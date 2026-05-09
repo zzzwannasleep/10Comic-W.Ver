@@ -1352,17 +1352,74 @@ const getDomText = (root, selector) => {
   }
 }
 
-const normalizeAuthorName = (text) => {
+const authorPrefixReg = /^(作者|作者名|作者\/作画|作者\/作畫|作画|作畫|漫画|漫畫|原著|原作|编剧|編劇|脚本|腳本|著者|繪者|绘者|畫師|画师|原案)\s*[：:：]?\s*/i
+const authorHintReg = /(作者|作者名|作画|作畫|原著|原作|编剧|編劇|脚本|腳本|著者|繪者|绘者|畫師|画师)/i
+const authorNoiseReg = /(状态|狀態|连载中|連載中|已完结|已完結|完结|完結|题材|題材|标签|標籤|类型|類型|分类|分類|更新|最新|人气|人氣|地区|地區|年份|别名|別名|简介|簡介|评分|評分|收藏|点击|點擊|进度|進度)/i
+const authorStopKeywords = [
+  '状态', '狀態', '连载中', '連載中', '已完结', '已完結', '完结', '完結',
+  '题材', '題材', '标签', '標籤', '类型', '類型', '分类', '分類',
+  '更新', '最新', '人气', '人氣', '地区', '地區', '年份', '别名', '別名',
+  '简介', '簡介', '评分', '評分', '收藏', '点击', '點擊', '进度', '進度'
+]
+
+const splitAuthorTextSegments = (text) => {
+  return String(text || '')
+    .replace(/\r/g, '\n')
+    .split(/\n|[|｜;；]/)
+    .map(item => item.trim())
+    .filter(Boolean)
+}
+
+const stripAuthorNoise = (text) => {
+  let value = String(text || '').trim()
+  let stopIndex = value.length
+  authorStopKeywords.forEach((keyword) => {
+    const index = value.indexOf(keyword)
+    if (index > 0 && index < stopIndex) {
+      stopIndex = index
+    }
+  })
+  if (stopIndex !== value.length) {
+    value = value.slice(0, stopIndex)
+  }
+  value = value
+    .replace(/^[\s:：/／|｜,，;；·•-]+/, '')
+    .replace(/[\s:：/／|｜,，;；·•-]+$/, '')
+    .replace(/\s{2,}/g, ' ')
+    .trim()
+  return value
+}
+
+const normalizeAuthorName = (text, allowLoose = false) => {
   if (!text) {
     return ''
   }
-  let authorName = text.replace(/^(作者|作画|漫画|原著|编剧|作者名|著者|繪者|作者：|作者:)/, '')
-  authorName = authorName.replace(/[：:]\s*/, '')
-  authorName = authorName.replace(/\s{2,}/g, ' ').trim()
-  if (authorName.length > 40) {
-    return ''
+
+  const segments = splitAuthorTextSegments(text)
+  const candidateList = segments.length > 0 ? segments : [String(text)]
+  const preferredSegments = candidateList.filter(item => authorHintReg.test(item))
+  const targetSegments = preferredSegments.length > 0 ? preferredSegments : (allowLoose ? candidateList : [])
+
+  for (let i = 0; i < targetSegments.length; i++) {
+    let authorName = targetSegments[i]
+    const hasPrefix = authorPrefixReg.test(authorName)
+    authorName = authorName.replace(authorPrefixReg, '')
+    authorName = stripAuthorNoise(authorName)
+    if (!authorName) {
+      continue
+    }
+    if (authorNoiseReg.test(authorName)) {
+      continue
+    }
+    if (!allowLoose && !hasPrefix) {
+      continue
+    }
+    if (authorName.length > 40) {
+      continue
+    }
+    return trimSpecial(authorName)
   }
-  return trimSpecial(authorName)
+  return ''
 }
 
 export const getAuthorNameFromDom = (root, webConfig) => {
@@ -1384,7 +1441,7 @@ export const getAuthorNameFromDom = (root, webConfig) => {
   )
 
   for (let i = 0; i < selectors.length; i++) {
-    const authorName = normalizeAuthorName(getDomText(root, selectors[i]))
+    const authorName = normalizeAuthorName(getDomText(root, selectors[i]), true)
     if (authorName) {
       return authorName
     }
@@ -1394,10 +1451,10 @@ export const getAuthorNameFromDom = (root, webConfig) => {
     const textDomList = root.querySelectorAll('p, span, div, li, dd, dt, a, strong')
     for (let i = 0; i < textDomList.length; i++) {
       const text = (textDomList[i].innerText || textDomList[i].textContent || '').trim()
-      if (text.length === 0 || text.length > 40) {
+      if (text.length === 0 || text.length > 120) {
         continue
       }
-      if (/(作者|作画|原著|编剧|著者|繪者)/.test(text)) {
+      if (authorHintReg.test(text)) {
         const authorName = normalizeAuthorName(text)
         if (authorName) {
           return authorName

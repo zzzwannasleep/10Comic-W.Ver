@@ -4,10 +4,7 @@
 // @version      2.0.8
 // @description  任意网页提供部分漫画网站搜索；漫画分章节下载(可直接下载/压缩下载/拼接下载)，可用于动漫之家、极速漫画、腾讯漫画、哔哩哔哩等35多个网站；对个别漫画网站修改阅读样式；可按需编写定义规则JSON导入以支持其他漫画网站
 // @author       journey3510
-// @homepageURL  https://github.com/zzzwannasleep/10Comic-W.Ver
-// @supportURL   https://github.com/zzzwannasleep/10Comic-W.Ver/issues
-// @updateURL    https://raw.githubusercontent.com/zzzwannasleep/10Comic-W.Ver/main/release/10comic.user.js
-// @downloadURL  https://raw.githubusercontent.com/zzzwannasleep/10Comic-W.Ver/main/release/10comic.user.js
+
 // @run-at       document-end
 // @grant        GM_getValue
 // @grant        GM_setValue
@@ -46,7 +43,7 @@
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".van-cell__title {\n  text-align: left;\n}\n.van-cell-group__title--inset {\n  text-align: left;\n}\n.van-button--default {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled {\n  opacity: 1 !important;\n}\n.van-tag--default {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow {\n  color: #d9d9d9 !important;\n}\n.van-popover__content {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".van-cell__title {\n  text-align: left;\n}\n.van-cell-group__title--inset {\n  text-align: left;\n}\n.van-button--default {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled {\n  opacity: 1 !important;\n}\n.van-tag--default {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow {\n  color: #d9d9d9 !important;\n}\n.van-popover__content {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n.van-cell__title {\n  text-align: left;\n}\n.van-cell-group__title--inset {\n  text-align: left;\n}\n.van-button--default {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled {\n  opacity: 1 !important;\n}\n.van-tag--default {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow {\n  color: #d9d9d9 !important;\n}\n.van-popover__content {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -2194,17 +2191,74 @@ const getDomText = (root, selector) => {
   }
 }
 
-const normalizeAuthorName = (text) => {
+const authorPrefixReg = /^(作者|作者名|作者\/作画|作者\/作畫|作画|作畫|漫画|漫畫|原著|原作|编剧|編劇|脚本|腳本|著者|繪者|绘者|畫師|画师|原案)\s*[：:：]?\s*/i
+const authorHintReg = /(作者|作者名|作画|作畫|原著|原作|编剧|編劇|脚本|腳本|著者|繪者|绘者|畫師|画师)/i
+const authorNoiseReg = /(状态|狀態|连载中|連載中|已完结|已完結|完结|完結|题材|題材|标签|標籤|类型|類型|分类|分類|更新|最新|人气|人氣|地区|地區|年份|别名|別名|简介|簡介|评分|評分|收藏|点击|點擊|进度|進度)/i
+const authorStopKeywords = [
+  '状态', '狀態', '连载中', '連載中', '已完结', '已完結', '完结', '完結',
+  '题材', '題材', '标签', '標籤', '类型', '類型', '分类', '分類',
+  '更新', '最新', '人气', '人氣', '地区', '地區', '年份', '别名', '別名',
+  '简介', '簡介', '评分', '評分', '收藏', '点击', '點擊', '进度', '進度'
+]
+
+const splitAuthorTextSegments = (text) => {
+  return String(text || '')
+    .replace(/\r/g, '\n')
+    .split(/\n|[|｜;；]/)
+    .map(item => item.trim())
+    .filter(Boolean)
+}
+
+const stripAuthorNoise = (text) => {
+  let value = String(text || '').trim()
+  let stopIndex = value.length
+  authorStopKeywords.forEach((keyword) => {
+    const index = value.indexOf(keyword)
+    if (index > 0 && index < stopIndex) {
+      stopIndex = index
+    }
+  })
+  if (stopIndex !== value.length) {
+    value = value.slice(0, stopIndex)
+  }
+  value = value
+    .replace(/^[\s:：/／|｜,，;；·•-]+/, '')
+    .replace(/[\s:：/／|｜,，;；·•-]+$/, '')
+    .replace(/\s{2,}/g, ' ')
+    .trim()
+  return value
+}
+
+const normalizeAuthorName = (text, allowLoose = false) => {
   if (!text) {
     return ''
   }
-  let authorName = text.replace(/^(作者|作画|漫画|原著|编剧|作者名|著者|繪者|作者：|作者:)/, '')
-  authorName = authorName.replace(/[：:]\s*/, '')
-  authorName = authorName.replace(/\s{2,}/g, ' ').trim()
-  if (authorName.length > 40) {
-    return ''
+
+  const segments = splitAuthorTextSegments(text)
+  const candidateList = segments.length > 0 ? segments : [String(text)]
+  const preferredSegments = candidateList.filter(item => authorHintReg.test(item))
+  const targetSegments = preferredSegments.length > 0 ? preferredSegments : (allowLoose ? candidateList : [])
+
+  for (let i = 0; i < targetSegments.length; i++) {
+    let authorName = targetSegments[i]
+    const hasPrefix = authorPrefixReg.test(authorName)
+    authorName = authorName.replace(authorPrefixReg, '')
+    authorName = stripAuthorNoise(authorName)
+    if (!authorName) {
+      continue
+    }
+    if (authorNoiseReg.test(authorName)) {
+      continue
+    }
+    if (!allowLoose && !hasPrefix) {
+      continue
+    }
+    if (authorName.length > 40) {
+      continue
+    }
+    return (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .trimSpecial */ .Sc)(authorName)
   }
-  return (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .trimSpecial */ .Sc)(authorName)
+  return ''
 }
 
 const getAuthorNameFromDom = (root, webConfig) => {
@@ -2226,7 +2280,7 @@ const getAuthorNameFromDom = (root, webConfig) => {
   )
 
   for (let i = 0; i < selectors.length; i++) {
-    const authorName = normalizeAuthorName(getDomText(root, selectors[i]))
+    const authorName = normalizeAuthorName(getDomText(root, selectors[i]), true)
     if (authorName) {
       return authorName
     }
@@ -2236,10 +2290,10 @@ const getAuthorNameFromDom = (root, webConfig) => {
     const textDomList = root.querySelectorAll('p, span, div, li, dd, dt, a, strong')
     for (let i = 0; i < textDomList.length; i++) {
       const text = (textDomList[i].innerText || textDomList[i].textContent || '').trim()
-      if (text.length === 0 || text.length > 40) {
+      if (text.length === 0 || text.length > 120) {
         continue
       }
-      if (/(作者|作画|原著|编剧|著者|繪者)/.test(text)) {
+      if (authorHintReg.test(text)) {
         const authorName = normalizeAuthorName(text)
         if (authorName) {
           return authorName
