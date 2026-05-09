@@ -4,10 +4,7 @@
 // @version      2.0.8
 // @description  任意网页提供部分漫画网站搜索；漫画分章节下载(可直接下载/压缩下载/拼接下载)，可用于动漫之家、极速漫画、腾讯漫画、哔哩哔哩等35多个网站；对个别漫画网站修改阅读样式；可按需编写定义规则JSON导入以支持其他漫画网站
 // @author       journey3510
-// @homepageURL  https://github.com/zzzwannasleep/10Comic-W.Ver
-// @supportURL   https://github.com/zzzwannasleep/10Comic-W.Ver/issues
-// @updateURL    https://raw.githubusercontent.com/zzzwannasleep/10Comic-W.Ver/main/release/10comic.user.js
-// @downloadURL  https://raw.githubusercontent.com/zzzwannasleep/10Comic-W.Ver/main/release/10comic.user.js
+
 // @run-at       document-end
 // @grant        GM_getValue
 // @grant        GM_setValue
@@ -46,7 +43,7 @@
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".van-cell__title {\n  text-align: left;\n}\n.van-cell-group__title--inset {\n  text-align: left;\n}\n.van-button--default {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled {\n  opacity: 1 !important;\n}\n.van-tag--default {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow {\n  color: #d9d9d9 !important;\n}\n.van-popover__content {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".van-cell__title {\n  text-align: left;\n}\n.van-cell-group__title--inset {\n  text-align: left;\n}\n.van-button--default {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled {\n  opacity: 1 !important;\n}\n.van-tag--default {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow {\n  color: #d9d9d9 !important;\n}\n.van-popover__content {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n.van-cell__title {\n  text-align: left;\n}\n.van-cell-group__title--inset {\n  text-align: left;\n}\n.van-button--default {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled {\n  opacity: 1 !important;\n}\n.van-tag--default {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow {\n  color: #d9d9d9 !important;\n}\n.van-popover__content {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -728,6 +725,10 @@ const configDefault = {
   metadataSettings: {
     enableComicInfoXml: true,
     enableSeriesJson: false,
+    enableSeriesCover: false,
+    enableBangumiScrape: false,
+    bangumiAccessToken: '',
+    bangumiIncludeNsfw: false,
     languageISO: 'zh',
     publisher: ''
   },
@@ -740,6 +741,7 @@ const configDefault = {
     lastUpdateCount: 0
   },
   followList: [],
+  bangumiMetadataCache: {},
   // downHistory: '[]', // 废弃
   userWebInfo: [],
   rootDir: '10Comic'
@@ -6456,6 +6458,233 @@ var settingvue_type_template_id_234d1526_scoped_true_render = function () {
                       attrs: {
                         "title-class": "cellleftvalue",
                         "value-class": "cellrightvalue",
+                        label: "下载系列封面到漫画目录下的 cover.jpg",
+                        center: "",
+                      },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "title",
+                          fn: function () {
+                            return [
+                              _c("span", { staticClass: "custom-title" }, [
+                                _vm._v("生成系列封面"),
+                              ]),
+                            ]
+                          },
+                          proxy: true,
+                        },
+                        {
+                          key: "default",
+                          fn: function () {
+                            return [
+                              _c("van-checkbox", {
+                                staticClass: "rightbutton",
+                                on: {
+                                  change: function ($event) {
+                                    return _vm.onChangeData(
+                                      "metadataSettings",
+                                      _vm.metadataSettings.enableSeriesCover,
+                                      "enableSeriesCover"
+                                    )
+                                  },
+                                },
+                                model: {
+                                  value: _vm.metadataSettings.enableSeriesCover,
+                                  callback: function ($$v) {
+                                    _vm.$set(
+                                      _vm.metadataSettings,
+                                      "enableSeriesCover",
+                                      $$v
+                                    )
+                                  },
+                                  expression:
+                                    "metadataSettings.enableSeriesCover",
+                                },
+                              }),
+                            ]
+                          },
+                          proxy: true,
+                        },
+                      ]),
+                    }),
+                    _vm._v(" "),
+                    _c("van-cell", {
+                      attrs: {
+                        "title-class": "cellleftvalue",
+                        "value-class": "cellrightvalue",
+                        label: "下载前自动用 Bangumi 检索并补全元数据",
+                        center: "",
+                      },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "title",
+                          fn: function () {
+                            return [
+                              _c("span", { staticClass: "custom-title" }, [
+                                _vm._v("启用 Bangumi 刮削"),
+                              ]),
+                            ]
+                          },
+                          proxy: true,
+                        },
+                        {
+                          key: "default",
+                          fn: function () {
+                            return [
+                              _c("van-checkbox", {
+                                staticClass: "rightbutton",
+                                on: {
+                                  change: function ($event) {
+                                    return _vm.onChangeData(
+                                      "metadataSettings",
+                                      _vm.metadataSettings.enableBangumiScrape,
+                                      "enableBangumiScrape"
+                                    )
+                                  },
+                                },
+                                model: {
+                                  value:
+                                    _vm.metadataSettings.enableBangumiScrape,
+                                  callback: function ($$v) {
+                                    _vm.$set(
+                                      _vm.metadataSettings,
+                                      "enableBangumiScrape",
+                                      $$v
+                                    )
+                                  },
+                                  expression:
+                                    "metadataSettings.enableBangumiScrape",
+                                },
+                              }),
+                            ]
+                          },
+                          proxy: true,
+                        },
+                      ]),
+                    }),
+                    _vm._v(" "),
+                    _c("van-cell", {
+                      attrs: {
+                        "title-class": "cellleftvalue",
+                        "value-class": "cellrightvalue",
+                        label:
+                          "开启后会尝试匹配 NSFW 条目，建议配合 Access Token 使用",
+                        center: "",
+                      },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "title",
+                          fn: function () {
+                            return [
+                              _c("span", { staticClass: "custom-title" }, [
+                                _vm._v("允许 NSFW 条目"),
+                              ]),
+                            ]
+                          },
+                          proxy: true,
+                        },
+                        {
+                          key: "default",
+                          fn: function () {
+                            return [
+                              _c("van-checkbox", {
+                                staticClass: "rightbutton",
+                                on: {
+                                  change: function ($event) {
+                                    return _vm.onChangeData(
+                                      "metadataSettings",
+                                      _vm.metadataSettings.bangumiIncludeNsfw,
+                                      "bangumiIncludeNsfw"
+                                    )
+                                  },
+                                },
+                                model: {
+                                  value:
+                                    _vm.metadataSettings.bangumiIncludeNsfw,
+                                  callback: function ($$v) {
+                                    _vm.$set(
+                                      _vm.metadataSettings,
+                                      "bangumiIncludeNsfw",
+                                      $$v
+                                    )
+                                  },
+                                  expression:
+                                    "metadataSettings.bangumiIncludeNsfw",
+                                },
+                              }),
+                            ]
+                          },
+                          proxy: true,
+                        },
+                      ]),
+                    }),
+                    _vm._v(" "),
+                    _c("van-cell", {
+                      attrs: {
+                        "title-class": "cellleftvalue",
+                        "value-class": "cellrightvalue",
+                        label:
+                          "可选。填写后可提高 Bangumi API 的稳定性与权限范围",
+                        center: "",
+                      },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "title",
+                          fn: function () {
+                            return [
+                              _c("span", { staticClass: "custom-title" }, [
+                                _vm._v("Bangumi Access Token"),
+                              ]),
+                            ]
+                          },
+                          proxy: true,
+                        },
+                        {
+                          key: "default",
+                          fn: function () {
+                            return [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value:
+                                      _vm.metadataSettings.bangumiAccessToken,
+                                    expression:
+                                      "metadataSettings.bangumiAccessToken",
+                                  },
+                                ],
+                                staticClass: "long-input",
+                                attrs: { type: "text" },
+                                domProps: {
+                                  value:
+                                    _vm.metadataSettings.bangumiAccessToken,
+                                },
+                                on: {
+                                  blur: _vm.bangumiTokenBlur,
+                                  input: function ($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.metadataSettings,
+                                      "bangumiAccessToken",
+                                      $event.target.value
+                                    )
+                                  },
+                                },
+                              }),
+                            ]
+                          },
+                          proxy: true,
+                        },
+                      ]),
+                    }),
+                    _vm._v(" "),
+                    _c("van-cell", {
+                      attrs: {
+                        "title-class": "cellleftvalue",
+                        "value-class": "cellrightvalue",
                         center: "",
                       },
                       scopedSlots: _vm._u([
@@ -6938,6 +7167,196 @@ settingvue_type_template_id_234d1526_scoped_true_render._withStripped = true
 
 
 ;// CONCATENATED MODULE: ./src/views/setting.vue?vue&type=template&id=234d1526&scoped=true&
+
+;// CONCATENATED MODULE: ./src/utils/metadata.js
+
+
+
+const invalidFileNameReg = /[\\/:*?"<>|]/g
+
+const metadataSettingsDefault = {
+  enableComicInfoXml: true,
+  enableSeriesJson: false,
+  enableSeriesCover: false,
+  enableBangumiScrape: false,
+  bangumiAccessToken: '',
+  bangumiIncludeNsfw: false,
+  languageISO: 'zh',
+  publisher: ''
+}
+
+const escapeXml = (value) => {
+  return String(value || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;')
+}
+
+const cleanFileName = (value) => {
+  return (0,utils/* trimSpecial */.Sc)(String(value || ''))
+    .replace(invalidFileNameReg, ' ')
+    .replace(/\s{2,}/g, ' ')
+    .trim()
+}
+
+const getTokenMap = (downloadItem, pageCount) => {
+  return {
+    '[站点名字]': cleanFileName(downloadItem.webName),
+    '[作者名]': cleanFileName(downloadItem.authorName),
+    '[漫画名称]': cleanFileName(downloadItem.comicName),
+    '[章节名称]': cleanFileName(downloadItem.downChapterName || downloadItem.chapterName),
+    '[章节序号]': cleanFileName(downloadItem.chapterNumStr),
+    '[多少P]': String(pageCount || 0)
+  }
+}
+
+const pushXmlTag = (arr, name, value) => {
+  if (value === undefined || value === null || value === '') {
+    return
+  }
+  arr.push(`  <${name}>${escapeXml(value)}</${name}>`)
+}
+
+const getChapterNumber = (downloadItem) => {
+  if (downloadItem.chapterNumStr) {
+    return downloadItem.chapterNumStr
+  }
+  const match = String(downloadItem.chapterName || '').match(/(\d+(\.\d+)?)/)
+  return match ? match[1] : ''
+}
+
+const uniqList = (list = []) => {
+  return [...new Set((list || []).filter(Boolean))]
+}
+
+const splitDateParts = (dateValue) => {
+  if (!dateValue) {
+    return {}
+  }
+  const match = String(dateValue).match(/(\d{4})(?:[-/.年](\d{1,2}))?(?:[-/.月](\d{1,2}))?/)
+  if (!match) {
+    return {}
+  }
+  return {
+    year: match[1],
+    month: match[2] ? String(parseInt(match[2])) : '',
+    day: match[3] ? String(parseInt(match[3])) : ''
+  }
+}
+
+const buildNotes = (downloadItem, externalMetadata) => {
+  const notes = []
+  if (downloadItem.webName) {
+    notes.push(`来源站点: ${downloadItem.webName}`)
+  }
+  if (externalMetadata?.originalTitle && externalMetadata.originalTitle !== externalMetadata.seriesTitle) {
+    notes.push(`原始标题: ${externalMetadata.originalTitle}`)
+  }
+  if (externalMetadata?.subjectUrl) {
+    notes.push(`Bangumi: ${externalMetadata.subjectUrl}`)
+  }
+  return notes.join('\n')
+}
+
+const getSeriesName = (downloadItem, externalMetadata) => {
+  return externalMetadata?.seriesTitle || downloadItem.comicName
+}
+
+const getPublisher = (settings, externalMetadata) => {
+  return externalMetadata?.publisher || settings.publisher || ''
+}
+
+const getIssueCount = (downloadItem, externalMetadata) => {
+  return downloadItem.seriesChapterCount || externalMetadata?.issueCount || externalMetadata?.volumeCount || undefined
+}
+
+const getWriter = (downloadItem, externalMetadata) => {
+  const writerList = uniqList([...(externalMetadata?.writers || []), downloadItem.authorName])
+  return writerList.join(', ')
+}
+
+const getPenciller = (externalMetadata) => {
+  return uniqList(externalMetadata?.illustrators || []).join(', ')
+}
+
+const getGenre = (externalMetadata) => {
+  return uniqList(externalMetadata?.tags || []).join(', ')
+}
+
+const getMetadataSettings = () => {
+  return {
+    ...metadataSettingsDefault,
+    ...((0,setup/* getStorage */.cF)('metadataSettings') || {})
+  }
+}
+
+const getZipNameTemplate = () => {
+  return (0,setup/* getStorage */.cF)('zipNameTemplate') || '[站点名字][作者名][漫画名称][章节名称][多少P]P'
+}
+
+const buildArchiveName = (downloadItem, pageCount) => {
+  let result = getZipNameTemplate()
+  const tokenMap = getTokenMap(downloadItem, pageCount)
+  Object.keys(tokenMap).forEach((key) => {
+    result = result.replaceAll(key, tokenMap[key] || '')
+  })
+  result = cleanFileName(result).replace(/\[\]/g, '')
+  return result || cleanFileName(downloadItem.downChapterName || downloadItem.chapterName || downloadItem.comicName || 'chapter')
+}
+
+const buildComicInfoXml = (downloadItem, pageCount, externalMetadata = null) => {
+  const settings = getMetadataSettings()
+  const lines = ['<?xml version="1.0" encoding="utf-8"?>', '<ComicInfo>']
+  const seriesName = getSeriesName(downloadItem, externalMetadata)
+  const dateParts = splitDateParts(externalMetadata?.releaseDate)
+
+  pushXmlTag(lines, 'Series', seriesName)
+  pushXmlTag(lines, 'Title', downloadItem.downChapterName || downloadItem.chapterName)
+  pushXmlTag(lines, 'Number', getChapterNumber(downloadItem))
+  pushXmlTag(lines, 'Count', getIssueCount(downloadItem, externalMetadata))
+  pushXmlTag(lines, 'Summary', externalMetadata?.summary || '')
+  pushXmlTag(lines, 'Writer', getWriter(downloadItem, externalMetadata))
+  pushXmlTag(lines, 'Penciller', getPenciller(externalMetadata))
+  pushXmlTag(lines, 'Genre', getGenre(externalMetadata))
+  pushXmlTag(lines, 'Tags', getGenre(externalMetadata))
+  pushXmlTag(lines, 'PageCount', pageCount)
+  pushXmlTag(lines, 'Web', downloadItem.url || downloadItem.comicPageUrl)
+  pushXmlTag(lines, 'Publisher', getPublisher(settings, externalMetadata))
+  pushXmlTag(lines, 'LanguageISO', settings.languageISO || externalMetadata?.languageISO || 'zh')
+  pushXmlTag(lines, 'Year', dateParts.year)
+  pushXmlTag(lines, 'Month', dateParts.month)
+  pushXmlTag(lines, 'Day', dateParts.day)
+  pushXmlTag(lines, 'Notes', buildNotes(downloadItem, externalMetadata))
+  lines.push('</ComicInfo>')
+  return lines.join('\n')
+}
+
+const buildSeriesJson = (downloadItem, externalMetadata = null) => {
+  const settings = getMetadataSettings()
+  const dateParts = splitDateParts(externalMetadata?.releaseDate)
+  const seriesInfo = {
+    name: getSeriesName(downloadItem, externalMetadata) || '',
+    publisher: getPublisher(settings, externalMetadata),
+    description_text: externalMetadata?.summary || `${downloadItem.webName || ''}`.trim(),
+    total_issues: getIssueCount(downloadItem, externalMetadata),
+    status: externalMetadata?.status || undefined,
+    age_rating: externalMetadata?.ageRating || undefined,
+    year: dateParts.year || undefined
+  }
+  return JSON.stringify(seriesInfo, null, 2)
+}
+
+const getMetadataFileFlags = () => {
+  const settings = getMetadataSettings()
+  return {
+    enableComicInfoXml: settings.enableComicInfoXml !== false,
+    enableSeriesJson: settings.enableSeriesJson === true,
+    enableSeriesCover: settings.enableSeriesCover === true,
+    enableBangumiScrape: settings.enableBangumiScrape === true
+  }
+}
 
 ;// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/importPage.vue?vue&type=template&id=3e5333e4&scoped=true&
 var importPagevue_type_template_id_3e5333e4_scoped_true_render = function () {
@@ -7640,8 +8059,86 @@ importPage_component.options.__file = "src/components/importPage.vue"
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* eslint-disable no-undef */
+
 
 
 
@@ -7670,12 +8167,7 @@ importPage_component.options.__file = "src/components/importPage.vue"
       imgIndexBitNum: 3,
       imgDownRange: [1, -1],
       zipNameTemplate: '',
-      metadataSettings: {
-        enableComicInfoXml: true,
-        enableSeriesJson: false,
-        languageISO: 'zh',
-        publisher: ''
-      },
+      metadataSettings: { ...metadataSettingsDefault },
       followSettings: {
         autoCheckOnLoad: true,
         checkCooldownMinutes: 30
@@ -7780,6 +8272,10 @@ importPage_component.options.__file = "src/components/importPage.vue"
       this.followSettings.checkCooldownMinutes = value
       this.onChangeData('followSettings', value, 'checkCooldownMinutes')
     },
+    bangumiTokenBlur() {
+      this.metadataSettings.bangumiAccessToken = (this.metadataSettings.bangumiAccessToken || '').trim()
+      this.onChangeData('metadataSettings', this.metadataSettings.bangumiAccessToken, 'bangumiAccessToken')
+    },
     exeFun(flag, basic) {
       let rightSize = 100; let centerSize = 100
       basic.rightSize ? rightSize = basic.rightSize : ''
@@ -7803,10 +8299,19 @@ importPage_component.options.__file = "src/components/importPage.vue"
 
         this.imgDownRange = GM_getValue('imgDownRange') ?? this.imgDownRange
         this.zipNameTemplate = GM_getValue('zipNameTemplate') ?? this.zipNameTemplate
-        this.metadataSettings = GM_getValue('metadataSettings') ?? this.metadataSettings
-        this.followSettings = GM_getValue('followSettings') ?? this.followSettings
+        this.metadataSettings = {
+          ...this.metadataSettings,
+          ...(GM_getValue('metadataSettings') || {})
+        }
+        this.followSettings = {
+          ...this.followSettings,
+          ...(GM_getValue('followSettings') || {})
+        }
         //
-        this.appLoadDefault = GM_getValue('appLoadDefault') ?? this.appLoadDefault
+        this.appLoadDefault = {
+          ...this.appLoadDefault,
+          ...(GM_getValue('appLoadDefault') || {})
+        }
       // eslint-disable-next-line no-empty
       } catch (error) {}
       // 获取数据后执行其他方法
@@ -8172,108 +8677,467 @@ downvue_type_template_id_1e855a88_scoped_true_render._withStripped = true
 ;// CONCATENATED MODULE: external "JSZip"
 const external_JSZip_namespaceObject = JSZip;
 var external_JSZip_default = /*#__PURE__*/__webpack_require__.n(external_JSZip_namespaceObject);
-;// CONCATENATED MODULE: ./src/utils/metadata.js
+;// CONCATENATED MODULE: ./src/utils/bangumi.js
 
 
 
-const invalidFileNameReg = /[\\/:*?"<>|]/g
 
-const escapeXml = (value) => {
-  return String(value || '')
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&apos;')
-}
 
-const cleanFileName = (value) => {
+const BANGUMI_SEARCH_API = 'https://api.bgm.tv/v0/search/subjects'
+const BANGUMI_SUBJECT_API = 'https://api.bgm.tv/v0/subjects'
+const BANGUMI_WEB_URL = 'https://bgm.tv/subject'
+const CACHE_KEY = 'bangumiMetadataCache'
+const CACHE_TTL = 30 * 24 * 60 * 60 * 1000
+const MAX_CANDIDATE_COUNT = 4
+const pendingMetadataMap = new Map()
+
+const normalizeText = (value) => {
   return (0,utils/* trimSpecial */.Sc)(String(value || ''))
-    .replace(invalidFileNameReg, ' ')
+    .replace(/[【】\[\]()（）「」『』《》〈〉]/g, ' ')
+    .replace(/[·•:：]/g, ' ')
     .replace(/\s{2,}/g, ' ')
     .trim()
 }
 
-const getTokenMap = (downloadItem, pageCount) => {
-  return {
-    '[站点名字]': cleanFileName(downloadItem.webName),
-    '[作者名]': cleanFileName(downloadItem.authorName),
-    '[漫画名称]': cleanFileName(downloadItem.comicName),
-    '[章节名称]': cleanFileName(downloadItem.downChapterName || downloadItem.chapterName),
-    '[章节序号]': cleanFileName(downloadItem.chapterNumStr),
-    '[多少P]': String(pageCount || 0)
+const normalizeCompareText = (value) => {
+  return normalizeText(value)
+    .toLowerCase()
+    .replace(/\s+/g, '')
+}
+
+const normalizeKeyword = (value) => {
+  return normalizeText(value)
+    .replace(/(?:第?\s*\d+(?:\.\d+)?\s*(?:话|話|卷|章|冊|集)|单行本|單行本|漫画|漫畫|コミック|comics?)$/i, '')
+    .trim()
+}
+
+const buildCacheKey = (downloadItem) => {
+  return [
+    normalizeCompareText(downloadItem.comicName),
+    normalizeCompareText(downloadItem.authorName),
+    normalizeCompareText(downloadItem.webName)
+  ].join('::')
+}
+
+const bangumi_cloneData = (value) => {
+  return JSON.parse(JSON.stringify(value))
+}
+
+const getCacheMap = () => {
+  return (0,setup/* getStorage */.cF)(CACHE_KEY) || {}
+}
+
+const getCachedMetadata = (cacheKey) => {
+  const cacheMap = getCacheMap()
+  const item = cacheMap[cacheKey]
+  if (!item?.savedAt || !item.data) {
+    return null
+  }
+  if (Date.now() - item.savedAt > CACHE_TTL) {
+    return null
+  }
+  return bangumi_cloneData(item.data)
+}
+
+const saveCachedMetadata = (cacheKey, data) => {
+  const cacheMap = getCacheMap()
+  cacheMap[cacheKey] = {
+    savedAt: Date.now(),
+    data
+  }
+  ;(0,setup/* setStorage */.po)(CACHE_KEY, cacheMap)
+  return data
+}
+
+const getBangumiHeaders = (settings) => {
+  const headers = {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+    'User-Agent': '10Comic Metadata Scraper'
+  }
+  if (settings.bangumiAccessToken) {
+    headers.Authorization = `Bearer ${settings.bangumiAccessToken}`
+  }
+  return headers
+}
+
+const parseResponseJson = (response) => {
+  const raw = response?.responseText || response?.response || ''
+  if (!raw) {
+    return null
+  }
+  if (typeof raw === 'object') {
+    return raw
+  }
+  try {
+    return JSON.parse(raw)
+  } catch (error) {
+    return null
   }
 }
 
-const getMetadataSettings = () => {
-  return (0,setup/* getStorage */.cF)('metadataSettings') || {}
+const toText = (value) => {
+  if (value === undefined || value === null) {
+    return ''
+  }
+  if (typeof value === 'string' || typeof value === 'number') {
+    return String(value).trim()
+  }
+  if (Array.isArray(value)) {
+    return value.map(item => toText(item)).filter(Boolean).join(' / ')
+  }
+  if (typeof value === 'object') {
+    return toText(value.v || value.value || value.k || value.name || '')
+  }
+  return ''
 }
 
-const getZipNameTemplate = () => {
-  return (0,setup/* getStorage */.cF)('zipNameTemplate') || '[站点名字][作者名][漫画名称][章节名称][多少P]P'
+const getInfoboxEntries = (subject) => {
+  return Array.isArray(subject?.infobox) ? subject.infobox : []
 }
 
-const buildArchiveName = (downloadItem, pageCount) => {
-  let result = getZipNameTemplate()
-  const tokenMap = getTokenMap(downloadItem, pageCount)
-  Object.keys(tokenMap).forEach((key) => {
-    result = result.replaceAll(key, tokenMap[key] || '')
+const matchInfoboxKey = (key = '', words = []) => {
+  return words.some(word => key.toLowerCase().includes(word.toLowerCase()))
+}
+
+const pickInfoboxTexts = (subject, keyWords = []) => {
+  return getInfoboxEntries(subject)
+    .filter(item => matchInfoboxKey(item?.key || '', keyWords))
+    .map(item => toText(item?.value))
+    .filter(Boolean)
+}
+
+const pickFirstInfoboxText = (subject, keyWords = []) => {
+  return pickInfoboxTexts(subject, keyWords)[0] || ''
+}
+
+const buildAliasList = (subject) => {
+  const aliases = []
+  ;['别名', '中文名', '英文名', '日文名', '罗马字', 'romanji', 'alias'].forEach((keyWord) => {
+    pickInfoboxTexts(subject, [keyWord]).forEach((item) => aliases.push(item))
   })
-  result = cleanFileName(result).replace(/\[\]/g, '')
-  return result || cleanFileName(downloadItem.downChapterName || downloadItem.chapterName || downloadItem.comicName || 'chapter')
-}
-
-const pushXmlTag = (arr, name, value) => {
-  if (value === undefined || value === null || value === '') {
-    return
+  if (subject?.name_cn) {
+    aliases.push(subject.name_cn)
   }
-  arr.push(`  <${name}>${escapeXml(value)}</${name}>`)
-}
-
-const getChapterNumber = (downloadItem) => {
-  if (downloadItem.chapterNumStr) {
-    return downloadItem.chapterNumStr
+  if (subject?.name) {
+    aliases.push(subject.name)
   }
-  const match = String(downloadItem.chapterName || '').match(/(\d+(\.\d+)?)/)
-  return match ? match[1] : ''
+  return [...new Set(aliases.map(item => normalizeText(item)).filter(Boolean))]
 }
 
-const buildComicInfoXml = (downloadItem, pageCount) => {
-  const settings = getMetadataSettings()
-  const lines = ['<?xml version="1.0" encoding="utf-8"?>', '<ComicInfo>']
-  pushXmlTag(lines, 'Series', downloadItem.comicName)
-  pushXmlTag(lines, 'Title', downloadItem.downChapterName || downloadItem.chapterName)
-  pushXmlTag(lines, 'Number', getChapterNumber(downloadItem))
-  pushXmlTag(lines, 'Writer', downloadItem.authorName)
-  pushXmlTag(lines, 'PageCount', pageCount)
-  pushXmlTag(lines, 'Web', downloadItem.url || downloadItem.comicPageUrl)
-  pushXmlTag(lines, 'Publisher', settings.publisher)
-  pushXmlTag(lines, 'LanguageISO', settings.languageISO || 'zh')
-  pushXmlTag(lines, 'Notes', `${downloadItem.webName || ''}`.trim())
-  lines.push('</ComicInfo>')
-  return lines.join('\n')
+const parseCount = (value) => {
+  const match = String(value || '').match(/(\d+)/)
+  return match ? parseInt(match[1]) : undefined
 }
 
-const buildSeriesJson = (downloadItem) => {
-  const settings = getMetadataSettings()
-  const seriesInfo = {
-    name: downloadItem.comicName || '',
-    publisher: settings.publisher || '',
-    description_text: `${downloadItem.webName || ''}`.trim(),
-    total_issues: downloadItem.seriesChapterCount || undefined
+const splitPersonNames = (value) => {
+  return String(value || '')
+    .split(/[\/／&＆,，、]/)
+    .map(item => normalizeText(item))
+    .filter(Boolean)
+}
+
+const dedupeList = (list = []) => {
+  return [...new Set((list || []).map(item => normalizeText(item)).filter(Boolean))]
+}
+
+const buildSearchKeywords = (downloadItem) => {
+  const keywords = []
+  const title = normalizeKeyword(downloadItem.comicName)
+  const authorName = normalizeText(downloadItem.authorName)
+  if (title) {
+    keywords.push(title)
   }
-  return JSON.stringify(seriesInfo, null, 2)
+  if (title && authorName) {
+    keywords.push(`${title} ${authorName}`)
+  }
+  if (downloadItem.comicName && downloadItem.comicName !== title) {
+    keywords.push(normalizeText(downloadItem.comicName))
+  }
+  return [...new Set(keywords.filter(Boolean))]
 }
 
-const getMetadataFileFlags = () => {
-  const settings = getMetadataSettings()
+const searchBangumiSubjects = async(keyword, settings) => {
+  const query = `${BANGUMI_SEARCH_API}?limit=10&offset=0`
+  const payload = {
+    keyword,
+    sort: 'rank',
+    filter: {
+      type: [1],
+      nsfw: settings.bangumiIncludeNsfw === true
+    }
+  }
+  const response = await (0,utils/* request */.WY)({
+    method: 'post',
+    url: query,
+    data: JSON.stringify(payload),
+    headers: getBangumiHeaders(settings)
+  })
+  const result = parseResponseJson(response)
+  if (!result) {
+    return []
+  }
+  if (Array.isArray(result)) {
+    return result
+  }
+  if (Array.isArray(result.data)) {
+    return result.data
+  }
+  if (Array.isArray(result.list)) {
+    return result.list
+  }
+  return []
+}
+
+const getBangumiSubject = async(subjectId, settings) => {
+  const response = await (0,utils/* request */.WY)({
+    method: 'get',
+    url: `${BANGUMI_SUBJECT_API}/${subjectId}`,
+    headers: getBangumiHeaders(settings)
+  })
+  return parseResponseJson(response)
+}
+
+const getBangumiSubjectPersons = async(subjectId, settings) => {
+  try {
+    const response = await (0,utils/* request */.WY)({
+      method: 'get',
+      url: `${BANGUMI_SUBJECT_API}/${subjectId}/persons`,
+      headers: getBangumiHeaders(settings)
+    })
+    const result = parseResponseJson(response)
+    if (Array.isArray(result)) {
+      return result
+    }
+    if (Array.isArray(result?.data)) {
+      return result.data
+    }
+  } catch (error) {
+    //
+  }
+  return []
+}
+
+const getPlatformPenalty = (subject) => {
+  const platform = normalizeText(subject?.platform || pickFirstInfoboxText(subject, ['平台', '类型', '類型']))
+  if (!platform) {
+    return 0
+  }
+  if (/(小说|小説|novel)/i.test(platform)) {
+    return -80
+  }
+  if (/(漫画|漫畫|コミック|manga)/i.test(platform)) {
+    return 30
+  }
+  return 0
+}
+
+const hasAuthorMatch = (subject, downloadItem) => {
+  const authorName = normalizeCompareText(downloadItem.authorName)
+  if (!authorName) {
+    return false
+  }
+  const authorFields = [
+    ...pickInfoboxTexts(subject, ['作者', '作画', '作畫', '原作', '脚本', '脚本协力', '漫畫']),
+    ...(subject._personNames || [])
+  ]
+  return authorFields.some(item => normalizeCompareText(item).includes(authorName) || authorName.includes(normalizeCompareText(item)))
+}
+
+const scoreBangumiSubject = (subject, downloadItem) => {
+  const targetTitle = normalizeCompareText(downloadItem.comicName)
+  const compareTitles = dedupeList([subject?.name_cn, subject?.name, ...buildAliasList(subject)])
+  let score = 0
+
+  compareTitles.forEach((title) => {
+    const value = normalizeCompareText(title)
+    if (!value) {
+      return
+    }
+    if (value === targetTitle) {
+      score += 140
+      return
+    }
+    if (value.includes(targetTitle) || targetTitle.includes(value)) {
+      score += 80
+    }
+  })
+
+  if (hasAuthorMatch(subject, downloadItem)) {
+    score += 70
+  }
+
+  score += getPlatformPenalty(subject)
+
+  if (subject?.rating?.score) {
+    score += Math.min(Math.round(subject.rating.score * 2), 20)
+  }
+
+  if (subject?.rank) {
+    score += Math.max(0, 20 - Math.floor(subject.rank / 100))
+  }
+
+  if (subject?.date) {
+    score += 5
+  }
+
+  return score
+}
+
+const enrichWithPersons = async(subject, settings) => {
+  const persons = await getBangumiSubjectPersons(subject.id, settings)
+  const writerList = []
+  const illustratorList = []
+  const personNames = []
+
+  persons.forEach((person) => {
+    const name = normalizeText(person?.name_cn || person?.name || '')
+    const relation = normalizeText(person?.relation || person?.type || '')
+    if (!name) {
+      return
+    }
+    personNames.push(name)
+    if (/(作者|原作|脚本|编剧|編劇)/i.test(relation)) {
+      writerList.push(name)
+    }
+    if (/(作画|作畫|绘师|繪師|插画|插畫)/i.test(relation)) {
+      illustratorList.push(name)
+    }
+  })
+
   return {
-    enableComicInfoXml: settings.enableComicInfoXml !== false,
-    enableSeriesJson: settings.enableSeriesJson === true
+    ...subject,
+    _personNames: personNames,
+    _personWriters: dedupeList(writerList),
+    _personIllustrators: dedupeList(illustratorList)
   }
+}
+
+const buildStatus = (subject) => {
+  const statusText = pickFirstInfoboxText(subject, ['连载状态', '連載狀態', '状态', '狀態'])
+  if (/(完结|完結|已完|finished|completed)/i.test(statusText)) {
+    return 'ended'
+  }
+  if (/(连载|連載|ongoing|连载中|連載中)/i.test(statusText)) {
+    return 'ongoing'
+  }
+  if (pickFirstInfoboxText(subject, ['结束', '完结', '完結'])) {
+    return 'ended'
+  }
+  return undefined
+}
+
+const normalizeScrapedMetadata = (subject) => {
+  const writers = dedupeList([
+    ...splitPersonNames(pickFirstInfoboxText(subject, ['作者', '原作', '脚本', '编剧', '編劇'])),
+    ...(subject?._personWriters || [])
+  ])
+  const illustrators = dedupeList([
+    ...splitPersonNames(pickFirstInfoboxText(subject, ['作画', '作畫', '绘师', '繪師', '插画', '插畫'])),
+    ...(subject?._personIllustrators || [])
+  ])
+  const tags = dedupeList((subject?.tags || []).slice(0, 8).map(item => item?.name || item))
+  const publisher = pickFirstInfoboxText(subject, ['出版社', '连载杂志', '連載雜誌', 'レーベル', 'label'])
+  const issueCount = parseCount(pickFirstInfoboxText(subject, ['话数', '話數', '章节数', '章數', '总话数', '總話數']))
+  const volumeCount = parseCount(pickFirstInfoboxText(subject, ['册数', '冊數', '卷数', '卷數', '单行本', '單行本']))
+  const subjectUrl = `${BANGUMI_WEB_URL}/${subject.id}`
+  const seriesTitle = normalizeText(subject?.name_cn || subject?.name)
+
+  return {
+    source: 'Bangumi',
+    subjectId: subject.id,
+    subjectUrl,
+    seriesTitle,
+    originalTitle: normalizeText(subject?.name),
+    aliases: buildAliasList(subject),
+    summary: (0,utils/* trimSpecial */.Sc)(subject?.summary || ''),
+    publisher,
+    writers,
+    illustrators,
+    tags,
+    issueCount,
+    volumeCount,
+    releaseDate: subject?.date || '',
+    status: buildStatus(subject),
+    coverUrl: subject?.images?.large || subject?.images?.common || subject?.images?.medium || subject?.images?.small || '',
+    languageISO: '',
+    confidence: subject?._matchScore || 0
+  }
+}
+
+const pickBestSubject = async(searchResults, downloadItem, settings) => {
+  const detailCandidates = await Promise.all(
+    searchResults
+      .slice(0, MAX_CANDIDATE_COUNT)
+      .map(async(item) => {
+        const subject = await getBangumiSubject(item.id, settings)
+        if (!subject) {
+          return null
+        }
+        const enrichedSubject = await enrichWithPersons(subject, settings)
+        enrichedSubject._matchScore = scoreBangumiSubject(enrichedSubject, downloadItem)
+        return enrichedSubject
+      })
+  )
+
+  const validCandidates = detailCandidates.filter(Boolean).sort((a, b) => b._matchScore - a._matchScore)
+  if (validCandidates.length === 0) {
+    return null
+  }
+  if (validCandidates[0]._matchScore < 60) {
+    return null
+  }
+  return validCandidates[0]
+}
+
+const fetchBangumiMetadata = async(downloadItem, settings) => {
+  const keywords = buildSearchKeywords(downloadItem)
+  for (let i = 0; i < keywords.length; i++) {
+    const searchResults = await searchBangumiSubjects(keywords[i], settings)
+    if (searchResults.length === 0) {
+      continue
+    }
+    const bestSubject = await pickBestSubject(searchResults, downloadItem, settings)
+    if (bestSubject) {
+      return normalizeScrapedMetadata(bestSubject)
+    }
+  }
+  return null
+}
+
+const getBangumiMetadata = async(downloadItem) => {
+  const settings = getMetadataSettings()
+  if (settings.enableBangumiScrape !== true) {
+    return null
+  }
+
+  const cacheKey = buildCacheKey(downloadItem)
+  const cachedData = getCachedMetadata(cacheKey)
+  if (cachedData) {
+    return cachedData
+  }
+
+  if (pendingMetadataMap.has(cacheKey)) {
+    return pendingMetadataMap.get(cacheKey)
+  }
+
+  const promise = fetchBangumiMetadata(downloadItem, settings)
+    .then((data) => {
+      if (!data) {
+        return null
+      }
+      return saveCachedMetadata(cacheKey, data)
+    })
+    .finally(() => {
+      pendingMetadataMap.delete(cacheKey)
+    })
+
+  pendingMetadataMap.set(cacheKey, promise)
+  return promise
 }
 
 ;// CONCATENATED MODULE: ./src/utils/queue.js
+
 
 
 
@@ -8291,7 +9155,8 @@ class Queue {
     this.worker = new Array(this.workerLen) // 正在执行的任务
     this.workerDownInfo = new Array(this.workerLen) // 存储下载信息
     this.imgIndexBitNum = imgIndexBitNum // 图片序号位数
-    this.seriesMetadataCache = new Set()
+    this.seriesJsonCache = new Set()
+    this.seriesCoverCache = new Set()
     this.Vue = vue
   }
 
@@ -8302,16 +9167,76 @@ class Queue {
     window.URL.revokeObjectURL(url)
   }
 
+  async downloadRemoteFile(fileName, url) {
+    if (!url) {
+      return false
+    }
+    return (0,utils/* downFile */.zd)({ url, name: fileName })
+  }
+
+  getCoverFileName(url) {
+    const match = String(url || '').match(/\.(jpg|jpeg|webp|png|gif|bmp)(?:$|[?#])/i)
+    const suffix = match ? match[1].toLowerCase() : 'jpg'
+    return `cover.${suffix === 'jpeg' ? 'jpg' : suffix}`
+  }
+
+  getSeriesCacheKey(worker) {
+    return `${worker.webName || ''}_${worker.comicName || ''}`
+  }
+
+  shouldPrepareMetadata(worker) {
+    const { enableBangumiScrape, enableComicInfoXml, enableSeriesJson, enableSeriesCover } = getMetadataFileFlags()
+    if (!enableBangumiScrape) {
+      return false
+    }
+    if (worker.downType === 1 && enableComicInfoXml) {
+      return true
+    }
+    return enableSeriesJson || enableSeriesCover
+  }
+
+  prepareWorkerMetadata(worker) {
+    if (!this.shouldPrepareMetadata(worker)) {
+      return Promise.resolve(null)
+    }
+    return getBangumiMetadata(worker).catch((error) => {
+      console.log('bangumiMetadataError: ', error)
+      return null
+    })
+  }
+
+  async getWorkerMetadata(worker) {
+    if (!worker) {
+      return null
+    }
+    if (!worker.metadataPromise) {
+      worker.metadataPromise = this.prepareWorkerMetadata(worker)
+    }
+    return worker.metadataPromise
+  }
+
   async writeSeriesMetadata(worker) {
-    const { enableSeriesJson } = getMetadataFileFlags()
-    const metadataKey = `${worker.webName || ''}_${worker.comicName || ''}`
-    if (!enableSeriesJson || this.seriesMetadataCache.has(metadataKey)) {
+    const { enableSeriesJson, enableSeriesCover } = getMetadataFileFlags()
+    const metadataKey = this.getSeriesCacheKey(worker)
+    if (!enableSeriesJson && !enableSeriesCover) {
       return
     }
-    const seriesJson = buildSeriesJson(worker)
-    const jsonBlob = new Blob([seriesJson], { type: 'application/json' })
-    await this.downloadFile(worker.comicName + '\\series.json', jsonBlob)
-    this.seriesMetadataCache.add(metadataKey)
+    const externalMetadata = await this.getWorkerMetadata(worker)
+
+    if (enableSeriesJson && !this.seriesJsonCache.has(metadataKey)) {
+      const seriesJson = buildSeriesJson(worker, externalMetadata)
+      const jsonBlob = new Blob([seriesJson], { type: 'application/json' })
+      await this.downloadFile(worker.comicName + '\\series.json', jsonBlob)
+      this.seriesJsonCache.add(metadataKey)
+    }
+
+    if (enableSeriesCover && externalMetadata?.coverUrl && !this.seriesCoverCache.has(metadataKey)) {
+      const coverFileName = this.getCoverFileName(externalMetadata.coverUrl)
+      const result = await this.downloadRemoteFile(worker.comicName + '\\' + coverFileName, externalMetadata.coverUrl)
+      if (result) {
+        this.seriesCoverCache.add(metadataKey)
+      }
+    }
   }
 
   /**
@@ -8655,8 +9580,10 @@ class Queue {
           downHeaders: item.downHeaders,
           otherData: undefined, // 自定义存储其他下载数据
           seriesChapterCount: item.seriesChapterCount,
-          followItemId: item.followItemId
+          followItemId: item.followItemId,
+          metadataPromise: undefined
         }
+        worker.metadataPromise = this.prepareWorkerMetadata(worker)
         this.worker[i] = worker
         this.workerDownInfo[i] = []
         this.list.pop()
@@ -8688,37 +9615,34 @@ class Queue {
   // 压缩
   async makeZip(workerId) {
     const { comicName } = this.worker[workerId]
-    return new Promise((resolve, reject) => {
-      const zip = new (external_JSZip_default())()
-      const { enableComicInfoXml } = getMetadataFileFlags()
-      this.workerDownInfo[workerId].forEach((item, index) => {
-        const imgblob = item.blob
-        const suffix = item.suffix
-        if (imgblob === 1 || imgblob === 0) {
-          const txtBlob = new Blob([item.imgurl], { type: 'text/plain' })
-          zip.file((0,utils/* addZeroForNum */.xo)(index + 1, this.imgIndexBitNum) + '.txt', txtBlob, { blob: true })
-          return
-        }
-        zip.file((0,utils/* addZeroForNum */.xo)(index + 1, this.imgIndexBitNum) + '.' + suffix, imgblob, { blob: true })
-      })
-      if (enableComicInfoXml) {
-        zip.file('ComicInfo.xml', buildComicInfoXml(this.worker[workerId], this.worker[workerId].totalNumber))
-      }
-
-      zip.generateAsync({
-        type: 'blob',
-        compression: 'DEFLATE',
-        compressionOptions: {
-          level: 9
-        }
-      }).then((zipblob) => {
-        const archiveName = buildArchiveName(this.worker[workerId], this.worker[workerId].totalNumber)
-        const name = comicName + '\\' + archiveName + '.zip'
-        this.downloadFile(name, zipblob)
-        resolve()
+    const zip = new (external_JSZip_default())()
+    const { enableComicInfoXml } = getMetadataFileFlags()
+    const externalMetadata = await this.getWorkerMetadata(this.worker[workerId])
+    this.workerDownInfo[workerId].forEach((item, index) => {
+      const imgblob = item.blob
+      const suffix = item.suffix
+      if (imgblob === 1 || imgblob === 0) {
+        const txtBlob = new Blob([item.imgurl], { type: 'text/plain' })
+        zip.file((0,utils/* addZeroForNum */.xo)(index + 1, this.imgIndexBitNum) + '.txt', txtBlob, { blob: true })
         return
-      })
+      }
+      zip.file((0,utils/* addZeroForNum */.xo)(index + 1, this.imgIndexBitNum) + '.' + suffix, imgblob, { blob: true })
     })
+    if (enableComicInfoXml) {
+      zip.file('ComicInfo.xml', buildComicInfoXml(this.worker[workerId], this.worker[workerId].totalNumber, externalMetadata))
+    }
+
+    const zipblob = await zip.generateAsync({
+      type: 'blob',
+      compression: 'DEFLATE',
+      compressionOptions: {
+        level: 9
+      }
+    })
+    const archiveName = buildArchiveName(this.worker[workerId], this.worker[workerId].totalNumber)
+    const name = comicName + '\\' + archiveName + '.zip'
+    await this.downloadFile(name, zipblob)
+    return true
   }
 
   async combineImages(workerId) {

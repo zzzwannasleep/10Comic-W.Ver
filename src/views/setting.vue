@@ -423,6 +423,83 @@
               </template>
             </van-cell>
 
+            <van-cell
+              title-class="cellleftvalue"
+              value-class="cellrightvalue"
+              label="下载系列封面到漫画目录下的 cover.jpg"
+              center
+            >
+              <template #title>
+                <span class="custom-title">生成系列封面</span>
+              </template>
+
+              <template #default>
+                <van-checkbox
+                  v-model="metadataSettings.enableSeriesCover"
+                  class="rightbutton"
+                  @change="onChangeData('metadataSettings', metadataSettings.enableSeriesCover, 'enableSeriesCover')"
+                />
+              </template>
+            </van-cell>
+
+            <van-cell
+              title-class="cellleftvalue"
+              value-class="cellrightvalue"
+              label="下载前自动用 Bangumi 检索并补全元数据"
+              center
+            >
+              <template #title>
+                <span class="custom-title">启用 Bangumi 刮削</span>
+              </template>
+
+              <template #default>
+                <van-checkbox
+                  v-model="metadataSettings.enableBangumiScrape"
+                  class="rightbutton"
+                  @change="onChangeData('metadataSettings', metadataSettings.enableBangumiScrape, 'enableBangumiScrape')"
+                />
+              </template>
+            </van-cell>
+
+            <van-cell
+              title-class="cellleftvalue"
+              value-class="cellrightvalue"
+              label="开启后会尝试匹配 NSFW 条目，建议配合 Access Token 使用"
+              center
+            >
+              <template #title>
+                <span class="custom-title">允许 NSFW 条目</span>
+              </template>
+
+              <template #default>
+                <van-checkbox
+                  v-model="metadataSettings.bangumiIncludeNsfw"
+                  class="rightbutton"
+                  @change="onChangeData('metadataSettings', metadataSettings.bangumiIncludeNsfw, 'bangumiIncludeNsfw')"
+                />
+              </template>
+            </van-cell>
+
+            <van-cell
+              title-class="cellleftvalue"
+              value-class="cellrightvalue"
+              label="可选。填写后可提高 Bangumi API 的稳定性与权限范围"
+              center
+            >
+              <template #title>
+                <span class="custom-title">Bangumi Access Token</span>
+              </template>
+
+              <template #default>
+                <input
+                  v-model="metadataSettings.bangumiAccessToken"
+                  class="long-input"
+                  type="text"
+                  @blur="bangumiTokenBlur"
+                >
+              </template>
+            </van-cell>
+
             <van-cell title-class="cellleftvalue" value-class="cellrightvalue" center>
               <template #title>
                 <span class="custom-title">语言 ISO</span>
@@ -594,6 +671,7 @@
 import { currentComics } from '@/utils/comics'
 import { setinit, setStorage } from '@/config/setup'
 import { loadStyle } from '@/utils/index'
+import { metadataSettingsDefault } from '@/utils/metadata'
 
 import { Dialog } from 'vant'
 
@@ -619,12 +697,7 @@ export default {
       imgIndexBitNum: 3,
       imgDownRange: [1, -1],
       zipNameTemplate: '',
-      metadataSettings: {
-        enableComicInfoXml: true,
-        enableSeriesJson: false,
-        languageISO: 'zh',
-        publisher: ''
-      },
+      metadataSettings: { ...metadataSettingsDefault },
       followSettings: {
         autoCheckOnLoad: true,
         checkCooldownMinutes: 30
@@ -729,6 +802,10 @@ export default {
       this.followSettings.checkCooldownMinutes = value
       this.onChangeData('followSettings', value, 'checkCooldownMinutes')
     },
+    bangumiTokenBlur() {
+      this.metadataSettings.bangumiAccessToken = (this.metadataSettings.bangumiAccessToken || '').trim()
+      this.onChangeData('metadataSettings', this.metadataSettings.bangumiAccessToken, 'bangumiAccessToken')
+    },
     exeFun(flag, basic) {
       let rightSize = 100; let centerSize = 100
       basic.rightSize ? rightSize = basic.rightSize : ''
@@ -752,10 +829,19 @@ export default {
 
         this.imgDownRange = GM_getValue('imgDownRange') ?? this.imgDownRange
         this.zipNameTemplate = GM_getValue('zipNameTemplate') ?? this.zipNameTemplate
-        this.metadataSettings = GM_getValue('metadataSettings') ?? this.metadataSettings
-        this.followSettings = GM_getValue('followSettings') ?? this.followSettings
+        this.metadataSettings = {
+          ...this.metadataSettings,
+          ...(GM_getValue('metadataSettings') || {})
+        }
+        this.followSettings = {
+          ...this.followSettings,
+          ...(GM_getValue('followSettings') || {})
+        }
         //
-        this.appLoadDefault = GM_getValue('appLoadDefault') ?? this.appLoadDefault
+        this.appLoadDefault = {
+          ...this.appLoadDefault,
+          ...(GM_getValue('appLoadDefault') || {})
+        }
       // eslint-disable-next-line no-empty
       } catch (error) {}
       // 获取数据后执行其他方法

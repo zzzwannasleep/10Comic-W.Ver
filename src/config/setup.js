@@ -23,6 +23,10 @@ const configDefault = {
   metadataSettings: {
     enableComicInfoXml: true,
     enableSeriesJson: false,
+    enableSeriesCover: false,
+    enableBangumiScrape: false,
+    bangumiAccessToken: '',
+    bangumiIncludeNsfw: false,
     languageISO: 'zh',
     publisher: ''
   },
@@ -35,6 +39,7 @@ const configDefault = {
     lastUpdateCount: 0
   },
   followList: [],
+  bangumiMetadataCache: {},
   // downHistory: '[]', // 废弃
   userWebInfo: [],
   rootDir: '10Comic'

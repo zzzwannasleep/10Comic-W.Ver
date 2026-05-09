@@ -2,6 +2,7 @@ import JSZip from 'jszip'
 import { getImage, downFile, addZeroForNum, request } from '@/utils/index'
 import { getStorage } from '@/config/setup'
 import { buildArchiveName, buildComicInfoXml, buildSeriesJson, getMetadataFileFlags } from '@/utils/metadata'
+import { getBangumiMetadata } from '@/utils/bangumi'
 import { clearPendingChapters } from '@/utils/follow'
 
 // 多个任务并行执行的队列
@@ -15,7 +16,8 @@ export default class Queue {
     this.worker = new Array(this.workerLen) // 正在执行的任务
     this.workerDownInfo = new Array(this.workerLen) // 存储下载信息
     this.imgIndexBitNum = imgIndexBitNum // 图片序号位数
-    this.seriesMetadataCache = new Set()
+    this.seriesJsonCache = new Set()
+    this.seriesCoverCache = new Set()
     this.Vue = vue
   }
 
@@ -26,16 +28,76 @@ export default class Queue {
     window.URL.revokeObjectURL(url)
   }
 
+  async downloadRemoteFile(fileName, url) {
+    if (!url) {
+      return false
+    }
+    return downFile({ url, name: fileName })
+  }
+
+  getCoverFileName(url) {
+    const match = String(url || '').match(/\.(jpg|jpeg|webp|png|gif|bmp)(?:$|[?#])/i)
+    const suffix = match ? match[1].toLowerCase() : 'jpg'
+    return `cover.${suffix === 'jpeg' ? 'jpg' : suffix}`
+  }
+
+  getSeriesCacheKey(worker) {
+    return `${worker.webName || ''}_${worker.comicName || ''}`
+  }
+
+  shouldPrepareMetadata(worker) {
+    const { enableBangumiScrape, enableComicInfoXml, enableSeriesJson, enableSeriesCover } = getMetadataFileFlags()
+    if (!enableBangumiScrape) {
+      return false
+    }
+    if (worker.downType === 1 && enableComicInfoXml) {
+      return true
+    }
+    return enableSeriesJson || enableSeriesCover
+  }
+
+  prepareWorkerMetadata(worker) {
+    if (!this.shouldPrepareMetadata(worker)) {
+      return Promise.resolve(null)
+    }
+    return getBangumiMetadata(worker).catch((error) => {
+      console.log('bangumiMetadataError: ', error)
+      return null
+    })
+  }
+
+  async getWorkerMetadata(worker) {
+    if (!worker) {
+      return null
+    }
+    if (!worker.metadataPromise) {
+      worker.metadataPromise = this.prepareWorkerMetadata(worker)
+    }
+    return worker.metadataPromise
+  }
+
   async writeSeriesMetadata(worker) {
-    const { enableSeriesJson } = getMetadataFileFlags()
-    const metadataKey = `${worker.webName || ''}_${worker.comicName || ''}`
-    if (!enableSeriesJson || this.seriesMetadataCache.has(metadataKey)) {
+    const { enableSeriesJson, enableSeriesCover } = getMetadataFileFlags()
+    const metadataKey = this.getSeriesCacheKey(worker)
+    if (!enableSeriesJson && !enableSeriesCover) {
       return
     }
-    const seriesJson = buildSeriesJson(worker)
-    const jsonBlob = new Blob([seriesJson], { type: 'application/json' })
-    await this.downloadFile(worker.comicName + '\\series.json', jsonBlob)
-    this.seriesMetadataCache.add(metadataKey)
+    const externalMetadata = await this.getWorkerMetadata(worker)
+
+    if (enableSeriesJson && !this.seriesJsonCache.has(metadataKey)) {
+      const seriesJson = buildSeriesJson(worker, externalMetadata)
+      const jsonBlob = new Blob([seriesJson], { type: 'application/json' })
+      await this.downloadFile(worker.comicName + '\\series.json', jsonBlob)
+      this.seriesJsonCache.add(metadataKey)
+    }
+
+    if (enableSeriesCover && externalMetadata?.coverUrl && !this.seriesCoverCache.has(metadataKey)) {
+      const coverFileName = this.getCoverFileName(externalMetadata.coverUrl)
+      const result = await this.downloadRemoteFile(worker.comicName + '\\' + coverFileName, externalMetadata.coverUrl)
+      if (result) {
+        this.seriesCoverCache.add(metadataKey)
+      }
+    }
   }
 
   /**
@@ -379,8 +441,10 @@ export default class Queue {
           downHeaders: item.downHeaders,
           otherData: undefined, // 自定义存储其他下载数据
           seriesChapterCount: item.seriesChapterCount,
-          followItemId: item.followItemId
+          followItemId: item.followItemId,
+          metadataPromise: undefined
         }
+        worker.metadataPromise = this.prepareWorkerMetadata(worker)
         this.worker[i] = worker
         this.workerDownInfo[i] = []
         this.list.pop()
@@ -412,37 +476,34 @@ export default class Queue {
   // 压缩
   async makeZip(workerId) {
     const { comicName } = this.worker[workerId]
-    return new Promise((resolve, reject) => {
-      const zip = new JSZip()
-      const { enableComicInfoXml } = getMetadataFileFlags()
-      this.workerDownInfo[workerId].forEach((item, index) => {
-        const imgblob = item.blob
-        const suffix = item.suffix
-        if (imgblob === 1 || imgblob === 0) {
-          const txtBlob = new Blob([item.imgurl], { type: 'text/plain' })
-          zip.file(addZeroForNum(index + 1, this.imgIndexBitNum) + '.txt', txtBlob, { blob: true })
-          return
-        }
-        zip.file(addZeroForNum(index + 1, this.imgIndexBitNum) + '.' + suffix, imgblob, { blob: true })
-      })
-      if (enableComicInfoXml) {
-        zip.file('ComicInfo.xml', buildComicInfoXml(this.worker[workerId], this.worker[workerId].totalNumber))
-      }
-
-      zip.generateAsync({
-        type: 'blob',
-        compression: 'DEFLATE',
-        compressionOptions: {
-          level: 9
-        }
-      }).then((zipblob) => {
-        const archiveName = buildArchiveName(this.worker[workerId], this.worker[workerId].totalNumber)
-        const name = comicName + '\\' + archiveName + '.zip'
-        this.downloadFile(name, zipblob)
-        resolve()
+    const zip = new JSZip()
+    const { enableComicInfoXml } = getMetadataFileFlags()
+    const externalMetadata = await this.getWorkerMetadata(this.worker[workerId])
+    this.workerDownInfo[workerId].forEach((item, index) => {
+      const imgblob = item.blob
+      const suffix = item.suffix
+      if (imgblob === 1 || imgblob === 0) {
+        const txtBlob = new Blob([item.imgurl], { type: 'text/plain' })
+        zip.file(addZeroForNum(index + 1, this.imgIndexBitNum) + '.txt', txtBlob, { blob: true })
         return
-      })
+      }
+      zip.file(addZeroForNum(index + 1, this.imgIndexBitNum) + '.' + suffix, imgblob, { blob: true })
     })
+    if (enableComicInfoXml) {
+      zip.file('ComicInfo.xml', buildComicInfoXml(this.worker[workerId], this.worker[workerId].totalNumber, externalMetadata))
+    }
+
+    const zipblob = await zip.generateAsync({
+      type: 'blob',
+      compression: 'DEFLATE',
+      compressionOptions: {
+        level: 9
+      }
+    })
+    const archiveName = buildArchiveName(this.worker[workerId], this.worker[workerId].totalNumber)
+    const name = comicName + '\\' + archiveName + '.zip'
+    await this.downloadFile(name, zipblob)
+    return true
   }
 
   async combineImages(workerId) {
