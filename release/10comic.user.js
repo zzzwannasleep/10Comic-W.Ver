@@ -10319,6 +10319,7 @@ var config = __webpack_require__(758);
 
 
 var id = null
+var appVm = null
 var appLoadDefault = null
 var tryLoadTimes = 0
 var hasStartedFollowCheck = false
@@ -10331,20 +10332,22 @@ function loadMenu() {
       (0,setup/* appLoadinit */.Iq)()
     }
     appLoadDefault = (0,setup/* getStorage */.cF)('appLoadDefault')
-    GM_registerMenuCommand(`加载UI (Alt + ${appLoadDefault.loadHotKey})`, loadUI)
+    GM_registerMenuCommand(`加载UI (Alt + ${appLoadDefault.loadHotKey})`, openUI)
     GM_registerMenuCommand(`重置所有数据`, setup/* setinit */.zU)
     document.addEventListener('keydown', (e) => {
       if (e.altKey && e.key.toUpperCase() === appLoadDefault.loadHotKey.toUpperCase()) {
-        loadUI(0)
+        openUI(0)
       }
     })
     if (appLoadDefault.isShowUI) {
-      loadUI(0)
+      openUI(0)
     }
-    runFollowCheck()
+    setTimeout(() => {
+      runFollowCheck()
+    }, 0)
   } catch (error) {
     console.log('loadError: ', error)
-    loadUI(tryLoadTimes)
+    openUI(tryLoadTimes)
   }
 }
 
@@ -10366,16 +10369,29 @@ async function runFollowCheck() {
   }
 }
 
+async function openUI(times = 0) {
+  if (appVm !== null) {
+    appVm.isHide = false
+    return appVm
+  }
+  const vm = await loadUI(times)
+  if (vm) {
+    vm.isHide = false
+    appVm = vm
+  }
+  return vm
+}
+
 async function loadUI(times) {
-  if (id !== null) {
-    return
+  if (appVm !== null) {
+    return appVm
   }
 
   if (!config/* isDev */.r8) {
     // 首次运行脚本无存储数据，无加载菜单， 重新载入
     if (times === 1) {
       loadMenu()
-      return
+      return null
     }
   }
 
@@ -10391,16 +10407,15 @@ async function loadUI(times) {
   ;(external_Vue_default()).prototype.$getType = utils/* getType */.oL
 
   if (config/* isDev */.r8) {
-    (0,utils/* loadStyle2 */.HM)('https://unpkg.com/vant@2.12/lib/index.css').then((res) => {
-      new (external_Vue_default())({
-        el: `#${id}`,
-        render: h => h(app)
-      })
+    await (0,utils/* loadStyle2 */.HM)('https://unpkg.com/vant@2.12/lib/index.css')
+    return new (external_Vue_default())({
+      el: `#${id}`,
+      render: h => h(app)
     })
   } else {
   // eslint-disable-next-line no-undef
     GM_addStyle(GM_getResourceText('vantcss'))
-    new (external_Vue_default())({
+    return new (external_Vue_default())({
       el: `#${id}`,
       render: h => h(app)
     })
