@@ -1,5 +1,5 @@
 import { getStorage, setStorage } from '@/config/setup'
-import { getComicInfoFromHtml, findWebByUrl } from '@/utils/comics'
+import { getComicInfoFromHtml, findWebByUrl, searchComicsAcrossWebs } from '@/utils/comics'
 import { request } from '@/utils/index'
 import { trimSpecial } from '@/utils/index'
 
@@ -18,6 +18,51 @@ const dedupeChapters = (chapterList) => {
     result.push(item)
   })
   return result
+}
+
+const normalizeCompareText = (value) => {
+  return trimSpecial(String(value || ''))
+    .toLowerCase()
+    .replace(/[【】\[\]()（）「」『』《》〈〉]/g, '')
+    .replace(/[·•:：]/g, '')
+    .replace(/\s+/g, '')
+}
+
+const scoreSearchResultName = (keyword, resultName) => {
+  const target = normalizeCompareText(keyword)
+  const current = normalizeCompareText(resultName)
+  if (!target || !current) {
+    return 0
+  }
+  if (target === current) {
+    return 120
+  }
+  if (current.includes(target) || target.includes(current)) {
+    return 80
+  }
+  let prefixLen = 0
+  while (prefixLen < target.length && prefixLen < current.length && target[prefixLen] === current[prefixLen]) {
+    prefixLen++
+  }
+  if (prefixLen >= 2) {
+    return 30 + prefixLen
+  }
+  return 0
+}
+
+const pickBestSearchResult = (keyword, resultList = []) => {
+  const candidates = (resultList || [])
+    .map(item => ({
+      ...item,
+      _score: scoreSearchResultName(keyword, item.name)
+    }))
+    .filter(item => item._score > 0)
+    .sort((a, b) => b._score - a._score)
+
+  if (candidates.length === 0 || candidates[0]._score < 60) {
+    return null
+  }
+  return candidates[0]
 }
 
 const mergeKnownUrl = (item, chapterUrls) => {
@@ -134,6 +179,91 @@ const getFollowInfoByRequest = async(webRule, comicPageUrl, fallbackComicName = 
 
   const { responseText } = await request({ method: 'get', url: comicPageUrl, headers: webRule.headers || '' })
   return getComicInfoFromHtml(responseText, webRule, comicPageUrl)
+}
+
+export const searchFollowCandidatesByKeyword = async(keyword, selectedWebNames = []) => {
+  const currentKeyword = trimSpecial(keyword || '')
+  if (!currentKeyword) {
+    return {
+      candidates: [],
+      skippedSites: []
+    }
+  }
+
+  const searchResultList = await searchComicsAcrossWebs(currentKeyword, selectedWebNames)
+  const candidates = []
+  const skippedSites = []
+
+  for (let i = 0; i < searchResultList.length; i++) {
+    const item = searchResultList[i]
+    const bestResult = pickBestSearchResult(currentKeyword, item.findres || [])
+    if (!bestResult?.url) {
+      skippedSites.push({
+        webName: item.webName,
+        reason: item.error ? 'search-error' : 'no-match'
+      })
+      continue
+    }
+
+    try {
+      const info = await getFollowInfoByRequest(item.webRule || findWebByUrl(bestResult.url), bestResult.url, currentKeyword)
+      const chapterList = dedupeChapters(info.chapters || [])
+      if (chapterList.length === 0) {
+        skippedSites.push({
+          webName: item.webName,
+          reason: 'no-chapters'
+        })
+        continue
+      }
+      candidates.push({
+        key: `${item.webName}__${bestResult.url}`,
+        comicName: info.comicName || bestResult.name || currentKeyword,
+        authorName: info.authorName || '',
+        webName: item.webName,
+        comicPageUrl: bestResult.url,
+        chapters: chapterList,
+        seriesChapterCount: chapterList.length,
+        latestChapterName: chapterList[0]?.chapterName || '',
+        latestChapterUrl: chapterList[0]?.url || '',
+        matchedName: bestResult.name || ''
+      })
+    } catch (error) {
+      skippedSites.push({
+        webName: item.webName,
+        reason: 'fetch-error',
+        error
+      })
+    }
+  }
+
+  return {
+    candidates,
+    skippedSites
+  }
+}
+
+export const addFollowCandidates = (candidateList = []) => {
+  const addedItems = []
+  candidateList.forEach((candidate) => {
+    const followItem = upsertFollowItem({
+      comicName: candidate.comicName,
+      authorName: candidate.authorName,
+      webName: candidate.webName,
+      comicPageUrl: candidate.comicPageUrl,
+      chapters: candidate.chapters || []
+    })
+    addedItems.push(followItem)
+  })
+  return addedItems
+}
+
+export const addFollowItemsByKeyword = async(keyword, selectedWebNames = []) => {
+  const result = await searchFollowCandidatesByKeyword(keyword, selectedWebNames)
+  const matchedItems = addFollowCandidates(result.candidates)
+  return {
+    matchedItems,
+    skippedSites: result.skippedSites
+  }
 }
 
 export const getFollowList = () => {

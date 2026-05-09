@@ -4,10 +4,7 @@
 // @version      2.0.8
 // @description  任意网页提供部分漫画网站搜索；漫画分章节下载(可直接下载/压缩下载/拼接下载)，可用于动漫之家、极速漫画、腾讯漫画、哔哩哔哩等35多个网站；对个别漫画网站修改阅读样式；可按需编写定义规则JSON导入以支持其他漫画网站
 // @author       journey3510
-// @homepageURL  https://github.com/zzzwannasleep/10Comic-W.Ver
-// @supportURL   https://github.com/zzzwannasleep/10Comic-W.Ver/issues
-// @updateURL    https://raw.githubusercontent.com/zzzwannasleep/10Comic-W.Ver/main/release/10comic.user.js
-// @downloadURL  https://raw.githubusercontent.com/zzzwannasleep/10Comic-W.Ver/main/release/10comic.user.js
+
 // @run-at       document-end
 // @grant        GM_getValue
 // @grant        GM_setValue
@@ -46,7 +43,7 @@
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".van-cell__title {\n  text-align: left;\n}\n.van-cell-group__title--inset {\n  text-align: left;\n}\n.van-button--default {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled {\n  opacity: 1 !important;\n}\n.van-tag--default {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow {\n  color: #d9d9d9 !important;\n}\n.van-popover__content {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".van-cell__title {\n  text-align: left;\n}\n.van-cell-group__title--inset {\n  text-align: left;\n}\n.van-button--default {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled {\n  opacity: 1 !important;\n}\n.van-tag--default {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow {\n  color: #d9d9d9 !important;\n}\n.van-popover__content {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n.van-cell__title {\n  text-align: left;\n}\n.van-cell-group__title--inset {\n  text-align: left;\n}\n.van-button--default {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled {\n  opacity: 1 !important;\n}\n.van-tag--default {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow {\n  color: #d9d9d9 !important;\n}\n.van-popover__content {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -198,7 +195,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, "#downcontext[data-v-1e855a88] {\n  mar
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".follow-page[data-v-2da631cb] {\n  margin: 15px;\n  max-height: 680px;\n  overflow: auto;\n}\n.follow-page .follow-toolbar[data-v-2da631cb] {\n  display: flex;\n  gap: 10px;\n  margin-bottom: 12px;\n}\n.follow-page .follow-hint[data-v-2da631cb] {\n  color: #999;\n  font-size: 13px;\n}\n.follow-page .follow-list[data-v-2da631cb] {\n  display: flex;\n  flex-direction: column;\n  gap: 12px;\n}\n.follow-page .follow-card[data-v-2da631cb] {\n  overflow: hidden;\n}\n.follow-page .pending-list[data-v-2da631cb] {\n  padding: 0 16px 8px;\n  color: #666;\n  font-size: 13px;\n}\n.follow-page .pending-item[data-v-2da631cb] {\n  margin-bottom: 4px;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.follow-page .follow-actions[data-v-2da631cb] {\n  display: flex;\n  gap: 8px;\n  padding: 0 16px 12px;\n  flex-wrap: wrap;\n}\n.van-cell__title[data-v-2da631cb] {\n  text-align: left;\n}\n.van-cell-group__title--inset[data-v-2da631cb] {\n  text-align: left;\n}\n.van-button--default[data-v-2da631cb] {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled[data-v-2da631cb] {\n  opacity: 1 !important;\n}\n.van-tag--default[data-v-2da631cb] {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon[data-v-2da631cb] {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light[data-v-2da631cb] {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow[data-v-2da631cb] {\n  color: #d9d9d9 !important;\n}\n.van-popover__content[data-v-2da631cb] {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".follow-page[data-v-2da631cb] {\n  margin: 15px;\n  max-height: 680px;\n  overflow: auto;\n}\n.follow-page .follow-toolbar[data-v-2da631cb] {\n  display: flex;\n  gap: 10px;\n  margin-bottom: 12px;\n}\n.follow-page .follow-keyword-toolbar[data-v-2da631cb] {\n  display: flex;\n  gap: 10px;\n  margin-bottom: 12px;\n  align-items: center;\n}\n.follow-page .follow-site-panel[data-v-2da631cb],\n.follow-page .follow-result-panel[data-v-2da631cb] {\n  padding: 12px;\n  margin-bottom: 12px;\n  background: #fff;\n  border-radius: 12px;\n}\n.follow-page .follow-panel-header[data-v-2da631cb] {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  margin-bottom: 10px;\n  color: #333;\n  font-size: 14px;\n  font-weight: 600;\n}\n.follow-page .follow-site-actions[data-v-2da631cb] {\n  display: flex;\n  gap: 8px;\n  flex-wrap: wrap;\n  margin-bottom: 10px;\n}\n.follow-page .follow-site-grid[data-v-2da631cb] {\n  display: grid;\n  grid-template-columns: repeat(3, minmax(0, 1fr));\n  gap: 10px 12px;\n}\n.follow-page .follow-site-check[data-v-2da631cb] {\n  margin: 0;\n}\n.follow-page .candidate-cell[data-v-2da631cb] .van-cell__title {\n  flex: 1;\n  min-width: 0;\n}\n.follow-page .candidate-label[data-v-2da631cb] {\n  margin-top: 4px;\n  color: #666;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.follow-page .candidate-label--sub[data-v-2da631cb] {\n  font-size: 12px;\n}\n.follow-page .follow-hint[data-v-2da631cb] {\n  color: #999;\n  font-size: 13px;\n}\n.follow-page .follow-list[data-v-2da631cb] {\n  display: flex;\n  flex-direction: column;\n  gap: 12px;\n}\n.follow-page .follow-card[data-v-2da631cb] {\n  overflow: hidden;\n}\n.follow-page .pending-list[data-v-2da631cb] {\n  padding: 0 16px 8px;\n  color: #666;\n  font-size: 13px;\n}\n.follow-page .pending-item[data-v-2da631cb] {\n  margin-bottom: 4px;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n.follow-page .follow-actions[data-v-2da631cb] {\n  display: flex;\n  gap: 8px;\n  padding: 0 16px 12px;\n  flex-wrap: wrap;\n}\n.van-cell__title[data-v-2da631cb] {\n  text-align: left;\n}\n.van-cell-group__title--inset[data-v-2da631cb] {\n  text-align: left;\n}\n.van-button--default[data-v-2da631cb] {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled[data-v-2da631cb] {\n  opacity: 1 !important;\n}\n.van-tag--default[data-v-2da631cb] {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon[data-v-2da631cb] {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light[data-v-2da631cb] {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow[data-v-2da631cb] {\n  color: #d9d9d9 !important;\n}\n.van-popover__content[data-v-2da631cb] {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -763,6 +760,7 @@ const configDefault = {
     lastUpdateCount: 0
   },
   followList: [],
+  followSearchWebNames: [],
   bangumiMetadataCache: {},
   // downHistory: '[]', // 废弃
   userWebInfo: [],
@@ -847,7 +845,9 @@ const getStorage = (key) => {
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "EQ": () => (/* binding */ getSearchableWebList),
 /* harmony export */   "HL": () => (/* binding */ matchWeb),
+/* harmony export */   "Iw": () => (/* binding */ searchComicsAcrossWebs),
 /* harmony export */   "KK": () => (/* binding */ getComicInfoFromHtml),
 /* harmony export */   "Ni": () => (/* binding */ searchFunTemplate_1),
 /* harmony export */   "Os": () => (/* binding */ comicsWebInfo),
@@ -856,7 +856,7 @@ const getStorage = (key) => {
 /* harmony export */   "jL": () => (/* binding */ findWebByUrl),
 /* harmony export */   "lb": () => (/* binding */ getCurrentComicMeta)
 /* harmony export */ });
-/* unused harmony exports getAuthorNameFromDom, getChapterListFromRoot */
+/* unused harmony exports searchComicOnWeb, getAuthorNameFromDom, getChapterListFromRoot */
 /* harmony import */ var _utils_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(624);
 /* harmony import */ var _config_setup__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(393);
 /* eslint-disable no-undef */
@@ -924,6 +924,23 @@ const searchFunTemplate_1 = async(data, keyword) => {
   return new Promise((resolve, reject) => {
     resolve(searchList)
   })
+}
+
+const searchComicOnWeb = async(webRule, keyword) => {
+  const currentWebRule = normalizeWebRule(webRule)
+  if (!currentWebRule?.searchTemplate_1 && !currentWebRule?.searchFun) {
+    return []
+  }
+
+  if (currentWebRule.searchTemplate_1) {
+    return searchFunTemplate_1(currentWebRule, keyword)
+  }
+
+  if (currentWebRule.searchFun) {
+    return currentWebRule.searchFun(keyword)
+  }
+
+  return []
 }
 
 const comicsWebInfo = [
@@ -2181,12 +2198,54 @@ const normalizeWebRule = (webRule) => {
     window.request = _utils_index__WEBPACK_IMPORTED_MODULE_0__/* .request */ .WY
     webRule.getImgs = funSplicing(webRule.getImgs)
   }
+  if (webRule && typeof webRule.searchFun === 'string') {
+    window.request = _utils_index__WEBPACK_IMPORTED_MODULE_0__/* .request */ .WY
+    webRule.searchFun = funSplicing(webRule.searchFun)
+  }
   return webRule
+}
+
+const getAllWebList = () => {
+  return comicsWebInfo.concat(getUserWebList()).map(item => normalizeWebRule(item))
+}
+
+const getSearchableWebList = () => {
+  return getAllWebList().filter(item => item.searchTemplate_1 || item.searchFun)
+}
+
+const searchComicsAcrossWebs = async(keyword, selectedWebNames = []) => {
+  const result = []
+  const selectedWebNameSet = new Set((selectedWebNames || []).filter(Boolean))
+  const webList = getSearchableWebList().filter((item) => {
+    if (selectedWebNameSet.size === 0) {
+      return true
+    }
+    return selectedWebNameSet.has(item.webName)
+  })
+  for (let i = 0; i < webList.length; i++) {
+    const webRule = webList[i]
+    try {
+      const findres = await searchComicOnWeb(webRule, keyword)
+      result.push({
+        webName: webRule.webName,
+        webRule,
+        findres: Array.isArray(findres) ? findres : []
+      })
+    } catch (error) {
+      result.push({
+        webName: webRule.webName,
+        webRule,
+        findres: [],
+        error
+      })
+    }
+  }
+  return result
 }
 
 const findWebByUrl = (url) => {
   const hname = (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .getdomain */ .m1)(url)
-  const allWebList = comicsWebInfo.concat(getUserWebList())
+  const allWebList = getAllWebList()
 
   for (let i = 0; i < allWebList.length; i++) {
     const webRule = allWebList[i]
@@ -4328,6 +4387,51 @@ const dedupeChapters = (chapterList) => {
   return result
 }
 
+const normalizeCompareText = (value) => {
+  return (0,utils/* trimSpecial */.Sc)(String(value || ''))
+    .toLowerCase()
+    .replace(/[【】\[\]()（）「」『』《》〈〉]/g, '')
+    .replace(/[·•:：]/g, '')
+    .replace(/\s+/g, '')
+}
+
+const scoreSearchResultName = (keyword, resultName) => {
+  const target = normalizeCompareText(keyword)
+  const current = normalizeCompareText(resultName)
+  if (!target || !current) {
+    return 0
+  }
+  if (target === current) {
+    return 120
+  }
+  if (current.includes(target) || target.includes(current)) {
+    return 80
+  }
+  let prefixLen = 0
+  while (prefixLen < target.length && prefixLen < current.length && target[prefixLen] === current[prefixLen]) {
+    prefixLen++
+  }
+  if (prefixLen >= 2) {
+    return 30 + prefixLen
+  }
+  return 0
+}
+
+const pickBestSearchResult = (keyword, resultList = []) => {
+  const candidates = (resultList || [])
+    .map(item => ({
+      ...item,
+      _score: scoreSearchResultName(keyword, item.name)
+    }))
+    .filter(item => item._score > 0)
+    .sort((a, b) => b._score - a._score)
+
+  if (candidates.length === 0 || candidates[0]._score < 60) {
+    return null
+  }
+  return candidates[0]
+}
+
 const mergeKnownUrl = (item, chapterUrls) => {
   const urlSet = new Set(item.knownChapterUrls || [])
   chapterUrls.forEach(url => urlSet.add(url))
@@ -4442,6 +4546,91 @@ const getFollowInfoByRequest = async(webRule, comicPageUrl, fallbackComicName = 
 
   const { responseText } = await (0,utils/* request */.WY)({ method: 'get', url: comicPageUrl, headers: webRule.headers || '' })
   return (0,comics/* getComicInfoFromHtml */.KK)(responseText, webRule, comicPageUrl)
+}
+
+const searchFollowCandidatesByKeyword = async(keyword, selectedWebNames = []) => {
+  const currentKeyword = (0,utils/* trimSpecial */.Sc)(keyword || '')
+  if (!currentKeyword) {
+    return {
+      candidates: [],
+      skippedSites: []
+    }
+  }
+
+  const searchResultList = await (0,comics/* searchComicsAcrossWebs */.Iw)(currentKeyword, selectedWebNames)
+  const candidates = []
+  const skippedSites = []
+
+  for (let i = 0; i < searchResultList.length; i++) {
+    const item = searchResultList[i]
+    const bestResult = pickBestSearchResult(currentKeyword, item.findres || [])
+    if (!bestResult?.url) {
+      skippedSites.push({
+        webName: item.webName,
+        reason: item.error ? 'search-error' : 'no-match'
+      })
+      continue
+    }
+
+    try {
+      const info = await getFollowInfoByRequest(item.webRule || (0,comics/* findWebByUrl */.jL)(bestResult.url), bestResult.url, currentKeyword)
+      const chapterList = dedupeChapters(info.chapters || [])
+      if (chapterList.length === 0) {
+        skippedSites.push({
+          webName: item.webName,
+          reason: 'no-chapters'
+        })
+        continue
+      }
+      candidates.push({
+        key: `${item.webName}__${bestResult.url}`,
+        comicName: info.comicName || bestResult.name || currentKeyword,
+        authorName: info.authorName || '',
+        webName: item.webName,
+        comicPageUrl: bestResult.url,
+        chapters: chapterList,
+        seriesChapterCount: chapterList.length,
+        latestChapterName: chapterList[0]?.chapterName || '',
+        latestChapterUrl: chapterList[0]?.url || '',
+        matchedName: bestResult.name || ''
+      })
+    } catch (error) {
+      skippedSites.push({
+        webName: item.webName,
+        reason: 'fetch-error',
+        error
+      })
+    }
+  }
+
+  return {
+    candidates,
+    skippedSites
+  }
+}
+
+const addFollowCandidates = (candidateList = []) => {
+  const addedItems = []
+  candidateList.forEach((candidate) => {
+    const followItem = upsertFollowItem({
+      comicName: candidate.comicName,
+      authorName: candidate.authorName,
+      webName: candidate.webName,
+      comicPageUrl: candidate.comicPageUrl,
+      chapters: candidate.chapters || []
+    })
+    addedItems.push(followItem)
+  })
+  return addedItems
+}
+
+const addFollowItemsByKeyword = async(keyword, selectedWebNames = []) => {
+  const result = await searchFollowCandidatesByKeyword(keyword, selectedWebNames)
+  const matchedItems = addFollowCandidates(result.candidates)
+  return {
+    matchedItems,
+    skippedSites: result.skippedSites
+  }
 }
 
 const getFollowList = () => {
@@ -5977,7 +6166,7 @@ const normalizeText = (value) => {
     .trim()
 }
 
-const normalizeCompareText = (value) => {
+const bangumi_normalizeCompareText = (value) => {
   return normalizeText(value)
     .toLowerCase()
     .replace(/\s+/g, '')
@@ -5991,9 +6180,9 @@ const normalizeKeyword = (value) => {
 
 const buildCacheKey = (downloadItem) => {
   return [
-    normalizeCompareText(downloadItem.comicName),
-    normalizeCompareText(downloadItem.authorName),
-    normalizeCompareText(downloadItem.webName)
+    bangumi_normalizeCompareText(downloadItem.comicName),
+    bangumi_normalizeCompareText(downloadItem.authorName),
+    bangumi_normalizeCompareText(downloadItem.webName)
   ].join('::')
 }
 
@@ -6211,7 +6400,7 @@ const getPlatformPenalty = (subject) => {
 }
 
 const hasAuthorMatch = (subject, downloadItem) => {
-  const authorName = normalizeCompareText(downloadItem.authorName)
+  const authorName = bangumi_normalizeCompareText(downloadItem.authorName)
   if (!authorName) {
     return false
   }
@@ -6219,16 +6408,16 @@ const hasAuthorMatch = (subject, downloadItem) => {
     ...pickInfoboxTexts(subject, ['作者', '作画', '作畫', '原作', '脚本', '脚本协力', '漫畫']),
     ...(subject._personNames || [])
   ]
-  return authorFields.some(item => normalizeCompareText(item).includes(authorName) || authorName.includes(normalizeCompareText(item)))
+  return authorFields.some(item => bangumi_normalizeCompareText(item).includes(authorName) || authorName.includes(bangumi_normalizeCompareText(item)))
 }
 
 const scoreBangumiSubject = (subject, downloadItem) => {
-  const targetTitle = normalizeCompareText(downloadItem.comicName)
+  const targetTitle = bangumi_normalizeCompareText(downloadItem.comicName)
   const compareTitles = dedupeList([subject?.name_cn, subject?.name, ...buildAliasList(subject)])
   let score = 0
 
   compareTitles.forEach((title) => {
-    const value = normalizeCompareText(title)
+    const value = bangumi_normalizeCompareText(title)
     if (!value) {
       return
     }
@@ -11003,6 +11192,309 @@ var followvue_type_template_id_2da631cb_scoped_true_render = function () {
         1
       ),
       _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "follow-keyword-toolbar" },
+        [
+          _c("van-field", {
+            attrs: {
+              size: "small",
+              placeholder: "输入漫画名，按选中站点搜索追更",
+            },
+            nativeOn: {
+              keyup: function ($event) {
+                if (
+                  !$event.type.indexOf("key") &&
+                  _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                ) {
+                  return null
+                }
+                return _vm.searchByKeyword.apply(null, arguments)
+              },
+            },
+            model: {
+              value: _vm.keywordFollowName,
+              callback: function ($$v) {
+                _vm.keywordFollowName = $$v
+              },
+              expression: "keywordFollowName",
+            },
+          }),
+          _vm._v(" "),
+          _c(
+            "van-button",
+            {
+              attrs: {
+                size: "small",
+                round: "",
+                type: "info",
+                loading: _vm.addingKeywordFollow,
+              },
+              on: { click: _vm.searchByKeyword },
+            },
+            [_vm._v("开始搜索")]
+          ),
+          _vm._v(" "),
+          _c(
+            "van-button",
+            {
+              attrs: { size: "small", round: "", plain: "" },
+              on: { click: _vm.toggleScanSitePanel },
+            },
+            [_vm._v(_vm._s(_vm.showScanSitePanel ? "收起站点" : "扫描站点"))]
+          ),
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _vm.showScanSitePanel
+        ? _c(
+            "div",
+            { staticClass: "follow-site-panel" },
+            [
+              _c("div", { staticClass: "follow-panel-header" }, [
+                _c("span", [_vm._v("扫描站点")]),
+                _vm._v(" "),
+                _c("span", [
+                  _vm._v(
+                    _vm._s(_vm.selectedScanWebNames.length) +
+                      "/" +
+                      _vm._s(_vm.searchableWebOptions.length)
+                  ),
+                ]),
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "follow-site-actions" },
+                [
+                  _c(
+                    "van-button",
+                    {
+                      attrs: { size: "mini" },
+                      on: { click: _vm.selectAllScanSites },
+                    },
+                    [_vm._v("全选")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "van-button",
+                    {
+                      attrs: { size: "mini" },
+                      on: { click: _vm.clearScanSites },
+                    },
+                    [_vm._v("清空")]
+                  ),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "van-checkbox-group",
+                {
+                  on: { change: _vm.saveScanSites },
+                  model: {
+                    value: _vm.selectedScanWebNames,
+                    callback: function ($$v) {
+                      _vm.selectedScanWebNames = $$v
+                    },
+                    expression: "selectedScanWebNames",
+                  },
+                },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "follow-site-grid" },
+                    _vm._l(_vm.searchableWebOptions, function (item) {
+                      return _c(
+                        "van-checkbox",
+                        {
+                          key: item.webName,
+                          staticClass: "follow-site-check",
+                          attrs: { name: item.webName },
+                        },
+                        [
+                          _vm._v(
+                            "\n          " + _vm._s(item.webName) + "\n        "
+                          ),
+                        ]
+                      )
+                    }),
+                    1
+                  ),
+                ]
+              ),
+            ],
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.searchCandidates.length > 0
+        ? _c(
+            "div",
+            { staticClass: "follow-result-panel" },
+            [
+              _c("div", { staticClass: "follow-panel-header" }, [
+                _c("span", [_vm._v("匹配结果")]),
+                _vm._v(" "),
+                _c("span", [
+                  _vm._v(
+                    _vm._s(_vm.selectedCandidateKeys.length) +
+                      "/" +
+                      _vm._s(_vm.searchCandidates.length)
+                  ),
+                ]),
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "follow-site-actions" },
+                [
+                  _c(
+                    "van-button",
+                    {
+                      attrs: { size: "mini" },
+                      on: { click: _vm.selectAllCandidates },
+                    },
+                    [_vm._v("全选")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "van-button",
+                    {
+                      attrs: { size: "mini" },
+                      on: { click: _vm.clearCandidateSelection },
+                    },
+                    [_vm._v("清空")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "van-button",
+                    {
+                      attrs: { size: "mini", type: "primary" },
+                      on: { click: _vm.addSelectedCandidates },
+                    },
+                    [_vm._v("加入选中站点")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "van-button",
+                    {
+                      attrs: { size: "mini", plain: "" },
+                      on: { click: _vm.clearSearchCandidates },
+                    },
+                    [_vm._v("取消结果")]
+                  ),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "van-checkbox-group",
+                {
+                  model: {
+                    value: _vm.selectedCandidateKeys,
+                    callback: function ($$v) {
+                      _vm.selectedCandidateKeys = $$v
+                    },
+                    expression: "selectedCandidateKeys",
+                  },
+                },
+                [
+                  _c(
+                    "van-cell-group",
+                    { attrs: { inset: "" } },
+                    _vm._l(_vm.searchCandidates, function (item) {
+                      return _c("van-cell", {
+                        key: item.key,
+                        staticClass: "candidate-cell",
+                        scopedSlots: _vm._u(
+                          [
+                            {
+                              key: "title",
+                              fn: function () {
+                                return [
+                                  _c(
+                                    "van-checkbox",
+                                    { attrs: { name: item.key } },
+                                    [_vm._v(_vm._s(item.webName))]
+                                  ),
+                                ]
+                              },
+                              proxy: true,
+                            },
+                            {
+                              key: "label",
+                              fn: function () {
+                                return [
+                                  _c(
+                                    "div",
+                                    { staticClass: "candidate-label" },
+                                    [_vm._v(_vm._s(item.comicName))]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "candidate-label candidate-label--sub",
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n              " +
+                                          _vm._s(
+                                            item.latestChapterName ||
+                                              "共 " +
+                                                item.seriesChapterCount +
+                                                " 话"
+                                          ) +
+                                          "\n            "
+                                      ),
+                                    ]
+                                  ),
+                                ]
+                              },
+                              proxy: true,
+                            },
+                            {
+                              key: "right-icon",
+                              fn: function () {
+                                return [
+                                  _c(
+                                    "van-button",
+                                    {
+                                      attrs: { size: "mini", plain: "" },
+                                      on: {
+                                        click: function ($event) {
+                                          $event.stopPropagation()
+                                          return _vm.openComic(
+                                            item.comicPageUrl
+                                          )
+                                        },
+                                      },
+                                    },
+                                    [_vm._v("打开")]
+                                  ),
+                                ]
+                              },
+                              proxy: true,
+                            },
+                          ],
+                          null,
+                          true
+                        ),
+                      })
+                    }),
+                    1
+                  ),
+                ],
+                1
+              ),
+            ],
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
       _vm.followList.length === 0
         ? _c("van-empty", { attrs: { description: "追更列表为空" } }, [
             _c("p", { staticClass: "follow-hint" }, [
@@ -11253,6 +11745,79 @@ followvue_type_template_id_2da631cb_scoped_true_render._withStripped = true
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -11265,7 +11830,15 @@ followvue_type_template_id_2da631cb_scoped_true_render._withStripped = true
   data() {
     return {
       followList: [],
-      checking: false
+      checking: false,
+      keywordFollowName: '',
+      addingKeywordFollow: false,
+      showScanSitePanel: false,
+      searchableWebOptions: [],
+      selectedScanWebNames: [],
+      searchCandidates: [],
+      selectedCandidateKeys: [],
+      lastSkippedSiteCount: 0
     }
   },
   computed: {
@@ -11275,7 +11848,13 @@ followvue_type_template_id_2da631cb_scoped_true_render._withStripped = true
   },
   mounted() {
     this.refreshList()
+    this.initSearchableWebOptions()
     this.$bus.$on('refreshFollowList', this.refreshList)
+    this.$bus.$on('getComicName', (comicName) => {
+      if (!this.keywordFollowName && comicName && comicName !== '------') {
+        this.keywordFollowName = comicName
+      }
+    })
     if (canAutoCheckFollow()) {
       this.autoCheckOnLoad()
     }
@@ -11283,6 +11862,30 @@ followvue_type_template_id_2da631cb_scoped_true_render._withStripped = true
   methods: {
     refreshList() {
       this.followList = getFollowList()
+    },
+    initSearchableWebOptions() {
+      this.searchableWebOptions = (0,comics/* getSearchableWebList */.EQ)().map(item => ({
+        webName: item.webName
+      }))
+      const savedWebNames = (0,setup/* getStorage */.cF)('followSearchWebNames') || []
+      const defaultWebNames = this.searchableWebOptions.map(item => item.webName)
+      const matchedWebNames = defaultWebNames.filter(webName => savedWebNames.includes(webName))
+      this.selectedScanWebNames = matchedWebNames.length > 0 ? matchedWebNames : defaultWebNames
+      this.saveScanSites()
+    },
+    saveScanSites() {
+      (0,setup/* setStorage */.po)('followSearchWebNames', this.selectedScanWebNames)
+    },
+    toggleScanSitePanel() {
+      this.showScanSitePanel = !this.showScanSitePanel
+    },
+    selectAllScanSites() {
+      this.selectedScanWebNames = this.searchableWebOptions.map(item => item.webName)
+      this.saveScanSites()
+    },
+    clearScanSites() {
+      this.selectedScanWebNames = []
+      this.saveScanSites()
     },
     formatCheckTime(time) {
       if (!time) {
@@ -11295,6 +11898,74 @@ followvue_type_template_id_2da631cb_scoped_true_render._withStripped = true
     },
     async autoCheckOnLoad() {
       await this.checkAll(true)
+    },
+    async searchByKeyword() {
+      const keyword = (this.keywordFollowName || '').trim()
+      if (keyword.length < 2) {
+        (0,external_vant_.Toast)({
+          message: '漫画名至少2个字符',
+          getContainer: '.card',
+          position: 'bottom'
+        })
+        return
+      }
+      if (this.selectedScanWebNames.length === 0) {
+        (0,external_vant_.Toast)({
+          message: '请先选择要扫描的站点',
+          getContainer: '.card',
+          position: 'bottom'
+        })
+        return
+      }
+      this.addingKeywordFollow = true
+      try {
+        const result = await searchFollowCandidatesByKeyword(keyword, this.selectedScanWebNames)
+        this.searchCandidates = result.candidates
+        this.selectedCandidateKeys = result.candidates.map(item => item.key)
+        this.lastSkippedSiteCount = result.skippedSites.length
+        const matchCount = result.candidates.length
+        const skipCount = result.skippedSites.length
+        ;(0,external_vant_.Toast)({
+          message: matchCount > 0
+            ? `找到 ${matchCount} 个候选站点${skipCount > 0 ? `，未命中 ${skipCount} 个站点` : ''}`
+            : '没有找到可加入追更的站点',
+          getContainer: '.card',
+          position: 'bottom'
+        })
+      } finally {
+        this.addingKeywordFollow = false
+      }
+    },
+    selectAllCandidates() {
+      this.selectedCandidateKeys = this.searchCandidates.map(item => item.key)
+    },
+    clearCandidateSelection() {
+      this.selectedCandidateKeys = []
+    },
+    clearSearchCandidates() {
+      this.searchCandidates = []
+      this.selectedCandidateKeys = []
+      this.lastSkippedSiteCount = 0
+    },
+    addSelectedCandidates() {
+      const selectedCandidates = this.searchCandidates.filter(item => this.selectedCandidateKeys.includes(item.key))
+      if (selectedCandidates.length === 0) {
+        (0,external_vant_.Toast)({
+          message: '请先勾选要保留的站点',
+          getContainer: '.card',
+          position: 'bottom'
+        })
+        return
+      }
+      const skippedSiteCount = this.lastSkippedSiteCount
+      const addedItems = addFollowCandidates(selectedCandidates)
+      this.refreshList()
+      this.clearSearchCandidates()
+      ;(0,external_vant_.Toast)({
+        message: `已加入 ${addedItems.length} 个站点${skippedSiteCount > 0 ? `，未命中 ${skippedSiteCount} 个站点` : ''}`,
+        getContainer: '.card',
+        position: 'bottom'
+      })
     },
     async checkAll(silent = false) {
       this.checking = true

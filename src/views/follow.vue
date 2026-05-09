@@ -5,6 +5,79 @@
       <van-button size="small" round :disabled="!hasPendingChapters" @click="downloadAllPending">下载全部更新</van-button>
     </div>
 
+    <div class="follow-keyword-toolbar">
+      <van-field
+        v-model="keywordFollowName"
+        size="small"
+        placeholder="输入漫画名，按选中站点搜索追更"
+        @keyup.enter.native="searchByKeyword"
+      />
+      <van-button size="small" round type="info" :loading="addingKeywordFollow" @click="searchByKeyword">开始搜索</van-button>
+      <van-button size="small" round plain @click="toggleScanSitePanel">{{ showScanSitePanel ? '收起站点' : '扫描站点' }}</van-button>
+    </div>
+
+    <div v-if="showScanSitePanel" class="follow-site-panel">
+      <div class="follow-panel-header">
+        <span>扫描站点</span>
+        <span>{{ selectedScanWebNames.length }}/{{ searchableWebOptions.length }}</span>
+      </div>
+
+      <div class="follow-site-actions">
+        <van-button size="mini" @click="selectAllScanSites">全选</van-button>
+        <van-button size="mini" @click="clearScanSites">清空</van-button>
+      </div>
+
+      <van-checkbox-group v-model="selectedScanWebNames" @change="saveScanSites">
+        <div class="follow-site-grid">
+          <van-checkbox
+            v-for="item in searchableWebOptions"
+            :key="item.webName"
+            :name="item.webName"
+            class="follow-site-check"
+          >
+            {{ item.webName }}
+          </van-checkbox>
+        </div>
+      </van-checkbox-group>
+    </div>
+
+    <div v-if="searchCandidates.length > 0" class="follow-result-panel">
+      <div class="follow-panel-header">
+        <span>匹配结果</span>
+        <span>{{ selectedCandidateKeys.length }}/{{ searchCandidates.length }}</span>
+      </div>
+
+      <div class="follow-site-actions">
+        <van-button size="mini" @click="selectAllCandidates">全选</van-button>
+        <van-button size="mini" @click="clearCandidateSelection">清空</van-button>
+        <van-button size="mini" type="primary" @click="addSelectedCandidates">加入选中站点</van-button>
+        <van-button size="mini" plain @click="clearSearchCandidates">取消结果</van-button>
+      </div>
+
+      <van-checkbox-group v-model="selectedCandidateKeys">
+        <van-cell-group inset>
+          <van-cell
+            v-for="item in searchCandidates"
+            :key="item.key"
+            class="candidate-cell"
+          >
+            <template #title>
+              <van-checkbox :name="item.key">{{ item.webName }}</van-checkbox>
+            </template>
+            <template #label>
+              <div class="candidate-label">{{ item.comicName }}</div>
+              <div class="candidate-label candidate-label--sub">
+                {{ item.latestChapterName || `共 ${item.seriesChapterCount} 话` }}
+              </div>
+            </template>
+            <template #right-icon>
+              <van-button size="mini" plain @click.stop="openComic(item.comicPageUrl)">打开</van-button>
+            </template>
+          </van-cell>
+        </van-cell-group>
+      </van-checkbox-group>
+    </div>
+
     <van-empty v-if="followList.length === 0" description="追更列表为空">
       <p class="follow-hint">在“加载”页点击“加入追更”即可收藏当前漫画。</p>
     </van-empty>
@@ -59,15 +132,17 @@
 <script>
 import { Dialog, Toast } from 'vant'
 
-import { getStorage } from '@/config/setup'
-import { findWebByUrl } from '@/utils/comics'
+import { getStorage, setStorage } from '@/config/setup'
+import { findWebByUrl, getSearchableWebList } from '@/utils/comics'
 import {
+  addFollowCandidates,
   canAutoCheckFollow,
   checkAllFollowItems,
   checkFollowItem,
   clearPendingChapters,
   getFollowList,
   removeFollowItem,
+  searchFollowCandidatesByKeyword,
   updateFollowItem
 } from '@/utils/follow'
 
@@ -76,7 +151,15 @@ export default {
   data() {
     return {
       followList: [],
-      checking: false
+      checking: false,
+      keywordFollowName: '',
+      addingKeywordFollow: false,
+      showScanSitePanel: false,
+      searchableWebOptions: [],
+      selectedScanWebNames: [],
+      searchCandidates: [],
+      selectedCandidateKeys: [],
+      lastSkippedSiteCount: 0
     }
   },
   computed: {
@@ -86,7 +169,13 @@ export default {
   },
   mounted() {
     this.refreshList()
+    this.initSearchableWebOptions()
     this.$bus.$on('refreshFollowList', this.refreshList)
+    this.$bus.$on('getComicName', (comicName) => {
+      if (!this.keywordFollowName && comicName && comicName !== '------') {
+        this.keywordFollowName = comicName
+      }
+    })
     if (canAutoCheckFollow()) {
       this.autoCheckOnLoad()
     }
@@ -94,6 +183,30 @@ export default {
   methods: {
     refreshList() {
       this.followList = getFollowList()
+    },
+    initSearchableWebOptions() {
+      this.searchableWebOptions = getSearchableWebList().map(item => ({
+        webName: item.webName
+      }))
+      const savedWebNames = getStorage('followSearchWebNames') || []
+      const defaultWebNames = this.searchableWebOptions.map(item => item.webName)
+      const matchedWebNames = defaultWebNames.filter(webName => savedWebNames.includes(webName))
+      this.selectedScanWebNames = matchedWebNames.length > 0 ? matchedWebNames : defaultWebNames
+      this.saveScanSites()
+    },
+    saveScanSites() {
+      setStorage('followSearchWebNames', this.selectedScanWebNames)
+    },
+    toggleScanSitePanel() {
+      this.showScanSitePanel = !this.showScanSitePanel
+    },
+    selectAllScanSites() {
+      this.selectedScanWebNames = this.searchableWebOptions.map(item => item.webName)
+      this.saveScanSites()
+    },
+    clearScanSites() {
+      this.selectedScanWebNames = []
+      this.saveScanSites()
     },
     formatCheckTime(time) {
       if (!time) {
@@ -106,6 +219,74 @@ export default {
     },
     async autoCheckOnLoad() {
       await this.checkAll(true)
+    },
+    async searchByKeyword() {
+      const keyword = (this.keywordFollowName || '').trim()
+      if (keyword.length < 2) {
+        Toast({
+          message: '漫画名至少2个字符',
+          getContainer: '.card',
+          position: 'bottom'
+        })
+        return
+      }
+      if (this.selectedScanWebNames.length === 0) {
+        Toast({
+          message: '请先选择要扫描的站点',
+          getContainer: '.card',
+          position: 'bottom'
+        })
+        return
+      }
+      this.addingKeywordFollow = true
+      try {
+        const result = await searchFollowCandidatesByKeyword(keyword, this.selectedScanWebNames)
+        this.searchCandidates = result.candidates
+        this.selectedCandidateKeys = result.candidates.map(item => item.key)
+        this.lastSkippedSiteCount = result.skippedSites.length
+        const matchCount = result.candidates.length
+        const skipCount = result.skippedSites.length
+        Toast({
+          message: matchCount > 0
+            ? `找到 ${matchCount} 个候选站点${skipCount > 0 ? `，未命中 ${skipCount} 个站点` : ''}`
+            : '没有找到可加入追更的站点',
+          getContainer: '.card',
+          position: 'bottom'
+        })
+      } finally {
+        this.addingKeywordFollow = false
+      }
+    },
+    selectAllCandidates() {
+      this.selectedCandidateKeys = this.searchCandidates.map(item => item.key)
+    },
+    clearCandidateSelection() {
+      this.selectedCandidateKeys = []
+    },
+    clearSearchCandidates() {
+      this.searchCandidates = []
+      this.selectedCandidateKeys = []
+      this.lastSkippedSiteCount = 0
+    },
+    addSelectedCandidates() {
+      const selectedCandidates = this.searchCandidates.filter(item => this.selectedCandidateKeys.includes(item.key))
+      if (selectedCandidates.length === 0) {
+        Toast({
+          message: '请先勾选要保留的站点',
+          getContainer: '.card',
+          position: 'bottom'
+        })
+        return
+      }
+      const skippedSiteCount = this.lastSkippedSiteCount
+      const addedItems = addFollowCandidates(selectedCandidates)
+      this.refreshList()
+      this.clearSearchCandidates()
+      Toast({
+        message: `已加入 ${addedItems.length} 个站点${skippedSiteCount > 0 ? `，未命中 ${skippedSiteCount} 个站点` : ''}`,
+        getContainer: '.card',
+        position: 'bottom'
+      })
     },
     async checkAll(silent = false) {
       this.checking = true
@@ -207,6 +388,67 @@ export default {
     display: flex;
     gap: 10px;
     margin-bottom: 12px;
+  }
+
+  .follow-keyword-toolbar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+    align-items: center;
+  }
+
+  .follow-site-panel,
+  .follow-result-panel {
+    padding: 12px;
+    margin-bottom: 12px;
+    background: #fff;
+    border-radius: 12px;
+  }
+
+  .follow-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    color: #333;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .follow-site-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+
+  .follow-site-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px 12px;
+  }
+
+  .follow-site-check {
+    margin: 0;
+  }
+
+  .candidate-cell {
+    /deep/ .van-cell__title {
+      flex: 1;
+      min-width: 0;
+    }
+  }
+
+  .candidate-label {
+    margin-top: 4px;
+    color: #666;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .candidate-label--sub {
+    font-size: 12px;
   }
 
   .follow-hint {

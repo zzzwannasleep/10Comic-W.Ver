@@ -65,6 +65,23 @@ export const searchFunTemplate_1 = async(data, keyword) => {
   })
 }
 
+export const searchComicOnWeb = async(webRule, keyword) => {
+  const currentWebRule = normalizeWebRule(webRule)
+  if (!currentWebRule?.searchTemplate_1 && !currentWebRule?.searchFun) {
+    return []
+  }
+
+  if (currentWebRule.searchTemplate_1) {
+    return searchFunTemplate_1(currentWebRule, keyword)
+  }
+
+  if (currentWebRule.searchFun) {
+    return currentWebRule.searchFun(keyword)
+  }
+
+  return []
+}
+
 export const comicsWebInfo = [
   {
     domain: 'manhua.idmzj.com',
@@ -1320,12 +1337,54 @@ const normalizeWebRule = (webRule) => {
     window.request = request
     webRule.getImgs = funSplicing(webRule.getImgs)
   }
+  if (webRule && typeof webRule.searchFun === 'string') {
+    window.request = request
+    webRule.searchFun = funSplicing(webRule.searchFun)
+  }
   return webRule
+}
+
+const getAllWebList = () => {
+  return comicsWebInfo.concat(getUserWebList()).map(item => normalizeWebRule(item))
+}
+
+export const getSearchableWebList = () => {
+  return getAllWebList().filter(item => item.searchTemplate_1 || item.searchFun)
+}
+
+export const searchComicsAcrossWebs = async(keyword, selectedWebNames = []) => {
+  const result = []
+  const selectedWebNameSet = new Set((selectedWebNames || []).filter(Boolean))
+  const webList = getSearchableWebList().filter((item) => {
+    if (selectedWebNameSet.size === 0) {
+      return true
+    }
+    return selectedWebNameSet.has(item.webName)
+  })
+  for (let i = 0; i < webList.length; i++) {
+    const webRule = webList[i]
+    try {
+      const findres = await searchComicOnWeb(webRule, keyword)
+      result.push({
+        webName: webRule.webName,
+        webRule,
+        findres: Array.isArray(findres) ? findres : []
+      })
+    } catch (error) {
+      result.push({
+        webName: webRule.webName,
+        webRule,
+        findres: [],
+        error
+      })
+    }
+  }
+  return result
 }
 
 export const findWebByUrl = (url) => {
   const hname = getdomain(url)
-  const allWebList = comicsWebInfo.concat(getUserWebList())
+  const allWebList = getAllWebList()
 
   for (let i = 0; i < allWebList.length; i++) {
     const webRule = allWebList[i]

@@ -39,6 +39,7 @@ const configDefault = {
     lastUpdateCount: 0
   },
   followList: [],
+  followSearchWebNames: [],
   bangumiMetadataCache: {},
   // downHistory: '[]', // 废弃
   userWebInfo: [],
