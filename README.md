@@ -13,7 +13,15 @@
   请在浏览器安装[Tampermonkey](https://tampermonkey.net/)插件
 
 - 安装脚本
-  安装地址：[10图漫](https://greasyfork.org/zh-CN/scripts/447819)
+  - GitHub 自动构建安装：
+    <!-- AUTO_USERSCRIPT_LINK:start -->
+[安装到 Tampermonkey / ScriptCat](https://raw.githubusercontent.com/zzzwannasleep/10Comic-W.Ver/main/release/10comic.user.js)
+<!-- AUTO_USERSCRIPT_LINK:end -->
+  - GitHub 发布文件：
+    <!-- AUTO_USERSCRIPT_FILE:start -->
+[release/10comic.user.js](https://github.com/zzzwannasleep/10Comic-W.Ver/blob/main/release/10comic.user.js)
+<!-- AUTO_USERSCRIPT_FILE:end -->
+  - GreasyFork 地址：[10图漫](https://greasyfork.org/zh-CN/scripts/447819)
 
 - 使用时可通过 快捷键 **Alt + V** 唤起界面
 - 更多使用说明见 [tampermonkey.md](https://github.com/journey3510/10Comic/blob/master/tampermonkey.md) 或 [greasyfork-10图漫](https://greasyfork.org/zh-CN/scripts/447819) 
@@ -54,6 +62,12 @@ npm run build
 可以在`.env`进行生产环境的配置，插件的版本号使用的是`package.json`的`version`版本号
 
 打包完成后，在`dist`目录下会生成`10comic.js`文件，再油猴新建脚本，把文件内容复制进行替换全部即可
+同时会生成可直接安装的 `release/10comic.user.js` 文件。
+
+如果推送到 GitHub 的 `main` 或 `master` 分支，Actions 会自动：
+1. 构建最新 userscript
+2. 更新 README 里的安装链接
+3. 提交 `release/10comic.user.js`
 <br /><br />
 
 

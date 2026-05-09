@@ -4,6 +4,10 @@
 // @version      __APP_VERSION__
 // @description  任意网页提供部分漫画网站搜索；漫画分章节下载(可直接下载/压缩下载/拼接下载)，可用于动漫之家、极速漫画、腾讯漫画、哔哩哔哩等35多个网站；对个别漫画网站修改阅读样式；可按需编写定义规则JSON导入以支持其他漫画网站
 // @author       journey3510
+__APP_HOMEPAGE_URL_LINE__
+__APP_SUPPORT_URL_LINE__
+__APP_UPDATE_URL_LINE__
+__APP_DOWNLOAD_URL_LINE__
 // @run-at       document-end
 // @grant        GM_getValue
 // @grant        GM_setValue

@@ -369,6 +369,129 @@
             </van-cell>
           </van-cell-group>
 
+          <van-cell-group title="压缩包与元数据" inset>
+            <van-cell
+              title-class="cellleftvalue"
+              value-class="cellrightvalue"
+              label="可用占位符: [站点名字][作者名][漫画名称][章节名称][章节序号][多少P]"
+              center
+            >
+              <template #title>
+                <span class="custom-title">压缩包命名模板</span>
+              </template>
+
+              <template #default>
+                <input
+                  v-model="zipNameTemplate"
+                  class="long-input"
+                  type="text"
+                  @blur="onChangeData('zipNameTemplate', zipNameTemplate)"
+                >
+              </template>
+            </van-cell>
+
+            <van-cell title-class="cellleftvalue" value-class="cellrightvalue" center>
+              <template #title>
+                <span class="custom-title">写入 ComicInfo.xml</span>
+              </template>
+
+              <template #default>
+                <van-checkbox
+                  v-model="metadataSettings.enableComicInfoXml"
+                  class="rightbutton"
+                  @change="onChangeData('metadataSettings', metadataSettings.enableComicInfoXml, 'enableComicInfoXml')"
+                />
+              </template>
+            </van-cell>
+
+            <van-cell
+              title-class="cellleftvalue"
+              value-class="cellrightvalue"
+              label="输出到漫画目录下，便于 Komga 识别系列信息"
+              center
+            >
+              <template #title>
+                <span class="custom-title">生成 series.json</span>
+              </template>
+
+              <template #default>
+                <van-checkbox
+                  v-model="metadataSettings.enableSeriesJson"
+                  class="rightbutton"
+                  @change="onChangeData('metadataSettings', metadataSettings.enableSeriesJson, 'enableSeriesJson')"
+                />
+              </template>
+            </van-cell>
+
+            <van-cell title-class="cellleftvalue" value-class="cellrightvalue" center>
+              <template #title>
+                <span class="custom-title">语言 ISO</span>
+              </template>
+
+              <template #default>
+                <input
+                  v-model="metadataSettings.languageISO"
+                  class="rightbutton"
+                  type="text"
+                  @blur="onChangeData('metadataSettings', metadataSettings.languageISO || 'zh', 'languageISO')"
+                >
+              </template>
+            </van-cell>
+
+            <van-cell title-class="cellleftvalue" value-class="cellrightvalue" center>
+              <template #title>
+                <span class="custom-title">出版社</span>
+              </template>
+
+              <template #default>
+                <input
+                  v-model="metadataSettings.publisher"
+                  class="long-input"
+                  type="text"
+                  @blur="onChangeData('metadataSettings', metadataSettings.publisher, 'publisher')"
+                >
+              </template>
+            </van-cell>
+          </van-cell-group>
+
+          <van-cell-group title="追更" inset>
+            <van-cell title-class="cellleftvalue" value-class="cellrightvalue" center>
+              <template #title>
+                <span class="custom-title">打开页面自动检查</span>
+              </template>
+
+              <template #default>
+                <van-checkbox
+                  v-model="followSettings.autoCheckOnLoad"
+                  class="rightbutton"
+                  @change="onChangeData('followSettings', followSettings.autoCheckOnLoad, 'autoCheckOnLoad')"
+                />
+              </template>
+            </van-cell>
+
+            <van-cell
+              title-class="cellleftvalue"
+              value-class="cellrightvalue"
+              label="避免频繁请求，单位分钟"
+              center
+            >
+              <template #title>
+                <span class="custom-title">检查冷却时间</span>
+              </template>
+
+              <template #default>
+                <input
+                  v-model="followSettings.checkCooldownMinutes"
+                  class="rightbutton"
+                  type="number"
+                  min="0"
+                  onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')"
+                  @blur="followCooldownBlur"
+                >
+              </template>
+            </van-cell>
+          </van-cell-group>
+
           <van-cell-group id="webpart" title="原网站阅读样式修改" inset>
             <van-cell
               title-class="cellleftvalue"
@@ -495,6 +618,17 @@ export default {
       maxPictureNum: 2,
       imgIndexBitNum: 3,
       imgDownRange: [1, -1],
+      zipNameTemplate: '',
+      metadataSettings: {
+        enableComicInfoXml: true,
+        enableSeriesJson: false,
+        languageISO: 'zh',
+        publisher: ''
+      },
+      followSettings: {
+        autoCheckOnLoad: true,
+        checkCooldownMinutes: 30
+      },
       imgSplicingFlag: false,
       //
       downTypePopover: false,
@@ -587,6 +721,14 @@ export default {
       this.imgDownRange = JSON.parse(JSON.stringify(this.imgDownRange))
       this.onChangeData('imgDownRange', this.imgDownRange)
     },
+    followCooldownBlur() {
+      let value = parseInt(this.followSettings.checkCooldownMinutes || 0)
+      if (Number.isNaN(value) || value < 0) {
+        value = 0
+      }
+      this.followSettings.checkCooldownMinutes = value
+      this.onChangeData('followSettings', value, 'checkCooldownMinutes')
+    },
     exeFun(flag, basic) {
       let rightSize = 100; let centerSize = 100
       basic.rightSize ? rightSize = basic.rightSize : ''
@@ -595,22 +737,25 @@ export default {
 
       basic.centerSize ? centerSize = basic.centerSize : ''
       basic.centerSize ? this.appCenterSize = basic.centerSize : ''
-      this.changeRightSize(centerSize)
+      this.changeCenterSize(centerSize)
 
       this.webImgSplicing(flag)
     },
     getAllData() {
       try {
-        this.maxChapterNum = GM_getValue('maxChapterNum')
-        this.maxPictureNum = GM_getValue('maxPictureNum')
-        this.downType = GM_getValue('downType')
-        this.maxSplicingHeight = GM_getValue('maxSplicingHeight')
-        this.imgIndexBitNum = GM_getValue('imgIndexBitNum')
-        this.imgSplicingFlag = GM_getValue('imgSplicingFlag')
+        this.maxChapterNum = GM_getValue('maxChapterNum') ?? this.maxChapterNum
+        this.maxPictureNum = GM_getValue('maxPictureNum') ?? this.maxPictureNum
+        this.downType = GM_getValue('downType') ?? this.downType
+        this.maxSplicingHeight = GM_getValue('maxSplicingHeight') ?? this.maxSplicingHeight
+        this.imgIndexBitNum = GM_getValue('imgIndexBitNum') ?? this.imgIndexBitNum
+        this.imgSplicingFlag = GM_getValue('imgSplicingFlag') ?? this.imgSplicingFlag
 
-        this.imgDownRange = GM_getValue('imgDownRange')
+        this.imgDownRange = GM_getValue('imgDownRange') ?? this.imgDownRange
+        this.zipNameTemplate = GM_getValue('zipNameTemplate') ?? this.zipNameTemplate
+        this.metadataSettings = GM_getValue('metadataSettings') ?? this.metadataSettings
+        this.followSettings = GM_getValue('followSettings') ?? this.followSettings
         //
-        this.appLoadDefault = GM_getValue('appLoadDefault')
+        this.appLoadDefault = GM_getValue('appLoadDefault') ?? this.appLoadDefault
       // eslint-disable-next-line no-empty
       } catch (error) {}
       // 获取数据后执行其他方法
@@ -756,6 +901,17 @@ export default {
         border-radius: 10px;
         text-align: center;
         background: #fff;
+      }
+
+      .long-input {
+        width: 190px;
+        height: 18px;
+        margin-right: 2px;
+        border: 1px #66ccff solid;
+        border-radius: 10px;
+        text-align: center;
+        background: #fff;
+        padding: 0 8px;
       }
 
       #max-splicing-height-input {

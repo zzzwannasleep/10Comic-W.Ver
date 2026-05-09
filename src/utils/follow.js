@@ -1,0 +1,322 @@
+import { getStorage, setStorage } from '@/config/setup'
+import { getComicInfoFromHtml, findWebByUrl } from '@/utils/comics'
+import { request } from '@/utils/index'
+import { trimSpecial } from '@/utils/index'
+
+const cloneData = (value) => {
+  return JSON.parse(JSON.stringify(value || []))
+}
+
+const dedupeChapters = (chapterList) => {
+  const urlSet = new Set()
+  const result = []
+  chapterList.forEach((item) => {
+    if (!item?.url || item.url === 'javascript:void();' || urlSet.has(item.url)) {
+      return
+    }
+    urlSet.add(item.url)
+    result.push(item)
+  })
+  return result
+}
+
+const mergeKnownUrl = (item, chapterUrls) => {
+  const urlSet = new Set(item.knownChapterUrls || [])
+  chapterUrls.forEach(url => urlSet.add(url))
+  item.knownChapterUrls = [...urlSet]
+}
+
+const getComicIdByUrl = (url) => {
+  const match = url.match(/detail\/(\D*)(\d*)/)
+  return match ? parseInt(match[2]) : null
+}
+
+const buildBilibiliChapters = (comicName, comicId, epList, webRule, comicPageUrl) => {
+  const allList = []
+  epList.forEach(element => {
+    allList.push({
+      comicName,
+      authorName: '',
+      comicPageUrl,
+      webName: webRule.webName,
+      chapterName: trimSpecial(`${element.short_title || ''} ${element.title || ''}`.trim()),
+      chapterNumStr: '',
+      downChapterName: '',
+      url: `${webRule.homepage}mc${comicId}/${element.id}`,
+      readtype: webRule.readtype,
+      isPay: element.is_locked,
+      isSelect: false
+    })
+  })
+  return allList.reverse()
+}
+
+const getDmzjFollowInfo = async(comicPageUrl, webRule, fallbackComicName = '') => {
+  const arr = comicPageUrl.split('/')
+  let name = arr[arr.length - 1] ? arr[arr.length - 1] : arr[arr.length - 2]
+  name = name.split('.')[0]
+  const infoUrl = `https://m.idmzj.com/info/${name}.html`
+  const { responseText } = await request({ method: 'get', url: infoUrl })
+  const str2 = responseText.match(/initIntroData\((.*)\)/)[1]
+  const dataArr = JSON.parse(str2)
+  const comicList = dataArr[0]?.data || []
+  const comicList2 = dataArr[1]?.data || []
+  const chapterList = []
+
+  comicList.forEach(element => {
+    chapterList.push({
+      comicName: fallbackComicName,
+      authorName: '',
+      comicPageUrl,
+      webName: webRule.webName,
+      chapterName: trimSpecial(element.chapter_name),
+      chapterNumStr: '',
+      downChapterName: '',
+      url: `https://m.idmzj.com/view/${element.comic_id}/${element.id}.html/`,
+      readtype: webRule.readtype,
+      isPay: false,
+      isSelect: false,
+      characterType: 'one'
+    })
+  })
+  comicList2.forEach(element => {
+    chapterList.push({
+      comicName: fallbackComicName,
+      authorName: '',
+      comicPageUrl,
+      webName: webRule.webName,
+      chapterName: trimSpecial(element.chapter_name),
+      chapterNumStr: '',
+      downChapterName: '',
+      url: `https://m.idmzj.com/view/${element.comic_id}/${element.id}.html/`,
+      readtype: webRule.readtype,
+      isPay: false,
+      isSelect: false,
+      characterType: 'many'
+    })
+  })
+  return {
+    comicName: fallbackComicName,
+    authorName: '',
+    chapters: chapterList
+  }
+}
+
+const getBilibiliFollowInfo = async(comicPageUrl, webRule) => {
+  const comicId = getComicIdByUrl(comicPageUrl)
+  if (!comicId) {
+    return {
+      comicName: '',
+      authorName: '',
+      chapters: []
+    }
+  }
+  const data = new FormData()
+  data.append('comic_id', comicId)
+  const getUrl = `${webRule.homepage}twirp/comic.v1.Comic/ComicDetail?device=pc&platform=web`
+  const { responseText } = await request({ method: 'post', url: getUrl, data, headers: webRule.headers })
+  const comic = JSON.parse(responseText)
+  const comicName = trimSpecial(comic.data?.title || '')
+  return {
+    comicName,
+    authorName: '',
+    chapters: buildBilibiliChapters(comicName, comicId, comic.data?.ep_list || [], webRule, comicPageUrl)
+  }
+}
+
+const getFollowInfoByRequest = async(webRule, comicPageUrl, fallbackComicName = '') => {
+  if (webRule.homepage.includes('manga.bilibili.com') || webRule.homepage.includes('bilibilicomics.com')) {
+    return getBilibiliFollowInfo(comicPageUrl, webRule)
+  }
+  if (webRule.homepage.includes('idmzj.com')) {
+    return getDmzjFollowInfo(comicPageUrl, webRule, fallbackComicName)
+  }
+
+  const { responseText } = await request({ method: 'get', url: comicPageUrl, headers: webRule.headers || '' })
+  return getComicInfoFromHtml(responseText, webRule, comicPageUrl)
+}
+
+export const getFollowList = () => {
+  return cloneData(getStorage('followList') || [])
+}
+
+export const saveFollowList = (followList) => {
+  setStorage('followList', followList)
+  return true
+}
+
+export const getFollowSettings = () => {
+  return getStorage('followSettings') || {}
+}
+
+export const getFollowCheckState = () => {
+  return getStorage('followCheckState') || { lastCheckAt: 0, lastUpdateCount: 0 }
+}
+
+export const setFollowCheckState = (state) => {
+  setStorage('followCheckState', state)
+}
+
+export const canAutoCheckFollow = () => {
+  const settings = getFollowSettings()
+  if (settings.autoCheckOnLoad === false) {
+    return false
+  }
+  const state = getFollowCheckState()
+  const cooldownMinutes = parseInt(settings.checkCooldownMinutes || 30)
+  return Date.now() - (state.lastCheckAt || 0) >= cooldownMinutes * 60 * 1000
+}
+
+export const findFollowItem = (comicPageUrl, webName, comicName) => {
+  const followList = getFollowList()
+  return followList.find(item => {
+    return (comicPageUrl && item.comicPageUrl === comicPageUrl) ||
+      (item.webName === webName && item.comicName === comicName)
+  }) || null
+}
+
+export const buildFollowItem = ({ comicName, authorName, webName, comicPageUrl, chapters }) => {
+  const latestChapter = chapters[0] || null
+  return {
+    id: `${Date.now()}_${Math.random().toString(16).slice(2, 8)}`,
+    comicName,
+    authorName: authorName || '',
+    webName,
+    comicPageUrl,
+    knownChapterUrls: chapters.map(item => item.url),
+    pendingChapters: [],
+    latestChapterName: latestChapter?.chapterName || '',
+    latestChapterUrl: latestChapter?.url || '',
+    seriesChapterCount: chapters.length,
+    lastCheckedAt: Date.now(),
+    lastError: '',
+    autoDownload: false
+  }
+}
+
+export const upsertFollowItem = (followPayload) => {
+  const followList = getFollowList()
+  const index = followList.findIndex(item => item.comicPageUrl === followPayload.comicPageUrl)
+  if (index === -1) {
+        const followItem = buildFollowItem(followPayload)
+    followList.unshift(followItem)
+    saveFollowList(followList)
+    return followItem
+  }
+
+  const currentItem = followList[index]
+  currentItem.comicName = followPayload.comicName
+  currentItem.authorName = followPayload.authorName || currentItem.authorName || ''
+  currentItem.webName = followPayload.webName
+  currentItem.seriesChapterCount = followPayload.chapters.length
+  currentItem.latestChapterName = followPayload.chapters[0]?.chapterName || currentItem.latestChapterName
+  currentItem.latestChapterUrl = followPayload.chapters[0]?.url || currentItem.latestChapterUrl
+  currentItem.lastCheckedAt = Date.now()
+  currentItem.lastError = ''
+  followList.splice(index, 1, currentItem)
+  saveFollowList(followList)
+  return currentItem
+}
+
+export const updateFollowItem = (followItemId, updater) => {
+  const followList = getFollowList()
+  const index = followList.findIndex(item => item.id === followItemId)
+  if (index === -1) {
+    return null
+  }
+  const nextItem = updater(cloneData(followList[index]))
+  followList.splice(index, 1, nextItem)
+  saveFollowList(followList)
+  return nextItem
+}
+
+export const removeFollowItem = (followItemId) => {
+  const followList = getFollowList().filter(item => item.id !== followItemId)
+  saveFollowList(followList)
+  return followList
+}
+
+export const clearPendingChapters = (followItemId, chapterUrls = []) => {
+  return updateFollowItem(followItemId, (item) => {
+    const clearSet = new Set(chapterUrls)
+    if (chapterUrls.length > 0) {
+      mergeKnownUrl(item, chapterUrls)
+      item.pendingChapters = (item.pendingChapters || []).filter(chapter => !clearSet.has(chapter.url))
+    } else {
+      mergeKnownUrl(item, (item.pendingChapters || []).map(chapter => chapter.url))
+      item.pendingChapters = []
+    }
+    return item
+  })
+}
+
+export const syncFollowItem = async(followItem) => {
+  const webRule = findWebByUrl(followItem.comicPageUrl)
+  if (!webRule) {
+    return {
+      ...followItem,
+      lastCheckedAt: Date.now(),
+      lastError: '未找到站点规则'
+    }
+  }
+
+  const info = await getFollowInfoByRequest(webRule, followItem.comicPageUrl, followItem.comicName)
+  const chapterList = dedupeChapters(info.chapters || [])
+  const knownUrlSet = new Set([...(followItem.knownChapterUrls || []), ...((followItem.pendingChapters || []).map(item => item.url))])
+  const newChapters = chapterList.filter(item => !knownUrlSet.has(item.url))
+
+  const nextItem = cloneData(followItem)
+  nextItem.comicName = info.comicName || followItem.comicName
+  nextItem.authorName = followItem.authorName || info.authorName || ''
+  nextItem.latestChapterName = chapterList[0]?.chapterName || followItem.latestChapterName
+  nextItem.latestChapterUrl = chapterList[0]?.url || followItem.latestChapterUrl
+  nextItem.seriesChapterCount = chapterList.length
+  nextItem.lastCheckedAt = Date.now()
+  nextItem.lastError = ''
+  nextItem.pendingChapters = dedupeChapters([...(followItem.pendingChapters || []), ...newChapters])
+  return nextItem
+}
+
+export const checkFollowItem = async(followItemId) => {
+  const followList = getFollowList()
+  const index = followList.findIndex(item => item.id === followItemId)
+  if (index === -1) {
+    return null
+  }
+
+  try {
+    const nextItem = await syncFollowItem(followList[index])
+    followList.splice(index, 1, nextItem)
+    saveFollowList(followList)
+    return nextItem
+  } catch (error) {
+    followList[index].lastCheckedAt = Date.now()
+    followList[index].lastError = error.message || String(error)
+    saveFollowList(followList)
+    return followList[index]
+  }
+}
+
+export const checkAllFollowItems = async() => {
+  const followList = getFollowList()
+  const result = []
+
+  for (let i = 0; i < followList.length; i++) {
+    try {
+      const nextItem = await syncFollowItem(followList[i])
+      followList.splice(i, 1, nextItem)
+      result.push(nextItem)
+    } catch (error) {
+      followList[i].lastCheckedAt = Date.now()
+      followList[i].lastError = error.message || String(error)
+      result.push(followList[i])
+    }
+  }
+  saveFollowList(followList)
+  const updateCount = followList.reduce((sum, item) => sum + ((item.pendingChapters || []).length > 0 ? 1 : 0), 0)
+  setFollowCheckState({
+    lastCheckAt: Date.now(),
+    lastUpdateCount: updateCount
+  })
+  return followList
+}

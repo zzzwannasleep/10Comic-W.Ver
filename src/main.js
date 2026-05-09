@@ -8,15 +8,21 @@ import './styles/global.less'
 import { isDev } from './config'
 import { loadStyle2, getType } from './utils'
 import { getStorage, appLoadinit, setinit } from '@/config/setup'
+import { canAutoCheckFollow, checkAllFollowItems } from '@/utils/follow'
+import { findWebByUrl } from '@/utils/comics'
 
 var id = null
 var appLoadDefault = null
 var tryLoadTimes = 0
+var hasStartedFollowCheck = false
 loadMenu(tryLoadTimes)
 
 function loadMenu() {
   tryLoadTimes += 1
   try {
+    if (!isDev) {
+      appLoadinit()
+    }
     appLoadDefault = getStorage('appLoadDefault')
     GM_registerMenuCommand(`加载UI (Alt + ${appLoadDefault.loadHotKey})`, loadUI)
     GM_registerMenuCommand(`重置所有数据`, setinit)
@@ -28,9 +34,28 @@ function loadMenu() {
     if (appLoadDefault.isShowUI) {
       loadUI(0)
     }
+    runFollowCheck()
   } catch (error) {
     console.log('loadError: ', error)
     loadUI(tryLoadTimes)
+  }
+}
+
+async function runFollowCheck() {
+  if (hasStartedFollowCheck || isDev) {
+    return
+  }
+  if (!findWebByUrl(window.location.href)) {
+    return
+  }
+  if (!canAutoCheckFollow()) {
+    return
+  }
+  hasStartedFollowCheck = true
+  try {
+    await checkAllFollowItems()
+  } catch (error) {
+    console.log('followCheckError: ', error)
   }
 }
 
@@ -40,7 +65,6 @@ async function loadUI(times) {
   }
 
   if (!isDev) {
-    appLoadinit()
     // 首次运行脚本无存储数据，无加载菜单， 重新载入
     if (times === 1) {
       loadMenu()

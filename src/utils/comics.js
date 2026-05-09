@@ -1294,58 +1294,225 @@ export const comicsWebInfo = [
   }
 ]
 
+const getUserStorageList = (key) => {
+  const data = getStorage(key) || []
+  if (getType(data) === 'Array') {
+    return data
+  }
+  if (getType(data) === 'String') {
+    return eval(data || '[]')
+  }
+  return []
+}
+
 export const getWebList = () => {
-  const userWebInfo = eval(getStorage('userWebInfo') || [])
+  const userWebInfo = getUserStorageList('userWebInfo')
   const originalInfo = comicsWebInfo
   return { originalInfo, userWebInfo }
+}
+
+const getUserWebList = () => {
+  return getUserStorageList('userWebInfo')
+}
+
+const normalizeWebRule = (webRule) => {
+  if (webRule && typeof webRule.getImgs === 'string') {
+    window.request = request
+    webRule.getImgs = funSplicing(webRule.getImgs)
+  }
+  return webRule
+}
+
+export const findWebByUrl = (url) => {
+  const hname = getdomain(url)
+  const allWebList = comicsWebInfo.concat(getUserWebList())
+
+  for (let i = 0; i < allWebList.length; i++) {
+    const webRule = allWebList[i]
+    if (getType(webRule.domain) === 'Array') {
+      if (webRule.domain.some(domain => hname.includes(domain) || domain.includes(hname))) {
+        return normalizeWebRule(webRule)
+      }
+    } else if (hname.includes(webRule.domain)) {
+      return normalizeWebRule(webRule)
+    }
+  }
+  return null
+}
+
+const getDomText = (root, selector) => {
+  try {
+    const dom = root.querySelector(selector)
+    if (!dom) {
+      return ''
+    }
+    return trimSpecial((dom.innerText || dom.textContent || '').trim())
+  } catch (error) {
+    return ''
+  }
+}
+
+const normalizeAuthorName = (text) => {
+  if (!text) {
+    return ''
+  }
+  let authorName = text.replace(/^(作者|作画|漫画|原著|编剧|作者名|著者|繪者|作者：|作者:)/, '')
+  authorName = authorName.replace(/[：:]\s*/, '')
+  authorName = authorName.replace(/\s{2,}/g, ' ').trim()
+  if (authorName.length > 40) {
+    return ''
+  }
+  return trimSpecial(authorName)
+}
+
+export const getAuthorNameFromDom = (root, webConfig) => {
+  const selectors = []
+  if (webConfig?.authorCss) {
+    if (getType(webConfig.authorCss) === 'Array') {
+      selectors.push(...webConfig.authorCss)
+    } else {
+      selectors.push(webConfig.authorCss)
+    }
+  }
+  selectors.push(
+    '[itemprop="author"]',
+    '[class*=author i]',
+    '[id*=author i]',
+    '[class*=writer i]',
+    '[class*=artist i]',
+    '[data-testid*=author i]'
+  )
+
+  for (let i = 0; i < selectors.length; i++) {
+    const authorName = normalizeAuthorName(getDomText(root, selectors[i]))
+    if (authorName) {
+      return authorName
+    }
+  }
+
+  try {
+    const textDomList = root.querySelectorAll('p, span, div, li, dd, dt, a, strong')
+    for (let i = 0; i < textDomList.length; i++) {
+      const text = (textDomList[i].innerText || textDomList[i].textContent || '').trim()
+      if (text.length === 0 || text.length > 40) {
+        continue
+      }
+      if (/(作者|作画|原著|编剧|著者|繪者)/.test(text)) {
+        const authorName = normalizeAuthorName(text)
+        if (authorName) {
+          return authorName
+        }
+      }
+    }
+  } catch (error) {
+    //
+  }
+  return ''
+}
+
+export const getCurrentComicMeta = (webConfig, root = document) => {
+  const comicName = webConfig?.comicNameCss ? getDomText(root, webConfig.comicNameCss).split('\n')[0] : ''
+  const authorName = getAuthorNameFromDom(root, webConfig)
+  return {
+    comicName: trimSpecial(comicName),
+    authorName
+  }
+}
+
+const getChapterNameByElement = (element, chapterNameReg) => {
+  let chapterName = ''
+  try {
+    if (!chapterNameReg) {
+      chapterName = element.innerText || element.textContent || ''
+    } else {
+      chapterName = element.outerHTML.match(chapterNameReg)[1]
+    }
+  } catch (error) {
+    chapterName = ''
+  }
+  return trimSpecial(chapterName)
+}
+
+const getElementUrl = (element, baseUrl) => {
+  const href = element.getAttribute('href')
+  if (!href || href.startsWith('javascript:')) {
+    return 'javascript:void();'
+  }
+  try {
+    return new URL(href, baseUrl).href
+  } catch (error) {
+    return href
+  }
+}
+
+const pushChapterData = (list, nodeList, currentWeb, type, pageUrl, comicName, authorName) => {
+  const hasSpend = currentWeb.hasSpend
+  const chapterNameReg = currentWeb.chapterNameReg
+  nodeList.forEach(dom => {
+    const urls = dom.querySelectorAll('a')
+    const readtype = currentWeb.readtype
+
+    urls.forEach((element) => {
+      const chapterName = getChapterNameByElement(element, chapterNameReg)
+      let currentIsPay = false
+      if (hasSpend) {
+        const payKey = currentWeb.payKey
+        const parent = element.parentElement
+        if (parent && parent.outerHTML.indexOf(payKey) > 0) {
+          currentIsPay = true
+        }
+      }
+
+      const data = {
+        comicName: trimSpecial(comicName),
+        authorName: trimSpecial(authorName || ''),
+        comicPageUrl: pageUrl,
+        webName: currentWeb.webName,
+        chapterNumStr: '',
+        chapterName,
+        downChapterName: '',
+        url: getElementUrl(element, pageUrl),
+        characterType: type,
+        readtype,
+        isPay: currentIsPay,
+        isSelect: false
+      }
+
+      if (data.chapterName !== '') {
+        list.push(data)
+      }
+    })
+  })
+}
+
+export const getChapterListFromRoot = (root, currentWeb, pageUrl, comicName, authorName = '') => {
+  const list = []
+  const nodeList = root.querySelectorAll(currentWeb.chapterCss)
+  pushChapterData(list, nodeList, currentWeb, 'one', pageUrl, comicName, authorName)
+
+  if (currentWeb.chapterCss_2) {
+    const nodeList2 = root.querySelectorAll(currentWeb.chapterCss_2)
+    pushChapterData(list, nodeList2, currentWeb, 'many', pageUrl, comicName, authorName)
+  }
+  return list
+}
+
+export const getComicInfoFromHtml = (html, currentWeb, pageUrl) => {
+  const root = parseToDOM(html)
+  const { comicName, authorName } = getCurrentComicMeta(currentWeb, root)
+  const chapters = getChapterListFromRoot(root, currentWeb, pageUrl, comicName, authorName)
+  return {
+    comicName,
+    authorName,
+    chapters
+  }
 }
 
 export let currentComics = null
 
 // 网站匹配
 export const matchWeb = (url) => {
-  let hname = ''
-  var domain = url.split('/')
-  if (domain[2]) {
-    hname = domain[2]
-  } else {
-    hname = ''
-  }
-  // 原漫画列表匹配
-  for (let i = 0; i < comicsWebInfo.length; i++) {
-    if (hname.includes(comicsWebInfo[i].domain)) {
-      currentComics = comicsWebInfo[i]
-      break
-    }
-
-    if (getType(comicsWebInfo[i].domain) === 'Array') {
-      if (comicsWebInfo[i].domain.includes(hname)) {
-        currentComics = comicsWebInfo[i]
-        break
-      }
-    }
-  }
-  // 导入规则列表匹配
-  if (currentComics === null) {
-    const userWebInfo = eval(getStorage('userWebInfo') || [])
-    for (let a = 0; a < userWebInfo.length; a++) {
-      if (hname.includes(userWebInfo[a].domain)) {
-        currentComics = userWebInfo[a]
-        break
-      }
-
-      if (getType(comicsWebInfo[i].domain) === 'Array') {
-        if (comicsWebInfo[i].domain.includes(hname)) {
-          currentComics = comicsWebInfo[i]
-          break
-        }
-      }
-    }
-    if (currentComics !== null && typeof currentComics.getImgs === 'string') {
-      window.request = request
-      currentComics.getImgs = funSplicing(currentComics.getImgs)
-    }
-  }
+  currentComics = findWebByUrl(url)
 }
 
 function funSplicing(funStr) {

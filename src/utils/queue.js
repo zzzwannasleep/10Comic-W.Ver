@@ -1,6 +1,8 @@
 import JSZip from 'jszip'
 import { getImage, downFile, addZeroForNum, request } from '@/utils/index'
 import { getStorage } from '@/config/setup'
+import { buildArchiveName, buildComicInfoXml, buildSeriesJson, getMetadataFileFlags } from '@/utils/metadata'
+import { clearPendingChapters } from '@/utils/follow'
 
 // 多个任务并行执行的队列
 // https://juejin.cn/post/6844903961728647181
@@ -13,6 +15,7 @@ export default class Queue {
     this.worker = new Array(this.workerLen) // 正在执行的任务
     this.workerDownInfo = new Array(this.workerLen) // 存储下载信息
     this.imgIndexBitNum = imgIndexBitNum // 图片序号位数
+    this.seriesMetadataCache = new Set()
     this.Vue = vue
   }
 
@@ -21,6 +24,18 @@ export default class Queue {
     const url = window.URL.createObjectURL(content)
     await downFile(url, fileName)
     window.URL.revokeObjectURL(url)
+  }
+
+  async writeSeriesMetadata(worker) {
+    const { enableSeriesJson } = getMetadataFileFlags()
+    const metadataKey = `${worker.webName || ''}_${worker.comicName || ''}`
+    if (!enableSeriesJson || this.seriesMetadataCache.has(metadataKey)) {
+      return
+    }
+    const seriesJson = buildSeriesJson(worker)
+    const jsonBlob = new Blob([seriesJson], { type: 'application/json' })
+    await this.downloadFile(worker.comicName + '\\series.json', jsonBlob)
+    this.seriesMetadataCache.add(metadataKey)
   }
 
   /**
@@ -32,15 +47,19 @@ export default class Queue {
     const _this = this
 
     async function afterDown(index) {
-      const { comicName, hasError } = _this.worker[index]
-      const comicPageUrl = window.location.href
+      const { comicName, hasError, comicPageUrl, followItemId, url } = _this.worker[index]
+      await _this.writeSeriesMetadata(_this.worker[index])
+      if (followItemId && !hasError) {
+        clearPendingChapters(followItemId, [url])
+      }
       let historyData = localStorage.getItem('ylComicDownHistory') || '[]'
       historyData = JSON.parse(historyData)
       const id = (new Date()).getTime()
-      historyData.unshift({ id, comicName, downChapterName, comicPageUrl, hasError })
+      historyData.unshift({ id, comicName, downChapterName, comicPageUrl: comicPageUrl || window.location.href, hasError })
       historyData = JSON.stringify(historyData)
       localStorage.setItem('ylComicDownHistory', historyData)
       _this.Vue.getHistoryData()
+      _this.Vue.$bus.$emit('refreshFollowList')
       _this.worker[index] = undefined
       // 休息下？
       setTimeout(() => {
@@ -340,6 +359,11 @@ export default class Queue {
 
         const worker = {
           comicName: item.comicName,
+          authorName: item.authorName,
+          webName: item.webName,
+          comicPageUrl: item.comicPageUrl,
+          chapterName: item.chapterName,
+          chapterNumStr: item.chapterNumStr,
           downChapterName: item.downChapterName,
           url: item.url,
           isPay: item.isPay, // 是否付费章节
@@ -353,7 +377,9 @@ export default class Queue {
           downType: item.downType, // 下载方式 0：直接  1：压缩  2：拼接
           hasError: false,
           downHeaders: item.downHeaders,
-          otherData: undefined // 自定义存储其他下载数据
+          otherData: undefined, // 自定义存储其他下载数据
+          seriesChapterCount: item.seriesChapterCount,
+          followItemId: item.followItemId
         }
         this.worker[i] = worker
         this.workerDownInfo[i] = []
@@ -385,9 +411,10 @@ export default class Queue {
 
   // 压缩
   async makeZip(workerId) {
-    const { comicName, downChapterName } = this.worker[workerId]
+    const { comicName } = this.worker[workerId]
     return new Promise((resolve, reject) => {
       const zip = new JSZip()
+      const { enableComicInfoXml } = getMetadataFileFlags()
       this.workerDownInfo[workerId].forEach((item, index) => {
         const imgblob = item.blob
         const suffix = item.suffix
@@ -398,6 +425,9 @@ export default class Queue {
         }
         zip.file(addZeroForNum(index + 1, this.imgIndexBitNum) + '.' + suffix, imgblob, { blob: true })
       })
+      if (enableComicInfoXml) {
+        zip.file('ComicInfo.xml', buildComicInfoXml(this.worker[workerId], this.worker[workerId].totalNumber))
+      }
 
       zip.generateAsync({
         type: 'blob',
@@ -406,7 +436,8 @@ export default class Queue {
           level: 9
         }
       }).then((zipblob) => {
-        const name = comicName + '\\' + downChapterName + '.zip'
+        const archiveName = buildArchiveName(this.worker[workerId], this.worker[workerId].totalNumber)
+        const name = comicName + '\\' + archiveName + '.zip'
         this.downloadFile(name, zipblob)
         resolve()
         return

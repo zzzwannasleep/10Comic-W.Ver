@@ -104,13 +104,22 @@
         /> 项
       </div>
 
-      <van-button
-        style="width:80px;"
-        size="mini"
-        round
-        :disabled="!showSelectList"
-        @click="downSelectList"
-      >下载</van-button>
+      <div style="display: flex; gap: 8px;">
+        <van-button
+          style="width:95px;"
+          size="mini"
+          round
+          :disabled="comicName === '------'"
+          @click="addCurrentComicToFollow"
+        >加入追更</van-button>
+        <van-button
+          style="width:80px;"
+          size="mini"
+          round
+          :disabled="!showSelectList"
+          @click="downSelectList"
+        >下载</van-button>
+      </div>
     </div>
 
     <van-divider
@@ -122,18 +131,28 @@
     <!-- 列表为空 -->
     <div v-if="!showSelectList">
       <van-empty description="漫画章节">
-        <van-button
-          style="width:120px;"
-          round
-          class="bottom-button"
-          :disabled="comicName === '------'"
-          @click="getSelectList"
-        > 加载 </van-button>
+        <div style="display: flex; gap: 10px; justify-content: center;">
+          <van-button
+            style="width:120px;"
+            round
+            class="bottom-button"
+            :disabled="comicName === '------'"
+            @click="getSelectList"
+          > 加载 </van-button>
+          <van-button
+            style="width:120px;"
+            round
+            class="bottom-button"
+            :disabled="comicName === '------'"
+            @click="addCurrentComicToFollow"
+          > 加入追更 </van-button>
+        </div>
       </van-empty>
 
       <van-cell-group id="comicinfo" inset>
         <van-cell title="网站" :value="webname" />
         <van-cell title="漫画" :value="comicName" />
+        <van-cell title="作者" :value="authorName || '--'" />
       </van-cell-group>
     </div>
 
@@ -239,9 +258,10 @@
 
 <script>
 
-import { currentComics } from '@/utils/comics'
+import { currentComics, getCurrentComicMeta } from '@/utils/comics'
 import { getStorage } from '@/config/setup'
 import { addZeroForNum, trimSpecial } from '@/utils/index'
+import { findFollowItem, upsertFollowItem } from '@/utils/follow'
 
 import { Toast } from 'vant'
 
@@ -262,6 +282,7 @@ export default {
       currentComics: '',
       webname: '未匹配',
       comicName: '------',
+      authorName: '',
 
       paylogoArr: [],
       downType: 0,
@@ -325,10 +346,12 @@ export default {
         if (currentComics === null) {
           return
         }
-        const comicNameCss = this.currentComics.comicNameCss
         this.webname = currentComics.webName
+        const { comicName, authorName } = getCurrentComicMeta(this.currentComics)
+        const followItem = findFollowItem(window.location.href, this.currentComics.webName, comicName)
 
-        this.comicName = document.querySelectorAll(comicNameCss)[0].innerText.split('\n')[0].trim()
+        this.comicName = comicName
+        this.authorName = followItem?.authorName || authorName || ''
         if (this.comicName === '') {
           setTimeout(() => {
             this.getInfo(1)
@@ -349,6 +372,20 @@ export default {
       }
       this.lastSelectIndex = null
       return
+    },
+    decorateChapterList(list) {
+      const followItem = findFollowItem(window.location.href, currentComics.webName, this.comicName)
+      const authorName = followItem?.authorName || this.authorName || ''
+      const seriesChapterCount = list.length
+      return list.map((item) => {
+        return {
+          webName: currentComics.webName,
+          authorName,
+          comicPageUrl: window.location.href,
+          seriesChapterCount,
+          ...item
+        }
+      })
     },
     reverseList() {
       this.overlayShow = true
@@ -417,27 +454,28 @@ export default {
         if (currentComics.getComicInfo) {
           const list = await currentComics.getComicInfo(this.comicName)
           if (list) {
-            this.list = list
+            this.list = this.decorateChapterList(list)
             this.overlayShow = false
             this.showSelectList = true
             return
           }
         }
 
-        setTimeout(() => {
+        await new Promise((resolve) => setTimeout(resolve, 100))
         // 单章数据
-          const nodeList = document.querySelectorAll(currentComics.chapterCss)
-          this.getChapterData(nodeList, currentComics, 'one')
+        const nodeList = document.querySelectorAll(currentComics.chapterCss)
+        this.getChapterData(nodeList, currentComics, 'one')
 
-          // （如果存在）分卷数据
-          if (currentComics.chapterCss_2) {
-            const nodeList_2 = document.querySelectorAll(currentComics.chapterCss_2)
-            this.getChapterData(nodeList_2, currentComics, 'many')
-          }
+        // （如果存在）分卷数据
+        if (currentComics.chapterCss_2) {
+          const nodeList_2 = document.querySelectorAll(currentComics.chapterCss_2)
+          this.getChapterData(nodeList_2, currentComics, 'many')
+        }
 
-          this.overlayShow = false
-          this.showSelectList = true
-        }, 100)
+        this.list = this.decorateChapterList(this.list)
+
+        this.overlayShow = false
+        this.showSelectList = true
       } catch (error) {
         console.log('getSelectList-e: ', error)
         Toast({
@@ -522,6 +560,10 @@ export default {
       }
       const item = {
         comicName: this.defineComicName,
+        authorName: this.authorName,
+        webName: currentComics.webName,
+        comicPageUrl: window.location.href,
+        seriesChapterCount: 1,
         chapterNumStr: '',
         chapterName: this.definechapterName,
         downChapterName: this.definechapterName,
@@ -576,6 +618,45 @@ export default {
       this.$bus.$emit('selectDown', this.downResult)
       this.$bus.$emit('changTab', 2)
       this.downResult = []
+    },
+    async addCurrentComicToFollow() {
+      if (!currentComics || this.comicName === '------') {
+        Toast({
+          message: '请先进入漫画目录页',
+          getContainer: '.card',
+          position: 'bottom'
+        })
+        return
+      }
+
+      if (this.list.length === 0) {
+        await this.getSelectList()
+      }
+
+      if (this.list.length === 0) {
+        Toast({
+          message: '当前页面未获取到章节列表',
+          getContainer: '.card',
+          position: 'bottom'
+        })
+        return
+      }
+
+      const followItem = upsertFollowItem({
+        comicName: this.comicName,
+        authorName: this.authorName,
+        webName: currentComics.webName,
+        comicPageUrl: window.location.href,
+        chapters: this.decorateChapterList(this.list)
+      })
+      this.authorName = followItem.authorName || this.authorName
+      this.$bus.$emit('refreshFollowList')
+      this.$bus.$emit('changTab', 3)
+      Toast({
+        message: '已加入追更',
+        getContainer: '.card',
+        position: 'bottom'
+      })
     },
     reloadList() {
       this.list = []
