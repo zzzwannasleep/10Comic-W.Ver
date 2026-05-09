@@ -19,7 +19,7 @@ const configDefault = {
   imgIndexBitNum: 3,
   imgSplicingFlag: true,
   imgDownRange: [1, -1], // 章节图片下载范围  第1张至最后1张
-  zipNameTemplate: '[站点名字][作者名][漫画名称][章节名称][多少P]P',
+  zipNameTemplate: '[站点名字][作者名][漫画名称][章节名称][多少P]',
   metadataSettings: {
     enableComicInfoXml: true,
     enableSeriesJson: false,

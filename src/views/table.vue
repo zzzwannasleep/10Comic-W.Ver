@@ -541,6 +541,15 @@ export default {
     },
 
     // 已进入原网站漫画章节页面阅读，获取章节 下载
+    startDownload(downloadItems) {
+      if (downloadItems.length === 1 && downloadItems[0].downType === 1) {
+        this.$bus.$emit('openCoverSelector', downloadItems[0])
+        this.$bus.$emit('changTab', 2)
+        return
+      }
+      this.$bus.$emit('selectDown', downloadItems)
+      this.$bus.$emit('changTab', 3)
+    },
     getCurrentWebData() {
       if (!currentComics) {
         Toast({
@@ -575,9 +584,7 @@ export default {
         downHeaders: currentComics.downHeaders
       }
       this.downResult.push(item)
-
-      this.$bus.$emit('selectDown', this.downResult)
-      this.$bus.$emit('changTab', 2)
+      this.startDownload(this.downResult)
       this.downResult = []
       this.show = false
     },
@@ -615,8 +622,7 @@ export default {
         return
       }
 
-      this.$bus.$emit('selectDown', this.downResult)
-      this.$bus.$emit('changTab', 2)
+      this.startDownload(this.downResult)
       this.downResult = []
     },
     async addCurrentComicToFollow() {
@@ -651,7 +657,7 @@ export default {
       })
       this.authorName = followItem.authorName || this.authorName
       this.$bus.$emit('refreshFollowList')
-      this.$bus.$emit('changTab', 3)
+      this.$bus.$emit('changTab', 4)
       Toast({
         message: '已加入追更',
         getContainer: '.card',

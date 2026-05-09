@@ -671,7 +671,7 @@
 import { currentComics } from '@/utils/comics'
 import { setinit, setStorage } from '@/config/setup'
 import { loadStyle } from '@/utils/index'
-import { metadataSettingsDefault } from '@/utils/metadata'
+import { defaultZipNameTemplate, metadataSettingsDefault } from '@/utils/metadata'
 
 import { Dialog } from 'vant'
 
@@ -829,6 +829,10 @@ export default {
 
         this.imgDownRange = GM_getValue('imgDownRange') ?? this.imgDownRange
         this.zipNameTemplate = GM_getValue('zipNameTemplate') ?? this.zipNameTemplate
+        if (this.zipNameTemplate === '[站点名字][作者名][漫画名称][章节名称][多少P]P') {
+          this.zipNameTemplate = defaultZipNameTemplate
+          this.onChangeData('zipNameTemplate', this.zipNameTemplate)
+        }
         this.metadataSettings = {
           ...this.metadataSettings,
           ...(GM_getValue('metadataSettings') || {})

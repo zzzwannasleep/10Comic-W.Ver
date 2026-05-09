@@ -41,6 +41,97 @@ export default class Queue {
     return `cover.${suffix === 'jpeg' ? 'jpg' : suffix}`
   }
 
+  normalizeImageExtension(suffix) {
+    if (!suffix) {
+      return 'jpg'
+    }
+    return suffix.toLowerCase() === 'jpeg' ? 'jpg' : suffix.toLowerCase()
+  }
+
+  getCoverExtensionByMimeType(mimeType) {
+    if (!mimeType) {
+      return 'jpg'
+    }
+    if (mimeType.includes('png')) return 'png'
+    if (mimeType.includes('webp')) return 'webp'
+    if (mimeType.includes('gif')) return 'gif'
+    if (mimeType.includes('bmp')) return 'bmp'
+    return 'jpg'
+  }
+
+  dataUrlToBlob(dataUrl) {
+    const group = String(dataUrl || '').split(',')
+    if (group.length < 2) {
+      return null
+    }
+    const mimeType = (group[0].match(/data:(.*?);base64/) || [])[1] || 'image/jpeg'
+    const binary = atob(group[1])
+    const len = binary.length
+    const bytes = new Uint8Array(len)
+    for (let i = 0; i < len; i++) {
+      bytes[i] = binary.charCodeAt(i)
+    }
+    return {
+      blob: new Blob([bytes], { type: mimeType }),
+      extension: this.getCoverExtensionByMimeType(mimeType)
+    }
+  }
+
+  async fetchImageBlob(workerId, url) {
+    if (!url) {
+      return null
+    }
+    const headers = this.worker[workerId].downHeaders || {
+      referer: this.worker[workerId].url
+    }
+    const response = await request({
+      method: 'get',
+      url,
+      responseType: 'blob',
+      headers,
+      timeout: 60 * 1000
+    })
+    if (!response || response === 'onerror' || response === 'timeout' || !response.response) {
+      return null
+    }
+    return {
+      blob: response.response,
+      suffix: this.getSuffix(response.finalUrl || url)
+    }
+  }
+
+  async writeBookCoverFile(workerId, archiveBasePath) {
+    const coverOption = this.worker[workerId].coverOption
+    if (!coverOption || coverOption.type === 'first') {
+      return
+    }
+
+    if (coverOption.type === 'upload' && coverOption.dataUrl) {
+      const result = this.dataUrlToBlob(coverOption.dataUrl)
+      if (result?.blob) {
+        await this.downloadFile(`${archiveBasePath}.${result.extension}`, result.blob)
+      }
+      return
+    }
+
+    if (coverOption.type === 'chapter' && coverOption.imageUrl) {
+      let coverData = this.workerDownInfo[workerId].find(item => item.imgurl === coverOption.imageUrl && item.blob !== 1 && item.blob !== 0)
+      if (!coverData) {
+        coverData = await this.fetchImageBlob(workerId, coverOption.imageUrl)
+      }
+      if (coverData?.blob) {
+        const coverExt = this.normalizeImageExtension(coverData.suffix)
+        await this.downloadFile(`${archiveBasePath}.${coverExt}`, coverData.blob)
+      }
+      return
+    }
+
+    if (coverOption.type === 'bangumi' && coverOption.imageUrl) {
+      const coverExt = this.normalizeImageExtension(this.getSuffix(coverOption.imageUrl))
+      await this.downloadRemoteFile(`${archiveBasePath}.${coverExt}`, coverOption.imageUrl)
+    }
+  }
+
   getSeriesCacheKey(worker) {
     return `${worker.webName || ''}_${worker.comicName || ''}`
   }
@@ -442,6 +533,7 @@ export default class Queue {
           otherData: undefined, // 自定义存储其他下载数据
           seriesChapterCount: item.seriesChapterCount,
           followItemId: item.followItemId,
+          coverOption: item.coverOption,
           metadataPromise: undefined
         }
         worker.metadataPromise = this.prepareWorkerMetadata(worker)
@@ -501,8 +593,9 @@ export default class Queue {
       }
     })
     const archiveName = buildArchiveName(this.worker[workerId], this.worker[workerId].totalNumber)
-    const name = comicName + '\\' + archiveName + '.zip'
-    await this.downloadFile(name, zipblob)
+    const archiveBasePath = comicName + '\\' + archiveName
+    await this.downloadFile(archiveBasePath + '.cbz', zipblob)
+    await this.writeBookCoverFile(workerId, archiveBasePath)
     return true
   }
 

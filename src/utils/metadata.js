@@ -2,6 +2,8 @@ import { getStorage } from '@/config/setup'
 import { trimSpecial } from '@/utils/index'
 
 const invalidFileNameReg = /[\\/:*?"<>|]/g
+export const defaultZipNameTemplate = '[站点名字][作者名][漫画名称][章节名称][多少P]'
+const legacyDefaultZipNameTemplate = '[站点名字][作者名][漫画名称][章节名称][多少P]P'
 
 export const metadataSettingsDefault = {
   enableComicInfoXml: true,
@@ -122,7 +124,11 @@ export const getMetadataSettings = () => {
 }
 
 export const getZipNameTemplate = () => {
-  return getStorage('zipNameTemplate') || '[站点名字][作者名][漫画名称][章节名称][多少P]P'
+  const currentTemplate = getStorage('zipNameTemplate')
+  if (!currentTemplate || currentTemplate === legacyDefaultZipNameTemplate) {
+    return defaultZipNameTemplate
+  }
+  return currentTemplate
 }
 
 export const buildArchiveName = (downloadItem, pageCount) => {

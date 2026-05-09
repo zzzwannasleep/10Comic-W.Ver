@@ -425,9 +425,9 @@ const fetchBangumiMetadata = async(downloadItem, settings) => {
   return null
 }
 
-export const getBangumiMetadata = async(downloadItem) => {
+export const getBangumiMetadata = async(downloadItem, options = {}) => {
   const settings = getMetadataSettings()
-  if (settings.enableBangumiScrape !== true) {
+  if (settings.enableBangumiScrape !== true && options.force !== true) {
     return null
   }
 

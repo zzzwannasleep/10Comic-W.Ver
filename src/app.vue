@@ -22,6 +22,9 @@
             <Table />
           </van-swipe-item>
           <van-swipe-item class="swipeitem">
+            <Cover />
+          </van-swipe-item>
+          <van-swipe-item class="swipeitem">
             <Down />
           </van-swipe-item>
           <van-swipe-item class="swipeitem">
@@ -42,6 +45,7 @@
           >
             <van-tabbar-item icon="home-o" />
             <van-tabbar-item icon="todo-list-o" />
+            <van-tabbar-item icon="photo-o" />
             <van-tabbar-item icon="underway-o" />
             <van-tabbar-item icon="clock-o" />
             <van-tabbar-item icon="setting-o" />
@@ -75,6 +79,7 @@
 <script>
 import Home from '@/views/home.vue'
 import Table from '@/views/table.vue'
+import Cover from '@/views/cover.vue'
 import Setting from '@/views/setting.vue'
 import Down from '@/views/down.vue'
 import Follow from '@/views/follow.vue'
@@ -87,14 +92,14 @@ import { matchWeb } from './utils/comics'
 export default {
   name: 'App',
   components: {
-    Home, Table, Down, Follow, Setting, Search
+    Home, Table, Cover, Down, Follow, Setting, Search
   },
   data() {
     return {
       isHide: true,
       showSearchPage: false,
       active: 1,
-      titles: ['漫画网站', '加载', '下载', '追更', '设置'],
+      titles: ['漫画网站', '加载', '封面', '下载', '追更', '设置'],
       comicInfo: {}
     }
   },

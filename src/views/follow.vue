@@ -167,7 +167,7 @@ export default {
         return
       }
       this.$bus.$emit('selectDown', downloadItems)
-      this.$bus.$emit('changTab', 2)
+      this.$bus.$emit('changTab', 3)
     },
     downloadAllPending() {
       const allDownloads = this.followList.flatMap(item => this.buildDownloadItems(item))
@@ -175,7 +175,7 @@ export default {
         return
       }
       this.$bus.$emit('selectDown', allDownloads)
-      this.$bus.$emit('changTab', 2)
+      this.$bus.$emit('changTab', 3)
     },
     markHandled(item) {
       clearPendingChapters(item.id)
