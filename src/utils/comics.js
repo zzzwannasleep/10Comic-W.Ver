@@ -1352,14 +1352,19 @@ const getDomText = (root, selector) => {
   }
 }
 
-const authorPrefixReg = /^(作者|作者名|作者\/作画|作者\/作畫|作画|作畫|漫画|漫畫|原著|原作|编剧|編劇|脚本|腳本|著者|繪者|绘者|畫師|画师|原案)\s*[：:：]?\s*/i
-const authorHintReg = /(作者|作者名|作画|作畫|原著|原作|编剧|編劇|脚本|腳本|著者|繪者|绘者|畫師|画师)/i
-const authorNoiseReg = /(状态|狀態|连载中|連載中|已完结|已完結|完结|完結|题材|題材|标签|標籤|类型|類型|分类|分類|更新|最新|人气|人氣|地区|地區|年份|别名|別名|简介|簡介|评分|評分|收藏|点击|點擊|进度|進度)/i
-const authorStopKeywords = [
-  '状态', '狀態', '连载中', '連載中', '已完结', '已完結', '完结', '完結',
-  '题材', '題材', '标签', '標籤', '类型', '類型', '分类', '分類',
-  '更新', '最新', '人气', '人氣', '地区', '地區', '年份', '别名', '別名',
-  '简介', '簡介', '评分', '評分', '收藏', '点击', '點擊', '进度', '進度'
+const authorPrefixReg = /^(作者|作者名|作者\/作画|作者\/作畫|作画|作畫|漫畫|漫画|原著|原作|编剧|編劇|脚本|腳本|著者|繪者|绘者|畫師|画师|原案|author(?:\(s\))?|writer(?:\(s\))?|artist(?:\(s\))?|illustrator(?:\(s\))?|creator(?:\(s\))?|story|story by|written by|script|script by|art by|illustrated by)\s*[：:：-]?\s*/i
+const authorHintReg = /(作者|作者名|作画|作畫|原著|原作|编剧|編劇|脚本|腳本|著者|繪者|绘者|畫師|画师|原案|\bauthor\b|\bwriter\b|\bartist\b|\billustrator\b|\bcreator\b|\bstory\b|\bscript\b|\bwritten by\b|\bart by\b|\billustrated by\b)/i
+const authorNoiseReg = /(状态|狀態|连载中|連載中|已完结|已完結|完结|完結|题材|題材|标签|標籤|类型|類型|分类|分類|更新|最新|人气|人氣|地区|地區|年份|别名|別名|简介|簡介|评分|評分|收藏|点击|點擊|进度|進度|\bstatus\b|\bongoing\b|\bcompleted\b|\bcomplete\b|\bgenre\b|\btag(?:s)?\b|\btype\b|\bcategory\b|\bcategories\b|\bupdate(?:d)?\b|\blatest\b|\bpopular(?:ity)?\b|\bregion\b|\byear\b|\balias(?:es)?\b|\bsummary\b|\bdescription\b|\brating\b|\bscore\b|\bfavorite(?:s)?\b|\bviews?\b|\bprogress\b)/i
+const authorStopPatterns = [
+  /状态/i, /狀態/i, /连载中/i, /連載中/i, /已完结/i, /已完結/i, /完结/i, /完結/i,
+  /题材/i, /題材/i, /标签/i, /標籤/i, /类型/i, /類型/i, /分类/i, /分類/i,
+  /更新/i, /最新/i, /人气/i, /人氣/i, /地区/i, /地區/i, /年份/i, /别名/i, /別名/i,
+  /简介/i, /簡介/i, /评分/i, /評分/i, /收藏/i, /点击/i, /點擊/i, /进度/i, /進度/i,
+  /\bstatus\b/i, /\bongoing\b/i, /\bcompleted\b/i, /\bcomplete\b/i,
+  /\bgenre\b/i, /\btag\b/i, /\btags\b/i, /\btype\b/i, /\bcategory\b/i, /\bcategories\b/i,
+  /\bupdate\b/i, /\bupdated\b/i, /\blatest\b/i, /\bpopularity\b/i, /\bpopular\b/i,
+  /\bregion\b/i, /\byear\b/i, /\balias\b/i, /\baliases\b/i, /\bsummary\b/i, /\bdescription\b/i,
+  /\brating\b/i, /\bscore\b/i, /\bfavorites\b/i, /\bfavorite\b/i, /\bview\b/i, /\bviews\b/i, /\bprogress\b/i
 ]
 
 const splitAuthorTextSegments = (text) => {
@@ -1373,18 +1378,19 @@ const splitAuthorTextSegments = (text) => {
 const stripAuthorNoise = (text) => {
   let value = String(text || '').trim()
   let stopIndex = value.length
-  authorStopKeywords.forEach((keyword) => {
-    const index = value.indexOf(keyword)
-    if (index > 0 && index < stopIndex) {
-      stopIndex = index
+  authorStopPatterns.forEach((pattern) => {
+    const match = value.match(pattern)
+    if (match && match.index > 0 && match.index < stopIndex) {
+      stopIndex = match.index
     }
   })
   if (stopIndex !== value.length) {
     value = value.slice(0, stopIndex)
   }
   value = value
-    .replace(/^[\s:：/／|｜,，;；·•-]+/, '')
-    .replace(/[\s:：/／|｜,，;；·•-]+$/, '')
+    .replace(/^[\s:：/／|｜,，;；·•\-()[\]{}<>]+/, '')
+    .replace(/[\s:：/／|｜,，;；·•\-()[\]{}<>]+$/, '')
+    .replace(/\b(?:by)\b\s*$/i, '')
     .replace(/\s{2,}/g, ' ')
     .trim()
   return value
@@ -1433,10 +1439,17 @@ export const getAuthorNameFromDom = (root, webConfig) => {
   }
   selectors.push(
     '[itemprop="author"]',
+    '[itemprop="creator"]',
     '[class*=author i]',
     '[id*=author i]',
     '[class*=writer i]',
     '[class*=artist i]',
+    '[class*=creator i]',
+    '[class*=illustrator i]',
+    '[id*=writer i]',
+    '[id*=artist i]',
+    '[id*=creator i]',
+    '[id*=illustrator i]',
     '[data-testid*=author i]'
   )
 
