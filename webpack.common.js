@@ -21,6 +21,9 @@ module.exports = () => {
     resolve: {
       alias: {
         '@': path.resolve(__dirname, 'src')
+      },
+      fallback: {
+        buffer: require.resolve('buffer/')
       }
     },
     module: {
@@ -78,6 +81,9 @@ module.exports = () => {
     plugins: [
       new VueLoaderPlugin(),
       new CleanWebpackPlugin(),
+      new webpack.ProvidePlugin({
+        Buffer: ['buffer', 'Buffer']
+      }),
       new webpack.DefinePlugin({
         __APP_NAME__: JSON.stringify(process.env.TAMPERMONKEY_APP_NAME),
         __APP_ENVIRONMENT__: JSON.stringify(process.env.TAMPERMONKEY_APP_ENVIRONMENT),

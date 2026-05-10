@@ -67,11 +67,17 @@
             <template #label>
               <div class="candidate-label">{{ item.comicName }}</div>
               <div class="candidate-label candidate-label--sub">
-                {{ item.latestChapterName || `共 ${item.seriesChapterCount} 话` }}
+                {{ formatSeriesCount(item.seriesChapterCount) }}
+              </div>
+              <div class="candidate-label candidate-label--sub">
+                最新: {{ formatLatestChapterName(item.latestChapterName) }}
               </div>
             </template>
             <template #right-icon>
-              <van-button size="mini" plain @click.stop="openComic(item.comicPageUrl)">打开</van-button>
+              <div class="candidate-actions">
+                <van-button size="mini" plain @click.stop="openComic(item.comicPageUrl)">详情</van-button>
+                <van-button size="mini" plain type="primary" @click.stop="openLatestChapter(item)">最新章</van-button>
+              </div>
             </template>
           </van-cell>
         </van-cell-group>
@@ -104,6 +110,18 @@
           is-link
           :value="formatCheckTime(item.lastCheckedAt)"
           @click="openComic(item.comicPageUrl)"
+        />
+
+        <van-cell
+          title="总章节"
+          :value="formatSeriesCount(item.seriesChapterCount)"
+        />
+
+        <van-cell
+          title="最新章节"
+          is-link
+          :value="formatLatestChapterName(item.latestChapterName)"
+          @click="openLatestChapter(item)"
         />
 
         <van-cell v-if="item.lastError" :title="`检查失败: ${item.lastError}`" />
@@ -216,6 +234,15 @@ export default {
       const hour = String(date.getHours()).padStart(2, '0')
       const minute = String(date.getMinutes()).padStart(2, '0')
       return `${date.getMonth() + 1}/${date.getDate()} ${hour}:${minute}`
+    },
+    formatSeriesCount(count) {
+      if (!count || count < 0) {
+        return '章节数未知'
+      }
+      return `共 ${count} 话`
+    },
+    formatLatestChapterName(name) {
+      return name || '未识别到最新章节'
     },
     async autoCheckOnLoad() {
       await this.checkAll(true)
@@ -371,7 +398,13 @@ export default {
         this.refreshList()
       }).catch(() => {})
     },
+    openLatestChapter(item) {
+      this.openComic(item.latestChapterUrl || item.comicPageUrl)
+    },
     openComic(url) {
+      if (!url) {
+        return
+      }
       window.open(url, '_blank')
     }
   }
@@ -437,6 +470,11 @@ export default {
       flex: 1;
       min-width: 0;
     }
+  }
+
+  .candidate-actions {
+    display: flex;
+    gap: 6px;
   }
 
   .candidate-label {

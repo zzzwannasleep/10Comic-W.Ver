@@ -155,6 +155,28 @@ export const request = async function request(...details) {
   })
 }
 
+export const openVerifyPage = (url) => {
+  if (!url) {
+    return null
+  }
+
+  try {
+    // eslint-disable-next-line no-undef
+    if (typeof GM_openInTab !== 'undefined') {
+      // eslint-disable-next-line no-undef
+      return GM_openInTab(url, {
+        active: true,
+        insert: true,
+        setParent: true
+      })
+    }
+  } catch (error) {
+    console.log('openVerifyPageError: ', error)
+  }
+
+  return window.open(url, '_blank')
+}
+
 let rootDir = '10Comic'
 
 try {

@@ -3,66 +3,174 @@
 /* eslint-disable no-eval */
 
 // eslint-disable-next-line no-unused-vars
-import { request, parseToDOM, funstrToData, getType, trimSpecial, getdomain, addZeroForNum, delay, doThingsEachSecond, startScroll } from '@/utils/index'
+import { request, parseToDOM, funstrToData, getType, trimSpecial, getdomain, addZeroForNum, delay, doThingsEachSecond, startScroll, openVerifyPage } from '@/utils/index'
+import iconv from 'iconv-lite'
 
 import { getStorage } from '@/config/setup'
+
+const challengePageReg = /challenge-platform|cf-browser-verification|cf-chl-|cf-turnstile|cf-challenge|cf-wrapper|verify you are human|attention required|checking if the site connection is secure|security check to access|just a moment\.\.\.|why do i have to complete a captcha/i
+
+const getResponseText = (response) => {
+  if (!response) {
+    return ''
+  }
+  if (typeof response === 'string') {
+    return response
+  }
+  return response.responseText || response.response || ''
+}
+
+const resolveUrl = (url, baseUrl) => {
+  if (!url) {
+    return ''
+  }
+  try {
+    return new URL(url, baseUrl).href
+  } catch (error) {
+    return url
+  }
+}
+
+const getSearchResultAnchor = (element, namelinkIndex = 0) => {
+  const preferredAnchor = element.querySelector('h1 a, h2 a, h3 a, h4 a, dt a, .title a, .comic-title a, .comic__title a, .book-title a')
+  if (preferredAnchor) {
+    return preferredAnchor
+  }
+  const anchorList = [...element.querySelectorAll('a')]
+  const targetAnchor = anchorList.find(anchor => trimSpecial(anchor?.getAttribute('title') || anchor?.innerText || anchor?.textContent || ''))
+  return targetAnchor || anchorList[namelinkIndex] || anchorList[0] || null
+}
+
+const toUint8Array = (value) => {
+  if (!value) {
+    return new Uint8Array()
+  }
+  if (value instanceof ArrayBuffer) {
+    return new Uint8Array(value)
+  }
+  if (ArrayBuffer.isView(value)) {
+    return new Uint8Array(value.buffer, value.byteOffset, value.byteLength)
+  }
+  return new Uint8Array()
+}
+
+const encodeTextByCharset = (text, charset = 'utf-8') => {
+  const encoded = iconv.encode(String(text || ''), charset)
+  const bytes = toUint8Array(encoded)
+  return bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength)
+}
+
+const decodeBinaryByCharset = (value, charset = 'utf-8') => {
+  return iconv.decode(toUint8Array(value), charset)
+}
+
+export const isChallengePage = (html) => {
+  return challengePageReg.test(String(html || ''))
+}
+
+export const requestTextWithGuard = async({ method = 'get', url, data = '', headers = '', useCookie = false, purpose = '页面', openVerifyOnChallenge = true, verifyUrl = '' }) => {
+  const response = await request({ method, url, data, headers, useCookie })
+  const responseText = getResponseText(response)
+  if (!responseText) {
+    throw new Error(`未获取到${purpose}`)
+  }
+  if (isChallengePage(responseText)) {
+    if (openVerifyOnChallenge) {
+      openVerifyPage(verifyUrl || url)
+    }
+    throw new Error(`检测到 Cloudflare 验证，已打开${purpose}，请手动通过后重试`)
+  }
+  return responseText
+}
 
 export const searchFunTemplate_1 = async(data, keyword) => {
   // eslint-disable-next-line prefer-const
   let { search_add_url, search_pre, alllist_dom_css, minlist_dom_css, namelink_index, img_src, use_background, img_reg, match_reg_num } = data.searchTemplate_1
   namelink_index ? namelink_index-- : namelink_index = 0
-  let searchUrl = ''
-  if (search_pre) {
-    searchUrl = search_pre + search_add_url + keyword
-  } else {
-    searchUrl = data.homepage + search_add_url + keyword
-  }
+  const searchPathList = Array.isArray(search_add_url) ? search_add_url : [search_add_url]
   let headers = ''
   data.headers ? headers = data.headers : ''
-  // 调试使用
-  // data.webName === '' ? console.log('') : ''
-  const { responseText } = await request({ method: 'get', url: searchUrl, data: '', headers })
-  const dom = parseToDOM(responseText).querySelector(alllist_dom_css)
+  const currentKeyword = encodeURIComponent(String(keyword || '').trim())
+  let lastError = null
 
-  const domList = dom.querySelectorAll(minlist_dom_css)
-  const searchList = []
-  domList.forEach(element => {
-    const obj = {}
+  for (let i = 0; i < searchPathList.length; i++) {
+    const searchUrl = (search_pre || data.homepage) + searchPathList[i] + currentKeyword
     try {
-      obj.name = element.querySelector('a').title
-      const pathname = element.querySelector('a').pathname
-      obj.url = data.homepage + pathname.slice(1, pathname.length)
-      // 获取封面图片地址
-      if (!use_background) {
-        if (!img_reg) {
-          const reg2 = eval('/' + img_src + `=('|")(.*?)('|")` + '/')
-          obj.imageUrl = element.innerHTML.match(reg2)[2]
-        } else {
-          obj.imageUrl = element.innerHTML.match(img_reg)[match_reg_num]
-        }
-        // obj.imageUrl = element.querySelector('img').getAttribute(img_src)
-      } else {
-        obj.imageUrl = element.innerHTML.match(/background.*?(url)\('?(.*?)'?\)/)[2]
+      const responseText = await requestTextWithGuard({
+        method: 'get',
+        url: searchUrl,
+        data: '',
+        headers,
+        purpose: `${data.webName} 搜索页`
+      })
+      const dom = parseToDOM(responseText).querySelector(alllist_dom_css)
+      if (!dom) {
+        continue
       }
 
-      // 名称修正？
-      if (obj.name === '') {
-        let titleArr = element.innerHTML.match(/title=('|")(.*?)('|")/);
+      const domList = dom.querySelectorAll(minlist_dom_css)
+      const searchList = []
+      domList.forEach(element => {
+        const obj = {}
+        try {
+          const anchorDom = getSearchResultAnchor(element, namelink_index)
+          obj.name = trimSpecial(anchorDom?.getAttribute('title') || anchorDom?.innerText || anchorDom?.textContent || '')
+          obj.url = resolveUrl(anchorDom?.getAttribute('href') || '', searchUrl)
 
-        (titleArr && titleArr.length >= 2) ? (obj.name = titleArr[2])
-          : (titleArr = element.innerHTML.match(/alt=('|")(.*?)('|")/),
-          (titleArr && titleArr.length >= 2) ? obj.name = titleArr[2] : '')
-        // 文本 name  innerText
-        obj.name === '' ? obj.name = element.querySelectorAll('a')[namelink_index].innerText : ''
+          if (!use_background) {
+            if (!img_reg) {
+              const imgDom = element.querySelector('img')
+              const rawImageUrl = imgDom?.getAttribute(img_src || 'src') ||
+                imgDom?.getAttribute('data-src') ||
+                imgDom?.getAttribute('data-original') ||
+                imgDom?.getAttribute('data-lazy-src') ||
+                imgDom?.getAttribute('src') ||
+                ''
+              if (rawImageUrl) {
+                obj.imageUrl = resolveUrl(rawImageUrl, searchUrl)
+              } else if (img_src) {
+                const reg2 = eval('/' + img_src + `=('|")(.*?)('|")` + '/')
+                obj.imageUrl = resolveUrl(element.innerHTML.match(reg2)?.[2] || '', searchUrl)
+              } else {
+                obj.imageUrl = ''
+              }
+            } else {
+              obj.imageUrl = resolveUrl(element.innerHTML.match(img_reg)?.[match_reg_num] || '', searchUrl)
+            }
+          } else {
+            obj.imageUrl = resolveUrl(element.innerHTML.match(/background.*?(url)\('?(.*?)'?\)/)?.[2] || '', searchUrl)
+          }
+
+          if (obj.name === '') {
+            let titleArr = element.innerHTML.match(/title=('|")(.*?)('|")/)
+            ;(titleArr && titleArr.length >= 2) ? (obj.name = titleArr[2])
+              : (titleArr = element.innerHTML.match(/alt=('|")(.*?)('|")/),
+              (titleArr && titleArr.length >= 2) ? obj.name = titleArr[2] : '')
+            obj.name === '' ? obj.name = trimSpecial(element.querySelectorAll('a')[namelink_index]?.innerText || '') : ''
+          }
+        } catch (error) {
+          console.log('error: ', data.webName, error)
+        }
+        if (obj.name || obj.url) {
+          searchList.push(obj)
+        }
+      })
+
+      if (searchList.length > 0 || domList.length === 0) {
+        return searchList
       }
     } catch (error) {
-      console.log('error: ', data.webName, error)
+      lastError = error
+      if (String(error?.message || '').includes('Cloudflare')) {
+        throw error
+      }
     }
-    searchList.push(obj)
-  })
-  return new Promise((resolve, reject) => {
-    resolve(searchList)
-  })
+  }
+
+  if (lastError) {
+    throw lastError
+  }
+  return []
 }
 
 export const searchComicOnWeb = async(webRule, keyword) => {
@@ -193,6 +301,12 @@ export const comicsWebInfo = [
     downHeaders: {
       referer: ''
     },
+    searchTemplate_1: {
+      search_add_url: 'search?title=',
+      alllist_dom_css: '.mh-list',
+      minlist_dom_css: 'li',
+      use_background: true
+    },
     getImgs: async function(context, processData) {
       let group; let page = 1
       if (processData.otherData) {
@@ -244,6 +358,51 @@ export const comicsWebInfo = [
     comicNameCss: '.title h1',
     chapterCss: '#play_0 ul ',
     readtype: 1,
+    searchFun: async function(keyword) {
+      const headers = {
+        'Content-Type': 'application/x-www-form-urlencoded; charset=gb2312',
+        referer: this.homepage
+      }
+      const data = encodeTextByCharset(`key=${keyword}`, 'gb2312')
+      const response = await request({
+        method: 'post',
+        url: this.homepage + 'e/search/',
+        headers,
+        data,
+        responseType: 'arraybuffer'
+      })
+      const responseText = decodeBinaryByCharset(response?.response || response, 'gb2312')
+
+      if (!responseText) {
+        throw new Error(`未获取到${this.webName} 搜索页`)
+      }
+      if (isChallengePage(responseText)) {
+        openVerifyPage(this.homepage)
+        throw new Error(`检测到 Cloudflare 验证，已打开${this.webName} 搜索页，请手动通过后重试`)
+      }
+
+      const root = parseToDOM(responseText)
+      if (root.querySelector('.noresult')) {
+        return []
+      }
+
+      const searchList = []
+      root.querySelectorAll('#dmList li').forEach((item) => {
+        const titleAnchor = item.querySelector('dt a')
+        const imgDom = item.querySelector('.pic img')
+        const name = trimSpecial(titleAnchor?.getAttribute('title') || titleAnchor?.innerText || titleAnchor?.textContent || '')
+        const url = resolveUrl(titleAnchor?.getAttribute('href') || '', this.homepage)
+        const imageUrl = resolveUrl(imgDom?.getAttribute('src') || '', this.homepage)
+        if (name && url) {
+          searchList.push({
+            name,
+            url,
+            imageUrl
+          })
+        }
+      })
+      return searchList
+    },
     useFrame: true,
     getImgs: async function(context, processData) {
       const iframeWindow = document.getElementById(processData.frameId).contentWindow
@@ -280,6 +439,33 @@ export const comicsWebInfo = [
     chapterCss: '#_listUl',
     chapterNameReg: /alt="(.*?)"/,
     readtype: 1,
+    searchFun: async function(keyword) {
+      const searchUrl = `${this.homepage}search?keyword=${encodeURIComponent(String(keyword || '').trim())}`
+      const responseText = await requestTextWithGuard({
+        method: 'get',
+        url: searchUrl,
+        headers: this.headers,
+        purpose: `${this.webName} search page`
+      })
+      const root = parseToDOM(responseText)
+      const searchList = []
+      root.querySelectorAll('.card_wrap.search ul.card_lst > li').forEach((item) => {
+        const anchor = item.querySelector('a.card_item')
+        const titleDom = item.querySelector('.subj')
+        const imgDom = item.querySelector('img')
+        const name = trimSpecial(titleDom?.innerText || titleDom?.textContent || '')
+        const url = resolveUrl(anchor?.getAttribute('href') || '', this.homepage)
+        const imageUrl = resolveUrl(imgDom?.getAttribute('src') || '', this.homepage)
+        if (name && url) {
+          searchList.push({
+            name,
+            url,
+            imageUrl
+          })
+        }
+      })
+      return searchList
+    },
     headers: {
       referer: 'https://www.dongmanmanhua.cn/'
     },
@@ -320,6 +506,33 @@ export const comicsWebInfo = [
     chapterCss: '#_listUl',
     chapterNameReg: /alt="(.*?)"/,
     readtype: 1,
+    searchFun: async function(keyword) {
+      const searchUrl = `${this.homepage}en/search?keyword=${encodeURIComponent(String(keyword || '').trim())}`
+      const responseText = await requestTextWithGuard({
+        method: 'get',
+        url: searchUrl,
+        headers: this.headers,
+        purpose: `${this.webName} search page`
+      })
+      const root = parseToDOM(responseText)
+      const searchList = []
+      root.querySelectorAll('.webtoon_list_wrap ul.webtoon_list > li').forEach((item) => {
+        const anchor = item.querySelector('a._card_item')
+        const titleDom = item.querySelector('.info_text .title')
+        const imgDom = item.querySelector('img')
+        const name = trimSpecial(titleDom?.innerText || titleDom?.textContent || '')
+        const url = resolveUrl(anchor?.getAttribute('href') || '', this.homepage)
+        const imageUrl = resolveUrl(imgDom?.getAttribute('src') || '', this.homepage)
+        if (name && url) {
+          searchList.push({
+            name,
+            url,
+            imageUrl
+          })
+        }
+      })
+      return searchList
+    },
     webDesc: '？需要魔法？',
     headers: {
       referer: 'https://www.webtoons.com/'
@@ -423,26 +636,6 @@ export const comicsWebInfo = [
     }
   },
   {
-    domain: ['qiximh2.com', 'www.qiximh2.com'],
-    homepage: 'http://www.qiximh2.com/',
-    webName: '七夕漫画',
-    comicNameCss: '.cy_title h1',
-    chapterCss: '.cy_plist ul',
-    readtype: 1,
-    useFrame: true,
-    getImgs: function(context, processData) {
-      const str = document.getElementById(processData.frameId).contentDocument.body.outerHTML
-      const imgStr = str.match(/main_img[\s\S]*?class="cy_intro_r/)[0]
-      const group = imgStr.matchAll(/data-src="(.*?)"/g)
-      const imgarr = []
-      for (const item of group) {
-        imgarr.push(item[1])
-      }
-      document.getElementById(processData.frameId).remove()
-      return imgarr
-    }
-  },
-  {
     domain: ['www.copymanga.tv', 'www.mangacopy.com'],
     homepage: 'https://www.mangacopy.com/',
     webName: '拷贝漫画',
@@ -513,30 +706,6 @@ export const comicsWebInfo = [
         return 'https://i.hamreus.com' + path + ele + '?e=' + e + '&m=' + m
       })
       return image
-    }
-  },
-  {
-    domain: 'www.36manga.com',
-    homepage: 'https://www.36manga.com/',
-    webName: '36漫画网',
-    comicNameCss: '.book-title h1 span',
-    chapterCss: '#chapter-list-4 li:not(:first-of-type)',
-    readtype: 1,
-    webDesc: '？可访问 ？',
-    getImgs: function(context) {
-      const group = context.matchAll(/chapterImages = ([\s\S]+?);var chapterPath = "([\s\S]+?)";var chapterPrice/g)
-      let imgarr = []
-      let middleStr = ''
-      for (const item of group) {
-        imgarr = JSON.parse(item[1])
-        middleStr = item[2]
-      }
-      if (imgarr[0].search('http') === -1) {
-        imgarr = imgarr.map((item) => {
-          return 'https://img001.arc-theday.com/' + middleStr + item
-        })
-      }
-      return imgarr
     }
   },
   {
@@ -626,27 +795,18 @@ export const comicsWebInfo = [
     }
   },
   {
-    domain: 'www.mhxqiu4.com',
-    homepage: 'http://www.mhxqiu4.com/',
-    webName: '漫画星球',
-    comicNameCss: '.cy_title h1',
-    chapterCss: '.cy_plist #mh-chapter-list-ol-0',
-    readtype: 1,
-    getImgs: function(context) {
-      let imgStr = funstrToData(context, /(function.*?return \S})(\(.*?{}\))/g)
-      imgStr = imgStr.match(/\[[\s\S]+?\]/)[0]
-      const imgArray = JSON.parse(imgStr)
-      return imgArray
-    }
-  },
-
-  {
     domain: 'www.mhua5.com',
     homepage: 'https://www.mhua5.com/',
     webName: '漫画屋',
     comicNameCss: '.comic-title.j-comic-title',
     chapterCss: '.chapter__list-box.clearfix',
     readtype: 1,
+    searchTemplate_1: {
+      search_add_url: 'index.php/search?key=',
+      alllist_dom_css: '.cate-comic-list',
+      minlist_dom_css: '.common-comic-item',
+      img_src: 'data-original'
+    },
     getImgs: function(context) {
       const group = context.matchAll(/data-original="(.*?)"/g)
       const imgArray = []
@@ -665,6 +825,12 @@ export const comicsWebInfo = [
     readtype: 1,
     headers: {
       referer: 'https://www.yymanhua.com/'
+    },
+    searchTemplate_1: {
+      search_add_url: 'search?title=',
+      alllist_dom_css: '.mh-list',
+      minlist_dom_css: 'li',
+      img_src: 'src'
     },
     useFrame: true,
     getImgs: async function(context, processData) {
@@ -705,6 +871,12 @@ export const comicsWebInfo = [
     readtype: 1,
     headers: {
       referer: 'https://xmanhua.com/'
+    },
+    searchTemplate_1: {
+      search_add_url: 'search?title=',
+      alllist_dom_css: '.mh-list',
+      minlist_dom_css: 'li',
+      img_src: 'src'
     },
     useFrame: true,
     getImgs: async function(context, processData) {
@@ -758,20 +930,6 @@ export const comicsWebInfo = [
     }
   },
   {
-    domain: 'www.zuimh.com',
-    homepage: 'https://www.zuimh.com/',
-    webName: '最漫画',
-    comicNameCss: '.book-detail .book-title h1 span',
-    chapterCss: '.chapter-body.clearfix #chapter-list-1',
-    readtype: 1,
-    readCssText: '.img_info {display: none;}.tbCenter img {border: 0px;}',
-    getImgs: async function(context) {
-      const imgStr = context.match(/var chapterImages = ([[\s\S]+?])[\s\S]+?var chapterPath/)[1]
-      const imgs = eval(imgStr)
-      return imgs
-    }
-  },
-  {
     domain: 'www.6mh1.com',
     homepage: 'http://www.6mh1.com/',
     webName: '六漫画',
@@ -784,34 +942,6 @@ export const comicsWebInfo = [
       const newImgs = JSON.parse(JSON.stringify(iframe.newImgs))
       document.getElementById(processData.frameId).remove()
       return newImgs
-    }
-  },
-  {
-    domain: 'www.mhxin.com',
-    homepage: 'https://www.mhxin.com/',
-    webName: '漫画芯',
-    comicNameCss: '.wrap_intro_l_comic .comic_deCon h1',
-    chapterCss: '.zj_list_con #chapter-list-1',
-    readtype: 1,
-    readCssText: '.img_info {display: none;}.comic_wraCon img {border: 0px;margin-top:0px;}',
-    getImgs: async function(context) {
-      const group = context.matchAll(/chapterImages = (.*?);var chapterPath = "(.*?)"/g)
-      const strArr = []
-      for (const item of group) {
-        strArr.push(item[1])
-        strArr.push(item[2])
-      }
-      let imgarr = JSON.parse(strArr[0])
-      const josnRes = await request('get', this.homepage + 'js/config.js')
-      const josnContext = josnRes.responseText
-      const imageDomian = josnContext.match(/"domain":\["(.*?)"]/)[1]
-      imgarr = imgarr.map((item) => {
-        if (imgarr[0].search('http') === -1) {
-          return imageDomian + '/' + strArr[1] + item
-        }
-        return item
-      })
-      return imgarr
     }
   },
   {
@@ -852,12 +982,113 @@ export const comicsWebInfo = [
     }
   },
   {
+    domain: ['bakamh.com', 'www.bakamh.com'],
+    homepage: 'https://bakamh.com/',
+    webName: 'bakamh巴卡漫画',
+    comicNameCss: '#manga-title h1',
+    authorCss: '.author-content',
+    chapterCss: '.listing-chapters_main',
+    readtype: 1,
+    useFrame: true,
+    headers: {
+      referer: 'https://bakamh.com/'
+    },
+    downHeaders: {
+      referer: 'https://bakamh.com/'
+    },
+    searchFun: async function(keyword) {
+      const headers = {
+        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+        referer: this.homepage
+      }
+      const data = `action=wp-manga-search-manga&title=${encodeURIComponent(keyword)}`
+      const responseText = await requestTextWithGuard({
+        method: 'post',
+        url: this.homepage + 'wp-admin/admin-ajax.php',
+        headers,
+        data,
+        purpose: `${this.webName} 搜索页`,
+        verifyUrl: this.homepage
+      })
+
+      let searchData = []
+      try {
+        const jsonData = JSON.parse(responseText || '{}')
+        searchData = Array.isArray(jsonData.data) ? jsonData.data : []
+      } catch (error) {
+        searchData = []
+      }
+
+      const searchList = []
+      for (let i = 0; i < searchData.length; i++) {
+        const item = searchData[i]
+        const name = trimSpecial(item?.title || item?.label || '')
+        const url = item?.url ? new URL(item.url, this.homepage).href : ''
+        if (!name || !url) {
+          continue
+        }
+
+        let imageUrl = ''
+        try {
+          const detailText = await requestTextWithGuard({
+            method: 'get',
+            url,
+            headers: this.headers || '',
+            purpose: `${this.webName} 详情页`
+          })
+          const root = parseToDOM(detailText || '')
+          const imgDom = root.querySelector('.summary_image img')
+          const rawImageUrl = imgDom?.getAttribute('data-src') || imgDom?.getAttribute('data-lazy-src') || imgDom?.getAttribute('src') || ''
+          imageUrl = rawImageUrl ? new URL(rawImageUrl, url).href : ''
+        } catch (error) {
+          imageUrl = ''
+        }
+
+        searchList.push({
+          name,
+          url,
+          imageUrl
+        })
+      }
+
+      return searchList
+    },
+    getImgs: async function(context, processData) {
+      const iframeDom = document.getElementById(processData.frameId).contentDocument
+      await delay(0.5)
+      const imgArray = [...iframeDom.querySelectorAll('img.wp-manga-chapter-img')]
+        .map(img => (img.getAttribute('data-manga-src') || img.dataset.mangaSrc || img.getAttribute('src') || '').trim())
+        .filter(Boolean)
+
+      if (imgArray.length === 0) {
+        const pageHtml = String(iframeDom.documentElement?.outerHTML || '').toLowerCase()
+        document.getElementById(processData.frameId).remove()
+
+        if (isChallengePage(pageHtml)) {
+          openVerifyPage(processData.url)
+          throw new Error('检测到 Cloudflare 验证，已打开章节页，请手动通过后重试下载')
+        }
+
+        throw new Error('未获取到章节图片，页面结构可能已变化')
+      }
+
+      document.getElementById(processData.frameId).remove()
+      return [...new Set(imgArray)]
+    }
+  },
+  {
     domain: 'www.guoman.net',
     homepage: 'https://www.guoman.net/',
     webName: '爱国漫',
     comicNameCss: '.detail-info > .detail-info-title',
     chapterCss: '#chapterlistload',
     readtype: 1,
+    searchTemplate_1: {
+      search_add_url: 'search?key=',
+      alllist_dom_css: '.mh-list',
+      minlist_dom_css: 'li',
+      img_src: 'src'
+    },
     getImgs: async function(context) {
       const group = context.matchAll(/<img.*src="(.*?)"/g)
       const imgArray = []
@@ -890,6 +1121,24 @@ export const comicsWebInfo = [
     comicNameCss: 'h1.title',
     chapterCss: '#j_chapter_list',
     readtype: 1,
+    searchFun: async function(keyword) {
+      const searchUrl = `${this.homepage}api/getsortlist/?search_key=${encodeURIComponent(String(keyword || '').trim())}`
+      const responseText = await requestTextWithGuard({
+        method: 'get',
+        url: searchUrl,
+        purpose: `${this.webName} search api`
+      })
+      const result = JSON.parse(responseText)
+      const dataList = Array.isArray(result?.data) ? result.data : []
+      return dataList.map((item) => {
+        const comicId = item?.comic_id || item?.comic_newid
+        return {
+          name: trimSpecial(item?.comic_name || ''),
+          url: resolveUrl(`/${comicId}/`, this.homepage),
+          imageUrl: resolveUrl(item?.cover_img || '', this.homepage)
+        }
+      }).filter(item => item.name && item.url && !item.url.endsWith('/undefined/'))
+    },
     getImgs: async function(context) {
       const imgStr = context.match(/chapter_img_list:(\[.*?\])/)[1]
       let imgArray = eval(imgStr)

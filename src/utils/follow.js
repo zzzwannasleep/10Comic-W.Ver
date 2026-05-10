@@ -1,6 +1,5 @@
 import { getStorage, setStorage } from '@/config/setup'
-import { getComicInfoFromHtml, findWebByUrl, searchComicsAcrossWebs } from '@/utils/comics'
-import { request } from '@/utils/index'
+import { getComicInfoFromHtml, findWebByUrl, requestTextWithGuard, searchComicsAcrossWebs } from '@/utils/comics'
 import { trimSpecial } from '@/utils/index'
 
 const cloneData = (value) => {
@@ -72,7 +71,12 @@ const mergeKnownUrl = (item, chapterUrls) => {
 }
 
 const getFollowInfoByRequest = async(webRule, comicPageUrl) => {
-  const { responseText } = await request({ method: 'get', url: comicPageUrl, headers: webRule.headers || '' })
+  const responseText = await requestTextWithGuard({
+    method: 'get',
+    url: comicPageUrl,
+    headers: webRule.headers || '',
+    purpose: `${webRule?.webName || '站点'} 漫画页`
+  })
   return getComicInfoFromHtml(responseText, webRule, comicPageUrl)
 }
 

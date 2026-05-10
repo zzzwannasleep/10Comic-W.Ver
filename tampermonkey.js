@@ -19,6 +19,7 @@ __APP_DOWNLOAD_URL_LINE__
 // @grant        GM_getResourceText
 // @grant        GM_download
 // @grant        GM_registerMenuCommand
+// @grant        GM_openInTab
 // @grant        unsafeWindow
 // @resource   vantcss   https://unpkg.com/vant@2.12/lib/index.css
 // @require      https://unpkg.com/vue@2.6.12/dist/vue.min.js
@@ -29,4 +30,3 @@ __APP_DOWNLOAD_URL_LINE__
 // @include      *
 // @connect      *
 // ==/UserScript==
-
