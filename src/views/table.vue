@@ -27,6 +27,18 @@
           </template>
         </van-cell>
 
+        <van-cell v-if="getDownloadSourceOptions().length > 1" title="图片来源">
+          <template #right-icon>
+            <van-radio-group v-model="imageSource" direction="horizontal">
+              <van-radio
+                v-for="item in getDownloadSourceOptions()"
+                :key="item.value"
+                :name="item.value"
+              >{{ item.text }}</van-radio>
+            </van-radio-group>
+          </template>
+        </van-cell>
+
         <van-cell>
           <div :style="{display: 'flex',justifyContent: 'space-between'}">
             <van-checkbox
@@ -286,6 +298,7 @@ export default {
 
       paylogoArr: [],
       downType: 0,
+      imageSource: '',
       useCharacterNum: false,
       characterNumSequence: false,
 
@@ -361,6 +374,7 @@ export default {
         this.$bus.$emit('getComicName', this.comicName)
         //
         this.downType = getStorage('downType')
+        this.syncDownloadSource()
       // eslint-disable-next-line no-empty
       } catch (error) {
         if (times === undefined) {
@@ -373,6 +387,29 @@ export default {
       this.lastSelectIndex = null
       return
     },
+    getDownloadSourceOptions() {
+      if (!Array.isArray(this.currentComics?.downloadSourceOptions)) {
+        return []
+      }
+      return this.currentComics.downloadSourceOptions
+    },
+    getSelectedImageSource() {
+      const optionList = this.getDownloadSourceOptions()
+      if (optionList.length === 0) {
+        return ''
+      }
+      const defaultSource = this.currentComics?.defaultImageSource || optionList[0].value
+      if (optionList.some(item => item.value === this.imageSource)) {
+        return this.imageSource
+      }
+      return defaultSource
+    },
+    syncDownloadSource() {
+      const nextSource = this.getSelectedImageSource()
+      if (nextSource !== this.imageSource) {
+        this.imageSource = nextSource
+      }
+    },
     decorateChapterList(list) {
       const followItem = findFollowItem(window.location.href, currentComics.webName, this.comicName)
       const authorName = followItem?.authorName || this.authorName || ''
@@ -383,7 +420,8 @@ export default {
           authorName,
           comicPageUrl: window.location.href,
           seriesChapterCount,
-          ...item
+          ...item,
+          imageSource: item.imageSource || this.getSelectedImageSource()
         }
       })
     },
@@ -447,6 +485,7 @@ export default {
         setKeyStatus(e.keyCode, false)
       }
     },
+    /*
     async getSelectList() {
       this.overlayShow = true
       try {
@@ -539,8 +578,114 @@ export default {
         })
       })
     },
+    */
+    async getSelectList() {
+      this.overlayShow = true
+      this.list = []
+      this.syncDownloadSource()
+      try {
+        if (currentComics.getComicInfo) {
+          const list = await currentComics.getComicInfo(this.comicName)
+          if (list) {
+            this.list = this.decorateChapterList(list)
+            this.overlayShow = false
+            this.showSelectList = true
+            return
+          }
+        }
+
+        await new Promise((resolve) => setTimeout(resolve, 100))
+
+        const { comicName, authorName } = getCurrentComicMeta(currentComics)
+        if (typeof currentComics.getChaptersFromRoot === 'function') {
+          const list = await currentComics.getChaptersFromRoot(
+            document,
+            window.location.href,
+            comicName || this.comicName,
+            authorName || this.authorName
+          )
+          if (Array.isArray(list) && list.length > 0) {
+            this.list = this.decorateChapterList(list)
+            this.overlayShow = false
+            this.showSelectList = true
+            return
+          }
+        }
+
+        const nodeList = document.querySelectorAll(currentComics.chapterCss)
+        this.getChapterData(nodeList, currentComics, 'one')
+
+        if (currentComics.chapterCss_2) {
+          const nodeList_2 = document.querySelectorAll(currentComics.chapterCss_2)
+          this.getChapterData(nodeList_2, currentComics, 'many')
+        }
+
+        this.list = this.decorateChapterList(this.list)
+        this.overlayShow = false
+        this.showSelectList = true
+      } catch (error) {
+        console.log('getSelectList-e: ', error)
+        Toast({
+          message: 'Site is not matched or method failed',
+          getContainer: '.card',
+          position: 'bottom'
+        })
+        setTimeout(() => {
+          this.overlayShow = false
+        }, 3000)
+      }
+    },
 
     // 已进入原网站漫画章节页面阅读，获取章节 下载
+    getChapterData(nodeList, currentComics, type) {
+      const hasSpend = currentComics.hasSpend
+      const chapterNameReg = currentComics.chapterNameReg
+      nodeList.forEach(dom => {
+        const urls = dom.querySelectorAll('a')
+        const readtype = currentComics.readtype
+
+        urls.forEach((element) => {
+          let chapterName = ''
+          try {
+            if (!chapterNameReg) {
+              chapterName = element.innerText
+            } else {
+              chapterName = element.outerHTML.match(chapterNameReg)[1]
+            }
+            chapterName = trimSpecial(chapterName)
+          } catch (error) {
+            //
+          }
+
+          let currentIsPay = false
+          if (hasSpend) {
+            const payKey = currentComics.payKey
+            const parent = element.parentElement
+            if (parent.outerHTML.indexOf(payKey) > 0) {
+              currentIsPay = true
+            } else {
+              currentIsPay = false
+            }
+          }
+
+          const data = {
+            comicName: trimSpecial(this.comicName),
+            chapterNumStr: '',
+            chapterName,
+            downChapterName: '',
+            url: element.href,
+            characterType: type,
+            readtype,
+            isPay: currentIsPay,
+            isSelect: false
+          }
+
+          if (data.chapterName !== '') {
+            this.list.push(data)
+          }
+        })
+      })
+    },
     startDownload(downloadItems) {
       const nextItems = downloadItems.map(item => ({
         originTab: 1,
@@ -571,6 +716,10 @@ export default {
         })
         return
       }
+      this.syncDownloadSource()
+      const currentDownloadUrl = typeof currentComics.normalizeDownloadUrl === 'function'
+        ? currentComics.normalizeDownloadUrl(window.location.href)
+        : window.location.href
       const item = {
         comicName: this.defineComicName,
         authorName: this.authorName,
@@ -580,11 +729,12 @@ export default {
         chapterNumStr: '',
         chapterName: this.definechapterName,
         downChapterName: this.definechapterName,
-        url: window.location.href,
+        url: currentDownloadUrl,
         characterType: 'one',
         readtype: currentComics.readtype,
         isPay: currentComics.hasSpend,
         downType: this.downType,
+        imageSource: this.getSelectedImageSource(),
         downHeaders: currentComics.downHeaders
       }
       this.downResult.push(item)
@@ -594,9 +744,11 @@ export default {
     },
     downSelectList() {
       let hasSelect = false
+      this.syncDownloadSource()
       this.list.forEach((item, index) => {
         if (item.isSelect) {
           item.downType = this.downType
+          item.imageSource = this.getSelectedImageSource()
           item.downHeaders = currentComics.downHeaders
           if (!hasSelect && item.isSelect) {
             hasSelect = true
@@ -657,7 +809,10 @@ export default {
         authorName: this.authorName,
         webName: currentComics.webName,
         comicPageUrl: window.location.href,
-        chapters: this.decorateChapterList(this.list)
+        chapters: this.decorateChapterList(this.list).map(item => ({
+          ...item,
+          imageSource: item.imageSource || this.getSelectedImageSource()
+        }))
       })
       this.authorName = followItem.authorName || this.authorName
       this.$bus.$emit('refreshFollowList')

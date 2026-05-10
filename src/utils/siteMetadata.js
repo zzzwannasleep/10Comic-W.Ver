@@ -328,15 +328,48 @@ export const getWebMetadata = async(downloadItem) => {
     return null
   }
 
+  if (typeof webRule.getMetadata === 'function') {
+    try {
+      const metadata = await webRule.getMetadata(downloadItem)
+      if (metadata) {
+        return metadata
+      }
+    } catch (error) {
+      console.log('getWebMetadata-custom-e: ', error)
+    }
+  }
+
   if (window.location.href === pageUrl) {
     return extractWebMetadataFromRoot(document, webRule, pageUrl, downloadItem)
   }
 
+  /*
+  /*
+  /*
   const responseText = await requestTextWithGuard({
     method: 'get',
     url: pageUrl,
     headers: webRule.headers || '',
     purpose: `${webRule.webName || 'Web'} 页面元数据`
+  })
+  const root = parseToDOM(responseText)
+  return extractWebMetadataFromRoot(root, webRule, pageUrl, downloadItem)
+  */
+  /*
+  const responseText = await requestTextWithGuard({
+    method: 'get',
+    url: pageUrl,
+    headers: webRule.headers || '',
+    purpose: `${webRule.webName || 'Web'} 页面元数据`
+  })
+  const root = parseToDOM(responseText)
+  return extractWebMetadataFromRoot(root, webRule, pageUrl, downloadItem)
+  */
+  const responseText = await requestTextWithGuard({
+    method: 'get',
+    url: pageUrl,
+    headers: webRule.headers || '',
+    purpose: `${webRule.webName || 'Web'} metadata`
   })
   const root = parseToDOM(responseText)
   return extractWebMetadataFromRoot(root, webRule, pageUrl, downloadItem)

@@ -6334,7 +6334,426 @@ const searchComicOnWeb = async(webRule, keyword) => {
   return []
 }
 
+const NHENTAI_API_ROOT = 'https://nhentai.net/api/v2'
+const NHENTAI_API_HEADERS = {
+  Accept: 'application/json',
+  'User-Agent': '10Comic-W.Ver/nhentai (https://github.com/zzzwannasleep/10Comic-W.Ver)'
+}
+const NHENTAI_DOWNLOAD_SOURCE_API = 'api'
+const NHENTAI_DOWNLOAD_SOURCE_WEB = 'web'
+const NHENTAI_DOWNLOAD_SOURCE_OPTIONS = [
+  { text: 'API', value: NHENTAI_DOWNLOAD_SOURCE_API },
+  { text: '网页', value: NHENTAI_DOWNLOAD_SOURCE_WEB }
+]
+
+let nhentaiCdnConfigPromise = null
+
+const getJsonByGuard = async(url, purpose, headers = '') => {
+  const responseText = await requestTextWithGuard({
+    method: 'get',
+    url,
+    headers,
+    purpose,
+    verifyUrl: 'https://nhentai.net/'
+  })
+  try {
+    return JSON.parse(responseText)
+  } catch (error) {
+    throw new Error(`${purpose} response is not valid JSON`)
+  }
+}
+
+const getNhentaiGalleryId = (url = '') => {
+  const match = String(url || '').match(/\/g\/(\d+)(?:\/\d+)?\/?/i)
+  return match?.[1] || ''
+}
+
+const normalizeNhentaiGalleryUrl = (url = '') => {
+  const galleryId = getNhentaiGalleryId(url)
+  if (!galleryId) {
+    return url
+  }
+  return `https://nhentai.net/g/${galleryId}/`
+}
+
+const getNhentaiApiJson = async(path, purpose) => {
+  return getJsonByGuard(`${NHENTAI_API_ROOT}${path}`, purpose, NHENTAI_API_HEADERS)
+}
+
+const getNhentaiCdnConfig = async() => {
+  if (!nhentaiCdnConfigPromise) {
+    nhentaiCdnConfigPromise = getNhentaiApiJson('/cdn', 'nhentai CDN config').catch((error) => {
+      nhentaiCdnConfigPromise = null
+      throw error
+    })
+  }
+  return nhentaiCdnConfigPromise
+}
+
+const getNhentaiGallery = async(galleryId) => {
+  if (!galleryId) {
+    throw new Error('Failed to parse nhentai gallery id')
+  }
+  return getNhentaiApiJson(`/galleries/${galleryId}`, `nhentai gallery ${galleryId}`)
+}
+
+const getNhentaiTitleText = (title = {}) => {
+  return (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .trimSpecial */ .Sc)(title.pretty || title.english || title.japanese || '')
+}
+
+const getNhentaiTitleFromPageTitle = (rawTitle = '') => {
+  const title = String(rawTitle || '')
+    .replace(/\s*[»禄]\s*nhentai.*$/i, '')
+    .replace(/\s*-\s*Page\s+\d+\s*$/i, '')
+    .trim()
+  return (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .trimSpecial */ .Sc)(title)
+}
+
+const getNhentaiRootTitle = (root) => {
+  const selectorList = ['h1 .pretty', 'h1.title', 'h1', 'title']
+  for (let i = 0; i < selectorList.length; i++) {
+    try {
+      const dom = root?.querySelector(selectorList[i])
+      const text = (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .trimSpecial */ .Sc)(dom?.innerText || dom?.textContent || '')
+      if (text) {
+        return getNhentaiTitleFromPageTitle(text)
+      }
+    } catch (error) {
+      //
+    }
+  }
+
+  try {
+    const docTitle = (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .trimSpecial */ .Sc)(root?.title || '')
+    if (docTitle) {
+      return getNhentaiTitleFromPageTitle(docTitle)
+    }
+  } catch (error) {
+    //
+  }
+
+  return getNhentaiTitleFromPageTitle(document?.title || '')
+}
+
+const getNhentaiTagNames = (tags = [], tagType = '') => {
+  return (tags || [])
+    .filter(item => !tagType || item?.type === tagType)
+    .map(item => (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .trimSpecial */ .Sc)(item?.name || ''))
+    .filter(Boolean)
+}
+
+const getNhentaiLanguageIso = (tags = []) => {
+  const languageNameList = getNhentaiTagNames(tags, 'language').map(item => item.toLowerCase())
+  const languageMap = {
+    english: 'en',
+    chinese: 'zh',
+    japanese: 'ja',
+    korean: 'ko',
+    spanish: 'es',
+    french: 'fr',
+    german: 'de',
+    russian: 'ru',
+    portuguese: 'pt',
+    italian: 'it',
+    thai: 'th',
+    vietnamese: 'vi'
+  }
+
+  for (let i = 0; i < languageNameList.length; i++) {
+    if (languageMap[languageNameList[i]]) {
+      return languageMap[languageNameList[i]]
+    }
+  }
+  return ''
+}
+
+const getNhentaiDownloadSource = (context = {}) => {
+  const source = String(context?.imageSource || context?.downloadSource || '').trim().toLowerCase()
+  return source === NHENTAI_DOWNLOAD_SOURCE_WEB ? NHENTAI_DOWNLOAD_SOURCE_WEB : NHENTAI_DOWNLOAD_SOURCE_API
+}
+
+const getNhentaiReaderPageUrl = (galleryId, pageNumber) => {
+  if (!galleryId || !pageNumber) {
+    return ''
+  }
+  return `https://nhentai.net/g/${galleryId}/${pageNumber}/`
+}
+
+const uniqUrlList = (list = []) => {
+  return [...new Set((list || []).filter(Boolean))]
+}
+
+const getNhentaiNumberText = (value = '') => {
+  const match = String(value || '').match(/\d+/)
+  return match ? parseInt(match[0]) : 0
+}
+
+const getNhentaiGalleryPageUrlsFromRoot = (root, pageUrl = '') => {
+  const pageUrlList = []
+  try {
+    root?.querySelectorAll('a.gallerythumb[href*="/g/"]').forEach((item) => {
+      const href = item?.getAttribute('href') || ''
+      if (href) {
+        pageUrlList.push(resolveUrl(href, pageUrl))
+      }
+    })
+  } catch (error) {
+    //
+  }
+
+  const uniquePageUrlList = uniqUrlList(pageUrlList)
+  if (uniquePageUrlList.length > 0) {
+    return uniquePageUrlList
+  }
+
+  const galleryId = getNhentaiGalleryId(pageUrl) ||
+    getNhentaiGalleryId(root?.querySelector('.go-back[href*="/g/"]')?.getAttribute('href') || '')
+  const numPages = getNhentaiNumberText(
+    root?.querySelector('.reader-pagination .num-pages, .page-number .num-pages')?.textContent || ''
+  )
+  if (!galleryId || !numPages) {
+    return []
+  }
+
+  return Array.from({ length: numPages }, (_, index) => getNhentaiReaderPageUrl(galleryId, index + 1)).filter(Boolean)
+}
+
+const getNhentaiReaderImageUrlFromRoot = (root, pageUrl = '') => {
+  const selectorList = [
+    '#image-container img',
+    'section#image-container img',
+    'img[alt^="Page "]'
+  ]
+
+  for (let i = 0; i < selectorList.length; i++) {
+    try {
+      const dom = root?.querySelector(selectorList[i])
+      const rawUrl = dom?.getAttribute('data-src') ||
+        dom?.getAttribute('data-lazy-src') ||
+        dom?.getAttribute('src') ||
+        ''
+      if (rawUrl) {
+        return resolveUrl(rawUrl, pageUrl)
+      }
+    } catch (error) {
+      //
+    }
+  }
+
+  return ''
+}
+
+const getNhentaiGalleryPageUrls = async(pageUrl, responseText = '') => {
+  const currentPageUrl = pageUrl || window.location.href
+  const currentRoot = responseText ? (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .parseToDOM */ .U3)(responseText) : null
+  let pageUrlList = getNhentaiGalleryPageUrlsFromRoot(currentRoot, currentPageUrl)
+  if (pageUrlList.length > 0) {
+    return pageUrlList
+  }
+
+  const galleryUrl = normalizeNhentaiGalleryUrl(currentPageUrl)
+  if (!galleryUrl || galleryUrl === currentPageUrl) {
+    return pageUrlList
+  }
+
+  const galleryText = await requestTextWithGuard({
+    method: 'get',
+    url: galleryUrl,
+    purpose: 'nhentai gallery page',
+    verifyUrl: galleryUrl
+  })
+  const galleryRoot = (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .parseToDOM */ .U3)(galleryText)
+  pageUrlList = getNhentaiGalleryPageUrlsFromRoot(galleryRoot, galleryUrl)
+  return pageUrlList
+}
+
+const getNhentaiWebImageList = async(pageUrl, responseText = '') => {
+  const currentPageUrl = pageUrl || window.location.href
+  const currentRoot = responseText ? (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .parseToDOM */ .U3)(responseText) : null
+  const directImageUrl = getNhentaiReaderImageUrlFromRoot(currentRoot, currentPageUrl)
+  const pageUrlList = await getNhentaiGalleryPageUrls(currentPageUrl, responseText)
+
+  if (pageUrlList.length === 0) {
+    return directImageUrl ? [directImageUrl] : []
+  }
+
+  const imageUrlList = []
+  const batchSize = 4
+  for (let i = 0; i < pageUrlList.length; i += batchSize) {
+    const batchList = pageUrlList.slice(i, i + batchSize)
+    const batchResult = await Promise.all(batchList.map(async(currentReaderPageUrl) => {
+      if (currentReaderPageUrl === currentPageUrl && directImageUrl) {
+        return directImageUrl
+      }
+
+      const readerText = await requestTextWithGuard({
+        method: 'get',
+        url: currentReaderPageUrl,
+        purpose: `nhentai reader page ${i + 1}`,
+        verifyUrl: normalizeNhentaiGalleryUrl(currentReaderPageUrl)
+      })
+      const readerRoot = (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .parseToDOM */ .U3)(readerText)
+      return getNhentaiReaderImageUrlFromRoot(readerRoot, currentReaderPageUrl)
+    }))
+    imageUrlList.push(...batchResult.filter(Boolean))
+  }
+
+  return imageUrlList
+}
+
+const buildNhentaiChapterName = (pageCount = 0) => {
+  return pageCount > 0 ? `Full Gallery (${pageCount}P)` : 'Full Gallery'
+}
+
+const buildNhentaiChapterList = ({ galleryId, comicName = '', authorName = '', pageUrl = '', numPages = 0 }) => {
+  if (!galleryId) {
+    return []
+  }
+
+  const normalizedPageUrl = normalizeNhentaiGalleryUrl(pageUrl || `https://nhentai.net/g/${galleryId}/`)
+  return [{
+    comicName: (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .trimSpecial */ .Sc)(comicName),
+    authorName: (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .trimSpecial */ .Sc)(authorName),
+    comicPageUrl: normalizedPageUrl,
+    webName: 'nhentai',
+    chapterNumStr: '',
+    chapterName: buildNhentaiChapterName(numPages),
+    downChapterName: '',
+    url: normalizedPageUrl,
+    characterType: 'one',
+    readtype: 1,
+    isPay: false,
+    isSelect: false
+  }]
+}
+
+const getNhentaiChapterListFromRoot = (root, pageUrl, comicName = '', authorName = '') => {
+  const normalizedPageUrl = normalizeNhentaiGalleryUrl(pageUrl || window.location.href)
+  const galleryId = getNhentaiGalleryId(normalizedPageUrl)
+  if (!galleryId) {
+    return []
+  }
+
+  const resolvedComicName = (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .trimSpecial */ .Sc)(comicName || getNhentaiRootTitle(root) || `nhentai ${galleryId}`)
+  const numPages = getNhentaiGalleryPageUrlsFromRoot(root, normalizedPageUrl).length
+  return buildNhentaiChapterList({
+    galleryId,
+    comicName: resolvedComicName,
+    authorName,
+    pageUrl: normalizedPageUrl,
+    numPages
+  })
+}
+
+const getNhentaiSearchResultName = (item = {}) => {
+  return (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .trimSpecial */ .Sc)(item.english_title || item.japanese_title || `nhentai ${item.id || ''}`)
+}
+
+const getNhentaiSearchList = async(keyword) => {
+  const currentKeyword = String(keyword || '').trim()
+  if (!currentKeyword) {
+    return []
+  }
+
+  const [searchResult, cdnConfig] = await Promise.all([
+    getNhentaiApiJson(`/search?query=${encodeURIComponent(currentKeyword)}`, 'nhentai search'),
+    getNhentaiCdnConfig()
+  ])
+  const thumbBaseUrl = `${cdnConfig?.thumb_servers?.[0] || 'https://t1.nhentai.net'}/`
+
+  return (searchResult?.result || []).map((item) => {
+    return {
+      name: getNhentaiSearchResultName(item),
+      url: `https://nhentai.net/g/${item.id}/`,
+      imageUrl: resolveUrl(item.thumbnail, thumbBaseUrl)
+    }
+  })
+}
+
+const getNhentaiApiImageList = async(pageUrl) => {
+  const galleryId = getNhentaiGalleryId(pageUrl)
+  const [gallery, cdnConfig] = await Promise.all([
+    getNhentaiGallery(galleryId),
+    getNhentaiCdnConfig()
+  ])
+  const imageBaseUrl = `${cdnConfig?.image_servers?.[0] || 'https://i1.nhentai.net'}/`
+  return (gallery?.pages || []).map(item => resolveUrl(item.path, imageBaseUrl))
+}
+
+const getNhentaiImageList = async(pageUrl, responseText = '', processData = {}) => {
+  if (getNhentaiDownloadSource(processData) === NHENTAI_DOWNLOAD_SOURCE_WEB) {
+    return getNhentaiWebImageList(pageUrl, responseText)
+  }
+  return getNhentaiApiImageList(pageUrl)
+}
+
+const getNhentaiMetadata = async(downloadItem = {}) => {
+  if (getNhentaiDownloadSource(downloadItem) === NHENTAI_DOWNLOAD_SOURCE_WEB) {
+    return null
+  }
+
+  const pageUrl = downloadItem?.comicPageUrl || downloadItem?.url || window.location.href
+  const galleryId = getNhentaiGalleryId(pageUrl)
+  if (!galleryId) {
+    return null
+  }
+
+  const [gallery, cdnConfig] = await Promise.all([
+    getNhentaiGallery(galleryId),
+    getNhentaiCdnConfig()
+  ])
+  const artistList = getNhentaiTagNames(gallery?.tags, 'artist')
+  const groupList = getNhentaiTagNames(gallery?.tags, 'group')
+  const tagList = (gallery?.tags || [])
+    .filter(item => !['artist', 'group', 'language', 'category'].includes(item?.type))
+    .map(item => (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .trimSpecial */ .Sc)(item?.name || ''))
+    .filter(Boolean)
+  const coverBaseUrl = `${cdnConfig?.image_servers?.[0] || 'https://i1.nhentai.net'}/`
+
+  return {
+    source: 'nhentai API',
+    seriesTitle: getNhentaiTitleText(gallery?.title) || downloadItem?.comicName || '',
+    originalTitle: (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .trimSpecial */ .Sc)(gallery?.title?.japanese || '') || getNhentaiTitleText(gallery?.title) || downloadItem?.comicName || '',
+    summary: '',
+    writers: artistList.length > 0 ? artistList : groupList,
+    illustrators: artistList,
+    tags: tagList,
+    publisher: groupList[0] || '',
+    issueCount: downloadItem?.seriesChapterCount || undefined,
+    releaseDate: gallery?.upload_date ? new Date(gallery.upload_date * 1000).toISOString().slice(0, 10) : '',
+    status: 'ended',
+    ageRating: 'R18+',
+    languageISO: getNhentaiLanguageIso(gallery?.tags),
+    subjectUrl: normalizeNhentaiGalleryUrl(pageUrl),
+    coverUrl: gallery?.cover?.path ? resolveUrl(gallery.cover.path, coverBaseUrl) : ''
+  }
+}
+
 const comicsWebInfo = [
+  {
+    domain: ['nhentai.net', 'www.nhentai.net'],
+    homepage: 'https://nhentai.net/',
+    webName: 'nhentai',
+    comicNameCss: 'h1 .pretty, h1.title, h1, title',
+    authorCss: '#tags a[href*="/artist/"] .name, #tags a[href*="/group/"] .name, a[href*="/artist/"] .name, a[href*="/group/"] .name',
+    chapterCss: '.__nhentai_single_gallery__',
+    normalizeDownloadUrl: normalizeNhentaiGalleryUrl,
+    defaultImageSource: NHENTAI_DOWNLOAD_SOURCE_API,
+    downloadSourceOptions: NHENTAI_DOWNLOAD_SOURCE_OPTIONS,
+    readtype: 1,
+    searchFun: async function(keyword) {
+      return getNhentaiSearchList(keyword)
+    },
+    getChaptersFromRoot: function(root, pageUrl, comicName, authorName) {
+      return getNhentaiChapterListFromRoot(root, pageUrl, comicName, authorName)
+    },
+    getImgs: async function(context, processData) {
+      return getNhentaiImageList(processData?.url || window.location.href, context, processData)
+    },
+    getMetadata: async function(downloadItem) {
+      return getNhentaiMetadata(downloadItem)
+    }
+  },
   {
     domain: ['mangabz.com', 'www.mangabz.com'],
     homepage: 'https://mangabz.com/',
@@ -7615,6 +8034,13 @@ const pushChapterData = (list, nodeList, currentWeb, type, pageUrl, comicName, a
 }
 
 const getChapterListFromRoot = (root, currentWeb, pageUrl, comicName, authorName = '') => {
+  if (typeof currentWeb?.getChaptersFromRoot === 'function') {
+    const customList = currentWeb.getChaptersFromRoot(root, pageUrl, comicName, authorName)
+    if (Array.isArray(customList)) {
+      return customList
+    }
+  }
+
   const list = []
   const nodeList = root.querySelectorAll(currentWeb.chapterCss)
   pushChapterData(list, nodeList, currentWeb, 'one', pageUrl, comicName, authorName)
@@ -9007,6 +9433,54 @@ var tablevue_type_template_id_657d4b24_scoped_true_render = function () {
                 ]),
               }),
               _vm._v(" "),
+              _vm.getDownloadSourceOptions().length > 1
+                ? _c("van-cell", {
+                    attrs: { title: "图片来源" },
+                    scopedSlots: _vm._u(
+                      [
+                        {
+                          key: "right-icon",
+                          fn: function () {
+                            return [
+                              _c(
+                                "van-radio-group",
+                                {
+                                  attrs: { direction: "horizontal" },
+                                  model: {
+                                    value: _vm.imageSource,
+                                    callback: function ($$v) {
+                                      _vm.imageSource = $$v
+                                    },
+                                    expression: "imageSource",
+                                  },
+                                },
+                                _vm._l(
+                                  _vm.getDownloadSourceOptions(),
+                                  function (item) {
+                                    return _c(
+                                      "van-radio",
+                                      {
+                                        key: item.value,
+                                        attrs: { name: item.value },
+                                      },
+                                      [_vm._v(_vm._s(item.text))]
+                                    )
+                                  }
+                                ),
+                                1
+                              ),
+                            ]
+                          },
+                          proxy: true,
+                        },
+                      ],
+                      null,
+                      false,
+                      2067699353
+                    ),
+                  })
+                : _vm._e(),
+              _vm._v(" "),
               _c("van-cell", [
                 _c(
                   "div",
@@ -10241,6 +10715,18 @@ var external_vant_ = __webpack_require__(8871);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -10271,6 +10757,7 @@ var external_vant_ = __webpack_require__(8871);
 
       paylogoArr: [],
       downType: 0,
+      imageSource: '',
       useCharacterNum: false,
       characterNumSequence: false,
 
@@ -10346,6 +10833,7 @@ var external_vant_ = __webpack_require__(8871);
         this.$bus.$emit('getComicName', this.comicName)
         //
         this.downType = (0,setup/* getStorage */.cF)('downType')
+        this.syncDownloadSource()
       // eslint-disable-next-line no-empty
       } catch (error) {
         if (times === undefined) {
@@ -10358,6 +10846,29 @@ var external_vant_ = __webpack_require__(8871);
       this.lastSelectIndex = null
       return
     },
+    getDownloadSourceOptions() {
+      if (!Array.isArray(this.currentComics?.downloadSourceOptions)) {
+        return []
+      }
+      return this.currentComics.downloadSourceOptions
+    },
+    getSelectedImageSource() {
+      const optionList = this.getDownloadSourceOptions()
+      if (optionList.length === 0) {
+        return ''
+      }
+      const defaultSource = this.currentComics?.defaultImageSource || optionList[0].value
+      if (optionList.some(item => item.value === this.imageSource)) {
+        return this.imageSource
+      }
+      return defaultSource
+    },
+    syncDownloadSource() {
+      const nextSource = this.getSelectedImageSource()
+      if (nextSource !== this.imageSource) {
+        this.imageSource = nextSource
+      }
+    },
     decorateChapterList(list) {
       const followItem = findFollowItem(window.location.href, comics/* currentComics.webName */.Po.webName, this.comicName)
       const authorName = followItem?.authorName || this.authorName || ''
@@ -10368,7 +10879,8 @@ var external_vant_ = __webpack_require__(8871);
           authorName,
           comicPageUrl: window.location.href,
           seriesChapterCount,
-          ...item
+          ...item,
+          imageSource: item.imageSource || this.getSelectedImageSource()
         }
       })
     },
@@ -10432,12 +10944,13 @@ var external_vant_ = __webpack_require__(8871);
         setKeyStatus(e.keyCode, false)
       }
     },
+    /*
     async getSelectList() {
       this.overlayShow = true
       try {
         // 优先 getComicInfo 获取章节信息
-        if (comics/* currentComics.getComicInfo */.Po.getComicInfo) {
-          const list = await comics/* currentComics.getComicInfo */.Po.getComicInfo(this.comicName)
+        if (currentComics.getComicInfo) {
+          const list = await currentComics.getComicInfo(this.comicName)
           if (list) {
             this.list = this.decorateChapterList(list)
             this.overlayShow = false
@@ -10448,13 +10961,13 @@ var external_vant_ = __webpack_require__(8871);
 
         await new Promise((resolve) => setTimeout(resolve, 100))
         // 单章数据
-        const nodeList = document.querySelectorAll(comics/* currentComics.chapterCss */.Po.chapterCss)
-        this.getChapterData(nodeList, comics/* currentComics */.Po, 'one')
+        const nodeList = document.querySelectorAll(currentComics.chapterCss)
+        this.getChapterData(nodeList, currentComics, 'one')
 
         // （如果存在）分卷数据
-        if (comics/* currentComics.chapterCss_2 */.Po.chapterCss_2) {
-          const nodeList_2 = document.querySelectorAll(comics/* currentComics.chapterCss_2 */.Po.chapterCss_2)
-          this.getChapterData(nodeList_2, comics/* currentComics */.Po, 'many')
+        if (currentComics.chapterCss_2) {
+          const nodeList_2 = document.querySelectorAll(currentComics.chapterCss_2)
+          this.getChapterData(nodeList_2, currentComics, 'many')
         }
 
         this.list = this.decorateChapterList(this.list)
@@ -10463,7 +10976,7 @@ var external_vant_ = __webpack_require__(8871);
         this.showSelectList = true
       } catch (error) {
         console.log('getSelectList-e: ', error)
-        ;(0,external_vant_.Toast)({
+        Toast({
           message: '网站未匹配或方法已失效',
           getContainer: '.card',
           position: 'bottom'
@@ -10489,12 +11002,120 @@ var external_vant_ = __webpack_require__(8871);
             } else {
               chapterName = element.outerHTML.match(chapterNameReg)[1]
             }
-            chapterName = (0,utils/* trimSpecial */.Sc)(chapterName)
+            chapterName = trimSpecial(chapterName)
           } catch (error) {
             // console.log()
           }
 
           // 获取付费标志
+          let currentIsPay = false
+          if (hasSpend) {
+            const payKey = currentComics.payKey
+            const parent = element.parentElement
+            if (parent.outerHTML.indexOf(payKey) > 0) {
+              currentIsPay = true
+            } else {
+              currentIsPay = false
+            }
+          }
+
+          const data = {
+            comicName: trimSpecial(this.comicName),
+            chapterNumStr: '',
+            chapterName,
+            downChapterName: '',
+            url: element.href,
+            characterType: type,
+            readtype,
+            isPay: currentIsPay,
+            isSelect: false
+          }
+
+          if (data.chapterName !== '') {
+            this.list.push(data)
+          }
+        })
+      })
+    },
+    */
+    async getSelectList() {
+      this.overlayShow = true
+      this.list = []
+      this.syncDownloadSource()
+      try {
+        if (comics/* currentComics.getComicInfo */.Po.getComicInfo) {
+          const list = await comics/* currentComics.getComicInfo */.Po.getComicInfo(this.comicName)
+          if (list) {
+            this.list = this.decorateChapterList(list)
+            this.overlayShow = false
+            this.showSelectList = true
+            return
+          }
+        }
+
+        await new Promise((resolve) => setTimeout(resolve, 100))
+
+        const { comicName, authorName } = (0,comics/* getCurrentComicMeta */.lb)(comics/* currentComics */.Po)
+        if (typeof comics/* currentComics.getChaptersFromRoot */.Po.getChaptersFromRoot === 'function') {
+          const list = await comics/* currentComics.getChaptersFromRoot */.Po.getChaptersFromRoot(
+            document,
+            window.location.href,
+            comicName || this.comicName,
+            authorName || this.authorName
+          )
+          if (Array.isArray(list) && list.length > 0) {
+            this.list = this.decorateChapterList(list)
+            this.overlayShow = false
+            this.showSelectList = true
+            return
+          }
+        }
+
+        const nodeList = document.querySelectorAll(comics/* currentComics.chapterCss */.Po.chapterCss)
+        this.getChapterData(nodeList, comics/* currentComics */.Po, 'one')
+
+        if (comics/* currentComics.chapterCss_2 */.Po.chapterCss_2) {
+          const nodeList_2 = document.querySelectorAll(comics/* currentComics.chapterCss_2 */.Po.chapterCss_2)
+          this.getChapterData(nodeList_2, comics/* currentComics */.Po, 'many')
+        }
+
+        this.list = this.decorateChapterList(this.list)
+        this.overlayShow = false
+        this.showSelectList = true
+      } catch (error) {
+        console.log('getSelectList-e: ', error)
+        ;(0,external_vant_.Toast)({
+          message: 'Site is not matched or method failed',
+          getContainer: '.card',
+          position: 'bottom'
+        })
+        setTimeout(() => {
+          this.overlayShow = false
+        }, 3000)
+      }
+    },
+
+    // 已进入原网站漫画章节页面阅读，获取章节 下载
+    getChapterData(nodeList, currentComics, type) {
+      const hasSpend = currentComics.hasSpend
+      const chapterNameReg = currentComics.chapterNameReg
+      nodeList.forEach(dom => {
+        const urls = dom.querySelectorAll('a')
+        const readtype = currentComics.readtype
+
+        urls.forEach((element) => {
+          let chapterName = ''
+          try {
+            if (!chapterNameReg) {
+              chapterName = element.innerText
+            } else {
+              chapterName = element.outerHTML.match(chapterNameReg)[1]
+            }
+            chapterName = (0,utils/* trimSpecial */.Sc)(chapterName)
+          } catch (error) {
+            //
+          }
+
           let currentIsPay = false
           if (hasSpend) {
             const payKey = currentComics.payKey
@@ -10524,8 +11145,6 @@ var external_vant_ = __webpack_require__(8871);
         })
       })
     },
-
-    // 已进入原网站漫画章节页面阅读，获取章节 下载
     startDownload(downloadItems) {
       const nextItems = downloadItems.map(item => ({
         originTab: 1,
@@ -10556,6 +11175,10 @@ var external_vant_ = __webpack_require__(8871);
         })
         return
       }
+      this.syncDownloadSource()
+      const currentDownloadUrl = typeof comics/* currentComics.normalizeDownloadUrl */.Po.normalizeDownloadUrl === 'function'
+        ? comics/* currentComics.normalizeDownloadUrl */.Po.normalizeDownloadUrl(window.location.href)
+        : window.location.href
       const item = {
         comicName: this.defineComicName,
         authorName: this.authorName,
@@ -10565,11 +11188,12 @@ var external_vant_ = __webpack_require__(8871);
         chapterNumStr: '',
         chapterName: this.definechapterName,
         downChapterName: this.definechapterName,
-        url: window.location.href,
+        url: currentDownloadUrl,
         characterType: 'one',
         readtype: comics/* currentComics.readtype */.Po.readtype,
         isPay: comics/* currentComics.hasSpend */.Po.hasSpend,
         downType: this.downType,
+        imageSource: this.getSelectedImageSource(),
         downHeaders: comics/* currentComics.downHeaders */.Po.downHeaders
       }
       this.downResult.push(item)
@@ -10579,9 +11203,11 @@ var external_vant_ = __webpack_require__(8871);
     },
     downSelectList() {
       let hasSelect = false
+      this.syncDownloadSource()
       this.list.forEach((item, index) => {
         if (item.isSelect) {
           item.downType = this.downType
+          item.imageSource = this.getSelectedImageSource()
           item.downHeaders = comics/* currentComics.downHeaders */.Po.downHeaders
           if (!hasSelect && item.isSelect) {
             hasSelect = true
@@ -10642,7 +11268,10 @@ var external_vant_ = __webpack_require__(8871);
         authorName: this.authorName,
         webName: comics/* currentComics.webName */.Po.webName,
         comicPageUrl: window.location.href,
-        chapters: this.decorateChapterList(this.list)
+        chapters: this.decorateChapterList(this.list).map(item => ({
+          ...item,
+          imageSource: item.imageSource || this.getSelectedImageSource()
+        }))
       })
       this.authorName = followItem.authorName || this.authorName
       this.$bus.$emit('refreshFollowList')
@@ -11940,7 +12569,8 @@ const getChapterImageUrls = async(downloadItem) => {
   if (downloadItem.readtype === 1) {
     const imgs = await (0,utils/* getImage */.gJ)({
       url: downloadItem.url,
-      isPay: downloadItem.isPay
+      isPay: downloadItem.isPay,
+      imageSource: downloadItem.imageSource
     })
     return applyImageRange(Array.isArray(imgs) ? imgs : [])
   }
@@ -11952,6 +12582,7 @@ const getChapterImageUrls = async(downloadItem) => {
     imgIndex: 0,
     totalNumber: 0,
     isPay: downloadItem.isPay,
+    imageSource: downloadItem.imageSource,
     otherData: undefined
   }
 
@@ -12806,8 +13437,8 @@ class Queue {
     }
 
     if (readtype === 1) {
-      const { url, isPay } = this.worker[index]
-      const processData = { url, isPay }
+      const { url, isPay, imageSource } = this.worker[index]
+      const processData = { url, isPay, imageSource }
       let imgs = []
       try {
         imgs = await (0,utils/* getImage */.gJ)(processData)
@@ -12971,9 +13602,9 @@ class Queue {
 
   // 网站翻页阅读
   async down2(workerId) {
-    const { url, downType, totalNumber, isPay, imgIndex, downHeaders } = this.worker[workerId]
+    const { url, downType, totalNumber, isPay, imgIndex, downHeaders, imageSource } = this.worker[workerId]
 
-    const processData = { url, imgIndex, totalNumber, isPay }
+    const processData = { url, imgIndex, totalNumber, isPay, imageSource }
     processData.otherData = this.worker[workerId].otherData
 
     const { imgUrlArr, nextPageUrl, imgCount, otherData } = await (0,utils/* getImage */.gJ)(processData)
@@ -13114,6 +13745,7 @@ class Queue {
           func: this.exeDown(i),
           downType: item.downType, // 下载方式 0：直接  1：压缩  2：拼接
           hasError: false,
+          imageSource: item.imageSource,
           downHeaders: item.downHeaders,
           otherData: undefined, // 自定义存储其他下载数据
           seriesChapterCount: item.seriesChapterCount,
@@ -14496,6 +15128,7 @@ followvue_type_template_id_2da631cb_scoped_true_render._withStripped = true
           followItemId: item.id,
           downChapterName,
           downType,
+          imageSource: chapter.imageSource || webRule?.defaultImageSource || '',
           downHeaders: webRule?.downHeaders
         }
       })
@@ -18396,15 +19029,48 @@ const getWebMetadata = async(downloadItem) => {
     return null
   }
 
+  if (typeof webRule.getMetadata === 'function') {
+    try {
+      const metadata = await webRule.getMetadata(downloadItem)
+      if (metadata) {
+        return metadata
+      }
+    } catch (error) {
+      console.log('getWebMetadata-custom-e: ', error)
+    }
+  }
+
   if (window.location.href === pageUrl) {
     return extractWebMetadataFromRoot(document, webRule, pageUrl, downloadItem)
   }
 
-  const responseText = await (0,comics/* requestTextWithGuard */.HN)({
+  /*
+  /*
+  /*
+  const responseText = await requestTextWithGuard({
     method: 'get',
     url: pageUrl,
     headers: webRule.headers || '',
     purpose: `${webRule.webName || 'Web'} 页面元数据`
+  })
+  const root = parseToDOM(responseText)
+  return extractWebMetadataFromRoot(root, webRule, pageUrl, downloadItem)
+  */
+  /*
+  const responseText = await requestTextWithGuard({
+    method: 'get',
+    url: pageUrl,
+    headers: webRule.headers || '',
+    purpose: `${webRule.webName || 'Web'} 页面元数据`
+  })
+  const root = parseToDOM(responseText)
+  return extractWebMetadataFromRoot(root, webRule, pageUrl, downloadItem)
+  */
+  const responseText = await (0,comics/* requestTextWithGuard */.HN)({
+    method: 'get',
+    url: pageUrl,
+    headers: webRule.headers || '',
+    purpose: `${webRule.webName || 'Web'} metadata`
   })
   const root = (0,utils/* parseToDOM */.U3)(responseText)
   return extractWebMetadataFromRoot(root, webRule, pageUrl, downloadItem)

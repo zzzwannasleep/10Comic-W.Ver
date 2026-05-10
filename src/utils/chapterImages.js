@@ -19,7 +19,8 @@ export const getChapterImageUrls = async(downloadItem) => {
   if (downloadItem.readtype === 1) {
     const imgs = await getImage({
       url: downloadItem.url,
-      isPay: downloadItem.isPay
+      isPay: downloadItem.isPay,
+      imageSource: downloadItem.imageSource
     })
     return applyImageRange(Array.isArray(imgs) ? imgs : [])
   }
@@ -31,6 +32,7 @@ export const getChapterImageUrls = async(downloadItem) => {
     imgIndex: 0,
     totalNumber: 0,
     isPay: downloadItem.isPay,
+    imageSource: downloadItem.imageSource,
     otherData: undefined
   }
 

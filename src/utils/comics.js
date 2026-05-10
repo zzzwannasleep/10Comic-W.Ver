@@ -190,7 +190,426 @@ export const searchComicOnWeb = async(webRule, keyword) => {
   return []
 }
 
+const NHENTAI_API_ROOT = 'https://nhentai.net/api/v2'
+const NHENTAI_API_HEADERS = {
+  Accept: 'application/json',
+  'User-Agent': '10Comic-W.Ver/nhentai (https://github.com/zzzwannasleep/10Comic-W.Ver)'
+}
+const NHENTAI_DOWNLOAD_SOURCE_API = 'api'
+const NHENTAI_DOWNLOAD_SOURCE_WEB = 'web'
+const NHENTAI_DOWNLOAD_SOURCE_OPTIONS = [
+  { text: 'API', value: NHENTAI_DOWNLOAD_SOURCE_API },
+  { text: '网页', value: NHENTAI_DOWNLOAD_SOURCE_WEB }
+]
+
+let nhentaiCdnConfigPromise = null
+
+const getJsonByGuard = async(url, purpose, headers = '') => {
+  const responseText = await requestTextWithGuard({
+    method: 'get',
+    url,
+    headers,
+    purpose,
+    verifyUrl: 'https://nhentai.net/'
+  })
+  try {
+    return JSON.parse(responseText)
+  } catch (error) {
+    throw new Error(`${purpose} response is not valid JSON`)
+  }
+}
+
+const getNhentaiGalleryId = (url = '') => {
+  const match = String(url || '').match(/\/g\/(\d+)(?:\/\d+)?\/?/i)
+  return match?.[1] || ''
+}
+
+const normalizeNhentaiGalleryUrl = (url = '') => {
+  const galleryId = getNhentaiGalleryId(url)
+  if (!galleryId) {
+    return url
+  }
+  return `https://nhentai.net/g/${galleryId}/`
+}
+
+const getNhentaiApiJson = async(path, purpose) => {
+  return getJsonByGuard(`${NHENTAI_API_ROOT}${path}`, purpose, NHENTAI_API_HEADERS)
+}
+
+const getNhentaiCdnConfig = async() => {
+  if (!nhentaiCdnConfigPromise) {
+    nhentaiCdnConfigPromise = getNhentaiApiJson('/cdn', 'nhentai CDN config').catch((error) => {
+      nhentaiCdnConfigPromise = null
+      throw error
+    })
+  }
+  return nhentaiCdnConfigPromise
+}
+
+const getNhentaiGallery = async(galleryId) => {
+  if (!galleryId) {
+    throw new Error('Failed to parse nhentai gallery id')
+  }
+  return getNhentaiApiJson(`/galleries/${galleryId}`, `nhentai gallery ${galleryId}`)
+}
+
+const getNhentaiTitleText = (title = {}) => {
+  return trimSpecial(title.pretty || title.english || title.japanese || '')
+}
+
+const getNhentaiTitleFromPageTitle = (rawTitle = '') => {
+  const title = String(rawTitle || '')
+    .replace(/\s*[»禄]\s*nhentai.*$/i, '')
+    .replace(/\s*-\s*Page\s+\d+\s*$/i, '')
+    .trim()
+  return trimSpecial(title)
+}
+
+const getNhentaiRootTitle = (root) => {
+  const selectorList = ['h1 .pretty', 'h1.title', 'h1', 'title']
+  for (let i = 0; i < selectorList.length; i++) {
+    try {
+      const dom = root?.querySelector(selectorList[i])
+      const text = trimSpecial(dom?.innerText || dom?.textContent || '')
+      if (text) {
+        return getNhentaiTitleFromPageTitle(text)
+      }
+    } catch (error) {
+      //
+    }
+  }
+
+  try {
+    const docTitle = trimSpecial(root?.title || '')
+    if (docTitle) {
+      return getNhentaiTitleFromPageTitle(docTitle)
+    }
+  } catch (error) {
+    //
+  }
+
+  return getNhentaiTitleFromPageTitle(document?.title || '')
+}
+
+const getNhentaiTagNames = (tags = [], tagType = '') => {
+  return (tags || [])
+    .filter(item => !tagType || item?.type === tagType)
+    .map(item => trimSpecial(item?.name || ''))
+    .filter(Boolean)
+}
+
+const getNhentaiLanguageIso = (tags = []) => {
+  const languageNameList = getNhentaiTagNames(tags, 'language').map(item => item.toLowerCase())
+  const languageMap = {
+    english: 'en',
+    chinese: 'zh',
+    japanese: 'ja',
+    korean: 'ko',
+    spanish: 'es',
+    french: 'fr',
+    german: 'de',
+    russian: 'ru',
+    portuguese: 'pt',
+    italian: 'it',
+    thai: 'th',
+    vietnamese: 'vi'
+  }
+
+  for (let i = 0; i < languageNameList.length; i++) {
+    if (languageMap[languageNameList[i]]) {
+      return languageMap[languageNameList[i]]
+    }
+  }
+  return ''
+}
+
+const getNhentaiDownloadSource = (context = {}) => {
+  const source = String(context?.imageSource || context?.downloadSource || '').trim().toLowerCase()
+  return source === NHENTAI_DOWNLOAD_SOURCE_WEB ? NHENTAI_DOWNLOAD_SOURCE_WEB : NHENTAI_DOWNLOAD_SOURCE_API
+}
+
+const getNhentaiReaderPageUrl = (galleryId, pageNumber) => {
+  if (!galleryId || !pageNumber) {
+    return ''
+  }
+  return `https://nhentai.net/g/${galleryId}/${pageNumber}/`
+}
+
+const uniqUrlList = (list = []) => {
+  return [...new Set((list || []).filter(Boolean))]
+}
+
+const getNhentaiNumberText = (value = '') => {
+  const match = String(value || '').match(/\d+/)
+  return match ? parseInt(match[0]) : 0
+}
+
+const getNhentaiGalleryPageUrlsFromRoot = (root, pageUrl = '') => {
+  const pageUrlList = []
+  try {
+    root?.querySelectorAll('a.gallerythumb[href*="/g/"]').forEach((item) => {
+      const href = item?.getAttribute('href') || ''
+      if (href) {
+        pageUrlList.push(resolveUrl(href, pageUrl))
+      }
+    })
+  } catch (error) {
+    //
+  }
+
+  const uniquePageUrlList = uniqUrlList(pageUrlList)
+  if (uniquePageUrlList.length > 0) {
+    return uniquePageUrlList
+  }
+
+  const galleryId = getNhentaiGalleryId(pageUrl) ||
+    getNhentaiGalleryId(root?.querySelector('.go-back[href*="/g/"]')?.getAttribute('href') || '')
+  const numPages = getNhentaiNumberText(
+    root?.querySelector('.reader-pagination .num-pages, .page-number .num-pages')?.textContent || ''
+  )
+  if (!galleryId || !numPages) {
+    return []
+  }
+
+  return Array.from({ length: numPages }, (_, index) => getNhentaiReaderPageUrl(galleryId, index + 1)).filter(Boolean)
+}
+
+const getNhentaiReaderImageUrlFromRoot = (root, pageUrl = '') => {
+  const selectorList = [
+    '#image-container img',
+    'section#image-container img',
+    'img[alt^="Page "]'
+  ]
+
+  for (let i = 0; i < selectorList.length; i++) {
+    try {
+      const dom = root?.querySelector(selectorList[i])
+      const rawUrl = dom?.getAttribute('data-src') ||
+        dom?.getAttribute('data-lazy-src') ||
+        dom?.getAttribute('src') ||
+        ''
+      if (rawUrl) {
+        return resolveUrl(rawUrl, pageUrl)
+      }
+    } catch (error) {
+      //
+    }
+  }
+
+  return ''
+}
+
+const getNhentaiGalleryPageUrls = async(pageUrl, responseText = '') => {
+  const currentPageUrl = pageUrl || window.location.href
+  const currentRoot = responseText ? parseToDOM(responseText) : null
+  let pageUrlList = getNhentaiGalleryPageUrlsFromRoot(currentRoot, currentPageUrl)
+  if (pageUrlList.length > 0) {
+    return pageUrlList
+  }
+
+  const galleryUrl = normalizeNhentaiGalleryUrl(currentPageUrl)
+  if (!galleryUrl || galleryUrl === currentPageUrl) {
+    return pageUrlList
+  }
+
+  const galleryText = await requestTextWithGuard({
+    method: 'get',
+    url: galleryUrl,
+    purpose: 'nhentai gallery page',
+    verifyUrl: galleryUrl
+  })
+  const galleryRoot = parseToDOM(galleryText)
+  pageUrlList = getNhentaiGalleryPageUrlsFromRoot(galleryRoot, galleryUrl)
+  return pageUrlList
+}
+
+const getNhentaiWebImageList = async(pageUrl, responseText = '') => {
+  const currentPageUrl = pageUrl || window.location.href
+  const currentRoot = responseText ? parseToDOM(responseText) : null
+  const directImageUrl = getNhentaiReaderImageUrlFromRoot(currentRoot, currentPageUrl)
+  const pageUrlList = await getNhentaiGalleryPageUrls(currentPageUrl, responseText)
+
+  if (pageUrlList.length === 0) {
+    return directImageUrl ? [directImageUrl] : []
+  }
+
+  const imageUrlList = []
+  const batchSize = 4
+  for (let i = 0; i < pageUrlList.length; i += batchSize) {
+    const batchList = pageUrlList.slice(i, i + batchSize)
+    const batchResult = await Promise.all(batchList.map(async(currentReaderPageUrl) => {
+      if (currentReaderPageUrl === currentPageUrl && directImageUrl) {
+        return directImageUrl
+      }
+
+      const readerText = await requestTextWithGuard({
+        method: 'get',
+        url: currentReaderPageUrl,
+        purpose: `nhentai reader page ${i + 1}`,
+        verifyUrl: normalizeNhentaiGalleryUrl(currentReaderPageUrl)
+      })
+      const readerRoot = parseToDOM(readerText)
+      return getNhentaiReaderImageUrlFromRoot(readerRoot, currentReaderPageUrl)
+    }))
+    imageUrlList.push(...batchResult.filter(Boolean))
+  }
+
+  return imageUrlList
+}
+
+const buildNhentaiChapterName = (pageCount = 0) => {
+  return pageCount > 0 ? `Full Gallery (${pageCount}P)` : 'Full Gallery'
+}
+
+const buildNhentaiChapterList = ({ galleryId, comicName = '', authorName = '', pageUrl = '', numPages = 0 }) => {
+  if (!galleryId) {
+    return []
+  }
+
+  const normalizedPageUrl = normalizeNhentaiGalleryUrl(pageUrl || `https://nhentai.net/g/${galleryId}/`)
+  return [{
+    comicName: trimSpecial(comicName),
+    authorName: trimSpecial(authorName),
+    comicPageUrl: normalizedPageUrl,
+    webName: 'nhentai',
+    chapterNumStr: '',
+    chapterName: buildNhentaiChapterName(numPages),
+    downChapterName: '',
+    url: normalizedPageUrl,
+    characterType: 'one',
+    readtype: 1,
+    isPay: false,
+    isSelect: false
+  }]
+}
+
+const getNhentaiChapterListFromRoot = (root, pageUrl, comicName = '', authorName = '') => {
+  const normalizedPageUrl = normalizeNhentaiGalleryUrl(pageUrl || window.location.href)
+  const galleryId = getNhentaiGalleryId(normalizedPageUrl)
+  if (!galleryId) {
+    return []
+  }
+
+  const resolvedComicName = trimSpecial(comicName || getNhentaiRootTitle(root) || `nhentai ${galleryId}`)
+  const numPages = getNhentaiGalleryPageUrlsFromRoot(root, normalizedPageUrl).length
+  return buildNhentaiChapterList({
+    galleryId,
+    comicName: resolvedComicName,
+    authorName,
+    pageUrl: normalizedPageUrl,
+    numPages
+  })
+}
+
+const getNhentaiSearchResultName = (item = {}) => {
+  return trimSpecial(item.english_title || item.japanese_title || `nhentai ${item.id || ''}`)
+}
+
+const getNhentaiSearchList = async(keyword) => {
+  const currentKeyword = String(keyword || '').trim()
+  if (!currentKeyword) {
+    return []
+  }
+
+  const [searchResult, cdnConfig] = await Promise.all([
+    getNhentaiApiJson(`/search?query=${encodeURIComponent(currentKeyword)}`, 'nhentai search'),
+    getNhentaiCdnConfig()
+  ])
+  const thumbBaseUrl = `${cdnConfig?.thumb_servers?.[0] || 'https://t1.nhentai.net'}/`
+
+  return (searchResult?.result || []).map((item) => {
+    return {
+      name: getNhentaiSearchResultName(item),
+      url: `https://nhentai.net/g/${item.id}/`,
+      imageUrl: resolveUrl(item.thumbnail, thumbBaseUrl)
+    }
+  })
+}
+
+const getNhentaiApiImageList = async(pageUrl) => {
+  const galleryId = getNhentaiGalleryId(pageUrl)
+  const [gallery, cdnConfig] = await Promise.all([
+    getNhentaiGallery(galleryId),
+    getNhentaiCdnConfig()
+  ])
+  const imageBaseUrl = `${cdnConfig?.image_servers?.[0] || 'https://i1.nhentai.net'}/`
+  return (gallery?.pages || []).map(item => resolveUrl(item.path, imageBaseUrl))
+}
+
+const getNhentaiImageList = async(pageUrl, responseText = '', processData = {}) => {
+  if (getNhentaiDownloadSource(processData) === NHENTAI_DOWNLOAD_SOURCE_WEB) {
+    return getNhentaiWebImageList(pageUrl, responseText)
+  }
+  return getNhentaiApiImageList(pageUrl)
+}
+
+const getNhentaiMetadata = async(downloadItem = {}) => {
+  if (getNhentaiDownloadSource(downloadItem) === NHENTAI_DOWNLOAD_SOURCE_WEB) {
+    return null
+  }
+
+  const pageUrl = downloadItem?.comicPageUrl || downloadItem?.url || window.location.href
+  const galleryId = getNhentaiGalleryId(pageUrl)
+  if (!galleryId) {
+    return null
+  }
+
+  const [gallery, cdnConfig] = await Promise.all([
+    getNhentaiGallery(galleryId),
+    getNhentaiCdnConfig()
+  ])
+  const artistList = getNhentaiTagNames(gallery?.tags, 'artist')
+  const groupList = getNhentaiTagNames(gallery?.tags, 'group')
+  const tagList = (gallery?.tags || [])
+    .filter(item => !['artist', 'group', 'language', 'category'].includes(item?.type))
+    .map(item => trimSpecial(item?.name || ''))
+    .filter(Boolean)
+  const coverBaseUrl = `${cdnConfig?.image_servers?.[0] || 'https://i1.nhentai.net'}/`
+
+  return {
+    source: 'nhentai API',
+    seriesTitle: getNhentaiTitleText(gallery?.title) || downloadItem?.comicName || '',
+    originalTitle: trimSpecial(gallery?.title?.japanese || '') || getNhentaiTitleText(gallery?.title) || downloadItem?.comicName || '',
+    summary: '',
+    writers: artistList.length > 0 ? artistList : groupList,
+    illustrators: artistList,
+    tags: tagList,
+    publisher: groupList[0] || '',
+    issueCount: downloadItem?.seriesChapterCount || undefined,
+    releaseDate: gallery?.upload_date ? new Date(gallery.upload_date * 1000).toISOString().slice(0, 10) : '',
+    status: 'ended',
+    ageRating: 'R18+',
+    languageISO: getNhentaiLanguageIso(gallery?.tags),
+    subjectUrl: normalizeNhentaiGalleryUrl(pageUrl),
+    coverUrl: gallery?.cover?.path ? resolveUrl(gallery.cover.path, coverBaseUrl) : ''
+  }
+}
+
 export const comicsWebInfo = [
+  {
+    domain: ['nhentai.net', 'www.nhentai.net'],
+    homepage: 'https://nhentai.net/',
+    webName: 'nhentai',
+    comicNameCss: 'h1 .pretty, h1.title, h1, title',
+    authorCss: '#tags a[href*="/artist/"] .name, #tags a[href*="/group/"] .name, a[href*="/artist/"] .name, a[href*="/group/"] .name',
+    chapterCss: '.__nhentai_single_gallery__',
+    normalizeDownloadUrl: normalizeNhentaiGalleryUrl,
+    defaultImageSource: NHENTAI_DOWNLOAD_SOURCE_API,
+    downloadSourceOptions: NHENTAI_DOWNLOAD_SOURCE_OPTIONS,
+    readtype: 1,
+    searchFun: async function(keyword) {
+      return getNhentaiSearchList(keyword)
+    },
+    getChaptersFromRoot: function(root, pageUrl, comicName, authorName) {
+      return getNhentaiChapterListFromRoot(root, pageUrl, comicName, authorName)
+    },
+    getImgs: async function(context, processData) {
+      return getNhentaiImageList(processData?.url || window.location.href, context, processData)
+    },
+    getMetadata: async function(downloadItem) {
+      return getNhentaiMetadata(downloadItem)
+    }
+  },
   {
     domain: ['mangabz.com', 'www.mangabz.com'],
     homepage: 'https://mangabz.com/',
@@ -1471,6 +1890,13 @@ const pushChapterData = (list, nodeList, currentWeb, type, pageUrl, comicName, a
 }
 
 export const getChapterListFromRoot = (root, currentWeb, pageUrl, comicName, authorName = '') => {
+  if (typeof currentWeb?.getChaptersFromRoot === 'function') {
+    const customList = currentWeb.getChaptersFromRoot(root, pageUrl, comicName, authorName)
+    if (Array.isArray(customList)) {
+      return customList
+    }
+  }
+
   const list = []
   const nodeList = root.querySelectorAll(currentWeb.chapterCss)
   pushChapterData(list, nodeList, currentWeb, 'one', pageUrl, comicName, authorName)

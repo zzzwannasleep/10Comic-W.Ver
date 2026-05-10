@@ -221,8 +221,8 @@ export default class Queue {
     }
 
     if (readtype === 1) {
-      const { url, isPay } = this.worker[index]
-      const processData = { url, isPay }
+      const { url, isPay, imageSource } = this.worker[index]
+      const processData = { url, isPay, imageSource }
       let imgs = []
       try {
         imgs = await getImage(processData)
@@ -386,9 +386,9 @@ export default class Queue {
 
   // 网站翻页阅读
   async down2(workerId) {
-    const { url, downType, totalNumber, isPay, imgIndex, downHeaders } = this.worker[workerId]
+    const { url, downType, totalNumber, isPay, imgIndex, downHeaders, imageSource } = this.worker[workerId]
 
-    const processData = { url, imgIndex, totalNumber, isPay }
+    const processData = { url, imgIndex, totalNumber, isPay, imageSource }
     processData.otherData = this.worker[workerId].otherData
 
     const { imgUrlArr, nextPageUrl, imgCount, otherData } = await getImage(processData)
@@ -529,6 +529,7 @@ export default class Queue {
           func: this.exeDown(i),
           downType: item.downType, // 下载方式 0：直接  1：压缩  2：拼接
           hasError: false,
+          imageSource: item.imageSource,
           downHeaders: item.downHeaders,
           otherData: undefined, // 自定义存储其他下载数据
           seriesChapterCount: item.seriesChapterCount,

@@ -366,6 +366,7 @@ export default {
           followItemId: item.id,
           downChapterName,
           downType,
+          imageSource: chapter.imageSource || webRule?.defaultImageSource || '',
           downHeaders: webRule?.downHeaders
         }
       })
