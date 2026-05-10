@@ -534,6 +534,7 @@ export default class Queue {
           seriesChapterCount: item.seriesChapterCount,
           followItemId: item.followItemId,
           coverOption: item.coverOption,
+          metadataOverride: item.metadataOverride,
           metadataPromise: undefined
         }
         worker.metadataPromise = this.prepareWorkerMetadata(worker)

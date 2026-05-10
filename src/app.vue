@@ -2,7 +2,6 @@
   <div class="yi-ling-app">
     <div id="app-right" class="card" :class="{ 'card--hide': isHide }">
       <div>
-
         <van-nav-bar id="border-top-set" :title="titles[this.active]" />
 
         <van-swipe
@@ -33,9 +32,12 @@
           <van-swipe-item class="swipeitem">
             <Setting />
           </van-swipe-item>
+          <van-swipe-item class="swipeitem">
+            <Metadata />
+          </van-swipe-item>
         </van-swipe>
 
-        <div class="app-container ">
+        <div class="app-container">
           <van-tabbar
             id="border-bottom-set"
             v-model="active"
@@ -49,10 +51,10 @@
             <van-tabbar-item icon="underway-o" />
             <van-tabbar-item icon="clock-o" />
             <van-tabbar-item icon="setting-o" />
+            <van-tabbar-item icon="description" />
           </van-tabbar>
         </div>
 
-        <!-- 按钮 -->
         <div class="card__btn" @click="hide">
           <svg
             t="1663828267105"
@@ -68,11 +70,6 @@
     </div>
 
     <Search />
-    <!-- <van-button
-      id="thebtn"
-      icon="plus"
-      @click="test"
-    /> -->
   </div>
 </template>
 
@@ -80,31 +77,38 @@
 import Home from '@/views/home.vue'
 import Table from '@/views/table.vue'
 import Cover from '@/views/cover.vue'
-import Setting from '@/views/setting.vue'
 import Down from '@/views/down.vue'
 import Follow from '@/views/follow.vue'
+import Setting from '@/views/setting.vue'
+import Metadata from '@/views/metadata.vue'
 
 import Search from '@/components/search.vue'
 
 import { matchWeb } from './utils/comics'
-// import { request, downFile } from './utils/index'
 
 export default {
   name: 'App',
   components: {
-    Home, Table, Cover, Down, Follow, Setting, Search
+    Home,
+    Table,
+    Cover,
+    Down,
+    Follow,
+    Setting,
+    Metadata,
+    Search
   },
   data() {
     return {
       isHide: true,
       showSearchPage: false,
       active: 1,
-      titles: ['漫画网站', '加载', '封面', '下载', '追更', '设置'],
+      titles: ['漫画网站', '加载', '封面', '下载', '追更', '设置', '元数据'],
       comicInfo: {}
     }
   },
   computed: {
-    current: function() {
+    current() {
       return this.active
     }
   },
@@ -125,9 +129,6 @@ export default {
     },
     async Init() {
       matchWeb(window.location.href)
-    },
-
-    async test() {
     }
   }
 }
@@ -137,8 +138,8 @@ export default {
 * {
   margin: 0;
   padding: 0;
-  // font-size: 14px !important;
 }
+
 .custom-indicator {
   position: absolute;
   height: 700px;
@@ -148,6 +149,7 @@ export default {
   font-size: 14px;
   background: rgba(0, 0, 0, 0.1);
 }
+
 #thebtn {
   position: fixed;
   top: 150px;
@@ -176,24 +178,28 @@ export default {
 .card {
   background-color: #f8f8f8;
   border: solid 1px #66ccffee;
-  border-radius: 25px ;
+  border-radius: 25px;
   transition: all 0.5s;
   box-shadow: 2px 3px 3px 2px #66ccff55;
+
   #border-top-set {
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;
     overflow: hidden;
   }
+
   #border-bottom-set {
     border-bottom-left-radius: 25px;
     border-bottom-right-radius: 25px;
     overflow: hidden;
   }
+
   .swipeitem {
     height: 697px;
     padding-bottom: 5px;
   }
 }
+
 .card__btn {
   transition: all 0.5s;
   border-radius: 30px 0 0 30px;
@@ -205,6 +211,7 @@ export default {
   right: 100%;
   top: 50%;
   text-align: center;
+
   svg {
     height: 20px;
     width: 20px;
@@ -215,8 +222,10 @@ export default {
     color: @lingColor;
   }
 }
+
 .card--hide {
-  transform: translate(100%, -50%)  !important;
+  transform: translate(100%, -50%) !important;
+
   .card__btn {
     svg {
       transform: rotate(180deg);

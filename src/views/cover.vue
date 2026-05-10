@@ -241,6 +241,7 @@ export default {
       this.submitting = true
       const nextItem = {
         ...cloneData(this.pendingItem),
+        originTab: 2,
         coverOption: this.buildCoverOption()
       }
       this.$bus.$emit('selectDown', [nextItem])

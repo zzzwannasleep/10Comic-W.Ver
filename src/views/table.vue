@@ -542,12 +542,16 @@ export default {
 
     // 已进入原网站漫画章节页面阅读，获取章节 下载
     startDownload(downloadItems) {
-      if (downloadItems.length === 1 && downloadItems[0].downType === 1) {
-        this.$bus.$emit('openCoverSelector', downloadItems[0])
+      const nextItems = downloadItems.map(item => ({
+        originTab: 1,
+        ...item
+      }))
+      if (nextItems.length === 1 && nextItems[0].downType === 1) {
+        this.$bus.$emit('openCoverSelector', nextItems[0])
         this.$bus.$emit('changTab', 2)
         return
       }
-      this.$bus.$emit('selectDown', downloadItems)
+      this.$bus.$emit('selectDown', nextItems)
       this.$bus.$emit('changTab', 3)
     },
     getCurrentWebData() {

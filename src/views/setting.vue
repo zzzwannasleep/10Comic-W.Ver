@@ -445,6 +445,25 @@
             <van-cell
               title-class="cellleftvalue"
               value-class="cellrightvalue"
+              label="下载前尝试从网页解析元数据，先预览并允许手动修改"
+              center
+            >
+              <template #title>
+                <span class="custom-title">下载前预览元数据</span>
+              </template>
+
+              <template #default>
+                <van-checkbox
+                  v-model="metadataSettings.enableMetadataPreview"
+                  class="rightbutton"
+                  @change="onChangeData('metadataSettings', metadataSettings.enableMetadataPreview, 'enableMetadataPreview')"
+                />
+              </template>
+            </van-cell>
+
+            <van-cell
+              title-class="cellleftvalue"
+              value-class="cellrightvalue"
               label="下载前自动用 Bangumi 检索并补全元数据"
               center
             >

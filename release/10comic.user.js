@@ -4,10 +4,7 @@
 // @version      2.0.8
 // @description  Multi-site comic search and chapter download userscript.
 // @author       journey3510
-// @homepageURL  https://github.com/zzzwannasleep/10Comic-W.Ver
-// @supportURL   https://github.com/zzzwannasleep/10Comic-W.Ver/issues
-// @updateURL    https://raw.githubusercontent.com/zzzwannasleep/10Comic-W.Ver/main/release/10comic.user.js
-// @downloadURL  https://raw.githubusercontent.com/zzzwannasleep/10Comic-W.Ver/main/release/10comic.user.js
+
 // @run-at       document-end
 // @grant        GM_getValue
 // @grant        GM_setValue
@@ -2319,7 +2316,7 @@ function BufferBigIntNotDefined () {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".van-cell__title {\n  text-align: left;\n}\n.van-cell-group__title--inset {\n  text-align: left;\n}\n.van-button--default {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled {\n  opacity: 1 !important;\n}\n.van-tag--default {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow {\n  color: #d9d9d9 !important;\n}\n.van-popover__content {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".van-cell__title {\n  text-align: left;\n}\n.van-cell-group__title--inset {\n  text-align: left;\n}\n.van-button--default {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled {\n  opacity: 1 !important;\n}\n.van-tag--default {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow {\n  color: #d9d9d9 !important;\n}\n.van-popover__content {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n.van-cell__title {\n  text-align: left;\n}\n.van-cell-group__title--inset {\n  text-align: left;\n}\n.van-button--default {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled {\n  opacity: 1 !important;\n}\n.van-tag--default {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow {\n  color: #d9d9d9 !important;\n}\n.van-popover__content {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -2379,7 +2376,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, "*[data-v-5ef48958] {\n  margin: 0;\n  
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".yi-ling-app[data-v-5ef48958] {\n  position: fixed;\n  z-index: 100000;\n}\n.yi-ling-app #app-right[data-v-5ef48958] {\n  height: 800px;\n  width: 420px;\n  position: fixed;\n  right: 0;\n  top: 50%;\n  transform: translateY(-50%);\n  transform-origin: right top;\n  z-index: 999999 !important;\n}\n.card[data-v-5ef48958] {\n  background-color: #f8f8f8;\n  border: solid 1px #66ccffee;\n  border-radius: 25px ;\n  transition: all 0.5s;\n  box-shadow: 2px 3px 3px 2px #66ccff55;\n}\n.card #border-top-set[data-v-5ef48958] {\n  border-top-left-radius: 25px;\n  border-top-right-radius: 25px;\n  overflow: hidden;\n}\n.card #border-bottom-set[data-v-5ef48958] {\n  border-bottom-left-radius: 25px;\n  border-bottom-right-radius: 25px;\n  overflow: hidden;\n}\n.card .swipeitem[data-v-5ef48958] {\n  height: 697px;\n  padding-bottom: 5px;\n}\n.card__btn[data-v-5ef48958] {\n  transition: all 0.5s;\n  border-radius: 30px 0 0 30px;\n  width: 30px;\n  height: 60px;\n  background-color: #66ccff96;\n  cursor: pointer;\n  position: absolute;\n  right: 100%;\n  top: 50%;\n  text-align: center;\n}\n.card__btn svg[data-v-5ef48958] {\n  height: 20px;\n  width: 20px;\n  position: absolute;\n  right: 5px;\n  top: 20px;\n  transition: all 0.5s;\n  color: #ee000088;\n}\n.card--hide[data-v-5ef48958] {\n  transform: translate(100%, -50%) !important;\n}\n.card--hide .card__btn svg[data-v-5ef48958] {\n  transform: rotate(180deg);\n}\n.test[data-v-5ef48958] {\n  position: absolute;\n  position: relative;\n  cursor: default;\n  height: 600px;\n}\n.van-cell__title[data-v-5ef48958] {\n  text-align: left;\n}\n.van-cell-group__title--inset[data-v-5ef48958] {\n  text-align: left;\n}\n.van-button--default[data-v-5ef48958] {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled[data-v-5ef48958] {\n  opacity: 1 !important;\n}\n.van-tag--default[data-v-5ef48958] {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon[data-v-5ef48958] {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light[data-v-5ef48958] {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow[data-v-5ef48958] {\n  color: #d9d9d9 !important;\n}\n.van-popover__content[data-v-5ef48958] {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".yi-ling-app[data-v-5ef48958] {\n  position: fixed;\n  z-index: 100000;\n}\n.yi-ling-app #app-right[data-v-5ef48958] {\n  height: 800px;\n  width: 420px;\n  position: fixed;\n  right: 0;\n  top: 50%;\n  transform: translateY(-50%);\n  transform-origin: right top;\n  z-index: 999999 !important;\n}\n.card[data-v-5ef48958] {\n  background-color: #f8f8f8;\n  border: solid 1px #66ccffee;\n  border-radius: 25px;\n  transition: all 0.5s;\n  box-shadow: 2px 3px 3px 2px #66ccff55;\n}\n.card #border-top-set[data-v-5ef48958] {\n  border-top-left-radius: 25px;\n  border-top-right-radius: 25px;\n  overflow: hidden;\n}\n.card #border-bottom-set[data-v-5ef48958] {\n  border-bottom-left-radius: 25px;\n  border-bottom-right-radius: 25px;\n  overflow: hidden;\n}\n.card .swipeitem[data-v-5ef48958] {\n  height: 697px;\n  padding-bottom: 5px;\n}\n.card__btn[data-v-5ef48958] {\n  transition: all 0.5s;\n  border-radius: 30px 0 0 30px;\n  width: 30px;\n  height: 60px;\n  background-color: #66ccff96;\n  cursor: pointer;\n  position: absolute;\n  right: 100%;\n  top: 50%;\n  text-align: center;\n}\n.card__btn svg[data-v-5ef48958] {\n  height: 20px;\n  width: 20px;\n  position: absolute;\n  right: 5px;\n  top: 20px;\n  transition: all 0.5s;\n  color: #ee000088;\n}\n.card--hide[data-v-5ef48958] {\n  transform: translate(100%, -50%) !important;\n}\n.card--hide .card__btn svg[data-v-5ef48958] {\n  transform: rotate(180deg);\n}\n.test[data-v-5ef48958] {\n  position: absolute;\n  position: relative;\n  cursor: default;\n  height: 600px;\n}\n.van-cell__title[data-v-5ef48958] {\n  text-align: left;\n}\n.van-cell-group__title--inset[data-v-5ef48958] {\n  text-align: left;\n}\n.van-button--default[data-v-5ef48958] {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled[data-v-5ef48958] {\n  opacity: 1 !important;\n}\n.van-tag--default[data-v-5ef48958] {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon[data-v-5ef48958] {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light[data-v-5ef48958] {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow[data-v-5ef48958] {\n  color: #d9d9d9 !important;\n}\n.van-popover__content[data-v-5ef48958] {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -2500,6 +2497,26 @@ ___CSS_LOADER_EXPORT___.push([module.id, ".follow-page[data-v-2da631cb] {\n  mar
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, ".homeindex[data-v-7eb2bc79] {\n  margin-top: 12px;\n  overflow-y: auto;\n  max-height: 675px;\n  min-height: 600px;\n}\n.homeindex #selectId[data-v-7eb2bc79] {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n}\n.homeindex #selectId[data-v-7eb2bc79] .van-collapse-item__wrapper {\n  position: absolute;\n  width: 100%;\n}\n.homeindex #selectId[data-v-7eb2bc79] .van-collapse-item__wrapper .van-collapse-item__content {\n  background-color: #eeeeee !important;\n  border-bottom-left-radius: 15px;\n  border-bottom-right-radius: 15px;\n}\n.homeindex #selectId[data-v-7eb2bc79] .van-collapse-item__wrapper .van-collapse-item__content div:hover {\n  color: red;\n}\n.homeindex #selectId #search-ico[data-v-7eb2bc79] {\n  cursor: pointer;\n  color: #ee000088;\n  margin-right: 15px;\n}\n.van-cell__title[data-v-7eb2bc79] {\n  text-align: left;\n}\n.van-cell-group__title--inset[data-v-7eb2bc79] {\n  text-align: left;\n}\n.van-button--default[data-v-7eb2bc79] {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled[data-v-7eb2bc79] {\n  opacity: 1 !important;\n}\n.van-tag--default[data-v-7eb2bc79] {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon[data-v-7eb2bc79] {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light[data-v-7eb2bc79] {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow[data-v-7eb2bc79] {\n  color: #d9d9d9 !important;\n}\n.van-popover__content[data-v-7eb2bc79] {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ 757:
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3645);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, ".metadata-page[data-v-78dd89c9] {\n  margin: 15px;\n  max-height: 680px;\n  overflow: auto;\n}\n.metadata-loading[data-v-78dd89c9] {\n  display: flex;\n  justify-content: center;\n  margin-top: 100px;\n}\n.metadata-hint[data-v-78dd89c9],\n.metadata-top__desc[data-v-78dd89c9],\n.metadata-preview-note[data-v-78dd89c9] {\n  color: #777;\n  font-size: 12px;\n  line-height: 1.6;\n}\n.metadata-top[data-v-78dd89c9] {\n  margin-bottom: 12px;\n}\n.metadata-top__title[data-v-78dd89c9] {\n  font-size: 14px;\n  font-weight: 600;\n  color: #333;\n}\n.metadata-group-title[data-v-78dd89c9] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  width: 100%;\n  gap: 10px;\n}\n.metadata-group-title__main[data-v-78dd89c9] {\n  max-width: 240px;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n}\n.metadata-card[data-v-78dd89c9] {\n  margin-top: 12px;\n  padding: 12px;\n  background: #fff;\n  border-radius: 12px;\n}\n.metadata-preview-stack[data-v-78dd89c9] {\n  padding-bottom: 8px;\n}\n.metadata-preview-title[data-v-78dd89c9] {\n  margin-bottom: 8px;\n  font-size: 14px;\n  font-weight: 600;\n  color: #333;\n}\n.metadata-preview[data-v-78dd89c9] {\n  margin-top: 10px;\n  padding: 10px;\n  border-radius: 10px;\n  background: #f5f7fa;\n  white-space: pre-wrap;\n  word-break: break-word;\n  font-size: 12px;\n  line-height: 1.5;\n  color: #333;\n}\n.metadata-bottom[data-v-78dd89c9] {\n  display: flex;\n  justify-content: space-between;\n  gap: 12px;\n  margin-top: 16px;\n}\n.van-cell__title[data-v-78dd89c9] {\n  text-align: left;\n}\n.van-cell-group__title--inset[data-v-78dd89c9] {\n  text-align: left;\n}\n.van-button--default[data-v-78dd89c9] {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled[data-v-78dd89c9] {\n  opacity: 1 !important;\n}\n.van-tag--default[data-v-78dd89c9] {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon[data-v-78dd89c9] {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light[data-v-78dd89c9] {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow[data-v-78dd89c9] {\n  color: #d9d9d9 !important;\n}\n.van-popover__content[data-v-78dd89c9] {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -5986,6 +6003,7 @@ const configDefault = {
     enableComicInfoXml: true,
     enableSeriesJson: false,
     enableSeriesCover: false,
+    enableMetadataPreview: false,
     enableBangumiScrape: false,
     bangumiAccessToken: '',
     bangumiIncludeNsfw: false,
@@ -8273,13 +8291,20 @@ var render = function () {
                     [_c("Setting")],
                     1
                   ),
+                  _vm._v(" "),
+                  _c(
+                    "van-swipe-item",
+                    { staticClass: "swipeitem" },
+                    [_c("Metadata")],
+                    1
+                  ),
                 ],
                 1
               ),
               _vm._v(" "),
               _c(
                 "div",
-                { staticClass: "app-container " },
+                { staticClass: "app-container" },
                 [
                   _c(
                     "van-tabbar",
@@ -8310,6 +8335,8 @@ var render = function () {
                       _c("van-tabbar-item", { attrs: { icon: "clock-o" } }),
                       _vm._v(" "),
                       _c("van-tabbar-item", { attrs: { icon: "setting-o" } }),
+                      _vm._v(" "),
+                      _c("van-tabbar-item", { attrs: { icon: "description" } }),
                     ],
                     1
                   ),
@@ -10469,12 +10496,16 @@ var external_vant_ = __webpack_require__(8871);
 
     // 已进入原网站漫画章节页面阅读，获取章节 下载
     startDownload(downloadItems) {
-      if (downloadItems.length === 1 && downloadItems[0].downType === 1) {
-        this.$bus.$emit('openCoverSelector', downloadItems[0])
+      const nextItems = downloadItems.map(item => ({
+        originTab: 1,
+        ...item
+      }))
+      if (nextItems.length === 1 && nextItems[0].downType === 1) {
+        this.$bus.$emit('openCoverSelector', nextItems[0])
         this.$bus.$emit('changTab', 2)
         return
       }
-      this.$bus.$emit('selectDown', downloadItems)
+      this.$bus.$emit('selectDown', nextItems)
       this.$bus.$emit('changTab', 3)
     },
     getCurrentWebData() {
@@ -11057,6 +11088,8 @@ covervue_type_template_id_5204468d_scoped_true_render._withStripped = true
 
 
 const invalidFileNameReg = /[\\/:*?"<>|]/g
+const metadataListSplitReg = /[\n,，/、|]+/g
+
 const defaultZipNameTemplate = '[站点名字][作者名][漫画名称][章节名称][多少P]'
 const legacyDefaultZipNameTemplate = '[站点名字][作者名][漫画名称][章节名称][多少P]P'
 
@@ -11064,6 +11097,7 @@ const metadataSettingsDefault = {
   enableComicInfoXml: true,
   enableSeriesJson: false,
   enableSeriesCover: false,
+  enableMetadataPreview: false,
   enableBangumiScrape: false,
   bangumiAccessToken: '',
   bangumiIncludeNsfw: false,
@@ -11085,6 +11119,81 @@ const cleanFileName = (value) => {
     .replace(invalidFileNameReg, ' ')
     .replace(/\s{2,}/g, ' ')
     .trim()
+}
+
+const uniqList = (list = []) => {
+  return [...new Set((list || []).filter(Boolean))]
+}
+
+const toMetadataText = (value) => {
+  if (value === undefined || value === null) {
+    return ''
+  }
+  return (0,utils/* trimSpecial */.Sc)(String(value)).trim()
+}
+
+const toMetadataList = (value) => {
+  if (Array.isArray(value)) {
+    return uniqList(value.map(item => toMetadataText(item)).filter(Boolean))
+  }
+  return uniqList(String(value || '')
+    .split(metadataListSplitReg)
+    .map(item => toMetadataText(item))
+    .filter(Boolean))
+}
+
+const parseOptionalNumber = (value) => {
+  if (value === undefined || value === null || value === '') {
+    return undefined
+  }
+  const match = String(value).match(/(\d+)/)
+  return match ? parseInt(match[1]) : undefined
+}
+
+const normalizeMetadataDraft = (metadata = {}) => {
+  return {
+    seriesTitle: toMetadataText(metadata.seriesTitle || metadata.name || ''),
+    originalTitle: toMetadataText(metadata.originalTitle || ''),
+    summary: toMetadataText(metadata.summary || metadata.description_text || ''),
+    writers: toMetadataList(metadata.writers || metadata.writer || metadata.authorName || ''),
+    illustrators: toMetadataList(metadata.illustrators || metadata.penciller || ''),
+    tags: toMetadataList(metadata.tags || metadata.genre || ''),
+    publisher: toMetadataText(metadata.publisher || ''),
+    issueCount: parseOptionalNumber(metadata.issueCount || metadata.total_issues),
+    volumeCount: parseOptionalNumber(metadata.volumeCount),
+    releaseDate: toMetadataText(metadata.releaseDate || metadata.date || ''),
+    status: toMetadataText(metadata.status || ''),
+    ageRating: toMetadataText(metadata.ageRating || metadata.age_rating || ''),
+    languageISO: toMetadataText(metadata.languageISO || metadata.language || ''),
+    subjectUrl: toMetadataText(metadata.subjectUrl || ''),
+    source: toMetadataText(metadata.source || '')
+  }
+}
+
+const mergeMetadataSources = (...sources) => {
+  const merged = normalizeMetadataDraft()
+  sources.forEach((source) => {
+    if (!source) {
+      return
+    }
+    const current = normalizeMetadataDraft(source)
+    if (current.seriesTitle) merged.seriesTitle = current.seriesTitle
+    if (current.originalTitle) merged.originalTitle = current.originalTitle
+    if (current.summary) merged.summary = current.summary
+    if (current.publisher) merged.publisher = current.publisher
+    if (current.issueCount !== undefined) merged.issueCount = current.issueCount
+    if (current.volumeCount !== undefined) merged.volumeCount = current.volumeCount
+    if (current.releaseDate) merged.releaseDate = current.releaseDate
+    if (current.status) merged.status = current.status
+    if (current.ageRating) merged.ageRating = current.ageRating
+    if (current.languageISO) merged.languageISO = current.languageISO
+    if (current.subjectUrl) merged.subjectUrl = current.subjectUrl
+    if (current.source) merged.source = current.source
+    merged.writers = uniqList([...merged.writers, ...current.writers])
+    merged.illustrators = uniqList([...merged.illustrators, ...current.illustrators])
+    merged.tags = uniqList([...merged.tags, ...current.tags])
+  })
+  return merged
 }
 
 const getTokenMap = (downloadItem, pageCount) => {
@@ -11113,10 +11222,6 @@ const getChapterNumber = (downloadItem) => {
   return match ? match[1] : ''
 }
 
-const uniqList = (list = []) => {
-  return [...new Set((list || []).filter(Boolean))]
-}
-
 const splitDateParts = (dateValue) => {
   if (!dateValue) {
     return {}
@@ -11132,50 +11237,100 @@ const splitDateParts = (dateValue) => {
   }
 }
 
-const buildNotes = (downloadItem, externalMetadata) => {
-  const notes = []
-  if (downloadItem.webName) {
-    notes.push(`来源站点: ${downloadItem.webName}`)
-  }
-  if (externalMetadata?.originalTitle && externalMetadata.originalTitle !== externalMetadata.seriesTitle) {
-    notes.push(`原始标题: ${externalMetadata.originalTitle}`)
-  }
-  if (externalMetadata?.subjectUrl) {
-    notes.push(`Bangumi: ${externalMetadata.subjectUrl}`)
-  }
-  return notes.join('\n')
-}
-
-const getSeriesName = (downloadItem, externalMetadata) => {
-  return externalMetadata?.seriesTitle || downloadItem.comicName
-}
-
-const getPublisher = (settings, externalMetadata) => {
-  return externalMetadata?.publisher || settings.publisher || ''
-}
-
-const getIssueCount = (downloadItem, externalMetadata) => {
-  return downloadItem.seriesChapterCount || externalMetadata?.issueCount || externalMetadata?.volumeCount || undefined
-}
-
-const getWriter = (downloadItem, externalMetadata) => {
-  const writerList = uniqList([...(externalMetadata?.writers || []), downloadItem.authorName])
-  return writerList.join(', ')
-}
-
-const getPenciller = (externalMetadata) => {
-  return uniqList(externalMetadata?.illustrators || []).join(', ')
-}
-
-const getGenre = (externalMetadata) => {
-  return uniqList(externalMetadata?.tags || []).join(', ')
-}
-
 const getMetadataSettings = () => {
   return {
     ...metadataSettingsDefault,
     ...((0,setup/* getStorage */.cF)('metadataSettings') || {})
   }
+}
+
+const buildDefaultMetadataDraft = (downloadItem = {}) => {
+  const settings = getMetadataSettings()
+  return normalizeMetadataDraft({
+    seriesTitle: downloadItem.comicName || '',
+    originalTitle: downloadItem.comicName || '',
+    writers: downloadItem.authorName ? [downloadItem.authorName] : [],
+    issueCount: downloadItem.seriesChapterCount,
+    languageISO: settings.languageISO || 'zh'
+  })
+}
+
+const getResolvedMetadata = (downloadItem, externalMetadata = null) => {
+  const settings = getMetadataSettings()
+  const metadata = mergeMetadataSources(
+    buildDefaultMetadataDraft(downloadItem),
+    externalMetadata
+  )
+  if (downloadItem?.metadataOverride) {
+    const override = normalizeMetadataDraft(downloadItem.metadataOverride)
+    metadata.seriesTitle = override.seriesTitle
+    metadata.originalTitle = override.originalTitle
+    metadata.summary = override.summary
+    metadata.writers = override.writers
+    metadata.illustrators = override.illustrators
+    metadata.tags = override.tags
+    metadata.publisher = override.publisher
+    metadata.issueCount = override.issueCount
+    metadata.volumeCount = override.volumeCount
+    metadata.releaseDate = override.releaseDate
+    metadata.status = override.status
+    metadata.ageRating = override.ageRating
+    metadata.languageISO = override.languageISO
+    metadata.subjectUrl = override.subjectUrl || metadata.subjectUrl
+    metadata.source = override.source || metadata.source
+  }
+  if (!metadata.seriesTitle) {
+    metadata.seriesTitle = toMetadataText(downloadItem?.comicName || '')
+  }
+  if (!metadata.originalTitle) {
+    metadata.originalTitle = metadata.seriesTitle
+  }
+  if (!metadata.issueCount && downloadItem?.seriesChapterCount) {
+    metadata.issueCount = downloadItem.seriesChapterCount
+  }
+  if (!metadata.languageISO) {
+    metadata.languageISO = settings.languageISO || 'zh'
+  }
+  return metadata
+}
+
+const buildNotes = (downloadItem, metadata) => {
+  const notes = []
+  if (downloadItem.webName) {
+    notes.push(`来源站点: ${downloadItem.webName}`)
+  }
+  if (metadata?.originalTitle && metadata.originalTitle !== metadata.seriesTitle) {
+    notes.push(`原始标题: ${metadata.originalTitle}`)
+  }
+  if (metadata?.subjectUrl) {
+    notes.push(`Metadata: ${metadata.subjectUrl}`)
+  }
+  return notes.join('\n')
+}
+
+const getSeriesName = (downloadItem, metadata) => {
+  return metadata?.seriesTitle || downloadItem.comicName
+}
+
+const getPublisher = (settings, metadata) => {
+  return metadata?.publisher || settings.publisher || ''
+}
+
+const getIssueCount = (downloadItem, metadata) => {
+  return metadata?.issueCount || metadata?.volumeCount || downloadItem.seriesChapterCount || undefined
+}
+
+const getWriter = (downloadItem, metadata) => {
+  const writerList = uniqList(metadata?.writers || [])
+  return writerList.join(', ')
+}
+
+const getPenciller = (metadata) => {
+  return uniqList(metadata?.illustrators || []).join(', ')
+}
+
+const getGenre = (metadata) => {
+  return uniqList(metadata?.tags || []).join(', ')
 }
 
 const getZipNameTemplate = () => {
@@ -11198,44 +11353,53 @@ const buildArchiveName = (downloadItem, pageCount) => {
 
 const buildComicInfoXml = (downloadItem, pageCount, externalMetadata = null) => {
   const settings = getMetadataSettings()
+  const metadata = getResolvedMetadata(downloadItem, externalMetadata)
   const lines = ['<?xml version="1.0" encoding="utf-8"?>', '<ComicInfo>']
-  const seriesName = getSeriesName(downloadItem, externalMetadata)
-  const dateParts = splitDateParts(externalMetadata?.releaseDate)
+  const seriesName = getSeriesName(downloadItem, metadata)
+  const dateParts = splitDateParts(metadata?.releaseDate)
 
   pushXmlTag(lines, 'Series', seriesName)
   pushXmlTag(lines, 'Title', downloadItem.downChapterName || downloadItem.chapterName)
   pushXmlTag(lines, 'Number', getChapterNumber(downloadItem))
-  pushXmlTag(lines, 'Count', getIssueCount(downloadItem, externalMetadata))
-  pushXmlTag(lines, 'Summary', externalMetadata?.summary || '')
-  pushXmlTag(lines, 'Writer', getWriter(downloadItem, externalMetadata))
-  pushXmlTag(lines, 'Penciller', getPenciller(externalMetadata))
-  pushXmlTag(lines, 'Genre', getGenre(externalMetadata))
-  pushXmlTag(lines, 'Tags', getGenre(externalMetadata))
+  pushXmlTag(lines, 'Count', getIssueCount(downloadItem, metadata))
+  pushXmlTag(lines, 'Summary', metadata?.summary || '')
+  pushXmlTag(lines, 'Writer', getWriter(downloadItem, metadata))
+  pushXmlTag(lines, 'Penciller', getPenciller(metadata))
+  pushXmlTag(lines, 'Genre', getGenre(metadata))
+  pushXmlTag(lines, 'Tags', getGenre(metadata))
   pushXmlTag(lines, 'PageCount', pageCount)
   pushXmlTag(lines, 'Web', downloadItem.url || downloadItem.comicPageUrl)
-  pushXmlTag(lines, 'Publisher', getPublisher(settings, externalMetadata))
-  pushXmlTag(lines, 'LanguageISO', settings.languageISO || externalMetadata?.languageISO || 'zh')
+  pushXmlTag(lines, 'Publisher', getPublisher(settings, metadata))
+  pushXmlTag(lines, 'LanguageISO', metadata?.languageISO || settings.languageISO || 'zh')
   pushXmlTag(lines, 'Year', dateParts.year)
   pushXmlTag(lines, 'Month', dateParts.month)
   pushXmlTag(lines, 'Day', dateParts.day)
-  pushXmlTag(lines, 'Notes', buildNotes(downloadItem, externalMetadata))
+  pushXmlTag(lines, 'Notes', buildNotes(downloadItem, metadata))
   lines.push('</ComicInfo>')
   return lines.join('\n')
 }
 
 const buildSeriesJson = (downloadItem, externalMetadata = null) => {
   const settings = getMetadataSettings()
-  const dateParts = splitDateParts(externalMetadata?.releaseDate)
+  const metadata = getResolvedMetadata(downloadItem, externalMetadata)
+  const dateParts = splitDateParts(metadata?.releaseDate)
   const seriesInfo = {
-    name: getSeriesName(downloadItem, externalMetadata) || '',
-    publisher: getPublisher(settings, externalMetadata),
-    description_text: externalMetadata?.summary || `${downloadItem.webName || ''}`.trim(),
-    total_issues: getIssueCount(downloadItem, externalMetadata),
-    status: externalMetadata?.status || undefined,
-    age_rating: externalMetadata?.ageRating || undefined,
+    name: getSeriesName(downloadItem, metadata) || '',
+    publisher: getPublisher(settings, metadata),
+    description_text: metadata?.summary || `${downloadItem.webName || ''}`.trim(),
+    total_issues: getIssueCount(downloadItem, metadata),
+    status: metadata?.status || undefined,
+    age_rating: metadata?.ageRating || undefined,
     year: dateParts.year || undefined
   }
   return JSON.stringify(seriesInfo, null, 2)
+}
+
+const buildMetadataPreviewFiles = (downloadItem, pageCount = 0, externalMetadata = null) => {
+  return {
+    comicInfoXml: buildComicInfoXml(downloadItem, pageCount, externalMetadata),
+    seriesJson: buildSeriesJson(downloadItem, externalMetadata)
+  }
 }
 
 const getMetadataFileFlags = () => {
@@ -11244,8 +11408,24 @@ const getMetadataFileFlags = () => {
     enableComicInfoXml: settings.enableComicInfoXml !== false,
     enableSeriesJson: settings.enableSeriesJson === true,
     enableSeriesCover: settings.enableSeriesCover === true,
+    enableMetadataPreview: settings.enableMetadataPreview === true,
     enableBangumiScrape: settings.enableBangumiScrape === true
   }
+}
+
+const shouldPreviewMetadataForItems = (downloadItems = []) => {
+  const { enableComicInfoXml, enableSeriesJson, enableMetadataPreview } = getMetadataFileFlags()
+  if (!enableMetadataPreview || !Array.isArray(downloadItems) || downloadItems.length === 0) {
+    return false
+  }
+  const hasUnconfirmedItem = downloadItems.some(item => item?.metadataConfirmed !== true)
+  if (!hasUnconfirmedItem) {
+    return false
+  }
+  if (enableSeriesJson) {
+    return true
+  }
+  return enableComicInfoXml && downloadItems.some(item => item?.downType === 1)
 }
 
 ;// CONCATENATED MODULE: ./src/utils/bangumi.js
@@ -12007,6 +12187,7 @@ const covervue_type_script_lang_js_cloneData = (value) => {
       this.submitting = true
       const nextItem = {
         ...covervue_type_script_lang_js_cloneData(this.pendingItem),
+        originTab: 2,
         coverOption: this.buildCoverOption()
       }
       this.$bus.$emit('selectDown', [nextItem])
@@ -12099,6 +12280,2295 @@ var cover_component = normalizeComponent(
 if (false) { var cover_api; }
 cover_component.options.__file = "src/views/cover.vue"
 /* harmony default export */ const cover = (cover_component.exports);
+;// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/views/down.vue?vue&type=template&id=1e855a88&scoped=true&
+var downvue_type_template_id_1e855a88_scoped_true_render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { attrs: { id: "downcontext" } },
+    [
+      _c(
+        "van-collapse",
+        {
+          model: {
+            value: _vm.collapseActiveName,
+            callback: function ($$v) {
+              _vm.collapseActiveName = $$v
+            },
+            expression: "collapseActiveName",
+          },
+        },
+        [
+          _c(
+            "van-collapse-item",
+            {
+              attrs: { title: "下载中", name: "1" },
+              scopedSlots: _vm._u([
+                {
+                  key: "title",
+                  fn: function () {
+                    return [
+                      _c(
+                        "div",
+                        { style: { display: "flex", lineHeight: "25px" } },
+                        [
+                          _vm._v("下载中\n          "),
+                          _vm.comicName
+                            ? _c("van-tag", { staticClass: "comicnametag1" }, [
+                                _vm._v(_vm._s(_vm.comicName)),
+                              ])
+                            : _vm._e(),
+                        ],
+                        1
+                      ),
+                    ]
+                  },
+                  proxy: true,
+                },
+              ]),
+            },
+            [
+              _vm._v(" "),
+              _c(
+                "div",
+                { attrs: { id: "downlist" } },
+                _vm._l(_vm.queue.worker, function (item, index) {
+                  return _c("div", { key: index, staticClass: "downitem" }, [
+                    item !== undefined
+                      ? _c(
+                          "div",
+                          [
+                            _c("div", { staticClass: "itemname" }, [
+                              _c("span", { staticClass: "custom-title" }, [
+                                _vm._v(_vm._s(item.downChapterName)),
+                              ]),
+                            ]),
+                            _vm._v(" "),
+                            _c("van-progress", {
+                              ref: "progress",
+                              refInFor: true,
+                              staticStyle: {
+                                width: "100%",
+                                "margin-top": "10px",
+                              },
+                              attrs: {
+                                percentage: item.progress,
+                                "pivot-color": "#66ccff",
+                                color:
+                                  "linear-gradient(to right, #66ccff22, ##66ccff)",
+                              },
+                            }),
+                            _vm._v(" "),
+                            _c("van-divider", {
+                              style: {
+                                margin: "13px 0px",
+                                padding: "0 0px",
+                                height: "1px",
+                              },
+                            }),
+                          ],
+                          1
+                        )
+                      : _vm._e(),
+                  ])
+                }),
+                0
+              ),
+            ]
+          ),
+          _vm._v(" "),
+          _c("van-collapse-item", { attrs: { title: "待下载", name: "2" } }, [
+            _c(
+              "div",
+              { attrs: { id: "downlist" } },
+              _vm._l(_vm.queue.list, function (item, index) {
+                return _c(
+                  "div",
+                  { key: index, staticClass: "downitem" },
+                  [
+                    _c("div", { staticClass: "itemname" }, [
+                      _c("span", { staticClass: "custom-title" }, [
+                        _vm._v(_vm._s(item.downChapterName)),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("van-divider", {
+                      style: {
+                        margin: "8px 0px",
+                        padding: "0 0px",
+                        height: "1px",
+                      },
+                    }),
+                  ],
+                  1
+                )
+              }),
+              0
+            ),
+          ]),
+          _vm._v(" "),
+          _c(
+            "van-collapse-item",
+            {
+              attrs: { name: "3" },
+              scopedSlots: _vm._u([
+                {
+                  key: "title",
+                  fn: function () {
+                    return [
+                      _c(
+                        "div",
+                        { style: { display: "flex" } },
+                        [
+                          _c(
+                            "span",
+                            { attrs: { title: _vm.currentDomain } },
+                            [
+                              _vm._v("\n            下载记录\n            "),
+                              _c("van-icon", {
+                                attrs: { name: "info-o", color: "#adadad" },
+                              }),
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("van-icon", {
+                            staticStyle: {
+                              "line-height": "25px",
+                              "margin-left": "10px",
+                            },
+                            attrs: {
+                              name: "delete-o",
+                              color: "#EE0000",
+                              size: "20",
+                            },
+                            on: {
+                              click: function ($event) {
+                                $event.stopPropagation()
+                                return _vm.deleteAllHistoryData.apply(
+                                  null,
+                                  arguments
+                                )
+                              },
+                            },
+                          }),
+                        ],
+                        1
+                      ),
+                    ]
+                  },
+                  proxy: true,
+                },
+              ]),
+            },
+            [
+              _vm._v(" "),
+              _c(
+                "div",
+                { attrs: { id: "downlist" } },
+                _vm._l(_vm.historyData, function (item, index) {
+                  return _c(
+                    "div",
+                    { key: index, staticClass: "downitem" },
+                    [
+                      _c(
+                        "div",
+                        { staticClass: "itemname" },
+                        [
+                          _c(
+                            "div",
+                            { staticStyle: { display: "flex" } },
+                            [
+                              _c(
+                                "van-tag",
+                                {
+                                  staticClass: "comicnametag",
+                                  attrs: { title: item.comicName },
+                                  on: {
+                                    click: function ($event) {
+                                      return _vm.jump(item.comicPageUrl)
+                                    },
+                                  },
+                                },
+                                [_vm._v(_vm._s(item.comicName))]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "span",
+                                {
+                                  staticClass: "custom-title chapterspan",
+                                  class: { hasError: item.hasError },
+                                },
+                                [_vm._v(_vm._s(item.downChapterName))]
+                              ),
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("van-icon", {
+                            style: { cursor: "pointer" },
+                            attrs: { name: "delete-o", size: "18px" },
+                            on: {
+                              click: function ($event) {
+                                return _vm.deleteHistoryData(index, item.id)
+                              },
+                            },
+                          }),
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("van-divider", {
+                        style: {
+                          margin: "8px 0px",
+                          padding: "0 0px",
+                          height: "1px",
+                        },
+                      }),
+                    ],
+                    1
+                  )
+                }),
+                0
+              ),
+            ]
+          ),
+        ],
+        1
+      ),
+    ],
+    1
+  )
+}
+var downvue_type_template_id_1e855a88_scoped_true_staticRenderFns = []
+downvue_type_template_id_1e855a88_scoped_true_render._withStripped = true
+
+
+;// CONCATENATED MODULE: ./src/views/down.vue?vue&type=template&id=1e855a88&scoped=true&
+
+;// CONCATENATED MODULE: external "JSZip"
+const external_JSZip_namespaceObject = JSZip;
+var external_JSZip_default = /*#__PURE__*/__webpack_require__.n(external_JSZip_namespaceObject);
+;// CONCATENATED MODULE: ./src/utils/queue.js
+
+
+
+
+
+
+
+// 多个任务并行执行的队列
+// https://juejin.cn/post/6844903961728647181
+
+class Queue {
+  constructor(workerLen, maxPictureNum, imgIndexBitNum, vue) {
+    this.workerLen = workerLen || 3 // 同时执行的任务数
+    this.pictureNum = maxPictureNum || 2 // 章节最大下载图片数量
+    this.list = [] // 任务队列
+    this.worker = new Array(this.workerLen) // 正在执行的任务
+    this.workerDownInfo = new Array(this.workerLen) // 存储下载信息
+    this.imgIndexBitNum = imgIndexBitNum // 图片序号位数
+    this.seriesJsonCache = new Set()
+    this.seriesCoverCache = new Set()
+    this.Vue = vue
+  }
+
+  // 压缩下载方式
+  async downloadFile(fileName, content) {
+    const url = window.URL.createObjectURL(content)
+    await (0,utils/* downFile */.zd)(url, fileName)
+    window.URL.revokeObjectURL(url)
+  }
+
+  async downloadRemoteFile(fileName, url) {
+    if (!url) {
+      return false
+    }
+    return (0,utils/* downFile */.zd)({ url, name: fileName })
+  }
+
+  getCoverFileName(url) {
+    const match = String(url || '').match(/\.(jpg|jpeg|webp|png|gif|bmp)(?:$|[?#])/i)
+    const suffix = match ? match[1].toLowerCase() : 'jpg'
+    return `cover.${suffix === 'jpeg' ? 'jpg' : suffix}`
+  }
+
+  normalizeImageExtension(suffix) {
+    if (!suffix) {
+      return 'jpg'
+    }
+    return suffix.toLowerCase() === 'jpeg' ? 'jpg' : suffix.toLowerCase()
+  }
+
+  getCoverExtensionByMimeType(mimeType) {
+    if (!mimeType) {
+      return 'jpg'
+    }
+    if (mimeType.includes('png')) return 'png'
+    if (mimeType.includes('webp')) return 'webp'
+    if (mimeType.includes('gif')) return 'gif'
+    if (mimeType.includes('bmp')) return 'bmp'
+    return 'jpg'
+  }
+
+  dataUrlToBlob(dataUrl) {
+    const group = String(dataUrl || '').split(',')
+    if (group.length < 2) {
+      return null
+    }
+    const mimeType = (group[0].match(/data:(.*?);base64/) || [])[1] || 'image/jpeg'
+    const binary = atob(group[1])
+    const len = binary.length
+    const bytes = new Uint8Array(len)
+    for (let i = 0; i < len; i++) {
+      bytes[i] = binary.charCodeAt(i)
+    }
+    return {
+      blob: new Blob([bytes], { type: mimeType }),
+      extension: this.getCoverExtensionByMimeType(mimeType)
+    }
+  }
+
+  async fetchImageBlob(workerId, url) {
+    if (!url) {
+      return null
+    }
+    const headers = this.worker[workerId].downHeaders || {
+      referer: this.worker[workerId].url
+    }
+    const response = await (0,utils/* request */.WY)({
+      method: 'get',
+      url,
+      responseType: 'blob',
+      headers,
+      timeout: 60 * 1000
+    })
+    if (!response || response === 'onerror' || response === 'timeout' || !response.response) {
+      return null
+    }
+    return {
+      blob: response.response,
+      suffix: this.getSuffix(response.finalUrl || url)
+    }
+  }
+
+  async writeBookCoverFile(workerId, archiveBasePath) {
+    const coverOption = this.worker[workerId].coverOption
+    if (!coverOption || coverOption.type === 'first') {
+      return
+    }
+
+    if (coverOption.type === 'upload' && coverOption.dataUrl) {
+      const result = this.dataUrlToBlob(coverOption.dataUrl)
+      if (result?.blob) {
+        await this.downloadFile(`${archiveBasePath}.${result.extension}`, result.blob)
+      }
+      return
+    }
+
+    if (coverOption.type === 'chapter' && coverOption.imageUrl) {
+      let coverData = this.workerDownInfo[workerId].find(item => item.imgurl === coverOption.imageUrl && item.blob !== 1 && item.blob !== 0)
+      if (!coverData) {
+        coverData = await this.fetchImageBlob(workerId, coverOption.imageUrl)
+      }
+      if (coverData?.blob) {
+        const coverExt = this.normalizeImageExtension(coverData.suffix)
+        await this.downloadFile(`${archiveBasePath}.${coverExt}`, coverData.blob)
+      }
+      return
+    }
+
+    if (coverOption.type === 'bangumi' && coverOption.imageUrl) {
+      const coverExt = this.normalizeImageExtension(this.getSuffix(coverOption.imageUrl))
+      await this.downloadRemoteFile(`${archiveBasePath}.${coverExt}`, coverOption.imageUrl)
+    }
+  }
+
+  getSeriesCacheKey(worker) {
+    return `${worker.webName || ''}_${worker.comicName || ''}`
+  }
+
+  shouldPrepareMetadata(worker) {
+    const { enableBangumiScrape, enableComicInfoXml, enableSeriesJson, enableSeriesCover } = getMetadataFileFlags()
+    if (!enableBangumiScrape) {
+      return false
+    }
+    if (worker.downType === 1 && enableComicInfoXml) {
+      return true
+    }
+    return enableSeriesJson || enableSeriesCover
+  }
+
+  prepareWorkerMetadata(worker) {
+    if (!this.shouldPrepareMetadata(worker)) {
+      return Promise.resolve(null)
+    }
+    return getBangumiMetadata(worker).catch((error) => {
+      console.log('bangumiMetadataError: ', error)
+      return null
+    })
+  }
+
+  async getWorkerMetadata(worker) {
+    if (!worker) {
+      return null
+    }
+    if (!worker.metadataPromise) {
+      worker.metadataPromise = this.prepareWorkerMetadata(worker)
+    }
+    return worker.metadataPromise
+  }
+
+  async writeSeriesMetadata(worker) {
+    const { enableSeriesJson, enableSeriesCover } = getMetadataFileFlags()
+    const metadataKey = this.getSeriesCacheKey(worker)
+    if (!enableSeriesJson && !enableSeriesCover) {
+      return
+    }
+    const externalMetadata = await this.getWorkerMetadata(worker)
+
+    if (enableSeriesJson && !this.seriesJsonCache.has(metadataKey)) {
+      const seriesJson = buildSeriesJson(worker, externalMetadata)
+      const jsonBlob = new Blob([seriesJson], { type: 'application/json' })
+      await this.downloadFile(worker.comicName + '\\series.json', jsonBlob)
+      this.seriesJsonCache.add(metadataKey)
+    }
+
+    if (enableSeriesCover && externalMetadata?.coverUrl && !this.seriesCoverCache.has(metadataKey)) {
+      const coverFileName = this.getCoverFileName(externalMetadata.coverUrl)
+      const result = await this.downloadRemoteFile(worker.comicName + '\\' + coverFileName, externalMetadata.coverUrl)
+      if (result) {
+        this.seriesCoverCache.add(metadataKey)
+      }
+    }
+  }
+
+  /**
+     * 执行一个任务
+     * @param { number } index
+     */
+  async * exeDown(index) {
+    const { readtype, downChapterName } = this.worker[index]
+    const _this = this
+
+    async function afterDown(index) {
+      const { comicName, hasError, comicPageUrl, followItemId, url } = _this.worker[index]
+      await _this.writeSeriesMetadata(_this.worker[index])
+      if (followItemId && !hasError) {
+        clearPendingChapters(followItemId, [url])
+      }
+      let historyData = localStorage.getItem('ylComicDownHistory') || '[]'
+      historyData = JSON.parse(historyData)
+      const id = (new Date()).getTime()
+      historyData.unshift({ id, comicName, downChapterName, comicPageUrl: comicPageUrl || window.location.href, hasError })
+      historyData = JSON.stringify(historyData)
+      localStorage.setItem('ylComicDownHistory', historyData)
+      _this.Vue.getHistoryData()
+      _this.Vue.$bus.$emit('refreshFollowList')
+      _this.worker[index] = undefined
+      // 休息下？
+      setTimeout(() => {
+        _this.run()
+      }, 2000)
+    }
+
+    if (readtype === 1) {
+      const { url, isPay } = this.worker[index]
+      const processData = { url, isPay }
+      let imgs = []
+      try {
+        imgs = await (0,utils/* getImage */.gJ)(processData)
+        const imgDownRange = (0,setup/* getStorage */.cF)('imgDownRange')
+        const start = parseInt(imgDownRange[0])
+        const end = parseInt(imgDownRange[1])
+        if (end === -1) {
+          imgs = imgs.slice(start - 1)
+        } else {
+          imgs = imgs.slice(start - 1, end + 1)
+        }
+        // eslint-disable-next-line eqeqeq
+        imgs == [] ? this.worker[index].hasError = true : ''
+        this.worker[index].imgs = imgs
+        this.worker[index].totalNumber = imgs.length
+      } catch (error) {
+        this.worker[index].hasError = true
+      }
+      yield this.down(index)
+        .then(function() {
+          afterDown(index)
+        })
+        //
+    } else {
+      yield this.down2(index)
+        .then(function() {
+          afterDown(index)
+        })
+    }
+  }
+
+  /**
+     * 添加到任务队列
+     * @param { Array<Array<any>> } list: 任务队列
+     */
+  addList(list) {
+    for (const item of list) {
+      this.list.unshift(item)
+    }
+  }
+
+  refresh() {
+    this.worker.splice(0, 0)
+  }
+
+  // 直接下载图片 Promise
+  addImgDownPromise(index, imgurl, imgIndex, newHeaders, retryTimes) {
+    const headers = {
+      referer: this.worker[index].url
+    }
+    return new Promise((resolve, reject) => {
+      const _this = this
+      if (!imgurl) {
+        _this.worker[index].progress = parseInt(_this.worker[index].imgIndex / _this.worker[index].totalNumber * 100)
+        _this.refresh()
+        resolve(false)
+      }
+
+      (0,utils/* request */.WY)({
+        method: 'get',
+        url: imgurl,
+        responseType: 'blob',
+        headers: newHeaders || headers,
+        timeout: 60 * 1000
+      }).then((res) => {
+        const name = this.worker[index].comicName + '\\' + this.worker[index].downChapterName + '\\' +
+        (0,utils/* addZeroForNum */.xo)(imgIndex, this.imgIndexBitNum) + '.'
+
+        let suffix = this.getSuffix(res.finalUrl)
+
+        _this.worker[index].successNum = _this.worker[index].successNum + 1
+        _this.worker[index].progress = parseInt(_this.worker[index].imgIndex / _this.worker[index].totalNumber * 100)
+        _this.refresh()
+
+        let newurl = ''
+        if (res === 'onerror' || res === 'timeout') {
+          if (retryTimes !== 2) {
+            if (retryTimes === undefined) retryTimes = 0
+            return resolve(_this.addImgDownPromise(index, imgurl, imgIndex, newHeaders, ++retryTimes))
+          }
+
+          _this.worker[index].hasError = true
+          suffix = 'txt'
+          const newBlob = new Blob([imgurl], { type: 'text/plain' })
+          newurl = window.URL.createObjectURL(newBlob)
+        } else {
+          newurl = window.URL.createObjectURL(res.response)
+        }
+        (0,utils/* downFile */.zd)(newurl, name + suffix).then((downRes) => {
+          if (downRes) {
+            resolve(true)
+          } else {
+            _this.worker[index].hasError = true
+            resolve(false)
+          }
+        })
+      })
+    })
+  }
+
+  // 请求图片Blob Promise (后用于压缩)
+  addImgPromise(index, imgurl, newHeaders, retryTimes) {
+    const headers = {
+      referer: this.worker[index].url
+    }
+    return new Promise((resolve, reject) => {
+      const _this = this
+      if (imgurl === '' || imgurl === undefined) {
+        _this.worker[index].hasError = true
+        return resolve({
+          blob: 1,
+          imgurl,
+          suffix: '' })
+      }
+
+      const suffix = this.getSuffix(imgurl)
+      ;(0,utils/* request */.WY)({
+        method: 'get',
+        url: imgurl,
+        responseType: 'blob',
+        headers: newHeaders || headers,
+        timeout: 60 * 1000,
+        onload: function(gmRes) {
+          _this.worker[index].successNum = _this.worker[index].successNum + 1
+          _this.worker[index].progress = parseInt(_this.worker[index].imgIndex / _this.worker[index].totalNumber * 100)
+          _this.refresh()
+          resolve({
+            blob: gmRes.response,
+            imgurl,
+            suffix: suffix })
+        },
+        onerror: function(e) {
+          if (retryTimes !== 2) {
+            if (retryTimes === undefined) retryTimes = 0
+            return resolve(_this.addImgPromise(index, imgurl, newHeaders, ++retryTimes))
+          }
+          _this.worker[index].hasError = true
+          resolve({
+            blob: 1,
+            imgurl,
+            suffix: '' })
+        },
+        ontimeout: function() {
+          if (retryTimes !== 2) {
+            if (retryTimes === undefined) retryTimes = 0
+            return resolve(_this.addImgPromise(index, imgurl, newHeaders, ++retryTimes))
+          }
+          resolve({
+            blob: 0,
+            imgurl,
+            suffix: '' })
+        }
+      })
+    })
+  }
+
+  /**
+     * 下载图片
+     * @param { workerId } workerId: 任务id
+     */
+
+  // 网站翻页阅读
+  async down2(workerId) {
+    const { url, downType, totalNumber, isPay, imgIndex, downHeaders } = this.worker[workerId]
+
+    const processData = { url, imgIndex, totalNumber, isPay }
+    processData.otherData = this.worker[workerId].otherData
+
+    const { imgUrlArr, nextPageUrl, imgCount, otherData } = await (0,utils/* getImage */.gJ)(processData)
+    this.worker[workerId].otherData = otherData
+
+    this.worker[workerId].totalNumber = parseInt(imgCount)
+    const beforeDownLen = imgUrlArr.length
+    // console.log('下载前', beforeDownLen, imgIndex, totalNumber)
+
+    while (imgUrlArr.length > 0) {
+      // eslint-disable-next-line prefer-const
+      let promise = []
+      for (let index = this.pictureNum; index > 0; index--) {
+        if (imgUrlArr[0] === undefined) {
+          break
+        }
+        const imgIndex = ++this.worker[workerId].imgIndex
+        if (downType) {
+          promise.push(this.addImgPromise(workerId, imgUrlArr[0], downHeaders))
+        } else {
+          promise.push(this.addImgDownPromise(workerId, imgUrlArr[0], imgIndex, downHeaders))
+        }
+        imgUrlArr.shift()
+      }
+
+      const res = await Promise.all(promise)
+      res.forEach(element => {
+        this.workerDownInfo[workerId].push(element)
+      })
+    }
+
+    const newImgIndex = this.worker[workerId].imgIndex
+    if (beforeDownLen !== 0 && nextPageUrl !== '' && newImgIndex < parseInt(imgCount)) {
+      this.worker[workerId].url = nextPageUrl
+      return new Promise((resolve, reject) => {
+        // 休息一下？
+        setTimeout(() => {
+          resolve(this.down2(workerId))
+        }, 1000)
+      })
+    } else {
+      // 压缩
+      if (downType === 1) {
+        const result = await this.makeZip(workerId)
+        return new Promise((resolve, reject) => {
+          resolve(result)
+        })
+      } else if (downType === 2) { // 拼接
+        await this.combineImages(workerId)
+        return new Promise((resolve, reject) => {
+          resolve()
+        })
+      } else {
+        return new Promise((resolve, reject) => {
+          resolve(1)
+        })
+      }
+    }
+  }
+
+  // 网站卷轴阅读
+  async down(workerId) {
+    const { imgs, downType, downHeaders } = this.worker[workerId]
+    const promise = []
+    let len = imgs.length
+    let pictureNum = this.pictureNum
+
+    while (pictureNum-- && len > 0) {
+      // 是否压缩
+      const imgIndex = ++this.worker[workerId].imgIndex
+      if (downType) {
+        promise.push(this.addImgPromise(workerId, imgs[0], downHeaders))
+      } else {
+        promise.push(this.addImgDownPromise(workerId, imgs[0], imgIndex, downHeaders))
+      }
+      this.worker[workerId].imgs.shift()
+      len--
+    }
+
+    const res = await Promise.all(promise)
+
+    res.forEach(element => {
+      this.workerDownInfo[workerId].push(element)
+    })
+
+    if (this.worker[workerId].imgs.length > 0) {
+      return new Promise((resolve, reject) => {
+        // 休息一下？
+        setTimeout(() => {
+          resolve(this.down(workerId))
+        }, 1000)
+      })
+    }
+
+    // 压缩
+    if (downType === 1) {
+      const result = await this.makeZip(workerId)
+      return new Promise((resolve, reject) => {
+        resolve(result)
+      })
+    } else if (downType === 2) { // 拼接
+      await this.combineImages(workerId)
+      return new Promise((resolve, reject) => {
+        resolve()
+      })
+    } else {
+      return new Promise((resolve, reject) => {
+        resolve(1)
+      })
+    }
+  }
+
+  // 分配并执行任务
+  async run() {
+    const runIndex = []
+    for (let i = 0; i < this.workerLen; i++) {
+      const len = this.list.length
+      if (!this.worker[i] && len > 0) {
+        // 需要执行的任务
+        const item = this.list[len - 1]
+
+        const worker = {
+          comicName: item.comicName,
+          authorName: item.authorName,
+          webName: item.webName,
+          comicPageUrl: item.comicPageUrl,
+          chapterName: item.chapterName,
+          chapterNumStr: item.chapterNumStr,
+          downChapterName: item.downChapterName,
+          url: item.url,
+          isPay: item.isPay, // 是否付费章节
+          imgIndex: 0, // 图片序号
+          successNum: 0, // 下载成功数量
+          totalNumber: 0, // 图片总数
+          imgs: [],
+          progress: 0, // 进度百分比
+          readtype: item.readtype, // 阅读(下载)方式类型
+          func: this.exeDown(i),
+          downType: item.downType, // 下载方式 0：直接  1：压缩  2：拼接
+          hasError: false,
+          downHeaders: item.downHeaders,
+          otherData: undefined, // 自定义存储其他下载数据
+          seriesChapterCount: item.seriesChapterCount,
+          followItemId: item.followItemId,
+          coverOption: item.coverOption,
+          metadataOverride: item.metadataOverride,
+          metadataPromise: undefined
+        }
+        worker.metadataPromise = this.prepareWorkerMetadata(worker)
+        this.worker[i] = worker
+        this.workerDownInfo[i] = []
+        this.list.pop()
+        runIndex.push(i)
+      }
+    }
+    // 执行任务
+    for (const index of runIndex) {
+      this.worker[index].func.next()
+    }
+  }
+
+  getSuffix(url) {
+    if (url) {
+      const testurl = url.toLowerCase()
+      const imgtype = ['jpg', 'jpeg', 'webp', 'png', 'gif', 'bmp', 'tiff', 'svg', 'ico']
+      for (let i = 0; i < imgtype.length; i++) {
+        const a = testurl.search(imgtype[i])
+        if (a !== -1) {
+          return imgtype[i]
+        }
+      }
+      // 可能网址没有图片后缀
+      return 'jpg'
+    }
+    return false
+  }
+
+  // 压缩
+  async makeZip(workerId) {
+    const { comicName } = this.worker[workerId]
+    const zip = new (external_JSZip_default())()
+    const { enableComicInfoXml } = getMetadataFileFlags()
+    const externalMetadata = await this.getWorkerMetadata(this.worker[workerId])
+    this.workerDownInfo[workerId].forEach((item, index) => {
+      const imgblob = item.blob
+      const suffix = item.suffix
+      if (imgblob === 1 || imgblob === 0) {
+        const txtBlob = new Blob([item.imgurl], { type: 'text/plain' })
+        zip.file((0,utils/* addZeroForNum */.xo)(index + 1, this.imgIndexBitNum) + '.txt', txtBlob, { blob: true })
+        return
+      }
+      zip.file((0,utils/* addZeroForNum */.xo)(index + 1, this.imgIndexBitNum) + '.' + suffix, imgblob, { blob: true })
+    })
+    if (enableComicInfoXml) {
+      zip.file('ComicInfo.xml', buildComicInfoXml(this.worker[workerId], this.worker[workerId].totalNumber, externalMetadata))
+    }
+
+    const zipblob = await zip.generateAsync({
+      type: 'blob',
+      compression: 'DEFLATE',
+      compressionOptions: {
+        level: 9
+      }
+    })
+    const archiveName = buildArchiveName(this.worker[workerId], this.worker[workerId].totalNumber)
+    const archiveBasePath = comicName + '\\' + archiveName
+    await this.downloadFile(archiveBasePath + '.cbz', zipblob)
+    await this.writeBookCoverFile(workerId, archiveBasePath)
+    return true
+  }
+
+  async combineImages(workerId) {
+    const maxSplicingHeight = (0,setup/* getStorage */.cF)('maxSplicingHeight')
+    const { comicName, downChapterName } = this.worker[workerId]
+    let imgNum = 0
+    let curHeight = 0
+    let totalHeight = 0
+    const saveImg = []
+    const _this = this
+
+    async function asyncLoadImg(src) {
+      return new Promise((resolve, reject) => {
+        const img = document.createElement('img')
+        img.onload = () => {
+          resolve(img)
+        }
+        img.onerror = () => {
+          const error = new Error(`图片加载失败，url：${src}`)
+          console.log('combineImages-e: ', error)
+          reject('')
+        }
+        img.src = src
+      })
+    }
+
+    async function asyncCanvas(canvas, name) {
+      return new Promise((resolve, reject) => {
+        canvas.toBlob(async function(imgblob) {
+          await _this.downloadFile(name, imgblob)
+          resolve()
+        }, 'image/jpeg', 0.8)
+      })
+    }
+
+    for (let index = 0; index < this.workerDownInfo[workerId].length; index++) {
+      const data = this.workerDownInfo[workerId][index]
+      // 去除不是图片类型
+      if (data.blob === 1 || data.blob === 0 || !data.blob.type.includes('image')) {
+        this.worker[workerId].hasError = true
+        const error_name = comicName + '\\' + downChapterName + '\\error_' + (0,utils/* addZeroForNum */.xo)(index + 1, this.imgIndexBitNum) + '.txt'
+        const imgurl = this.workerDownInfo[workerId][index].imgurl
+        const newBlob = new Blob([imgurl], { type: 'text/plain' })
+        _this.downloadFile(error_name, newBlob)
+        continue
+      }
+
+      const newurl = window.URL.createObjectURL(data.blob)
+      const image = await asyncLoadImg(newurl)
+      if (image === '') {
+        continue
+      }
+      if (totalHeight === 0) {
+        const obj = { num: imgNum, width: image.width, height: image.height, img: [image] }
+        curHeight = image.height
+        totalHeight += image.height
+        saveImg.push(obj)
+        continue
+      }
+      if (curHeight + image.height > maxSplicingHeight) {
+        const newobj = { num: ++imgNum, width: image.width, height: image.height, img: [image] }
+        curHeight = image.height
+        saveImg.push(newobj)
+      } else {
+        curHeight += image.height
+        saveImg[imgNum].height += image.height
+        saveImg[imgNum].img.push(image)
+      }
+      totalHeight += image.height
+    }
+
+    const canvas = document.createElement('canvas')
+    const context = canvas.getContext('2d')
+    let offsetY = 0
+    for (let i = 0; i < saveImg.length; i++) {
+      const item = saveImg[i]
+      canvas.width = item.width
+      canvas.height = item.height
+      offsetY = 0
+
+      for (let len = 0; len < item.img.length; len++) {
+        const element = item.img[len]
+        context.drawImage(element, 0, offsetY, element.width, element.height)
+        offsetY = offsetY + parseInt(element.height)
+      }
+      const name = comicName + '\\' + downChapterName + '\\' + (0,utils/* addZeroForNum */.xo)(item.num + 1, this.imgIndexBitNum) + '.jpg'
+      await asyncCanvas(canvas, name)
+    }
+
+    return new Promise((resolve, reject) => {
+      resolve(true)
+    })
+  }
+}
+
+;// CONCATENATED MODULE: ./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/views/down.vue?vue&type=script&lang=js&
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+
+
+/* harmony default export */ const downvue_type_script_lang_js_ = ({
+  name: 'Down',
+  data() {
+    return {
+      collapseActiveName: ['1', '2', '3'],
+      comicName: null,
+      currentDomain: '当前记录 ' + (0,utils/* getdomain */.m1)(),
+      queue: {
+        'worker': '',
+        'list': '',
+        'workeredList': ''
+      },
+      maxChapterNum: 3,
+      maxPictureNum: 2,
+      imgIndexBitNum: 3,
+      historyData: []
+    }
+  },
+  watch: {
+
+  },
+  mounted() {
+    console.clear()
+    this.$bus.$on('selectDown', this.downInit)
+  },
+  created() {
+    this.$bus.$on('getComicName', this.getComicName)
+    this.getHistoryData()
+  },
+  methods: {
+    getComicName(value) {
+      if (value !== '------') { this.comicName = value }
+    },
+    downInit(arr) {
+      const downloadItems = (arr || []).map(item => ({
+        originTab: item?.originTab ?? 3,
+        ...item
+      }))
+      if (shouldPreviewMetadataForItems(downloadItems)) {
+        this.$bus.$emit('openMetadataPreview', downloadItems)
+        this.$bus.$emit('changTab', 6)
+        return
+      }
+      if (this.queue.worker === '') {
+        this.maxChapterNum = (0,setup/* getStorage */.cF)('maxChapterNum')
+        this.maxPictureNum = (0,setup/* getStorage */.cF)('maxPictureNum')
+        this.imgIndexBitNum = (0,setup/* getStorage */.cF)('imgIndexBitNum')
+        this.queue = new Queue(this.maxChapterNum, this.maxPictureNum, this.imgIndexBitNum, this)
+      }
+      this.queue.addList(downloadItems)
+      this.queue.run()
+    },
+    getHistoryData() {
+      const data = localStorage.getItem('ylComicDownHistory')
+      this.historyData = JSON.parse(data || '[]')
+    },
+    deleteHistoryData(index, id) {
+      this.historyData.splice(index, 1)
+      let data = localStorage.getItem('ylComicDownHistory')
+      let historyData = JSON.parse(data || '[]')
+      historyData = historyData.filter((item) => item.id !== id)
+      data = JSON.stringify(historyData)
+      localStorage.setItem('ylComicDownHistory', data)
+    },
+    deleteAllHistoryData() {
+      external_vant_.Dialog.confirm({
+        getContainer: '.card',
+        message: '确认全部删除'
+      })
+        .then(() => {
+          this.historyData.splice(0, this.historyData.length)
+          localStorage.setItem('ylComicDownHistory', '[]')
+        })
+        .catch(() => {
+          // on cancel
+        })
+    },
+    jump(url) {
+      window.open(url, '_blank')
+      // window.location.href = url
+    }
+  }
+});
+
+;// CONCATENATED MODULE: ./src/views/down.vue?vue&type=script&lang=js&
+ /* harmony default export */ const views_downvue_type_script_lang_js_ = (downvue_type_script_lang_js_); 
+// EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/less-loader/dist/cjs.js??clonedRuleSet-2[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/views/down.vue?vue&type=style&index=0&id=1e855a88&lang=less&scoped=true&
+var downvue_type_style_index_0_id_1e855a88_lang_less_scoped_true_ = __webpack_require__(3240);
+;// CONCATENATED MODULE: ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/less-loader/dist/cjs.js??clonedRuleSet-2[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/views/down.vue?vue&type=style&index=0&id=1e855a88&lang=less&scoped=true&
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var downvue_type_style_index_0_id_1e855a88_lang_less_scoped_true_options = {};
+
+downvue_type_style_index_0_id_1e855a88_lang_less_scoped_true_options.styleTagTransform = (styleTagTransform_default());
+downvue_type_style_index_0_id_1e855a88_lang_less_scoped_true_options.setAttributes = (setAttributesWithoutAttributes_default());
+
+      downvue_type_style_index_0_id_1e855a88_lang_less_scoped_true_options.insert = insertBySelector_default().bind(null, "head");
+    
+downvue_type_style_index_0_id_1e855a88_lang_less_scoped_true_options.domAPI = (styleDomAPI_default());
+downvue_type_style_index_0_id_1e855a88_lang_less_scoped_true_options.insertStyleElement = (insertStyleElement_default());
+
+var downvue_type_style_index_0_id_1e855a88_lang_less_scoped_true_update = injectStylesIntoStyleTag_default()(downvue_type_style_index_0_id_1e855a88_lang_less_scoped_true_/* default */.Z, downvue_type_style_index_0_id_1e855a88_lang_less_scoped_true_options);
+
+
+
+
+       /* harmony default export */ const views_downvue_type_style_index_0_id_1e855a88_lang_less_scoped_true_ = (downvue_type_style_index_0_id_1e855a88_lang_less_scoped_true_/* default */.Z && downvue_type_style_index_0_id_1e855a88_lang_less_scoped_true_/* default.locals */.Z.locals ? downvue_type_style_index_0_id_1e855a88_lang_less_scoped_true_/* default.locals */.Z.locals : undefined);
+
+;// CONCATENATED MODULE: ./src/views/down.vue?vue&type=style&index=0&id=1e855a88&lang=less&scoped=true&
+
+;// CONCATENATED MODULE: ./src/views/down.vue
+
+
+
+;
+
+
+/* normalize component */
+
+var down_component = normalizeComponent(
+  views_downvue_type_script_lang_js_,
+  downvue_type_template_id_1e855a88_scoped_true_render,
+  downvue_type_template_id_1e855a88_scoped_true_staticRenderFns,
+  false,
+  null,
+  "1e855a88",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var down_api; }
+down_component.options.__file = "src/views/down.vue"
+/* harmony default export */ const down = (down_component.exports);
+;// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/views/follow.vue?vue&type=template&id=2da631cb&scoped=true&
+var followvue_type_template_id_2da631cb_scoped_true_render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "follow-page" },
+    [
+      _c(
+        "div",
+        { staticClass: "follow-toolbar" },
+        [
+          _c(
+            "van-button",
+            {
+              attrs: {
+                size: "small",
+                round: "",
+                type: "primary",
+                loading: _vm.checking,
+              },
+              on: { click: _vm.checkAll },
+            },
+            [_vm._v("检查全部")]
+          ),
+          _vm._v(" "),
+          _c(
+            "van-button",
+            {
+              attrs: {
+                size: "small",
+                round: "",
+                disabled: !_vm.hasPendingChapters,
+              },
+              on: { click: _vm.downloadAllPending },
+            },
+            [_vm._v("下载全部更新")]
+          ),
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "follow-keyword-toolbar" },
+        [
+          _c("van-field", {
+            attrs: {
+              size: "small",
+              placeholder: "输入漫画名，按选中站点搜索追更",
+            },
+            nativeOn: {
+              keyup: function ($event) {
+                if (
+                  !$event.type.indexOf("key") &&
+                  _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                ) {
+                  return null
+                }
+                return _vm.searchByKeyword.apply(null, arguments)
+              },
+            },
+            model: {
+              value: _vm.keywordFollowName,
+              callback: function ($$v) {
+                _vm.keywordFollowName = $$v
+              },
+              expression: "keywordFollowName",
+            },
+          }),
+          _vm._v(" "),
+          _c(
+            "van-button",
+            {
+              attrs: {
+                size: "small",
+                round: "",
+                type: "info",
+                loading: _vm.addingKeywordFollow,
+              },
+              on: { click: _vm.searchByKeyword },
+            },
+            [_vm._v("开始搜索")]
+          ),
+          _vm._v(" "),
+          _c(
+            "van-button",
+            {
+              attrs: { size: "small", round: "", plain: "" },
+              on: { click: _vm.toggleScanSitePanel },
+            },
+            [_vm._v(_vm._s(_vm.showScanSitePanel ? "收起站点" : "扫描站点"))]
+          ),
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _vm.showScanSitePanel
+        ? _c(
+            "div",
+            { staticClass: "follow-site-panel" },
+            [
+              _c("div", { staticClass: "follow-panel-header" }, [
+                _c("span", [_vm._v("扫描站点")]),
+                _vm._v(" "),
+                _c("span", [
+                  _vm._v(
+                    _vm._s(_vm.selectedScanWebNames.length) +
+                      "/" +
+                      _vm._s(_vm.searchableWebOptions.length)
+                  ),
+                ]),
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "follow-site-actions" },
+                [
+                  _c(
+                    "van-button",
+                    {
+                      attrs: { size: "mini" },
+                      on: { click: _vm.selectAllScanSites },
+                    },
+                    [_vm._v("全选")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "van-button",
+                    {
+                      attrs: { size: "mini" },
+                      on: { click: _vm.clearScanSites },
+                    },
+                    [_vm._v("清空")]
+                  ),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "van-checkbox-group",
+                {
+                  on: { change: _vm.saveScanSites },
+                  model: {
+                    value: _vm.selectedScanWebNames,
+                    callback: function ($$v) {
+                      _vm.selectedScanWebNames = $$v
+                    },
+                    expression: "selectedScanWebNames",
+                  },
+                },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "follow-site-grid" },
+                    _vm._l(_vm.searchableWebOptions, function (item) {
+                      return _c(
+                        "van-checkbox",
+                        {
+                          key: item.webName,
+                          staticClass: "follow-site-check",
+                          attrs: { name: item.webName },
+                        },
+                        [
+                          _vm._v(
+                            "\n          " + _vm._s(item.webName) + "\n        "
+                          ),
+                        ]
+                      )
+                    }),
+                    1
+                  ),
+                ]
+              ),
+            ],
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.searchCandidates.length > 0
+        ? _c(
+            "div",
+            { staticClass: "follow-result-panel" },
+            [
+              _c("div", { staticClass: "follow-panel-header" }, [
+                _c("span", [_vm._v("匹配结果")]),
+                _vm._v(" "),
+                _c("span", [
+                  _vm._v(
+                    _vm._s(_vm.selectedCandidateKeys.length) +
+                      "/" +
+                      _vm._s(_vm.searchCandidates.length)
+                  ),
+                ]),
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "follow-site-actions" },
+                [
+                  _c(
+                    "van-button",
+                    {
+                      attrs: { size: "mini" },
+                      on: { click: _vm.selectAllCandidates },
+                    },
+                    [_vm._v("全选")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "van-button",
+                    {
+                      attrs: { size: "mini" },
+                      on: { click: _vm.clearCandidateSelection },
+                    },
+                    [_vm._v("清空")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "van-button",
+                    {
+                      attrs: { size: "mini", type: "primary" },
+                      on: { click: _vm.addSelectedCandidates },
+                    },
+                    [_vm._v("加入选中站点")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "van-button",
+                    {
+                      attrs: { size: "mini", plain: "" },
+                      on: { click: _vm.clearSearchCandidates },
+                    },
+                    [_vm._v("取消结果")]
+                  ),
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "van-checkbox-group",
+                {
+                  model: {
+                    value: _vm.selectedCandidateKeys,
+                    callback: function ($$v) {
+                      _vm.selectedCandidateKeys = $$v
+                    },
+                    expression: "selectedCandidateKeys",
+                  },
+                },
+                [
+                  _c(
+                    "van-cell-group",
+                    { attrs: { inset: "" } },
+                    _vm._l(_vm.searchCandidates, function (item) {
+                      return _c("van-cell", {
+                        key: item.key,
+                        staticClass: "candidate-cell",
+                        scopedSlots: _vm._u(
+                          [
+                            {
+                              key: "title",
+                              fn: function () {
+                                return [
+                                  _c(
+                                    "van-checkbox",
+                                    { attrs: { name: item.key } },
+                                    [_vm._v(_vm._s(item.webName))]
+                                  ),
+                                ]
+                              },
+                              proxy: true,
+                            },
+                            {
+                              key: "label",
+                              fn: function () {
+                                return [
+                                  _c(
+                                    "div",
+                                    { staticClass: "candidate-label" },
+                                    [_vm._v(_vm._s(item.comicName))]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "candidate-label candidate-label--sub",
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n              " +
+                                          _vm._s(
+                                            _vm.formatSeriesCount(
+                                              item.seriesChapterCount
+                                            )
+                                          ) +
+                                          "\n            "
+                                      ),
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "candidate-label candidate-label--sub",
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n              最新: " +
+                                          _vm._s(
+                                            _vm.formatLatestChapterName(
+                                              item.latestChapterName
+                                            )
+                                          ) +
+                                          "\n            "
+                                      ),
+                                    ]
+                                  ),
+                                ]
+                              },
+                              proxy: true,
+                            },
+                            {
+                              key: "right-icon",
+                              fn: function () {
+                                return [
+                                  _c(
+                                    "div",
+                                    { staticClass: "candidate-actions" },
+                                    [
+                                      _c(
+                                        "van-button",
+                                        {
+                                          attrs: { size: "mini", plain: "" },
+                                          on: {
+                                            click: function ($event) {
+                                              $event.stopPropagation()
+                                              return _vm.openComic(
+                                                item.comicPageUrl
+                                              )
+                                            },
+                                          },
+                                        },
+                                        [_vm._v("详情")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "van-button",
+                                        {
+                                          attrs: {
+                                            size: "mini",
+                                            plain: "",
+                                            type: "primary",
+                                          },
+                                          on: {
+                                            click: function ($event) {
+                                              $event.stopPropagation()
+                                              return _vm.openLatestChapter(item)
+                                            },
+                                          },
+                                        },
+                                        [_vm._v("最新章")]
+                                      ),
+                                    ],
+                                    1
+                                  ),
+                                ]
+                              },
+                              proxy: true,
+                            },
+                          ],
+                          null,
+                          true
+                        ),
+                      })
+                    }),
+                    1
+                  ),
+                ],
+                1
+              ),
+            ],
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.followList.length === 0
+        ? _c("van-empty", { attrs: { description: "追更列表为空" } }, [
+            _c("p", { staticClass: "follow-hint" }, [
+              _vm._v("在“加载”页点击“加入追更”即可收藏当前漫画。"),
+            ]),
+          ])
+        : _c(
+            "div",
+            { staticClass: "follow-list" },
+            _vm._l(_vm.followList, function (item) {
+              return _c(
+                "van-cell-group",
+                {
+                  key: item.id,
+                  staticClass: "follow-card",
+                  attrs: { inset: "" },
+                },
+                [
+                  _c("van-cell", {
+                    attrs: { title: item.comicName, label: item.webName },
+                    scopedSlots: _vm._u(
+                      [
+                        {
+                          key: "right-icon",
+                          fn: function () {
+                            return [
+                              _c(
+                                "van-tag",
+                                {
+                                  attrs: {
+                                    type:
+                                      item.pendingChapters.length > 0
+                                        ? "danger"
+                                        : "primary",
+                                  },
+                                },
+                                [
+                                  _vm._v(
+                                    "\n            " +
+                                      _vm._s(item.pendingChapters.length) +
+                                      " 更\n          "
+                                  ),
+                                ]
+                              ),
+                            ]
+                          },
+                          proxy: true,
+                        },
+                      ],
+                      null,
+                      true
+                    ),
+                  }),
+                  _vm._v(" "),
+                  _c("van-field", {
+                    attrs: { label: "作者", placeholder: "可手动补充作者名" },
+                    on: {
+                      blur: function ($event) {
+                        return _vm.saveAuthor(item)
+                      },
+                    },
+                    model: {
+                      value: item.authorName,
+                      callback: function ($$v) {
+                        _vm.$set(item, "authorName", $$v)
+                      },
+                      expression: "item.authorName",
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c("van-cell", {
+                    attrs: {
+                      title: "漫画页",
+                      "is-link": "",
+                      value: _vm.formatCheckTime(item.lastCheckedAt),
+                    },
+                    on: {
+                      click: function ($event) {
+                        return _vm.openComic(item.comicPageUrl)
+                      },
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c("van-cell", {
+                    attrs: {
+                      title: "总章节",
+                      value: _vm.formatSeriesCount(item.seriesChapterCount),
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c("van-cell", {
+                    attrs: {
+                      title: "最新章节",
+                      "is-link": "",
+                      value: _vm.formatLatestChapterName(
+                        item.latestChapterName
+                      ),
+                    },
+                    on: {
+                      click: function ($event) {
+                        return _vm.openLatestChapter(item)
+                      },
+                    },
+                  }),
+                  _vm._v(" "),
+                  item.lastError
+                    ? _c("van-cell", {
+                        attrs: { title: "检查失败: " + item.lastError },
+                      })
+                    : _vm._e(),
+                  _vm._v(" "),
+                  item.pendingChapters.length > 0
+                    ? _c(
+                        "div",
+                        { staticClass: "pending-list" },
+                        _vm._l(item.pendingChapters, function (chapter) {
+                          return _c(
+                            "div",
+                            { key: chapter.url, staticClass: "pending-item" },
+                            [
+                              _vm._v(
+                                "\n          " +
+                                  _vm._s(chapter.chapterName) +
+                                  "\n        "
+                              ),
+                            ]
+                          )
+                        }),
+                        0
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "follow-actions" },
+                    [
+                      _c(
+                        "van-button",
+                        {
+                          attrs: { size: "mini" },
+                          on: {
+                            click: function ($event) {
+                              return _vm.checkOne(item)
+                            },
+                          },
+                        },
+                        [_vm._v("检查")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "van-button",
+                        {
+                          attrs: {
+                            size: "mini",
+                            type: "primary",
+                            disabled: item.pendingChapters.length === 0,
+                          },
+                          on: {
+                            click: function ($event) {
+                              return _vm.downloadPending(item)
+                            },
+                          },
+                        },
+                        [_vm._v("下载更新")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "van-button",
+                        {
+                          attrs: {
+                            size: "mini",
+                            disabled: item.pendingChapters.length === 0,
+                          },
+                          on: {
+                            click: function ($event) {
+                              return _vm.markHandled(item)
+                            },
+                          },
+                        },
+                        [_vm._v("标记已处理")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "van-button",
+                        {
+                          attrs: { size: "mini", type: "danger", plain: "" },
+                          on: {
+                            click: function ($event) {
+                              return _vm.removeItem(item)
+                            },
+                          },
+                        },
+                        [_vm._v("删除")]
+                      ),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              )
+            }),
+            1
+          ),
+    ],
+    1
+  )
+}
+var followvue_type_template_id_2da631cb_scoped_true_staticRenderFns = []
+followvue_type_template_id_2da631cb_scoped_true_render._withStripped = true
+
+
+;// CONCATENATED MODULE: ./src/views/follow.vue?vue&type=template&id=2da631cb&scoped=true&
+
+;// CONCATENATED MODULE: ./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/views/follow.vue?vue&type=script&lang=js&
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+
+/* harmony default export */ const followvue_type_script_lang_js_ = ({
+  name: 'Follow',
+  data() {
+    return {
+      followList: [],
+      checking: false,
+      keywordFollowName: '',
+      addingKeywordFollow: false,
+      showScanSitePanel: false,
+      searchableWebOptions: [],
+      selectedScanWebNames: [],
+      searchCandidates: [],
+      selectedCandidateKeys: [],
+      lastSkippedSiteCount: 0
+    }
+  },
+  computed: {
+    hasPendingChapters() {
+      return this.followList.some(item => item.pendingChapters.length > 0)
+    }
+  },
+  mounted() {
+    this.refreshList()
+    this.initSearchableWebOptions()
+    this.$bus.$on('refreshFollowList', this.refreshList)
+    this.$bus.$on('getComicName', (comicName) => {
+      if (!this.keywordFollowName && comicName && comicName !== '------') {
+        this.keywordFollowName = comicName
+      }
+    })
+    if (canAutoCheckFollow()) {
+      this.autoCheckOnLoad()
+    }
+  },
+  methods: {
+    refreshList() {
+      this.followList = getFollowList()
+    },
+    initSearchableWebOptions() {
+      this.searchableWebOptions = (0,comics/* getSearchableWebList */.EQ)().map(item => ({
+        webName: item.webName
+      }))
+      const savedWebNames = (0,setup/* getStorage */.cF)('followSearchWebNames') || []
+      const defaultWebNames = this.searchableWebOptions.map(item => item.webName)
+      const matchedWebNames = defaultWebNames.filter(webName => savedWebNames.includes(webName))
+      this.selectedScanWebNames = matchedWebNames.length > 0 ? matchedWebNames : defaultWebNames
+      this.saveScanSites()
+    },
+    saveScanSites() {
+      (0,setup/* setStorage */.po)('followSearchWebNames', this.selectedScanWebNames)
+    },
+    toggleScanSitePanel() {
+      this.showScanSitePanel = !this.showScanSitePanel
+    },
+    selectAllScanSites() {
+      this.selectedScanWebNames = this.searchableWebOptions.map(item => item.webName)
+      this.saveScanSites()
+    },
+    clearScanSites() {
+      this.selectedScanWebNames = []
+      this.saveScanSites()
+    },
+    formatCheckTime(time) {
+      if (!time) {
+        return '未检查'
+      }
+      const date = new Date(time)
+      const hour = String(date.getHours()).padStart(2, '0')
+      const minute = String(date.getMinutes()).padStart(2, '0')
+      return `${date.getMonth() + 1}/${date.getDate()} ${hour}:${minute}`
+    },
+    formatSeriesCount(count) {
+      if (!count || count < 0) {
+        return '章节数未知'
+      }
+      return `共 ${count} 话`
+    },
+    formatLatestChapterName(name) {
+      return name || '未识别到最新章节'
+    },
+    async autoCheckOnLoad() {
+      await this.checkAll(true)
+    },
+    async searchByKeyword() {
+      const keyword = (this.keywordFollowName || '').trim()
+      if (keyword.length < 2) {
+        (0,external_vant_.Toast)({
+          message: '漫画名至少2个字符',
+          getContainer: '.card',
+          position: 'bottom'
+        })
+        return
+      }
+      if (this.selectedScanWebNames.length === 0) {
+        (0,external_vant_.Toast)({
+          message: '请先选择要扫描的站点',
+          getContainer: '.card',
+          position: 'bottom'
+        })
+        return
+      }
+      this.addingKeywordFollow = true
+      try {
+        const result = await searchFollowCandidatesByKeyword(keyword, this.selectedScanWebNames)
+        this.searchCandidates = result.candidates
+        this.selectedCandidateKeys = result.candidates.map(item => item.key)
+        this.lastSkippedSiteCount = result.skippedSites.length
+        const matchCount = result.candidates.length
+        const skipCount = result.skippedSites.length
+        ;(0,external_vant_.Toast)({
+          message: matchCount > 0
+            ? `找到 ${matchCount} 个候选站点${skipCount > 0 ? `，未命中 ${skipCount} 个站点` : ''}`
+            : '没有找到可加入追更的站点',
+          getContainer: '.card',
+          position: 'bottom'
+        })
+      } finally {
+        this.addingKeywordFollow = false
+      }
+    },
+    selectAllCandidates() {
+      this.selectedCandidateKeys = this.searchCandidates.map(item => item.key)
+    },
+    clearCandidateSelection() {
+      this.selectedCandidateKeys = []
+    },
+    clearSearchCandidates() {
+      this.searchCandidates = []
+      this.selectedCandidateKeys = []
+      this.lastSkippedSiteCount = 0
+    },
+    addSelectedCandidates() {
+      const selectedCandidates = this.searchCandidates.filter(item => this.selectedCandidateKeys.includes(item.key))
+      if (selectedCandidates.length === 0) {
+        (0,external_vant_.Toast)({
+          message: '请先勾选要保留的站点',
+          getContainer: '.card',
+          position: 'bottom'
+        })
+        return
+      }
+      const skippedSiteCount = this.lastSkippedSiteCount
+      const addedItems = addFollowCandidates(selectedCandidates)
+      this.refreshList()
+      this.clearSearchCandidates()
+      ;(0,external_vant_.Toast)({
+        message: `已加入 ${addedItems.length} 个站点${skippedSiteCount > 0 ? `，未命中 ${skippedSiteCount} 个站点` : ''}`,
+        getContainer: '.card',
+        position: 'bottom'
+      })
+    },
+    async checkAll(silent = false) {
+      this.checking = true
+      try {
+        const list = await checkAllFollowItems()
+        this.followList = list
+        const updateCount = list.reduce((sum, item) => sum + item.pendingChapters.length, 0)
+        if (!silent || updateCount > 0) {
+          (0,external_vant_.Toast)({
+            message: updateCount > 0 ? `发现 ${updateCount} 个待处理章节` : '追更检查完成',
+            getContainer: '.card',
+            position: 'bottom'
+          })
+        }
+      } finally {
+        this.checking = false
+      }
+    },
+    async checkOne(item) {
+      const nextItem = await checkFollowItem(item.id)
+      this.followList = this.followList.map(current => current.id === item.id ? nextItem : current)
+      ;(0,external_vant_.Toast)({
+        message: nextItem.pendingChapters.length > 0 ? `发现 ${nextItem.pendingChapters.length} 个更新` : '暂无更新',
+        getContainer: '.card',
+        position: 'bottom'
+      })
+    },
+    saveAuthor(item) {
+      updateFollowItem(item.id, (current) => {
+        current.authorName = item.authorName || ''
+        return current
+      })
+      this.refreshList()
+    },
+    buildDownloadItems(item) {
+      const downType = (0,setup/* getStorage */.cF)('downType')
+      return item.pendingChapters.map((chapter) => {
+        const webRule = (0,comics/* findWebByUrl */.jL)(chapter.url || item.comicPageUrl)
+        const downChapterName = chapter.chapterNumStr
+          ? `${chapter.chapterNumStr}${chapter.chapterName ? '-' + chapter.chapterName : ''}`
+          : chapter.chapterName
+        return {
+          ...chapter,
+          originTab: 4,
+          comicName: item.comicName,
+          authorName: item.authorName || chapter.authorName || '',
+          webName: item.webName,
+          comicPageUrl: item.comicPageUrl,
+          seriesChapterCount: item.seriesChapterCount,
+          followItemId: item.id,
+          downChapterName,
+          downType,
+          downHeaders: webRule?.downHeaders
+        }
+      })
+    },
+    downloadPending(item) {
+      const downloadItems = this.buildDownloadItems(item)
+      if (downloadItems.length === 0) {
+        return
+      }
+      this.$bus.$emit('selectDown', downloadItems)
+      this.$bus.$emit('changTab', 3)
+    },
+    downloadAllPending() {
+      const allDownloads = this.followList.flatMap(item => this.buildDownloadItems(item))
+      if (allDownloads.length === 0) {
+        return
+      }
+      this.$bus.$emit('selectDown', allDownloads)
+      this.$bus.$emit('changTab', 3)
+    },
+    markHandled(item) {
+      clearPendingChapters(item.id)
+      this.refreshList()
+    },
+    removeItem(item) {
+      external_vant_.Dialog.confirm({
+        getContainer: '.card',
+        message: `确认删除 ${item.comicName} ？`
+      }).then(() => {
+        removeFollowItem(item.id)
+        this.refreshList()
+      }).catch(() => {})
+    },
+    openLatestChapter(item) {
+      this.openComic(item.latestChapterUrl || item.comicPageUrl)
+    },
+    openComic(url) {
+      if (!url) {
+        return
+      }
+      window.open(url, '_blank')
+    }
+  }
+});
+
+;// CONCATENATED MODULE: ./src/views/follow.vue?vue&type=script&lang=js&
+ /* harmony default export */ const views_followvue_type_script_lang_js_ = (followvue_type_script_lang_js_); 
+// EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/less-loader/dist/cjs.js??clonedRuleSet-2[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/views/follow.vue?vue&type=style&index=0&id=2da631cb&lang=less&scoped=true&
+var followvue_type_style_index_0_id_2da631cb_lang_less_scoped_true_ = __webpack_require__(386);
+;// CONCATENATED MODULE: ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/less-loader/dist/cjs.js??clonedRuleSet-2[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/views/follow.vue?vue&type=style&index=0&id=2da631cb&lang=less&scoped=true&
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var followvue_type_style_index_0_id_2da631cb_lang_less_scoped_true_options = {};
+
+followvue_type_style_index_0_id_2da631cb_lang_less_scoped_true_options.styleTagTransform = (styleTagTransform_default());
+followvue_type_style_index_0_id_2da631cb_lang_less_scoped_true_options.setAttributes = (setAttributesWithoutAttributes_default());
+
+      followvue_type_style_index_0_id_2da631cb_lang_less_scoped_true_options.insert = insertBySelector_default().bind(null, "head");
+    
+followvue_type_style_index_0_id_2da631cb_lang_less_scoped_true_options.domAPI = (styleDomAPI_default());
+followvue_type_style_index_0_id_2da631cb_lang_less_scoped_true_options.insertStyleElement = (insertStyleElement_default());
+
+var followvue_type_style_index_0_id_2da631cb_lang_less_scoped_true_update = injectStylesIntoStyleTag_default()(followvue_type_style_index_0_id_2da631cb_lang_less_scoped_true_/* default */.Z, followvue_type_style_index_0_id_2da631cb_lang_less_scoped_true_options);
+
+
+
+
+       /* harmony default export */ const views_followvue_type_style_index_0_id_2da631cb_lang_less_scoped_true_ = (followvue_type_style_index_0_id_2da631cb_lang_less_scoped_true_/* default */.Z && followvue_type_style_index_0_id_2da631cb_lang_less_scoped_true_/* default.locals */.Z.locals ? followvue_type_style_index_0_id_2da631cb_lang_less_scoped_true_/* default.locals */.Z.locals : undefined);
+
+;// CONCATENATED MODULE: ./src/views/follow.vue?vue&type=style&index=0&id=2da631cb&lang=less&scoped=true&
+
+;// CONCATENATED MODULE: ./src/views/follow.vue
+
+
+
+;
+
+
+/* normalize component */
+
+var follow_component = normalizeComponent(
+  views_followvue_type_script_lang_js_,
+  followvue_type_template_id_2da631cb_scoped_true_render,
+  followvue_type_template_id_2da631cb_scoped_true_staticRenderFns,
+  false,
+  null,
+  "2da631cb",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var follow_api; }
+follow_component.options.__file = "src/views/follow.vue"
+/* harmony default export */ const follow = (follow_component.exports);
 ;// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/views/setting.vue?vue&type=template&id=234d1526&scoped=true&
 var settingvue_type_template_id_234d1526_scoped_true_render = function () {
   var _vm = this
@@ -13319,6 +15789,63 @@ var settingvue_type_template_id_234d1526_scoped_true_render = function () {
                                   },
                                   expression:
                                     "metadataSettings.enableSeriesCover",
+                                },
+                              }),
+                            ]
+                          },
+                          proxy: true,
+                        },
+                      ]),
+                    }),
+                    _vm._v(" "),
+                    _c("van-cell", {
+                      attrs: {
+                        "title-class": "cellleftvalue",
+                        "value-class": "cellrightvalue",
+                        label:
+                          "下载前尝试从网页解析元数据，先预览并允许手动修改",
+                        center: "",
+                      },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "title",
+                          fn: function () {
+                            return [
+                              _c("span", { staticClass: "custom-title" }, [
+                                _vm._v("下载前预览元数据"),
+                              ]),
+                            ]
+                          },
+                          proxy: true,
+                        },
+                        {
+                          key: "default",
+                          fn: function () {
+                            return [
+                              _c("van-checkbox", {
+                                staticClass: "rightbutton",
+                                on: {
+                                  change: function ($event) {
+                                    return _vm.onChangeData(
+                                      "metadataSettings",
+                                      _vm.metadataSettings
+                                        .enableMetadataPreview,
+                                      "enableMetadataPreview"
+                                    )
+                                  },
+                                },
+                                model: {
+                                  value:
+                                    _vm.metadataSettings.enableMetadataPreview,
+                                  callback: function ($$v) {
+                                    _vm.$set(
+                                      _vm.metadataSettings,
+                                      "enableMetadataPreview",
+                                      $$v
+                                    )
+                                  },
+                                  expression:
+                                    "metadataSettings.enableMetadataPreview",
                                 },
                               }),
                             ]
@@ -14766,6 +17293,25 @@ importPage_component.options.__file = "src/components/importPage.vue"
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* eslint-disable no-undef */
 
@@ -15040,1649 +17586,98 @@ var setting_component = normalizeComponent(
 if (false) { var setting_api; }
 setting_component.options.__file = "src/views/setting.vue"
 /* harmony default export */ const setting = (setting_component.exports);
-;// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/views/down.vue?vue&type=template&id=1e855a88&scoped=true&
-var downvue_type_template_id_1e855a88_scoped_true_render = function () {
+;// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/views/metadata.vue?vue&type=template&id=78dd89c9&scoped=true&
+var metadatavue_type_template_id_78dd89c9_scoped_true_render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { attrs: { id: "downcontext" } },
+    { staticClass: "metadata-page" },
     [
-      _c(
-        "van-collapse",
-        {
-          model: {
-            value: _vm.collapseActiveName,
-            callback: function ($$v) {
-              _vm.collapseActiveName = $$v
-            },
-            expression: "collapseActiveName",
-          },
-        },
-        [
-          _c(
-            "van-collapse-item",
-            {
-              attrs: { title: "下载中", name: "1" },
-              scopedSlots: _vm._u([
-                {
-                  key: "title",
-                  fn: function () {
-                    return [
-                      _c(
-                        "div",
-                        { style: { display: "flex", lineHeight: "25px" } },
-                        [
-                          _vm._v("下载中\n          "),
-                          _vm.comicName
-                            ? _c("van-tag", { staticClass: "comicnametag1" }, [
-                                _vm._v(_vm._s(_vm.comicName)),
-                              ])
-                            : _vm._e(),
-                        ],
-                        1
-                      ),
-                    ]
-                  },
-                  proxy: true,
-                },
-              ]),
-            },
-            [
-              _vm._v(" "),
-              _c(
-                "div",
-                { attrs: { id: "downlist" } },
-                _vm._l(_vm.queue.worker, function (item, index) {
-                  return _c("div", { key: index, staticClass: "downitem" }, [
-                    item !== undefined
-                      ? _c(
-                          "div",
-                          [
-                            _c("div", { staticClass: "itemname" }, [
-                              _c("span", { staticClass: "custom-title" }, [
-                                _vm._v(_vm._s(item.downChapterName)),
-                              ]),
-                            ]),
-                            _vm._v(" "),
-                            _c("van-progress", {
-                              ref: "progress",
-                              refInFor: true,
-                              staticStyle: {
-                                width: "100%",
-                                "margin-top": "10px",
-                              },
-                              attrs: {
-                                percentage: item.progress,
-                                "pivot-color": "#66ccff",
-                                color:
-                                  "linear-gradient(to right, #66ccff22, ##66ccff)",
-                              },
-                            }),
-                            _vm._v(" "),
-                            _c("van-divider", {
-                              style: {
-                                margin: "13px 0px",
-                                padding: "0 0px",
-                                height: "1px",
-                              },
-                            }),
-                          ],
-                          1
-                        )
-                      : _vm._e(),
-                  ])
-                }),
-                0
-              ),
-            ]
-          ),
-          _vm._v(" "),
-          _c("van-collapse-item", { attrs: { title: "待下载", name: "2" } }, [
-            _c(
-              "div",
-              { attrs: { id: "downlist" } },
-              _vm._l(_vm.queue.list, function (item, index) {
-                return _c(
-                  "div",
-                  { key: index, staticClass: "downitem" },
-                  [
-                    _c("div", { staticClass: "itemname" }, [
-                      _c("span", { staticClass: "custom-title" }, [
-                        _vm._v(_vm._s(item.downChapterName)),
-                      ]),
-                    ]),
-                    _vm._v(" "),
-                    _c("van-divider", {
-                      style: {
-                        margin: "8px 0px",
-                        padding: "0 0px",
-                        height: "1px",
-                      },
-                    }),
-                  ],
-                  1
-                )
-              }),
-              0
-            ),
-          ]),
-          _vm._v(" "),
-          _c(
-            "van-collapse-item",
-            {
-              attrs: { name: "3" },
-              scopedSlots: _vm._u([
-                {
-                  key: "title",
-                  fn: function () {
-                    return [
-                      _c(
-                        "div",
-                        { style: { display: "flex" } },
-                        [
-                          _c(
-                            "span",
-                            { attrs: { title: _vm.currentDomain } },
-                            [
-                              _vm._v("\n            下载记录\n            "),
-                              _c("van-icon", {
-                                attrs: { name: "info-o", color: "#adadad" },
-                              }),
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c("van-icon", {
-                            staticStyle: {
-                              "line-height": "25px",
-                              "margin-left": "10px",
-                            },
-                            attrs: {
-                              name: "delete-o",
-                              color: "#EE0000",
-                              size: "20",
-                            },
-                            on: {
-                              click: function ($event) {
-                                $event.stopPropagation()
-                                return _vm.deleteAllHistoryData.apply(
-                                  null,
-                                  arguments
-                                )
-                              },
-                            },
-                          }),
-                        ],
-                        1
-                      ),
-                    ]
-                  },
-                  proxy: true,
-                },
-              ]),
-            },
-            [
-              _vm._v(" "),
-              _c(
-                "div",
-                { attrs: { id: "downlist" } },
-                _vm._l(_vm.historyData, function (item, index) {
-                  return _c(
-                    "div",
-                    { key: index, staticClass: "downitem" },
-                    [
-                      _c(
-                        "div",
-                        { staticClass: "itemname" },
-                        [
-                          _c(
-                            "div",
-                            { staticStyle: { display: "flex" } },
-                            [
-                              _c(
-                                "van-tag",
-                                {
-                                  staticClass: "comicnametag",
-                                  attrs: { title: item.comicName },
-                                  on: {
-                                    click: function ($event) {
-                                      return _vm.jump(item.comicPageUrl)
-                                    },
-                                  },
-                                },
-                                [_vm._v(_vm._s(item.comicName))]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "span",
-                                {
-                                  staticClass: "custom-title chapterspan",
-                                  class: { hasError: item.hasError },
-                                },
-                                [_vm._v(_vm._s(item.downChapterName))]
-                              ),
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c("van-icon", {
-                            style: { cursor: "pointer" },
-                            attrs: { name: "delete-o", size: "18px" },
-                            on: {
-                              click: function ($event) {
-                                return _vm.deleteHistoryData(index, item.id)
-                              },
-                            },
-                          }),
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c("van-divider", {
-                        style: {
-                          margin: "8px 0px",
-                          padding: "0 0px",
-                          height: "1px",
-                        },
-                      }),
-                    ],
-                    1
-                  )
-                }),
-                0
-              ),
-            ]
-          ),
-        ],
-        1
-      ),
-    ],
-    1
-  )
-}
-var downvue_type_template_id_1e855a88_scoped_true_staticRenderFns = []
-downvue_type_template_id_1e855a88_scoped_true_render._withStripped = true
-
-
-;// CONCATENATED MODULE: ./src/views/down.vue?vue&type=template&id=1e855a88&scoped=true&
-
-;// CONCATENATED MODULE: external "JSZip"
-const external_JSZip_namespaceObject = JSZip;
-var external_JSZip_default = /*#__PURE__*/__webpack_require__.n(external_JSZip_namespaceObject);
-;// CONCATENATED MODULE: ./src/utils/queue.js
-
-
-
-
-
-
-
-// 多个任务并行执行的队列
-// https://juejin.cn/post/6844903961728647181
-
-class Queue {
-  constructor(workerLen, maxPictureNum, imgIndexBitNum, vue) {
-    this.workerLen = workerLen || 3 // 同时执行的任务数
-    this.pictureNum = maxPictureNum || 2 // 章节最大下载图片数量
-    this.list = [] // 任务队列
-    this.worker = new Array(this.workerLen) // 正在执行的任务
-    this.workerDownInfo = new Array(this.workerLen) // 存储下载信息
-    this.imgIndexBitNum = imgIndexBitNum // 图片序号位数
-    this.seriesJsonCache = new Set()
-    this.seriesCoverCache = new Set()
-    this.Vue = vue
-  }
-
-  // 压缩下载方式
-  async downloadFile(fileName, content) {
-    const url = window.URL.createObjectURL(content)
-    await (0,utils/* downFile */.zd)(url, fileName)
-    window.URL.revokeObjectURL(url)
-  }
-
-  async downloadRemoteFile(fileName, url) {
-    if (!url) {
-      return false
-    }
-    return (0,utils/* downFile */.zd)({ url, name: fileName })
-  }
-
-  getCoverFileName(url) {
-    const match = String(url || '').match(/\.(jpg|jpeg|webp|png|gif|bmp)(?:$|[?#])/i)
-    const suffix = match ? match[1].toLowerCase() : 'jpg'
-    return `cover.${suffix === 'jpeg' ? 'jpg' : suffix}`
-  }
-
-  normalizeImageExtension(suffix) {
-    if (!suffix) {
-      return 'jpg'
-    }
-    return suffix.toLowerCase() === 'jpeg' ? 'jpg' : suffix.toLowerCase()
-  }
-
-  getCoverExtensionByMimeType(mimeType) {
-    if (!mimeType) {
-      return 'jpg'
-    }
-    if (mimeType.includes('png')) return 'png'
-    if (mimeType.includes('webp')) return 'webp'
-    if (mimeType.includes('gif')) return 'gif'
-    if (mimeType.includes('bmp')) return 'bmp'
-    return 'jpg'
-  }
-
-  dataUrlToBlob(dataUrl) {
-    const group = String(dataUrl || '').split(',')
-    if (group.length < 2) {
-      return null
-    }
-    const mimeType = (group[0].match(/data:(.*?);base64/) || [])[1] || 'image/jpeg'
-    const binary = atob(group[1])
-    const len = binary.length
-    const bytes = new Uint8Array(len)
-    for (let i = 0; i < len; i++) {
-      bytes[i] = binary.charCodeAt(i)
-    }
-    return {
-      blob: new Blob([bytes], { type: mimeType }),
-      extension: this.getCoverExtensionByMimeType(mimeType)
-    }
-  }
-
-  async fetchImageBlob(workerId, url) {
-    if (!url) {
-      return null
-    }
-    const headers = this.worker[workerId].downHeaders || {
-      referer: this.worker[workerId].url
-    }
-    const response = await (0,utils/* request */.WY)({
-      method: 'get',
-      url,
-      responseType: 'blob',
-      headers,
-      timeout: 60 * 1000
-    })
-    if (!response || response === 'onerror' || response === 'timeout' || !response.response) {
-      return null
-    }
-    return {
-      blob: response.response,
-      suffix: this.getSuffix(response.finalUrl || url)
-    }
-  }
-
-  async writeBookCoverFile(workerId, archiveBasePath) {
-    const coverOption = this.worker[workerId].coverOption
-    if (!coverOption || coverOption.type === 'first') {
-      return
-    }
-
-    if (coverOption.type === 'upload' && coverOption.dataUrl) {
-      const result = this.dataUrlToBlob(coverOption.dataUrl)
-      if (result?.blob) {
-        await this.downloadFile(`${archiveBasePath}.${result.extension}`, result.blob)
-      }
-      return
-    }
-
-    if (coverOption.type === 'chapter' && coverOption.imageUrl) {
-      let coverData = this.workerDownInfo[workerId].find(item => item.imgurl === coverOption.imageUrl && item.blob !== 1 && item.blob !== 0)
-      if (!coverData) {
-        coverData = await this.fetchImageBlob(workerId, coverOption.imageUrl)
-      }
-      if (coverData?.blob) {
-        const coverExt = this.normalizeImageExtension(coverData.suffix)
-        await this.downloadFile(`${archiveBasePath}.${coverExt}`, coverData.blob)
-      }
-      return
-    }
-
-    if (coverOption.type === 'bangumi' && coverOption.imageUrl) {
-      const coverExt = this.normalizeImageExtension(this.getSuffix(coverOption.imageUrl))
-      await this.downloadRemoteFile(`${archiveBasePath}.${coverExt}`, coverOption.imageUrl)
-    }
-  }
-
-  getSeriesCacheKey(worker) {
-    return `${worker.webName || ''}_${worker.comicName || ''}`
-  }
-
-  shouldPrepareMetadata(worker) {
-    const { enableBangumiScrape, enableComicInfoXml, enableSeriesJson, enableSeriesCover } = getMetadataFileFlags()
-    if (!enableBangumiScrape) {
-      return false
-    }
-    if (worker.downType === 1 && enableComicInfoXml) {
-      return true
-    }
-    return enableSeriesJson || enableSeriesCover
-  }
-
-  prepareWorkerMetadata(worker) {
-    if (!this.shouldPrepareMetadata(worker)) {
-      return Promise.resolve(null)
-    }
-    return getBangumiMetadata(worker).catch((error) => {
-      console.log('bangumiMetadataError: ', error)
-      return null
-    })
-  }
-
-  async getWorkerMetadata(worker) {
-    if (!worker) {
-      return null
-    }
-    if (!worker.metadataPromise) {
-      worker.metadataPromise = this.prepareWorkerMetadata(worker)
-    }
-    return worker.metadataPromise
-  }
-
-  async writeSeriesMetadata(worker) {
-    const { enableSeriesJson, enableSeriesCover } = getMetadataFileFlags()
-    const metadataKey = this.getSeriesCacheKey(worker)
-    if (!enableSeriesJson && !enableSeriesCover) {
-      return
-    }
-    const externalMetadata = await this.getWorkerMetadata(worker)
-
-    if (enableSeriesJson && !this.seriesJsonCache.has(metadataKey)) {
-      const seriesJson = buildSeriesJson(worker, externalMetadata)
-      const jsonBlob = new Blob([seriesJson], { type: 'application/json' })
-      await this.downloadFile(worker.comicName + '\\series.json', jsonBlob)
-      this.seriesJsonCache.add(metadataKey)
-    }
-
-    if (enableSeriesCover && externalMetadata?.coverUrl && !this.seriesCoverCache.has(metadataKey)) {
-      const coverFileName = this.getCoverFileName(externalMetadata.coverUrl)
-      const result = await this.downloadRemoteFile(worker.comicName + '\\' + coverFileName, externalMetadata.coverUrl)
-      if (result) {
-        this.seriesCoverCache.add(metadataKey)
-      }
-    }
-  }
-
-  /**
-     * 执行一个任务
-     * @param { number } index
-     */
-  async * exeDown(index) {
-    const { readtype, downChapterName } = this.worker[index]
-    const _this = this
-
-    async function afterDown(index) {
-      const { comicName, hasError, comicPageUrl, followItemId, url } = _this.worker[index]
-      await _this.writeSeriesMetadata(_this.worker[index])
-      if (followItemId && !hasError) {
-        clearPendingChapters(followItemId, [url])
-      }
-      let historyData = localStorage.getItem('ylComicDownHistory') || '[]'
-      historyData = JSON.parse(historyData)
-      const id = (new Date()).getTime()
-      historyData.unshift({ id, comicName, downChapterName, comicPageUrl: comicPageUrl || window.location.href, hasError })
-      historyData = JSON.stringify(historyData)
-      localStorage.setItem('ylComicDownHistory', historyData)
-      _this.Vue.getHistoryData()
-      _this.Vue.$bus.$emit('refreshFollowList')
-      _this.worker[index] = undefined
-      // 休息下？
-      setTimeout(() => {
-        _this.run()
-      }, 2000)
-    }
-
-    if (readtype === 1) {
-      const { url, isPay } = this.worker[index]
-      const processData = { url, isPay }
-      let imgs = []
-      try {
-        imgs = await (0,utils/* getImage */.gJ)(processData)
-        const imgDownRange = (0,setup/* getStorage */.cF)('imgDownRange')
-        const start = parseInt(imgDownRange[0])
-        const end = parseInt(imgDownRange[1])
-        if (end === -1) {
-          imgs = imgs.slice(start - 1)
-        } else {
-          imgs = imgs.slice(start - 1, end + 1)
-        }
-        // eslint-disable-next-line eqeqeq
-        imgs == [] ? this.worker[index].hasError = true : ''
-        this.worker[index].imgs = imgs
-        this.worker[index].totalNumber = imgs.length
-      } catch (error) {
-        this.worker[index].hasError = true
-      }
-      yield this.down(index)
-        .then(function() {
-          afterDown(index)
-        })
-        //
-    } else {
-      yield this.down2(index)
-        .then(function() {
-          afterDown(index)
-        })
-    }
-  }
-
-  /**
-     * 添加到任务队列
-     * @param { Array<Array<any>> } list: 任务队列
-     */
-  addList(list) {
-    for (const item of list) {
-      this.list.unshift(item)
-    }
-  }
-
-  refresh() {
-    this.worker.splice(0, 0)
-  }
-
-  // 直接下载图片 Promise
-  addImgDownPromise(index, imgurl, imgIndex, newHeaders, retryTimes) {
-    const headers = {
-      referer: this.worker[index].url
-    }
-    return new Promise((resolve, reject) => {
-      const _this = this
-      if (!imgurl) {
-        _this.worker[index].progress = parseInt(_this.worker[index].imgIndex / _this.worker[index].totalNumber * 100)
-        _this.refresh()
-        resolve(false)
-      }
-
-      (0,utils/* request */.WY)({
-        method: 'get',
-        url: imgurl,
-        responseType: 'blob',
-        headers: newHeaders || headers,
-        timeout: 60 * 1000
-      }).then((res) => {
-        const name = this.worker[index].comicName + '\\' + this.worker[index].downChapterName + '\\' +
-        (0,utils/* addZeroForNum */.xo)(imgIndex, this.imgIndexBitNum) + '.'
-
-        let suffix = this.getSuffix(res.finalUrl)
-
-        _this.worker[index].successNum = _this.worker[index].successNum + 1
-        _this.worker[index].progress = parseInt(_this.worker[index].imgIndex / _this.worker[index].totalNumber * 100)
-        _this.refresh()
-
-        let newurl = ''
-        if (res === 'onerror' || res === 'timeout') {
-          if (retryTimes !== 2) {
-            if (retryTimes === undefined) retryTimes = 0
-            return resolve(_this.addImgDownPromise(index, imgurl, imgIndex, newHeaders, ++retryTimes))
-          }
-
-          _this.worker[index].hasError = true
-          suffix = 'txt'
-          const newBlob = new Blob([imgurl], { type: 'text/plain' })
-          newurl = window.URL.createObjectURL(newBlob)
-        } else {
-          newurl = window.URL.createObjectURL(res.response)
-        }
-        (0,utils/* downFile */.zd)(newurl, name + suffix).then((downRes) => {
-          if (downRes) {
-            resolve(true)
-          } else {
-            _this.worker[index].hasError = true
-            resolve(false)
-          }
-        })
-      })
-    })
-  }
-
-  // 请求图片Blob Promise (后用于压缩)
-  addImgPromise(index, imgurl, newHeaders, retryTimes) {
-    const headers = {
-      referer: this.worker[index].url
-    }
-    return new Promise((resolve, reject) => {
-      const _this = this
-      if (imgurl === '' || imgurl === undefined) {
-        _this.worker[index].hasError = true
-        return resolve({
-          blob: 1,
-          imgurl,
-          suffix: '' })
-      }
-
-      const suffix = this.getSuffix(imgurl)
-      ;(0,utils/* request */.WY)({
-        method: 'get',
-        url: imgurl,
-        responseType: 'blob',
-        headers: newHeaders || headers,
-        timeout: 60 * 1000,
-        onload: function(gmRes) {
-          _this.worker[index].successNum = _this.worker[index].successNum + 1
-          _this.worker[index].progress = parseInt(_this.worker[index].imgIndex / _this.worker[index].totalNumber * 100)
-          _this.refresh()
-          resolve({
-            blob: gmRes.response,
-            imgurl,
-            suffix: suffix })
-        },
-        onerror: function(e) {
-          if (retryTimes !== 2) {
-            if (retryTimes === undefined) retryTimes = 0
-            return resolve(_this.addImgPromise(index, imgurl, newHeaders, ++retryTimes))
-          }
-          _this.worker[index].hasError = true
-          resolve({
-            blob: 1,
-            imgurl,
-            suffix: '' })
-        },
-        ontimeout: function() {
-          if (retryTimes !== 2) {
-            if (retryTimes === undefined) retryTimes = 0
-            return resolve(_this.addImgPromise(index, imgurl, newHeaders, ++retryTimes))
-          }
-          resolve({
-            blob: 0,
-            imgurl,
-            suffix: '' })
-        }
-      })
-    })
-  }
-
-  /**
-     * 下载图片
-     * @param { workerId } workerId: 任务id
-     */
-
-  // 网站翻页阅读
-  async down2(workerId) {
-    const { url, downType, totalNumber, isPay, imgIndex, downHeaders } = this.worker[workerId]
-
-    const processData = { url, imgIndex, totalNumber, isPay }
-    processData.otherData = this.worker[workerId].otherData
-
-    const { imgUrlArr, nextPageUrl, imgCount, otherData } = await (0,utils/* getImage */.gJ)(processData)
-    this.worker[workerId].otherData = otherData
-
-    this.worker[workerId].totalNumber = parseInt(imgCount)
-    const beforeDownLen = imgUrlArr.length
-    // console.log('下载前', beforeDownLen, imgIndex, totalNumber)
-
-    while (imgUrlArr.length > 0) {
-      // eslint-disable-next-line prefer-const
-      let promise = []
-      for (let index = this.pictureNum; index > 0; index--) {
-        if (imgUrlArr[0] === undefined) {
-          break
-        }
-        const imgIndex = ++this.worker[workerId].imgIndex
-        if (downType) {
-          promise.push(this.addImgPromise(workerId, imgUrlArr[0], downHeaders))
-        } else {
-          promise.push(this.addImgDownPromise(workerId, imgUrlArr[0], imgIndex, downHeaders))
-        }
-        imgUrlArr.shift()
-      }
-
-      const res = await Promise.all(promise)
-      res.forEach(element => {
-        this.workerDownInfo[workerId].push(element)
-      })
-    }
-
-    const newImgIndex = this.worker[workerId].imgIndex
-    if (beforeDownLen !== 0 && nextPageUrl !== '' && newImgIndex < parseInt(imgCount)) {
-      this.worker[workerId].url = nextPageUrl
-      return new Promise((resolve, reject) => {
-        // 休息一下？
-        setTimeout(() => {
-          resolve(this.down2(workerId))
-        }, 1000)
-      })
-    } else {
-      // 压缩
-      if (downType === 1) {
-        const result = await this.makeZip(workerId)
-        return new Promise((resolve, reject) => {
-          resolve(result)
-        })
-      } else if (downType === 2) { // 拼接
-        await this.combineImages(workerId)
-        return new Promise((resolve, reject) => {
-          resolve()
-        })
-      } else {
-        return new Promise((resolve, reject) => {
-          resolve(1)
-        })
-      }
-    }
-  }
-
-  // 网站卷轴阅读
-  async down(workerId) {
-    const { imgs, downType, downHeaders } = this.worker[workerId]
-    const promise = []
-    let len = imgs.length
-    let pictureNum = this.pictureNum
-
-    while (pictureNum-- && len > 0) {
-      // 是否压缩
-      const imgIndex = ++this.worker[workerId].imgIndex
-      if (downType) {
-        promise.push(this.addImgPromise(workerId, imgs[0], downHeaders))
-      } else {
-        promise.push(this.addImgDownPromise(workerId, imgs[0], imgIndex, downHeaders))
-      }
-      this.worker[workerId].imgs.shift()
-      len--
-    }
-
-    const res = await Promise.all(promise)
-
-    res.forEach(element => {
-      this.workerDownInfo[workerId].push(element)
-    })
-
-    if (this.worker[workerId].imgs.length > 0) {
-      return new Promise((resolve, reject) => {
-        // 休息一下？
-        setTimeout(() => {
-          resolve(this.down(workerId))
-        }, 1000)
-      })
-    }
-
-    // 压缩
-    if (downType === 1) {
-      const result = await this.makeZip(workerId)
-      return new Promise((resolve, reject) => {
-        resolve(result)
-      })
-    } else if (downType === 2) { // 拼接
-      await this.combineImages(workerId)
-      return new Promise((resolve, reject) => {
-        resolve()
-      })
-    } else {
-      return new Promise((resolve, reject) => {
-        resolve(1)
-      })
-    }
-  }
-
-  // 分配并执行任务
-  async run() {
-    const runIndex = []
-    for (let i = 0; i < this.workerLen; i++) {
-      const len = this.list.length
-      if (!this.worker[i] && len > 0) {
-        // 需要执行的任务
-        const item = this.list[len - 1]
-
-        const worker = {
-          comicName: item.comicName,
-          authorName: item.authorName,
-          webName: item.webName,
-          comicPageUrl: item.comicPageUrl,
-          chapterName: item.chapterName,
-          chapterNumStr: item.chapterNumStr,
-          downChapterName: item.downChapterName,
-          url: item.url,
-          isPay: item.isPay, // 是否付费章节
-          imgIndex: 0, // 图片序号
-          successNum: 0, // 下载成功数量
-          totalNumber: 0, // 图片总数
-          imgs: [],
-          progress: 0, // 进度百分比
-          readtype: item.readtype, // 阅读(下载)方式类型
-          func: this.exeDown(i),
-          downType: item.downType, // 下载方式 0：直接  1：压缩  2：拼接
-          hasError: false,
-          downHeaders: item.downHeaders,
-          otherData: undefined, // 自定义存储其他下载数据
-          seriesChapterCount: item.seriesChapterCount,
-          followItemId: item.followItemId,
-          coverOption: item.coverOption,
-          metadataPromise: undefined
-        }
-        worker.metadataPromise = this.prepareWorkerMetadata(worker)
-        this.worker[i] = worker
-        this.workerDownInfo[i] = []
-        this.list.pop()
-        runIndex.push(i)
-      }
-    }
-    // 执行任务
-    for (const index of runIndex) {
-      this.worker[index].func.next()
-    }
-  }
-
-  getSuffix(url) {
-    if (url) {
-      const testurl = url.toLowerCase()
-      const imgtype = ['jpg', 'jpeg', 'webp', 'png', 'gif', 'bmp', 'tiff', 'svg', 'ico']
-      for (let i = 0; i < imgtype.length; i++) {
-        const a = testurl.search(imgtype[i])
-        if (a !== -1) {
-          return imgtype[i]
-        }
-      }
-      // 可能网址没有图片后缀
-      return 'jpg'
-    }
-    return false
-  }
-
-  // 压缩
-  async makeZip(workerId) {
-    const { comicName } = this.worker[workerId]
-    const zip = new (external_JSZip_default())()
-    const { enableComicInfoXml } = getMetadataFileFlags()
-    const externalMetadata = await this.getWorkerMetadata(this.worker[workerId])
-    this.workerDownInfo[workerId].forEach((item, index) => {
-      const imgblob = item.blob
-      const suffix = item.suffix
-      if (imgblob === 1 || imgblob === 0) {
-        const txtBlob = new Blob([item.imgurl], { type: 'text/plain' })
-        zip.file((0,utils/* addZeroForNum */.xo)(index + 1, this.imgIndexBitNum) + '.txt', txtBlob, { blob: true })
-        return
-      }
-      zip.file((0,utils/* addZeroForNum */.xo)(index + 1, this.imgIndexBitNum) + '.' + suffix, imgblob, { blob: true })
-    })
-    if (enableComicInfoXml) {
-      zip.file('ComicInfo.xml', buildComicInfoXml(this.worker[workerId], this.worker[workerId].totalNumber, externalMetadata))
-    }
-
-    const zipblob = await zip.generateAsync({
-      type: 'blob',
-      compression: 'DEFLATE',
-      compressionOptions: {
-        level: 9
-      }
-    })
-    const archiveName = buildArchiveName(this.worker[workerId], this.worker[workerId].totalNumber)
-    const archiveBasePath = comicName + '\\' + archiveName
-    await this.downloadFile(archiveBasePath + '.cbz', zipblob)
-    await this.writeBookCoverFile(workerId, archiveBasePath)
-    return true
-  }
-
-  async combineImages(workerId) {
-    const maxSplicingHeight = (0,setup/* getStorage */.cF)('maxSplicingHeight')
-    const { comicName, downChapterName } = this.worker[workerId]
-    let imgNum = 0
-    let curHeight = 0
-    let totalHeight = 0
-    const saveImg = []
-    const _this = this
-
-    async function asyncLoadImg(src) {
-      return new Promise((resolve, reject) => {
-        const img = document.createElement('img')
-        img.onload = () => {
-          resolve(img)
-        }
-        img.onerror = () => {
-          const error = new Error(`图片加载失败，url：${src}`)
-          console.log('combineImages-e: ', error)
-          reject('')
-        }
-        img.src = src
-      })
-    }
-
-    async function asyncCanvas(canvas, name) {
-      return new Promise((resolve, reject) => {
-        canvas.toBlob(async function(imgblob) {
-          await _this.downloadFile(name, imgblob)
-          resolve()
-        }, 'image/jpeg', 0.8)
-      })
-    }
-
-    for (let index = 0; index < this.workerDownInfo[workerId].length; index++) {
-      const data = this.workerDownInfo[workerId][index]
-      // 去除不是图片类型
-      if (data.blob === 1 || data.blob === 0 || !data.blob.type.includes('image')) {
-        this.worker[workerId].hasError = true
-        const error_name = comicName + '\\' + downChapterName + '\\error_' + (0,utils/* addZeroForNum */.xo)(index + 1, this.imgIndexBitNum) + '.txt'
-        const imgurl = this.workerDownInfo[workerId][index].imgurl
-        const newBlob = new Blob([imgurl], { type: 'text/plain' })
-        _this.downloadFile(error_name, newBlob)
-        continue
-      }
-
-      const newurl = window.URL.createObjectURL(data.blob)
-      const image = await asyncLoadImg(newurl)
-      if (image === '') {
-        continue
-      }
-      if (totalHeight === 0) {
-        const obj = { num: imgNum, width: image.width, height: image.height, img: [image] }
-        curHeight = image.height
-        totalHeight += image.height
-        saveImg.push(obj)
-        continue
-      }
-      if (curHeight + image.height > maxSplicingHeight) {
-        const newobj = { num: ++imgNum, width: image.width, height: image.height, img: [image] }
-        curHeight = image.height
-        saveImg.push(newobj)
-      } else {
-        curHeight += image.height
-        saveImg[imgNum].height += image.height
-        saveImg[imgNum].img.push(image)
-      }
-      totalHeight += image.height
-    }
-
-    const canvas = document.createElement('canvas')
-    const context = canvas.getContext('2d')
-    let offsetY = 0
-    for (let i = 0; i < saveImg.length; i++) {
-      const item = saveImg[i]
-      canvas.width = item.width
-      canvas.height = item.height
-      offsetY = 0
-
-      for (let len = 0; len < item.img.length; len++) {
-        const element = item.img[len]
-        context.drawImage(element, 0, offsetY, element.width, element.height)
-        offsetY = offsetY + parseInt(element.height)
-      }
-      const name = comicName + '\\' + downChapterName + '\\' + (0,utils/* addZeroForNum */.xo)(item.num + 1, this.imgIndexBitNum) + '.jpg'
-      await asyncCanvas(canvas, name)
-    }
-
-    return new Promise((resolve, reject) => {
-      resolve(true)
-    })
-  }
-}
-
-;// CONCATENATED MODULE: ./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/views/down.vue?vue&type=script&lang=js&
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
-
-
-
-/* harmony default export */ const downvue_type_script_lang_js_ = ({
-  name: 'Down',
-  data() {
-    return {
-      collapseActiveName: ['1', '2', '3'],
-      comicName: null,
-      currentDomain: '当前记录 ' + (0,utils/* getdomain */.m1)(),
-      queue: {
-        'worker': '',
-        'list': '',
-        'workeredList': ''
-      },
-      maxChapterNum: 3,
-      maxPictureNum: 2,
-      imgIndexBitNum: 3,
-      historyData: []
-    }
-  },
-  watch: {
-
-  },
-  mounted() {
-    console.clear()
-    this.$bus.$on('selectDown', this.downInit)
-  },
-  created() {
-    this.$bus.$on('getComicName', this.getComicName)
-    this.getHistoryData()
-  },
-  methods: {
-    getComicName(value) {
-      if (value !== '------') { this.comicName = value }
-    },
-    downInit(arr) {
-      if (this.queue.worker === '') {
-        this.maxChapterNum = (0,setup/* getStorage */.cF)('maxChapterNum')
-        this.maxPictureNum = (0,setup/* getStorage */.cF)('maxPictureNum')
-        this.imgIndexBitNum = (0,setup/* getStorage */.cF)('imgIndexBitNum')
-        this.queue = new Queue(this.maxChapterNum, this.maxPictureNum, this.imgIndexBitNum, this)
-      }
-      this.queue.addList(arr)
-      this.queue.run()
-    },
-    getHistoryData() {
-      const data = localStorage.getItem('ylComicDownHistory')
-      this.historyData = JSON.parse(data || '[]')
-    },
-    deleteHistoryData(index, id) {
-      this.historyData.splice(index, 1)
-      let data = localStorage.getItem('ylComicDownHistory')
-      let historyData = JSON.parse(data || '[]')
-      historyData = historyData.filter((item) => item.id !== id)
-      data = JSON.stringify(historyData)
-      localStorage.setItem('ylComicDownHistory', data)
-    },
-    deleteAllHistoryData() {
-      external_vant_.Dialog.confirm({
-        getContainer: '.card',
-        message: '确认全部删除'
-      })
-        .then(() => {
-          this.historyData.splice(0, this.historyData.length)
-          localStorage.setItem('ylComicDownHistory', '[]')
-        })
-        .catch(() => {
-          // on cancel
-        })
-    },
-    jump(url) {
-      window.open(url, '_blank')
-      // window.location.href = url
-    }
-  }
-});
-
-;// CONCATENATED MODULE: ./src/views/down.vue?vue&type=script&lang=js&
- /* harmony default export */ const views_downvue_type_script_lang_js_ = (downvue_type_script_lang_js_); 
-// EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/less-loader/dist/cjs.js??clonedRuleSet-2[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/views/down.vue?vue&type=style&index=0&id=1e855a88&lang=less&scoped=true&
-var downvue_type_style_index_0_id_1e855a88_lang_less_scoped_true_ = __webpack_require__(3240);
-;// CONCATENATED MODULE: ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/less-loader/dist/cjs.js??clonedRuleSet-2[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/views/down.vue?vue&type=style&index=0&id=1e855a88&lang=less&scoped=true&
-
-      
-      
-      
-      
-      
-      
-      
-      
-      
-
-var downvue_type_style_index_0_id_1e855a88_lang_less_scoped_true_options = {};
-
-downvue_type_style_index_0_id_1e855a88_lang_less_scoped_true_options.styleTagTransform = (styleTagTransform_default());
-downvue_type_style_index_0_id_1e855a88_lang_less_scoped_true_options.setAttributes = (setAttributesWithoutAttributes_default());
-
-      downvue_type_style_index_0_id_1e855a88_lang_less_scoped_true_options.insert = insertBySelector_default().bind(null, "head");
-    
-downvue_type_style_index_0_id_1e855a88_lang_less_scoped_true_options.domAPI = (styleDomAPI_default());
-downvue_type_style_index_0_id_1e855a88_lang_less_scoped_true_options.insertStyleElement = (insertStyleElement_default());
-
-var downvue_type_style_index_0_id_1e855a88_lang_less_scoped_true_update = injectStylesIntoStyleTag_default()(downvue_type_style_index_0_id_1e855a88_lang_less_scoped_true_/* default */.Z, downvue_type_style_index_0_id_1e855a88_lang_less_scoped_true_options);
-
-
-
-
-       /* harmony default export */ const views_downvue_type_style_index_0_id_1e855a88_lang_less_scoped_true_ = (downvue_type_style_index_0_id_1e855a88_lang_less_scoped_true_/* default */.Z && downvue_type_style_index_0_id_1e855a88_lang_less_scoped_true_/* default.locals */.Z.locals ? downvue_type_style_index_0_id_1e855a88_lang_less_scoped_true_/* default.locals */.Z.locals : undefined);
-
-;// CONCATENATED MODULE: ./src/views/down.vue?vue&type=style&index=0&id=1e855a88&lang=less&scoped=true&
-
-;// CONCATENATED MODULE: ./src/views/down.vue
-
-
-
-;
-
-
-/* normalize component */
-
-var down_component = normalizeComponent(
-  views_downvue_type_script_lang_js_,
-  downvue_type_template_id_1e855a88_scoped_true_render,
-  downvue_type_template_id_1e855a88_scoped_true_staticRenderFns,
-  false,
-  null,
-  "1e855a88",
-  null
-  
-)
-
-/* hot reload */
-if (false) { var down_api; }
-down_component.options.__file = "src/views/down.vue"
-/* harmony default export */ const down = (down_component.exports);
-;// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/views/follow.vue?vue&type=template&id=2da631cb&scoped=true&
-var followvue_type_template_id_2da631cb_scoped_true_render = function () {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "follow-page" },
-    [
-      _c(
-        "div",
-        { staticClass: "follow-toolbar" },
-        [
-          _c(
-            "van-button",
-            {
-              attrs: {
-                size: "small",
-                round: "",
-                type: "primary",
-                loading: _vm.checking,
-              },
-              on: { click: _vm.checkAll },
-            },
-            [_vm._v("检查全部")]
-          ),
-          _vm._v(" "),
-          _c(
-            "van-button",
-            {
-              attrs: {
-                size: "small",
-                round: "",
-                disabled: !_vm.hasPendingChapters,
-              },
-              on: { click: _vm.downloadAllPending },
-            },
-            [_vm._v("下载全部更新")]
-          ),
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "follow-keyword-toolbar" },
-        [
-          _c("van-field", {
-            attrs: {
-              size: "small",
-              placeholder: "输入漫画名，按选中站点搜索追更",
-            },
-            nativeOn: {
-              keyup: function ($event) {
-                if (
-                  !$event.type.indexOf("key") &&
-                  _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                ) {
-                  return null
-                }
-                return _vm.searchByKeyword.apply(null, arguments)
-              },
-            },
-            model: {
-              value: _vm.keywordFollowName,
-              callback: function ($$v) {
-                _vm.keywordFollowName = $$v
-              },
-              expression: "keywordFollowName",
-            },
-          }),
-          _vm._v(" "),
-          _c(
-            "van-button",
-            {
-              attrs: {
-                size: "small",
-                round: "",
-                type: "info",
-                loading: _vm.addingKeywordFollow,
-              },
-              on: { click: _vm.searchByKeyword },
-            },
-            [_vm._v("开始搜索")]
-          ),
-          _vm._v(" "),
-          _c(
-            "van-button",
-            {
-              attrs: { size: "small", round: "", plain: "" },
-              on: { click: _vm.toggleScanSitePanel },
-            },
-            [_vm._v(_vm._s(_vm.showScanSitePanel ? "收起站点" : "扫描站点"))]
-          ),
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _vm.showScanSitePanel
+      _vm.loading
         ? _c(
-            "div",
-            { staticClass: "follow-site-panel" },
-            [
-              _c("div", { staticClass: "follow-panel-header" }, [
-                _c("span", [_vm._v("扫描站点")]),
-                _vm._v(" "),
-                _c("span", [
-                  _vm._v(
-                    _vm._s(_vm.selectedScanWebNames.length) +
-                      "/" +
-                      _vm._s(_vm.searchableWebOptions.length)
-                  ),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "follow-site-actions" },
-                [
-                  _c(
-                    "van-button",
-                    {
-                      attrs: { size: "mini" },
-                      on: { click: _vm.selectAllScanSites },
-                    },
-                    [_vm._v("全选")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "van-button",
-                    {
-                      attrs: { size: "mini" },
-                      on: { click: _vm.clearScanSites },
-                    },
-                    [_vm._v("清空")]
-                  ),
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "van-checkbox-group",
-                {
-                  on: { change: _vm.saveScanSites },
-                  model: {
-                    value: _vm.selectedScanWebNames,
-                    callback: function ($$v) {
-                      _vm.selectedScanWebNames = $$v
-                    },
-                    expression: "selectedScanWebNames",
-                  },
-                },
-                [
-                  _c(
-                    "div",
-                    { staticClass: "follow-site-grid" },
-                    _vm._l(_vm.searchableWebOptions, function (item) {
-                      return _c(
-                        "van-checkbox",
-                        {
-                          key: item.webName,
-                          staticClass: "follow-site-check",
-                          attrs: { name: item.webName },
-                        },
-                        [
-                          _vm._v(
-                            "\n          " + _vm._s(item.webName) + "\n        "
-                          ),
-                        ]
-                      )
-                    }),
-                    1
-                  ),
-                ]
-              ),
-            ],
-            1
+            "van-loading",
+            { staticClass: "metadata-loading", attrs: { size: "24px" } },
+            [_vm._v("\n    正在解析网页并整理元数据...\n  ")]
           )
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.searchCandidates.length > 0
-        ? _c(
-            "div",
-            { staticClass: "follow-result-panel" },
-            [
-              _c("div", { staticClass: "follow-panel-header" }, [
-                _c("span", [_vm._v("匹配结果")]),
-                _vm._v(" "),
-                _c("span", [
-                  _vm._v(
-                    _vm._s(_vm.selectedCandidateKeys.length) +
-                      "/" +
-                      _vm._s(_vm.searchCandidates.length)
-                  ),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "follow-site-actions" },
-                [
-                  _c(
-                    "van-button",
-                    {
-                      attrs: { size: "mini" },
-                      on: { click: _vm.selectAllCandidates },
-                    },
-                    [_vm._v("全选")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "van-button",
-                    {
-                      attrs: { size: "mini" },
-                      on: { click: _vm.clearCandidateSelection },
-                    },
-                    [_vm._v("清空")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "van-button",
-                    {
-                      attrs: { size: "mini", type: "primary" },
-                      on: { click: _vm.addSelectedCandidates },
-                    },
-                    [_vm._v("加入选中站点")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "van-button",
-                    {
-                      attrs: { size: "mini", plain: "" },
-                      on: { click: _vm.clearSearchCandidates },
-                    },
-                    [_vm._v("取消结果")]
-                  ),
-                ],
-                1
+        : _vm.pendingGroups.length === 0
+        ? _c("van-empty", { attrs: { description: "暂无待确认的元数据" } }, [
+            _c("p", { staticClass: "metadata-hint" }, [
+              _vm._v(
+                "开启“下载前预览并编辑元数据”后，开始下载时会先进入这里。"
               ),
-              _vm._v(" "),
-              _c(
-                "van-checkbox-group",
-                {
-                  model: {
-                    value: _vm.selectedCandidateKeys,
-                    callback: function ($$v) {
-                      _vm.selectedCandidateKeys = $$v
-                    },
-                    expression: "selectedCandidateKeys",
-                  },
-                },
-                [
-                  _c(
-                    "van-cell-group",
-                    { attrs: { inset: "" } },
-                    _vm._l(_vm.searchCandidates, function (item) {
-                      return _c("van-cell", {
-                        key: item.key,
-                        staticClass: "candidate-cell",
-                        scopedSlots: _vm._u(
-                          [
-                            {
-                              key: "title",
-                              fn: function () {
-                                return [
-                                  _c(
-                                    "van-checkbox",
-                                    { attrs: { name: item.key } },
-                                    [_vm._v(_vm._s(item.webName))]
-                                  ),
-                                ]
-                              },
-                              proxy: true,
-                            },
-                            {
-                              key: "label",
-                              fn: function () {
-                                return [
-                                  _c(
-                                    "div",
-                                    { staticClass: "candidate-label" },
-                                    [_vm._v(_vm._s(item.comicName))]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    {
-                                      staticClass:
-                                        "candidate-label candidate-label--sub",
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n              " +
-                                          _vm._s(
-                                            _vm.formatSeriesCount(
-                                              item.seriesChapterCount
-                                            )
-                                          ) +
-                                          "\n            "
-                                      ),
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    {
-                                      staticClass:
-                                        "candidate-label candidate-label--sub",
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n              最新: " +
-                                          _vm._s(
-                                            _vm.formatLatestChapterName(
-                                              item.latestChapterName
-                                            )
-                                          ) +
-                                          "\n            "
-                                      ),
-                                    ]
-                                  ),
-                                ]
-                              },
-                              proxy: true,
-                            },
-                            {
-                              key: "right-icon",
-                              fn: function () {
-                                return [
-                                  _c(
-                                    "div",
-                                    { staticClass: "candidate-actions" },
-                                    [
-                                      _c(
-                                        "van-button",
-                                        {
-                                          attrs: { size: "mini", plain: "" },
-                                          on: {
-                                            click: function ($event) {
-                                              $event.stopPropagation()
-                                              return _vm.openComic(
-                                                item.comicPageUrl
-                                              )
-                                            },
-                                          },
-                                        },
-                                        [_vm._v("详情")]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "van-button",
-                                        {
-                                          attrs: {
-                                            size: "mini",
-                                            plain: "",
-                                            type: "primary",
-                                          },
-                                          on: {
-                                            click: function ($event) {
-                                              $event.stopPropagation()
-                                              return _vm.openLatestChapter(item)
-                                            },
-                                          },
-                                        },
-                                        [_vm._v("最新章")]
-                                      ),
-                                    ],
-                                    1
-                                  ),
-                                ]
-                              },
-                              proxy: true,
-                            },
-                          ],
-                          null,
-                          true
-                        ),
-                      })
-                    }),
-                    1
-                  ),
-                ],
-                1
-              ),
-            ],
-            1
-          )
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.followList.length === 0
-        ? _c("van-empty", { attrs: { description: "追更列表为空" } }, [
-            _c("p", { staticClass: "follow-hint" }, [
-              _vm._v("在“加载”页点击“加入追更”即可收藏当前漫画。"),
             ]),
           ])
-        : _c(
-            "div",
-            { staticClass: "follow-list" },
-            _vm._l(_vm.followList, function (item) {
-              return _c(
-                "van-cell-group",
-                {
-                  key: item.id,
-                  staticClass: "follow-card",
-                  attrs: { inset: "" },
+        : [
+            _c("div", { staticClass: "metadata-top" }, [
+              _c("div", { staticClass: "metadata-top__title" }, [
+                _vm._v(
+                  "待确认系列 " + _vm._s(_vm.pendingGroups.length) + " 个"
+                ),
+              ]),
+              _vm._v(" "),
+              _vm.showComicInfoPreview
+                ? _c("div", { staticClass: "metadata-top__desc" }, [
+                    _vm._v(
+                      "\n        `ComicInfo.xml` 中的 `PageCount` 会在实际下载图片后自动填充，这里先展示其它字段。\n      "
+                    ),
+                  ])
+                : _vm._e(),
+            ]),
+            _vm._v(" "),
+            _c(
+              "van-collapse",
+              {
+                model: {
+                  value: _vm.activeNames,
+                  callback: function ($$v) {
+                    _vm.activeNames = $$v
+                  },
+                  expression: "activeNames",
                 },
-                [
-                  _c("van-cell", {
-                    attrs: { title: item.comicName, label: item.webName },
+              },
+              _vm._l(_vm.pendingGroups, function (group) {
+                return _c(
+                  "van-collapse-item",
+                  {
+                    key: group.key,
+                    attrs: { name: group.key },
                     scopedSlots: _vm._u(
                       [
                         {
-                          key: "right-icon",
+                          key: "title",
                           fn: function () {
                             return [
                               _c(
-                                "van-tag",
-                                {
-                                  attrs: {
-                                    type:
-                                      item.pendingChapters.length > 0
-                                        ? "danger"
-                                        : "primary",
-                                  },
-                                },
+                                "div",
+                                { staticClass: "metadata-group-title" },
                                 [
-                                  _vm._v(
-                                    "\n            " +
-                                      _vm._s(item.pendingChapters.length) +
-                                      " 更\n          "
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "metadata-group-title__main",
+                                    },
+                                    [_vm._v(_vm._s(group.baseItem.comicName))]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "metadata-group-title__side",
+                                    },
+                                    [
+                                      _c(
+                                        "van-tag",
+                                        { attrs: { type: "primary" } },
+                                        [
+                                          _vm._v(
+                                            _vm._s(group.items.length) + " 章"
+                                          ),
+                                        ]
+                                      ),
+                                    ],
+                                    1
                                   ),
                                 ]
                               ),
@@ -16694,575 +17689,1027 @@ var followvue_type_template_id_2da631cb_scoped_true_render = function () {
                       null,
                       true
                     ),
-                  }),
-                  _vm._v(" "),
-                  _c("van-field", {
-                    attrs: { label: "作者", placeholder: "可手动补充作者名" },
-                    on: {
-                      blur: function ($event) {
-                        return _vm.saveAuthor(item)
-                      },
-                    },
-                    model: {
-                      value: item.authorName,
-                      callback: function ($$v) {
-                        _vm.$set(item, "authorName", $$v)
-                      },
-                      expression: "item.authorName",
-                    },
-                  }),
-                  _vm._v(" "),
-                  _c("van-cell", {
-                    attrs: {
-                      title: "漫画页",
-                      "is-link": "",
-                      value: _vm.formatCheckTime(item.lastCheckedAt),
-                    },
-                    on: {
-                      click: function ($event) {
-                        return _vm.openComic(item.comicPageUrl)
-                      },
-                    },
-                  }),
-                  _vm._v(" "),
-                  _c("van-cell", {
-                    attrs: {
-                      title: "总章节",
-                      value: _vm.formatSeriesCount(item.seriesChapterCount),
-                    },
-                  }),
-                  _vm._v(" "),
-                  _c("van-cell", {
-                    attrs: {
-                      title: "最新章节",
-                      "is-link": "",
-                      value: _vm.formatLatestChapterName(
-                        item.latestChapterName
-                      ),
-                    },
-                    on: {
-                      click: function ($event) {
-                        return _vm.openLatestChapter(item)
-                      },
-                    },
-                  }),
-                  _vm._v(" "),
-                  item.lastError
-                    ? _c("van-cell", {
-                        attrs: { title: "检查失败: " + item.lastError },
-                      })
-                    : _vm._e(),
-                  _vm._v(" "),
-                  item.pendingChapters.length > 0
-                    ? _c(
-                        "div",
-                        { staticClass: "pending-list" },
-                        _vm._l(item.pendingChapters, function (chapter) {
-                          return _c(
-                            "div",
-                            { key: chapter.url, staticClass: "pending-item" },
-                            [
-                              _vm._v(
-                                "\n          " +
-                                  _vm._s(chapter.chapterName) +
-                                  "\n        "
-                              ),
-                            ]
-                          )
+                  },
+                  [
+                    _vm._v(" "),
+                    _c(
+                      "van-cell-group",
+                      { attrs: { inset: "" } },
+                      [
+                        _c("van-cell", {
+                          attrs: {
+                            title: "站点",
+                            value: group.baseItem.webName,
+                          },
                         }),
-                        0
-                      )
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "follow-actions" },
-                    [
-                      _c(
-                        "van-button",
-                        {
-                          attrs: { size: "mini" },
-                          on: {
-                            click: function ($event) {
-                              return _vm.checkOne(item)
-                            },
-                          },
-                        },
-                        [_vm._v("检查")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "van-button",
-                        {
+                        _vm._v(" "),
+                        _c("van-cell", {
                           attrs: {
-                            size: "mini",
-                            type: "primary",
-                            disabled: item.pendingChapters.length === 0,
+                            title: "样例章节",
+                            value:
+                              group.baseItem.downChapterName ||
+                              group.baseItem.chapterName,
                           },
-                          on: {
-                            click: function ($event) {
-                              return _vm.downloadPending(item)
-                            },
-                          },
-                        },
-                        [_vm._v("下载更新")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "van-button",
-                        {
+                        }),
+                        _vm._v(" "),
+                        _c("van-cell", {
                           attrs: {
-                            size: "mini",
-                            disabled: item.pendingChapters.length === 0,
+                            title: "来源",
+                            value: group.sourceText || "基础信息",
                           },
+                        }),
+                        _vm._v(" "),
+                        group.error
+                          ? _c("van-cell", {
+                              attrs: { title: "解析提示", value: group.error },
+                            })
+                          : _vm._e(),
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "metadata-card" },
+                      [
+                        _c("van-field", {
+                          attrs: { label: "系列名", placeholder: "系列名" },
                           on: {
-                            click: function ($event) {
-                              return _vm.markHandled(item)
+                            input: function ($event) {
+                              return _vm.syncGroupPreview(group)
                             },
                           },
-                        },
-                        [_vm._v("标记已处理")]
-                      ),
+                          model: {
+                            value: group.form.seriesTitle,
+                            callback: function ($$v) {
+                              _vm.$set(group.form, "seriesTitle", $$v)
+                            },
+                            expression: "group.form.seriesTitle",
+                          },
+                        }),
+                        _vm._v(" "),
+                        _c("van-field", {
+                          attrs: { label: "原始标题", placeholder: "可选" },
+                          on: {
+                            input: function ($event) {
+                              return _vm.syncGroupPreview(group)
+                            },
+                          },
+                          model: {
+                            value: group.form.originalTitle,
+                            callback: function ($$v) {
+                              _vm.$set(group.form, "originalTitle", $$v)
+                            },
+                            expression: "group.form.originalTitle",
+                          },
+                        }),
+                        _vm._v(" "),
+                        _c("van-field", {
+                          attrs: {
+                            label: "作者",
+                            placeholder: "多个作者用逗号分隔",
+                          },
+                          on: {
+                            input: function ($event) {
+                              return _vm.syncGroupPreview(group)
+                            },
+                          },
+                          model: {
+                            value: group.form.writersText,
+                            callback: function ($$v) {
+                              _vm.$set(group.form, "writersText", $$v)
+                            },
+                            expression: "group.form.writersText",
+                          },
+                        }),
+                        _vm._v(" "),
+                        _c("van-field", {
+                          attrs: {
+                            label: "画师",
+                            placeholder: "多个画师用逗号分隔",
+                          },
+                          on: {
+                            input: function ($event) {
+                              return _vm.syncGroupPreview(group)
+                            },
+                          },
+                          model: {
+                            value: group.form.illustratorsText,
+                            callback: function ($$v) {
+                              _vm.$set(group.form, "illustratorsText", $$v)
+                            },
+                            expression: "group.form.illustratorsText",
+                          },
+                        }),
+                        _vm._v(" "),
+                        _c("van-field", {
+                          attrs: {
+                            label: "标签",
+                            placeholder: "多个标签用逗号分隔",
+                          },
+                          on: {
+                            input: function ($event) {
+                              return _vm.syncGroupPreview(group)
+                            },
+                          },
+                          model: {
+                            value: group.form.tagsText,
+                            callback: function ($$v) {
+                              _vm.$set(group.form, "tagsText", $$v)
+                            },
+                            expression: "group.form.tagsText",
+                          },
+                        }),
+                        _vm._v(" "),
+                        _c("van-field", {
+                          attrs: { label: "出版社", placeholder: "可选" },
+                          on: {
+                            input: function ($event) {
+                              return _vm.syncGroupPreview(group)
+                            },
+                          },
+                          model: {
+                            value: group.form.publisher,
+                            callback: function ($$v) {
+                              _vm.$set(group.form, "publisher", $$v)
+                            },
+                            expression: "group.form.publisher",
+                          },
+                        }),
+                        _vm._v(" "),
+                        _c("van-field", {
+                          attrs: {
+                            type: "number",
+                            label: "总话数",
+                            placeholder: "可选",
+                          },
+                          on: {
+                            input: function ($event) {
+                              return _vm.syncGroupPreview(group)
+                            },
+                          },
+                          model: {
+                            value: group.form.issueCount,
+                            callback: function ($$v) {
+                              _vm.$set(group.form, "issueCount", $$v)
+                            },
+                            expression: "group.form.issueCount",
+                          },
+                        }),
+                        _vm._v(" "),
+                        _c("van-field", {
+                          attrs: {
+                            label: "发布日期",
+                            placeholder: "例如 2024-05-01",
+                          },
+                          on: {
+                            input: function ($event) {
+                              return _vm.syncGroupPreview(group)
+                            },
+                          },
+                          model: {
+                            value: group.form.releaseDate,
+                            callback: function ($$v) {
+                              _vm.$set(group.form, "releaseDate", $$v)
+                            },
+                            expression: "group.form.releaseDate",
+                          },
+                        }),
+                        _vm._v(" "),
+                        _c("van-field", {
+                          attrs: {
+                            label: "状态",
+                            placeholder: "例如 continuing / ended",
+                          },
+                          on: {
+                            input: function ($event) {
+                              return _vm.syncGroupPreview(group)
+                            },
+                          },
+                          model: {
+                            value: group.form.status,
+                            callback: function ($$v) {
+                              _vm.$set(group.form, "status", $$v)
+                            },
+                            expression: "group.form.status",
+                          },
+                        }),
+                        _vm._v(" "),
+                        _c("van-field", {
+                          attrs: { label: "分级", placeholder: "可选" },
+                          on: {
+                            input: function ($event) {
+                              return _vm.syncGroupPreview(group)
+                            },
+                          },
+                          model: {
+                            value: group.form.ageRating,
+                            callback: function ($$v) {
+                              _vm.$set(group.form, "ageRating", $$v)
+                            },
+                            expression: "group.form.ageRating",
+                          },
+                        }),
+                        _vm._v(" "),
+                        _c("van-field", {
+                          attrs: { label: "语言", placeholder: "例如 zh" },
+                          on: {
+                            input: function ($event) {
+                              return _vm.syncGroupPreview(group)
+                            },
+                          },
+                          model: {
+                            value: group.form.languageISO,
+                            callback: function ($$v) {
+                              _vm.$set(group.form, "languageISO", $$v)
+                            },
+                            expression: "group.form.languageISO",
+                          },
+                        }),
+                        _vm._v(" "),
+                        _c("van-field", {
+                          attrs: {
+                            type: "textarea",
+                            rows: "4",
+                            autosize: "",
+                            label: "简介",
+                            placeholder: "可手动编辑简介",
+                          },
+                          on: {
+                            input: function ($event) {
+                              return _vm.syncGroupPreview(group)
+                            },
+                          },
+                          model: {
+                            value: group.form.summary,
+                            callback: function ($$v) {
+                              _vm.$set(group.form, "summary", $$v)
+                            },
+                            expression: "group.form.summary",
+                          },
+                        }),
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "metadata-preview-stack" }, [
+                      _vm.showComicInfoPreview
+                        ? _c("div", { staticClass: "metadata-card" }, [
+                            _c(
+                              "div",
+                              { staticClass: "metadata-preview-title" },
+                              [_vm._v("ComicInfo.xml 预览")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "metadata-preview-note" },
+                              [
+                                _vm._v(
+                                  "这里展示样例章节，章节名和章节序号仍会按各自下载项写入。"
+                                ),
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("pre", { staticClass: "metadata-preview" }, [
+                              _vm._v(_vm._s(group.preview.comicInfoXml)),
+                            ]),
+                          ])
+                        : _vm._e(),
                       _vm._v(" "),
-                      _c(
-                        "van-button",
-                        {
-                          attrs: { size: "mini", type: "danger", plain: "" },
-                          on: {
-                            click: function ($event) {
-                              return _vm.removeItem(item)
-                            },
-                          },
-                        },
-                        [_vm._v("删除")]
-                      ),
-                    ],
-                    1
-                  ),
-                ],
-                1
-              )
-            }),
-            1
-          ),
+                      _vm.showSeriesJsonPreview
+                        ? _c("div", { staticClass: "metadata-card" }, [
+                            _c(
+                              "div",
+                              { staticClass: "metadata-preview-title" },
+                              [_vm._v("series.json 预览")]
+                            ),
+                            _vm._v(" "),
+                            _c("pre", { staticClass: "metadata-preview" }, [
+                              _vm._v(_vm._s(group.preview.seriesJson)),
+                            ]),
+                          ])
+                        : _vm._e(),
+                    ]),
+                  ],
+                  1
+                )
+              }),
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "metadata-bottom" },
+              [
+                _c(
+                  "van-button",
+                  { attrs: { round: "" }, on: { click: _vm.cancelPreview } },
+                  [_vm._v("返回")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "van-button",
+                  {
+                    attrs: {
+                      round: "",
+                      type: "primary",
+                      loading: _vm.submitting,
+                    },
+                    on: { click: _vm.confirmPreview },
+                  },
+                  [_vm._v("继续下载")]
+                ),
+              ],
+              1
+            ),
+          ],
     ],
-    1
+    2
   )
 }
-var followvue_type_template_id_2da631cb_scoped_true_staticRenderFns = []
-followvue_type_template_id_2da631cb_scoped_true_render._withStripped = true
+var metadatavue_type_template_id_78dd89c9_scoped_true_staticRenderFns = []
+metadatavue_type_template_id_78dd89c9_scoped_true_render._withStripped = true
 
 
-;// CONCATENATED MODULE: ./src/views/follow.vue?vue&type=template&id=2da631cb&scoped=true&
+;// CONCATENATED MODULE: ./src/views/metadata.vue?vue&type=template&id=78dd89c9&scoped=true&
 
-;// CONCATENATED MODULE: ./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/views/follow.vue?vue&type=script&lang=js&
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+;// CONCATENATED MODULE: ./src/utils/siteMetadata.js
 
 
 
+const multiValueSplitReg = /[,\uff0c/\u3001|]/g
+const statusFinishedReg = /(完结|完結|已完结|已完結|finished|completed|complete)/i
+const statusOngoingReg = /(连载|連載|连载中|連載中|ongoing|seriali[sz]ing)/i
+
+const siteMetadata_uniqList = (list = []) => {
+  return [...new Set((list || []).filter(Boolean))]
+}
+
+const siteMetadata_toText = (value) => {
+  if (value === undefined || value === null) {
+    return ''
+  }
+  if (typeof value === 'string' || typeof value === 'number') {
+    return (0,utils/* trimSpecial */.Sc)(String(value)).trim()
+  }
+  if (Array.isArray(value)) {
+    return value.map(item => siteMetadata_toText(item)).filter(Boolean).join(' / ')
+  }
+  if (typeof value === 'object') {
+    return siteMetadata_toText(value.name || value.text || value.value || value['@value'] || '')
+  }
+  return ''
+}
+
+const getDomText = (root, selector) => {
+  try {
+    const dom = root.querySelector(selector)
+    if (!dom) {
+      return ''
+    }
+    return (0,utils/* trimSpecial */.Sc)((dom.innerText || dom.textContent || '').trim())
+  } catch (error) {
+    return ''
+  }
+}
+
+const getMetaContent = (root, selectors = []) => {
+  for (let i = 0; i < selectors.length; i++) {
+    const value = getDomText(root, selectors[i])
+    if (value) {
+      return value
+    }
+    try {
+      const dom = root.querySelector(selectors[i])
+      const content = (0,utils/* trimSpecial */.Sc)(dom?.getAttribute('content') || '').trim()
+      if (content) {
+        return content
+      }
+    } catch (error) {
+      //
+    }
+  }
+  return ''
+}
+
+const safeParseJson = (text) => {
+  try {
+    return JSON.parse(text)
+  } catch (error) {
+    return null
+  }
+}
+
+const flattenJsonLd = (value) => {
+  if (!value) {
+    return []
+  }
+  if (Array.isArray(value)) {
+    return value.flatMap(item => flattenJsonLd(item))
+  }
+  if (typeof value === 'object' && Array.isArray(value['@graph'])) {
+    return flattenJsonLd(value['@graph'])
+  }
+  if (typeof value === 'object') {
+    return [value]
+  }
+  return []
+}
+
+const getJsonLdNodes = (root) => {
+  const nodeList = []
+  try {
+    root.querySelectorAll('script[type="application/ld+json"]').forEach((item) => {
+      const parsed = safeParseJson(item.textContent || item.innerText || '')
+      nodeList.push(...flattenJsonLd(parsed))
+    })
+  } catch (error) {
+    //
+  }
+  return nodeList
+}
+
+const pickJsonLdField = (root, fieldNames = []) => {
+  const nodeList = getJsonLdNodes(root)
+  for (let i = 0; i < nodeList.length; i++) {
+    const item = nodeList[i]
+    for (let j = 0; j < fieldNames.length; j++) {
+      const value = siteMetadata_toText(item?.[fieldNames[j]])
+      if (value) {
+        return value
+      }
+    }
+  }
+  return ''
+}
+
+const parseListText = (value) => {
+  if (Array.isArray(value)) {
+    return siteMetadata_uniqList(value.map(item => (0,utils/* trimSpecial */.Sc)(String(item || '')).trim()).filter(Boolean))
+  }
+  return siteMetadata_uniqList(String(value || '')
+    .split(multiValueSplitReg)
+    .map(item => (0,utils/* trimSpecial */.Sc)(item).trim())
+    .filter(Boolean))
+}
+
+const stripLabelPrefix = (value, labels = []) => {
+  let text = (0,utils/* trimSpecial */.Sc)(String(value || '')).trim()
+  labels.forEach((label) => {
+    const reg = new RegExp(`^${label}\\s*[：:|/-]?\\s*`, 'i')
+    text = text.replace(reg, '')
+  })
+  return text.trim()
+}
+
+const getCandidateTextList = (root) => {
+  const result = []
+  try {
+    root.querySelectorAll('p, div, span, li, dd, dt, td, th, strong').forEach((item) => {
+      const text = (0,utils/* trimSpecial */.Sc)((item.innerText || item.textContent || '').trim())
+      if (!text || text.length < 2 || text.length > 300) {
+        return
+      }
+      result.push(text)
+    })
+  } catch (error) {
+    //
+  }
+  return siteMetadata_uniqList(result)
+}
+
+const findLabeledValue = (root, labels = []) => {
+  const textList = getCandidateTextList(root)
+  for (let i = 0; i < textList.length; i++) {
+    const line = textList[i]
+    for (let j = 0; j < labels.length; j++) {
+      const label = labels[j]
+      const exactReg = new RegExp(`^${label}\\s*[：:|/-]?\\s*(.+)$`, 'i')
+      const match = line.match(exactReg)
+      if (match?.[1]) {
+        return (0,utils/* trimSpecial */.Sc)(match[1]).trim()
+      }
+    }
+  }
+  return ''
+}
+
+const pickLongText = (root, selectors = []) => {
+  for (let i = 0; i < selectors.length; i++) {
+    const text = getDomText(root, selectors[i])
+    if (text && text.length >= 12) {
+      return text
+    }
+  }
+  return ''
+}
+
+const normalizeStatus = (value) => {
+  const text = (0,utils/* trimSpecial */.Sc)(String(value || '')).trim()
+  if (!text) {
+    return ''
+  }
+  if (statusFinishedReg.test(text)) {
+    return 'ended'
+  }
+  if (statusOngoingReg.test(text)) {
+    return 'continuing'
+  }
+  return text
+}
+
+const normalizeDateText = (value) => {
+  const text = (0,utils/* trimSpecial */.Sc)(String(value || '')).trim()
+  if (!text) {
+    return ''
+  }
+  const match = text.match(/(\d{4})(?:[-/.年](\d{1,2}))?(?:[-/.月](\d{1,2}))?/)
+  if (!match) {
+    return ''
+  }
+  const year = match[1]
+  const month = match[2] ? String(parseInt(match[2])) : ''
+  const day = match[3] ? String(parseInt(match[3])) : ''
+  return [year, month, day].filter(Boolean).join('-')
+}
+
+const guessLanguageISO = (root) => {
+  const langText = (0,utils/* trimSpecial */.Sc)(root?.documentElement?.lang || root?.lang || '').trim().toLowerCase()
+  if (!langText) {
+    return ''
+  }
+  const match = langText.match(/[a-z]{2,3}/)
+  return match ? match[0] : ''
+}
+
+const getSummary = (root) => {
+  const selectorValue = pickLongText(root, [
+    '[itemprop="description"]',
+    '[property="og:description"]',
+    '[name="description"]',
+    '[name="twitter:description"]',
+    '[class*="summary" i]',
+    '[id*="summary" i]',
+    '[class*="intro" i]',
+    '[id*="intro" i]',
+    '[class*="description" i]',
+    '[id*="description" i]'
+  ])
+  if (selectorValue) {
+    return stripLabelPrefix(selectorValue, ['简介', '簡介', 'description', 'summary', 'intro'])
+  }
+  const metaValue = getMetaContent(root, [
+    'meta[name="description"]',
+    'meta[property="og:description"]',
+    'meta[name="twitter:description"]'
+  ])
+  if (metaValue) {
+    return metaValue
+  }
+  const labeledValue = findLabeledValue(root, ['简介', '簡介', 'description', 'summary', 'intro'])
+  return stripLabelPrefix(labeledValue, ['简介', '簡介', 'description', 'summary', 'intro'])
+}
+
+const getTags = (root) => {
+  const keywordText = getMetaContent(root, [
+    'meta[name="keywords"]',
+    'meta[property="book:tag"]'
+  ])
+  if (keywordText) {
+    const list = parseListText(keywordText).filter(item => item.length <= 20)
+    if (list.length > 0) {
+      return list
+    }
+  }
+
+  const taggedValue = findLabeledValue(root, ['标签', '標籤', '题材', '題材', '类型', '類型', '分类', '分類', 'genre', 'tag'])
+  if (taggedValue) {
+    return parseListText(taggedValue)
+  }
+
+  const jsonLdGenre = pickJsonLdField(root, ['genre', 'keywords'])
+  return parseListText(jsonLdGenre)
+}
+
+const siteMetadata_getPublisher = (root) => {
+  return findLabeledValue(root, ['出版社', '连载杂志', '連載雜誌', 'label', 'publisher']) ||
+    pickJsonLdField(root, ['publisher'])
+}
+
+const getStatus = (root) => {
+  const labeledStatus = findLabeledValue(root, ['状态', '狀態', '连载状态', '連載狀態', 'status'])
+  if (labeledStatus) {
+    return normalizeStatus(labeledStatus)
+  }
+  const textList = getCandidateTextList(root)
+  const joinedText = textList.slice(0, 80).join(' ')
+  const inferredStatus = normalizeStatus(joinedText)
+  if (inferredStatus === 'ended' || inferredStatus === 'continuing') {
+    return inferredStatus
+  }
+  return ''
+}
+
+const getReleaseDate = (root) => {
+  const metaDate = getMetaContent(root, [
+    'meta[property="article:published_time"]',
+    'meta[property="og:novel:update_time"]',
+    'meta[itemprop="datePublished"]'
+  ])
+  if (metaDate) {
+    return normalizeDateText(metaDate)
+  }
+
+  const labeledValue = findLabeledValue(root, ['年份', '出版日期', '发布时间', '發佈時間', 'date', 'year'])
+  if (labeledValue) {
+    return normalizeDateText(labeledValue)
+  }
+
+  const jsonLdDate = pickJsonLdField(root, ['datePublished', 'dateCreated', 'dateModified'])
+  return normalizeDateText(jsonLdDate)
+}
+
+const extractWebMetadataFromRoot = (root, webRule, pageUrl, downloadItem = {}) => {
+  const { comicName, authorName } = (0,comics/* getCurrentComicMeta */.lb)(webRule, root)
+  const jsonLdAuthor = pickJsonLdField(root, ['author', 'creator'])
+  const summary = getSummary(root)
+  const tags = getTags(root)
+  const publisher = siteMetadata_getPublisher(root)
+  const status = getStatus(root)
+  const releaseDate = getReleaseDate(root)
+  const languageISO = guessLanguageISO(root)
+
+  return {
+    source: 'WebPage',
+    seriesTitle: comicName || downloadItem.comicName || '',
+    originalTitle: comicName || downloadItem.comicName || '',
+    summary,
+    writers: siteMetadata_uniqList([authorName, jsonLdAuthor].filter(Boolean)),
+    illustrators: [],
+    tags,
+    publisher,
+    issueCount: downloadItem.seriesChapterCount || undefined,
+    releaseDate,
+    status,
+    ageRating: '',
+    languageISO,
+    subjectUrl: pageUrl || downloadItem.comicPageUrl || downloadItem.url || ''
+  }
+}
+
+const getWebMetadata = async(downloadItem) => {
+  const pageUrl = downloadItem?.comicPageUrl || downloadItem?.url || window.location.href
+  const webRule = (0,comics/* findWebByUrl */.jL)(pageUrl)
+  if (!pageUrl || !webRule) {
+    return null
+  }
+
+  if (window.location.href === pageUrl) {
+    return extractWebMetadataFromRoot(document, webRule, pageUrl, downloadItem)
+  }
+
+  const responseText = await (0,comics/* requestTextWithGuard */.HN)({
+    method: 'get',
+    url: pageUrl,
+    headers: webRule.headers || '',
+    purpose: `${webRule.webName || 'Web'} 页面元数据`
+  })
+  const root = (0,utils/* parseToDOM */.U3)(responseText)
+  return extractWebMetadataFromRoot(root, webRule, pageUrl, downloadItem)
+}
+
+;// CONCATENATED MODULE: ./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/views/metadata.vue?vue&type=script&lang=js&
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 
-/* harmony default export */ const followvue_type_script_lang_js_ = ({
-  name: 'Follow',
+
+
+
+const metadatavue_type_script_lang_js_cloneData = (value) => {
+  return JSON.parse(JSON.stringify(value))
+}
+
+/* harmony default export */ const metadatavue_type_script_lang_js_ = ({
+  name: 'Metadata',
   data() {
     return {
-      followList: [],
-      checking: false,
-      keywordFollowName: '',
-      addingKeywordFollow: false,
-      showScanSitePanel: false,
-      searchableWebOptions: [],
-      selectedScanWebNames: [],
-      searchCandidates: [],
-      selectedCandidateKeys: [],
-      lastSkippedSiteCount: 0
-    }
-  },
-  computed: {
-    hasPendingChapters() {
-      return this.followList.some(item => item.pendingChapters.length > 0)
+      loading: false,
+      submitting: false,
+      pendingItems: [],
+      pendingGroups: [],
+      activeNames: [],
+      returnTab: 3,
+      showComicInfoPreview: false,
+      showSeriesJsonPreview: false,
+      enableBangumiScrape: false
     }
   },
   mounted() {
-    this.refreshList()
-    this.initSearchableWebOptions()
-    this.$bus.$on('refreshFollowList', this.refreshList)
-    this.$bus.$on('getComicName', (comicName) => {
-      if (!this.keywordFollowName && comicName && comicName !== '------') {
-        this.keywordFollowName = comicName
-      }
-    })
-    if (canAutoCheckFollow()) {
-      this.autoCheckOnLoad()
-    }
+    this.$bus.$on('openMetadataPreview', this.openMetadataPreview)
   },
   methods: {
-    refreshList() {
-      this.followList = getFollowList()
+    buildGroupKey(item) {
+      return `${item.webName || ''}__${item.comicPageUrl || item.comicName || ''}`
     },
-    initSearchableWebOptions() {
-      this.searchableWebOptions = (0,comics/* getSearchableWebList */.EQ)().map(item => ({
-        webName: item.webName
-      }))
-      const savedWebNames = (0,setup/* getStorage */.cF)('followSearchWebNames') || []
-      const defaultWebNames = this.searchableWebOptions.map(item => item.webName)
-      const matchedWebNames = defaultWebNames.filter(webName => savedWebNames.includes(webName))
-      this.selectedScanWebNames = matchedWebNames.length > 0 ? matchedWebNames : defaultWebNames
-      this.saveScanSites()
-    },
-    saveScanSites() {
-      (0,setup/* setStorage */.po)('followSearchWebNames', this.selectedScanWebNames)
-    },
-    toggleScanSitePanel() {
-      this.showScanSitePanel = !this.showScanSitePanel
-    },
-    selectAllScanSites() {
-      this.selectedScanWebNames = this.searchableWebOptions.map(item => item.webName)
-      this.saveScanSites()
-    },
-    clearScanSites() {
-      this.selectedScanWebNames = []
-      this.saveScanSites()
-    },
-    formatCheckTime(time) {
-      if (!time) {
-        return '未检查'
-      }
-      const date = new Date(time)
-      const hour = String(date.getHours()).padStart(2, '0')
-      const minute = String(date.getMinutes()).padStart(2, '0')
-      return `${date.getMonth() + 1}/${date.getDate()} ${hour}:${minute}`
-    },
-    formatSeriesCount(count) {
-      if (!count || count < 0) {
-        return '章节数未知'
-      }
-      return `共 ${count} 话`
-    },
-    formatLatestChapterName(name) {
-      return name || '未识别到最新章节'
-    },
-    async autoCheckOnLoad() {
-      await this.checkAll(true)
-    },
-    async searchByKeyword() {
-      const keyword = (this.keywordFollowName || '').trim()
-      if (keyword.length < 2) {
-        (0,external_vant_.Toast)({
-          message: '漫画名至少2个字符',
-          getContainer: '.card',
-          position: 'bottom'
-        })
-        return
-      }
-      if (this.selectedScanWebNames.length === 0) {
-        (0,external_vant_.Toast)({
-          message: '请先选择要扫描的站点',
-          getContainer: '.card',
-          position: 'bottom'
-        })
-        return
-      }
-      this.addingKeywordFollow = true
-      try {
-        const result = await searchFollowCandidatesByKeyword(keyword, this.selectedScanWebNames)
-        this.searchCandidates = result.candidates
-        this.selectedCandidateKeys = result.candidates.map(item => item.key)
-        this.lastSkippedSiteCount = result.skippedSites.length
-        const matchCount = result.candidates.length
-        const skipCount = result.skippedSites.length
-        ;(0,external_vant_.Toast)({
-          message: matchCount > 0
-            ? `找到 ${matchCount} 个候选站点${skipCount > 0 ? `，未命中 ${skipCount} 个站点` : ''}`
-            : '没有找到可加入追更的站点',
-          getContainer: '.card',
-          position: 'bottom'
-        })
-      } finally {
-        this.addingKeywordFollow = false
+    createFormFromDraft(draft) {
+      return {
+        seriesTitle: draft.seriesTitle || '',
+        originalTitle: draft.originalTitle || '',
+        summary: draft.summary || '',
+        writersText: (draft.writers || []).join(', '),
+        illustratorsText: (draft.illustrators || []).join(', '),
+        tagsText: (draft.tags || []).join(', '),
+        publisher: draft.publisher || '',
+        issueCount: draft.issueCount ?? '',
+        releaseDate: draft.releaseDate || '',
+        status: draft.status || '',
+        ageRating: draft.ageRating || '',
+        languageISO: draft.languageISO || ''
       }
     },
-    selectAllCandidates() {
-      this.selectedCandidateKeys = this.searchCandidates.map(item => item.key)
-    },
-    clearCandidateSelection() {
-      this.selectedCandidateKeys = []
-    },
-    clearSearchCandidates() {
-      this.searchCandidates = []
-      this.selectedCandidateKeys = []
-      this.lastSkippedSiteCount = 0
-    },
-    addSelectedCandidates() {
-      const selectedCandidates = this.searchCandidates.filter(item => this.selectedCandidateKeys.includes(item.key))
-      if (selectedCandidates.length === 0) {
-        (0,external_vant_.Toast)({
-          message: '请先勾选要保留的站点',
-          getContainer: '.card',
-          position: 'bottom'
-        })
-        return
-      }
-      const skippedSiteCount = this.lastSkippedSiteCount
-      const addedItems = addFollowCandidates(selectedCandidates)
-      this.refreshList()
-      this.clearSearchCandidates()
-      ;(0,external_vant_.Toast)({
-        message: `已加入 ${addedItems.length} 个站点${skippedSiteCount > 0 ? `，未命中 ${skippedSiteCount} 个站点` : ''}`,
-        getContainer: '.card',
-        position: 'bottom'
+    buildDraftFromForm(form, currentDraft = {}) {
+      return normalizeMetadataDraft({
+        seriesTitle: form.seriesTitle,
+        originalTitle: form.originalTitle,
+        summary: form.summary,
+        writers: form.writersText,
+        illustrators: form.illustratorsText,
+        tags: form.tagsText,
+        publisher: form.publisher,
+        issueCount: form.issueCount,
+        releaseDate: form.releaseDate,
+        status: form.status,
+        ageRating: form.ageRating,
+        languageISO: form.languageISO,
+        subjectUrl: currentDraft.subjectUrl || '',
+        source: currentDraft.source || ''
       })
     },
-    async checkAll(silent = false) {
-      this.checking = true
-      try {
-        const list = await checkAllFollowItems()
-        this.followList = list
-        const updateCount = list.reduce((sum, item) => sum + item.pendingChapters.length, 0)
-        if (!silent || updateCount > 0) {
-          (0,external_vant_.Toast)({
-            message: updateCount > 0 ? `发现 ${updateCount} 个待处理章节` : '追更检查完成',
-            getContainer: '.card',
-            position: 'bottom'
+    syncGroupPreview(group) {
+      group.draft = this.buildDraftFromForm(group.form, group.draft || {})
+      const previewItem = {
+        ...metadatavue_type_script_lang_js_cloneData(group.baseItem),
+        metadataOverride: metadatavue_type_script_lang_js_cloneData(group.draft)
+      }
+      group.preview = buildMetadataPreviewFiles(previewItem, 0)
+    },
+    buildGroups(items) {
+      const groupMap = new Map()
+      items.forEach((item) => {
+        const key = this.buildGroupKey(item)
+        if (!groupMap.has(key)) {
+          groupMap.set(key, {
+            key,
+            items: [],
+            baseItem: metadatavue_type_script_lang_js_cloneData(item),
+            draft: buildDefaultMetadataDraft(item),
+            form: {},
+            preview: {
+              comicInfoXml: '',
+              seriesJson: ''
+            },
+            sourceText: '',
+            error: ''
           })
         }
-      } finally {
-        this.checking = false
+        groupMap.get(key).items.push(metadatavue_type_script_lang_js_cloneData(item))
+      })
+      return [...groupMap.values()]
+    },
+    async prepareGroup(group) {
+      const sourceList = []
+      const metadataSources = [buildDefaultMetadataDraft(group.baseItem)]
+
+      try {
+        const webMetadata = await getWebMetadata(group.baseItem)
+        if (webMetadata) {
+          metadataSources.push(webMetadata)
+          sourceList.push('网页解析')
+        }
+      } catch (error) {
+        group.error = '网页解析失败，可手动修正'
       }
+
+      if (this.enableBangumiScrape) {
+        try {
+          const bangumiMetadata = await getBangumiMetadata(group.baseItem, { force: true })
+          if (bangumiMetadata) {
+            metadataSources.push(bangumiMetadata)
+            sourceList.push('Bangumi')
+          }
+        } catch (error) {
+          group.error = group.error || 'Bangumi 补全失败，可手动修正'
+        }
+      }
+
+      group.draft = mergeMetadataSources(...metadataSources, group.baseItem.metadataOverride)
+      if (!group.draft.issueCount && group.baseItem.seriesChapterCount) {
+        group.draft.issueCount = group.baseItem.seriesChapterCount
+      }
+      group.sourceText = sourceList.length > 0 ? sourceList.join(' + ') : '基础信息'
+      group.form = this.createFormFromDraft(group.draft)
+      this.syncGroupPreview(group)
     },
-    async checkOne(item) {
-      const nextItem = await checkFollowItem(item.id)
-      this.followList = this.followList.map(current => current.id === item.id ? nextItem : current)
-      ;(0,external_vant_.Toast)({
-        message: nextItem.pendingChapters.length > 0 ? `发现 ${nextItem.pendingChapters.length} 个更新` : '暂无更新',
-        getContainer: '.card',
-        position: 'bottom'
-      })
+    async openMetadataPreview(items = []) {
+      const list = metadatavue_type_script_lang_js_cloneData(items || [])
+      const flags = getMetadataFileFlags()
+      this.pendingItems = list
+      this.pendingGroups = this.buildGroups(list)
+      this.returnTab = list[0]?.originTab ?? 3
+      this.showComicInfoPreview = flags.enableComicInfoXml && list.some(item => item.downType === 1)
+      this.showSeriesJsonPreview = flags.enableSeriesJson === true
+      this.enableBangumiScrape = flags.enableBangumiScrape === true
+      this.activeNames = this.pendingGroups.length > 0 ? [this.pendingGroups[0].key] : []
+      this.loading = true
+
+      for (let i = 0; i < this.pendingGroups.length; i++) {
+        await this.prepareGroup(this.pendingGroups[i])
+      }
+
+      this.loading = false
     },
-    saveAuthor(item) {
-      updateFollowItem(item.id, (current) => {
-        current.authorName = item.authorName || ''
-        return current
-      })
-      this.refreshList()
+    cancelPreview() {
+      this.$bus.$emit('changTab', this.returnTab || 3)
     },
-    buildDownloadItems(item) {
-      const downType = (0,setup/* getStorage */.cF)('downType')
-      return item.pendingChapters.map((chapter) => {
-        const webRule = (0,comics/* findWebByUrl */.jL)(chapter.url || item.comicPageUrl)
-        const downChapterName = chapter.chapterNumStr
-          ? `${chapter.chapterNumStr}${chapter.chapterName ? '-' + chapter.chapterName : ''}`
-          : chapter.chapterName
+    confirmPreview() {
+      if (this.pendingGroups.length === 0) {
+        return
+      }
+      this.submitting = true
+      const draftMap = new Map(this.pendingGroups.map(group => [group.key, metadatavue_type_script_lang_js_cloneData(group.draft)]))
+      const nextItems = this.pendingItems.map((item) => {
+        const key = this.buildGroupKey(item)
         return {
-          ...chapter,
-          comicName: item.comicName,
-          authorName: item.authorName || chapter.authorName || '',
-          webName: item.webName,
-          comicPageUrl: item.comicPageUrl,
-          seriesChapterCount: item.seriesChapterCount,
-          followItemId: item.id,
-          downChapterName,
-          downType,
-          downHeaders: webRule?.downHeaders
+          ...metadatavue_type_script_lang_js_cloneData(item),
+          metadataOverride: draftMap.get(key) || null,
+          metadataConfirmed: true
         }
       })
-    },
-    downloadPending(item) {
-      const downloadItems = this.buildDownloadItems(item)
-      if (downloadItems.length === 0) {
+      if (nextItems.length === 0) {
+        (0,external_vant_.Toast)({
+          message: '没有可下载的条目',
+          getContainer: '.card',
+          position: 'bottom'
+        })
+        this.submitting = false
         return
       }
-      this.$bus.$emit('selectDown', downloadItems)
+      this.$bus.$emit('selectDown', nextItems)
       this.$bus.$emit('changTab', 3)
-    },
-    downloadAllPending() {
-      const allDownloads = this.followList.flatMap(item => this.buildDownloadItems(item))
-      if (allDownloads.length === 0) {
-        return
-      }
-      this.$bus.$emit('selectDown', allDownloads)
-      this.$bus.$emit('changTab', 3)
-    },
-    markHandled(item) {
-      clearPendingChapters(item.id)
-      this.refreshList()
-    },
-    removeItem(item) {
-      external_vant_.Dialog.confirm({
-        getContainer: '.card',
-        message: `确认删除 ${item.comicName} ？`
-      }).then(() => {
-        removeFollowItem(item.id)
-        this.refreshList()
-      }).catch(() => {})
-    },
-    openLatestChapter(item) {
-      this.openComic(item.latestChapterUrl || item.comicPageUrl)
-    },
-    openComic(url) {
-      if (!url) {
-        return
-      }
-      window.open(url, '_blank')
+      this.submitting = false
     }
   }
 });
 
-;// CONCATENATED MODULE: ./src/views/follow.vue?vue&type=script&lang=js&
- /* harmony default export */ const views_followvue_type_script_lang_js_ = (followvue_type_script_lang_js_); 
-// EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/less-loader/dist/cjs.js??clonedRuleSet-2[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/views/follow.vue?vue&type=style&index=0&id=2da631cb&lang=less&scoped=true&
-var followvue_type_style_index_0_id_2da631cb_lang_less_scoped_true_ = __webpack_require__(386);
-;// CONCATENATED MODULE: ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/less-loader/dist/cjs.js??clonedRuleSet-2[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/views/follow.vue?vue&type=style&index=0&id=2da631cb&lang=less&scoped=true&
+;// CONCATENATED MODULE: ./src/views/metadata.vue?vue&type=script&lang=js&
+ /* harmony default export */ const views_metadatavue_type_script_lang_js_ = (metadatavue_type_script_lang_js_); 
+// EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/less-loader/dist/cjs.js??clonedRuleSet-2[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/views/metadata.vue?vue&type=style&index=0&id=78dd89c9&lang=less&scoped=true&
+var metadatavue_type_style_index_0_id_78dd89c9_lang_less_scoped_true_ = __webpack_require__(757);
+;// CONCATENATED MODULE: ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/less-loader/dist/cjs.js??clonedRuleSet-2[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/views/metadata.vue?vue&type=style&index=0&id=78dd89c9&lang=less&scoped=true&
 
       
       
@@ -17274,26 +18721,26 @@ var followvue_type_style_index_0_id_2da631cb_lang_less_scoped_true_ = __webpack_
       
       
 
-var followvue_type_style_index_0_id_2da631cb_lang_less_scoped_true_options = {};
+var metadatavue_type_style_index_0_id_78dd89c9_lang_less_scoped_true_options = {};
 
-followvue_type_style_index_0_id_2da631cb_lang_less_scoped_true_options.styleTagTransform = (styleTagTransform_default());
-followvue_type_style_index_0_id_2da631cb_lang_less_scoped_true_options.setAttributes = (setAttributesWithoutAttributes_default());
+metadatavue_type_style_index_0_id_78dd89c9_lang_less_scoped_true_options.styleTagTransform = (styleTagTransform_default());
+metadatavue_type_style_index_0_id_78dd89c9_lang_less_scoped_true_options.setAttributes = (setAttributesWithoutAttributes_default());
 
-      followvue_type_style_index_0_id_2da631cb_lang_less_scoped_true_options.insert = insertBySelector_default().bind(null, "head");
+      metadatavue_type_style_index_0_id_78dd89c9_lang_less_scoped_true_options.insert = insertBySelector_default().bind(null, "head");
     
-followvue_type_style_index_0_id_2da631cb_lang_less_scoped_true_options.domAPI = (styleDomAPI_default());
-followvue_type_style_index_0_id_2da631cb_lang_less_scoped_true_options.insertStyleElement = (insertStyleElement_default());
+metadatavue_type_style_index_0_id_78dd89c9_lang_less_scoped_true_options.domAPI = (styleDomAPI_default());
+metadatavue_type_style_index_0_id_78dd89c9_lang_less_scoped_true_options.insertStyleElement = (insertStyleElement_default());
 
-var followvue_type_style_index_0_id_2da631cb_lang_less_scoped_true_update = injectStylesIntoStyleTag_default()(followvue_type_style_index_0_id_2da631cb_lang_less_scoped_true_/* default */.Z, followvue_type_style_index_0_id_2da631cb_lang_less_scoped_true_options);
-
-
+var metadatavue_type_style_index_0_id_78dd89c9_lang_less_scoped_true_update = injectStylesIntoStyleTag_default()(metadatavue_type_style_index_0_id_78dd89c9_lang_less_scoped_true_/* default */.Z, metadatavue_type_style_index_0_id_78dd89c9_lang_less_scoped_true_options);
 
 
-       /* harmony default export */ const views_followvue_type_style_index_0_id_2da631cb_lang_less_scoped_true_ = (followvue_type_style_index_0_id_2da631cb_lang_less_scoped_true_/* default */.Z && followvue_type_style_index_0_id_2da631cb_lang_less_scoped_true_/* default.locals */.Z.locals ? followvue_type_style_index_0_id_2da631cb_lang_less_scoped_true_/* default.locals */.Z.locals : undefined);
 
-;// CONCATENATED MODULE: ./src/views/follow.vue?vue&type=style&index=0&id=2da631cb&lang=less&scoped=true&
 
-;// CONCATENATED MODULE: ./src/views/follow.vue
+       /* harmony default export */ const views_metadatavue_type_style_index_0_id_78dd89c9_lang_less_scoped_true_ = (metadatavue_type_style_index_0_id_78dd89c9_lang_less_scoped_true_/* default */.Z && metadatavue_type_style_index_0_id_78dd89c9_lang_less_scoped_true_/* default.locals */.Z.locals ? metadatavue_type_style_index_0_id_78dd89c9_lang_less_scoped_true_/* default.locals */.Z.locals : undefined);
+
+;// CONCATENATED MODULE: ./src/views/metadata.vue?vue&type=style&index=0&id=78dd89c9&lang=less&scoped=true&
+
+;// CONCATENATED MODULE: ./src/views/metadata.vue
 
 
 
@@ -17302,21 +18749,21 @@ var followvue_type_style_index_0_id_2da631cb_lang_less_scoped_true_update = inje
 
 /* normalize component */
 
-var follow_component = normalizeComponent(
-  views_followvue_type_script_lang_js_,
-  followvue_type_template_id_2da631cb_scoped_true_render,
-  followvue_type_template_id_2da631cb_scoped_true_staticRenderFns,
+var metadata_component = normalizeComponent(
+  views_metadatavue_type_script_lang_js_,
+  metadatavue_type_template_id_78dd89c9_scoped_true_render,
+  metadatavue_type_template_id_78dd89c9_scoped_true_staticRenderFns,
   false,
   null,
-  "2da631cb",
+  "78dd89c9",
   null
   
 )
 
 /* hot reload */
-if (false) { var follow_api; }
-follow_component.options.__file = "src/views/follow.vue"
-/* harmony default export */ const follow = (follow_component.exports);
+if (false) { var metadata_api; }
+metadata_component.options.__file = "src/views/metadata.vue"
+/* harmony default export */ const metadata = (metadata_component.exports);
 ;// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/search.vue?vue&type=template&id=4ad41bb8&scoped=true&
 var searchvue_type_template_id_4ad41bb8_scoped_true_render = function () {
   var this$1 = this
@@ -17868,9 +19315,6 @@ search_component.options.__file = "src/components/search.vue"
 //
 //
 //
-//
-//
-//
 
 
 
@@ -17882,24 +19326,31 @@ search_component.options.__file = "src/components/search.vue"
 
 
 
-// import { request, downFile } from './utils/index'
+
 
 /* harmony default export */ const appvue_type_script_lang_js_ = ({
   name: 'App',
   components: {
-    Home: home, Table: table, Cover: cover, Down: down, Follow: follow, Setting: setting, Search: search
+    Home: home,
+    Table: table,
+    Cover: cover,
+    Down: down,
+    Follow: follow,
+    Setting: setting,
+    Metadata: metadata,
+    Search: search
   },
   data() {
     return {
       isHide: true,
       showSearchPage: false,
       active: 1,
-      titles: ['漫画网站', '加载', '封面', '下载', '追更', '设置'],
+      titles: ['漫画网站', '加载', '封面', '下载', '追更', '设置', '元数据'],
       comicInfo: {}
     }
   },
   computed: {
-    current: function() {
+    current() {
       return this.active
     }
   },
@@ -17920,9 +19371,6 @@ search_component.options.__file = "src/components/search.vue"
     },
     async Init() {
       (0,comics/* matchWeb */.HL)(window.location.href)
-    },
-
-    async test() {
     }
   }
 });

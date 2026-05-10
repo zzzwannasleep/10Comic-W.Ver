@@ -357,6 +357,7 @@ export default {
           : chapter.chapterName
         return {
           ...chapter,
+          originTab: 4,
           comicName: item.comicName,
           authorName: item.authorName || chapter.authorName || '',
           webName: item.webName,

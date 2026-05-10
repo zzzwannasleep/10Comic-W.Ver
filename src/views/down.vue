@@ -105,6 +105,7 @@
 
 <script>
 import Queue from '@/utils/queue'
+import { shouldPreviewMetadataForItems } from '@/utils/metadata'
 import { getStorage } from '@/config/setup'
 import { getdomain } from '@/utils/index'
 
@@ -144,13 +145,22 @@ export default {
       if (value !== '------') { this.comicName = value }
     },
     downInit(arr) {
+      const downloadItems = (arr || []).map(item => ({
+        originTab: item?.originTab ?? 3,
+        ...item
+      }))
+      if (shouldPreviewMetadataForItems(downloadItems)) {
+        this.$bus.$emit('openMetadataPreview', downloadItems)
+        this.$bus.$emit('changTab', 6)
+        return
+      }
       if (this.queue.worker === '') {
         this.maxChapterNum = getStorage('maxChapterNum')
         this.maxPictureNum = getStorage('maxPictureNum')
         this.imgIndexBitNum = getStorage('imgIndexBitNum')
         this.queue = new Queue(this.maxChapterNum, this.maxPictureNum, this.imgIndexBitNum, this)
       }
-      this.queue.addList(arr)
+      this.queue.addList(downloadItems)
       this.queue.run()
     },
     getHistoryData() {

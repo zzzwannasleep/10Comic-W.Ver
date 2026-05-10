@@ -24,6 +24,7 @@ const configDefault = {
     enableComicInfoXml: true,
     enableSeriesJson: false,
     enableSeriesCover: false,
+    enableMetadataPreview: false,
     enableBangumiScrape: false,
     bangumiAccessToken: '',
     bangumiIncludeNsfw: false,
