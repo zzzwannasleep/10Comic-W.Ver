@@ -34,7 +34,7 @@ jobs:
         env:
           TAMPERMONKEY_HOMEPAGE_URL: https://github.com/${{ github.repository }}
           TAMPERMONKEY_SUPPORT_URL: https://github.com/${{ github.repository }}/issues
-          TAMPERMONKEY_UPDATE_URL: https://raw.githubusercontent.com/${{ github.repository }}/${{ github.ref_name }}/release/10comic.user.js
+          TAMPERMONKEY_UPDATE_URL: https://raw.githubusercontent.com/${{ github.repository }}/${{ github.ref_name }}/release/10comic.meta.js
           TAMPERMONKEY_DOWNLOAD_URL: https://raw.githubusercontent.com/${{ github.repository }}/${{ github.ref_name }}/release/10comic.user.js
         run: npm run build
 
@@ -48,13 +48,15 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: 10comic-userscript
-          path: release/10comic.user.js
+          path: |
+            release/10comic.user.js
+            release/10comic.meta.js
 
       - name: Commit published userscript
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add README.md release/10comic.user.js
+          git add README.md release/10comic.user.js release/10comic.meta.js
           if git diff --cached --quiet; then
             echo "No changes to commit"
             exit 0

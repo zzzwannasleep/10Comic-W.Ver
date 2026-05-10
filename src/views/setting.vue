@@ -645,6 +645,31 @@
             />
           </van-cell-group>
 
+          <van-cell-group title="脚本更新" inset>
+            <van-cell title-class="cellleftvalue" value-class="cellrightvalue" center>
+              <template #title>
+                <span class="custom-title">启动时自动检查更新</span>
+              </template>
+
+              <template #default>
+                <van-checkbox
+                  v-model="updateSettings.autoCheckOnLoad"
+                  class="rightbutton"
+                  @change="onChangeData('updateSettings', updateSettings.autoCheckOnLoad, 'autoCheckOnLoad')"
+                />
+              </template>
+            </van-cell>
+
+            <van-cell
+              title-class="cellleftvalue"
+              value-class="cellrightvalue"
+              title="立即检查更新"
+              is-link
+              center
+              @click="checkScriptUpdate"
+            />
+          </van-cell-group>
+
           <van-cell-group id="otherpart" title="其他" inset>
             <van-cell
               title-class="cellleftvalue"
@@ -691,6 +716,7 @@ import { currentComics } from '@/utils/comics'
 import { setinit, setStorage } from '@/config/setup'
 import { loadStyle } from '@/utils/index'
 import { defaultZipNameTemplate, metadataSettingsDefault } from '@/utils/metadata'
+import { runScriptUpdateCheck } from '@/utils/updater'
 
 import { Dialog } from 'vant'
 
@@ -720,6 +746,10 @@ export default {
       followSettings: {
         autoCheckOnLoad: true,
         checkCooldownMinutes: 30
+      },
+      updateSettings: {
+        autoCheckOnLoad: true,
+        checkIntervalHours: 12
       },
       imgSplicingFlag: false,
       //
@@ -825,6 +855,9 @@ export default {
       this.metadataSettings.bangumiAccessToken = (this.metadataSettings.bangumiAccessToken || '').trim()
       this.onChangeData('metadataSettings', this.metadataSettings.bangumiAccessToken, 'bangumiAccessToken')
     },
+    async checkScriptUpdate() {
+      await runScriptUpdateCheck({ manual: true })
+    },
     exeFun(flag, basic) {
       let rightSize = 100; let centerSize = 100
       basic.rightSize ? rightSize = basic.rightSize : ''
@@ -859,6 +892,10 @@ export default {
         this.followSettings = {
           ...this.followSettings,
           ...(GM_getValue('followSettings') || {})
+        }
+        this.updateSettings = {
+          ...this.updateSettings,
+          ...(GM_getValue('updateSettings') || {})
         }
         //
         this.appLoadDefault = {

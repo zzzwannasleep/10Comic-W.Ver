@@ -39,9 +39,20 @@ const configDefault = {
     autoCheckOnLoad: true,
     checkCooldownMinutes: 30
   },
+  updateSettings: {
+    autoCheckOnLoad: true,
+    checkIntervalHours: 12
+  },
   followCheckState: {
     lastCheckAt: 0,
     lastUpdateCount: 0
+  },
+  updateCheckState: {
+    lastCheckAt: 0,
+    lastPromptVersion: '',
+    latestVersion: '',
+    latestDownloadUrl: '',
+    latestUpdateUrl: ''
   },
   followList: [],
   followSearchWebNames: [],

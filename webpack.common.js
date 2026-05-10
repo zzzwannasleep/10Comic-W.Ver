@@ -87,7 +87,11 @@ module.exports = () => {
       new webpack.DefinePlugin({
         __APP_NAME__: JSON.stringify(process.env.TAMPERMONKEY_APP_NAME),
         __APP_ENVIRONMENT__: JSON.stringify(process.env.TAMPERMONKEY_APP_ENVIRONMENT),
-        __APP_VERSION__: JSON.stringify(require('./package.json').version)
+        __APP_VERSION__: JSON.stringify(require('./package.json').version),
+        __APP_HOMEPAGE_URL__: JSON.stringify(process.env.TAMPERMONKEY_HOMEPAGE_URL || ''),
+        __APP_SUPPORT_URL__: JSON.stringify(process.env.TAMPERMONKEY_SUPPORT_URL || ''),
+        __APP_UPDATE_URL__: JSON.stringify(process.env.TAMPERMONKEY_UPDATE_URL || ''),
+        __APP_DOWNLOAD_URL__: JSON.stringify(process.env.TAMPERMONKEY_DOWNLOAD_URL || '')
       })
     ]
   }

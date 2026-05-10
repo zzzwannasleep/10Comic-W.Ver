@@ -38,6 +38,7 @@ GreasyFork：
 安装后在任意页面按 `Alt + V` 打开界面，或从脚本管理器菜单点击“加载UI”。
 
 默认情况下脚本不会随页面直接展开 UI，这样能尽量减少对原网站样式的影响。
+脚本管理器会按元数据自动检查更新；脚本自身也会在检测到新版本时弹窗提示跳转安装。
 
 ## 快速上手
 
@@ -95,7 +96,7 @@ npm install
 
 - `npm run dev`：本地 UI 调试，不依赖 Tampermonkey。
 - `npm run test`：监听构建，配合 `testTemplate.js` 在 Tampermonkey 中调试脚本。
-- `npm run build`：生成 `dist/10comic.js` 和 `release/10comic.user.js`。
+- `npm run build`：生成 `dist/10comic.js`、`dist/10comic.meta.js`、`release/10comic.user.js` 和 `release/10comic.meta.js`。
 
 项目内置 `.env`、`.env.dev`、`.env.test` 三套配置，打包版本号来自 `package.json`。
 
@@ -103,7 +104,7 @@ npm install
 
 1. 构建最新 userscript
 2. 更新 README 中的安装链接
-3. 提交 `release/10comic.user.js`
+3. 提交 `release/10comic.user.js` 和 `release/10comic.meta.js`
 
 ## 常见问题
 

@@ -1,12 +1,12 @@
 // ==UserScript==
 // @name         10图漫
 // @namespace    http://tampermonkey2.net/
-// @version      2.0.8
+// @version      2.0.9
 // @description  Multi-site comic search and chapter download userscript.
 // @author       journey3510
 // @homepageURL  https://github.com/zzzwannasleep/10Comic-W.Ver
 // @supportURL   https://github.com/zzzwannasleep/10Comic-W.Ver/issues
-// @updateURL    https://raw.githubusercontent.com/zzzwannasleep/10Comic-W.Ver/main/release/10comic.user.js
+// @updateURL    https://raw.githubusercontent.com/zzzwannasleep/10Comic-W.Ver/main/release/10comic.meta.js
 // @downloadURL  https://raw.githubusercontent.com/zzzwannasleep/10Comic-W.Ver/main/release/10comic.user.js
 // @run-at       document-end
 // @grant        GM_getValue
@@ -2319,7 +2319,7 @@ function BufferBigIntNotDefined () {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".van-cell__title {\n  text-align: left;\n}\n.van-cell-group__title--inset {\n  text-align: left;\n}\n.van-button--default {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled {\n  opacity: 1 !important;\n}\n.van-tag--default {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow {\n  color: #d9d9d9 !important;\n}\n.van-popover__content {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".van-cell__title {\n  text-align: left;\n}\n.van-cell-group__title--inset {\n  text-align: left;\n}\n.van-button--default {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled {\n  opacity: 1 !important;\n}\n.van-tag--default {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow {\n  color: #d9d9d9 !important;\n}\n.van-popover__content {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n.van-cell__title {\n  text-align: left;\n}\n.van-cell-group__title--inset {\n  text-align: left;\n}\n.van-button--default {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled {\n  opacity: 1 !important;\n}\n.van-tag--default {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow {\n  color: #d9d9d9 !important;\n}\n.van-popover__content {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -5974,14 +5974,23 @@ module.exports = styleTagTransform;
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Hi": () => (/* binding */ AppDownloadUrl),
+/* harmony export */   "KR": () => (/* binding */ AppSupportUrl),
+/* harmony export */   "QW": () => (/* binding */ AppUpdateUrl),
 /* harmony export */   "bF": () => (/* binding */ AppVersion),
-/* harmony export */   "r8": () => (/* binding */ isDev)
+/* harmony export */   "lW": () => (/* binding */ AppName),
+/* harmony export */   "r8": () => (/* binding */ isDev),
+/* harmony export */   "x5": () => (/* binding */ AppHomepageUrl)
 /* harmony export */ });
-/* unused harmony exports AppName, AppEnv */
+/* unused harmony export AppEnv */
 /* eslint-disable no-undef */
-const AppName = (/* unused pure expression or super */ null && ("10图漫"))
-const AppVersion = "2.0.8"
+const AppName = "10图漫"
+const AppVersion = "2.0.9"
 const AppEnv = "production"
+const AppHomepageUrl = "https://github.com/zzzwannasleep/10Comic-W.Ver"
+const AppSupportUrl = "https://github.com/zzzwannasleep/10Comic-W.Ver/issues"
+const AppUpdateUrl = "https://raw.githubusercontent.com/zzzwannasleep/10Comic-W.Ver/main/release/10comic.meta.js"
+const AppDownloadUrl = "https://raw.githubusercontent.com/zzzwannasleep/10Comic-W.Ver/main/release/10comic.user.js"
 const isDev = AppEnv === 'development'
 
 
@@ -6042,9 +6051,20 @@ const configDefault = {
     autoCheckOnLoad: true,
     checkCooldownMinutes: 30
   },
+  updateSettings: {
+    autoCheckOnLoad: true,
+    checkIntervalHours: 12
+  },
   followCheckState: {
     lastCheckAt: 0,
     lastUpdateCount: 0
+  },
+  updateCheckState: {
+    lastCheckAt: 0,
+    lastPromptVersion: '',
+    latestVersion: '',
+    latestDownloadUrl: '',
+    latestUpdateUrl: ''
   },
   followList: [],
   followSearchWebNames: [],
@@ -17090,6 +17110,76 @@ var settingvue_type_template_id_234d1526_scoped_true_render = function () {
                 _vm._v(" "),
                 _c(
                   "van-cell-group",
+                  { attrs: { title: "脚本更新", inset: "" } },
+                  [
+                    _c("van-cell", {
+                      attrs: {
+                        "title-class": "cellleftvalue",
+                        "value-class": "cellrightvalue",
+                        center: "",
+                      },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "title",
+                          fn: function () {
+                            return [
+                              _c("span", { staticClass: "custom-title" }, [
+                                _vm._v("启动时自动检查更新"),
+                              ]),
+                            ]
+                          },
+                          proxy: true,
+                        },
+                        {
+                          key: "default",
+                          fn: function () {
+                            return [
+                              _c("van-checkbox", {
+                                staticClass: "rightbutton",
+                                on: {
+                                  change: function ($event) {
+                                    return _vm.onChangeData(
+                                      "updateSettings",
+                                      _vm.updateSettings.autoCheckOnLoad,
+                                      "autoCheckOnLoad"
+                                    )
+                                  },
+                                },
+                                model: {
+                                  value: _vm.updateSettings.autoCheckOnLoad,
+                                  callback: function ($$v) {
+                                    _vm.$set(
+                                      _vm.updateSettings,
+                                      "autoCheckOnLoad",
+                                      $$v
+                                    )
+                                  },
+                                  expression: "updateSettings.autoCheckOnLoad",
+                                },
+                              }),
+                            ]
+                          },
+                          proxy: true,
+                        },
+                      ]),
+                    }),
+                    _vm._v(" "),
+                    _c("van-cell", {
+                      attrs: {
+                        "title-class": "cellleftvalue",
+                        "value-class": "cellrightvalue",
+                        title: "立即检查更新",
+                        "is-link": "",
+                        center: "",
+                      },
+                      on: { click: _vm.checkScriptUpdate },
+                    }),
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "van-cell-group",
                   { attrs: { id: "otherpart", title: "其他", inset: "" } },
                   [
                     _c("van-cell", {
@@ -17181,6 +17271,306 @@ settingvue_type_template_id_234d1526_scoped_true_render._withStripped = true
 
 
 ;// CONCATENATED MODULE: ./src/views/setting.vue?vue&type=template&id=234d1526&scoped=true&
+
+// EXTERNAL MODULE: ./src/config/index.js
+var config = __webpack_require__(6758);
+;// CONCATENATED MODULE: ./src/utils/updater.js
+/* eslint-disable no-undef */
+
+
+
+const updateSettingsDefault = {
+  autoCheckOnLoad: true,
+  checkIntervalHours: 12
+}
+
+const updateCheckStateDefault = {
+  lastCheckAt: 0,
+  lastPromptVersion: '',
+  latestVersion: '',
+  latestDownloadUrl: '',
+  latestUpdateUrl: ''
+}
+
+const normalizeString = (value) => typeof value === 'string' ? value.trim() : ''
+
+const getUpdateSettings = () => ({
+  ...updateSettingsDefault,
+  ...((0,setup/* getStorage */.cF)('updateSettings') || {})
+})
+
+const getUpdateCheckState = () => ({
+  ...updateCheckStateDefault,
+  ...((0,setup/* getStorage */.cF)('updateCheckState') || {})
+})
+
+const withCacheBust = (url) => {
+  if (!url) {
+    return ''
+  }
+  const joiner = url.includes('?') ? '&' : '?'
+  return `${url}${joiner}_=${Date.now()}`
+}
+
+const getScriptInfo = () => {
+  let scriptInfo = {}
+  try {
+    scriptInfo = GM_info?.script || {}
+  } catch (error) {
+    scriptInfo = {}
+  }
+
+  return {
+    updateUrl: normalizeString(config/* AppUpdateUrl */.QW) || normalizeString(scriptInfo.updateURL),
+    downloadUrl: normalizeString(config/* AppDownloadUrl */.Hi) || normalizeString(scriptInfo.downloadURL),
+    homepageUrl: normalizeString(config/* AppHomepageUrl */.x5) || normalizeString(scriptInfo.homepageURL),
+    supportUrl: normalizeString(config/* AppSupportUrl */.KR) || normalizeString(scriptInfo.supportURL)
+  }
+}
+
+const requestText = (url) => {
+  if (!url) {
+    return Promise.resolve('')
+  }
+
+  return new Promise((resolve) => {
+    GM_xmlhttpRequest({
+      method: 'GET',
+      url: withCacheBust(url),
+      timeout: 10 * 1000,
+      headers: {
+        pragma: 'no-cache',
+        'cache-control': 'no-cache'
+      },
+      onload: (response) => {
+        resolve(response?.responseText || '')
+      },
+      onerror: () => resolve(''),
+      ontimeout: () => resolve('')
+    })
+  })
+}
+
+const parseUserscriptMeta = (content) => {
+  const meta = {}
+  const lines = String(content || '').split(/\r?\n/)
+
+  for (const line of lines) {
+    const matched = line.match(/^\/\/\s*@([^\s]+)\s+(.+?)\s*$/)
+    if (matched) {
+      meta[matched[1]] = matched[2]
+    }
+    if (line.includes('// ==/UserScript==')) {
+      break
+    }
+  }
+
+  return meta
+}
+
+const toVersionParts = (version) => {
+  return normalizeString(version)
+    .split(/[.-]/)
+    .map(part => {
+      const num = parseInt(part, 10)
+      return Number.isNaN(num) ? 0 : num
+    })
+}
+
+const compareVersions = (currentVersion, nextVersion) => {
+  const currentParts = toVersionParts(currentVersion)
+  const nextParts = toVersionParts(nextVersion)
+  const maxLength = Math.max(currentParts.length, nextParts.length)
+
+  for (let index = 0; index < maxLength; index += 1) {
+    const currentPart = currentParts[index] || 0
+    const nextPart = nextParts[index] || 0
+
+    if (currentPart < nextPart) {
+      return -1
+    }
+    if (currentPart > nextPart) {
+      return 1
+    }
+  }
+
+  return 0
+}
+
+const saveUpdateCheckState = (nextState) => {
+  const currentState = getUpdateCheckState()
+  ;(0,setup/* setStorage */.po)('updateCheckState', {
+    ...currentState,
+    ...nextState
+  })
+}
+
+const openUpdatePage = (url) => {
+  if (!url) {
+    return null
+  }
+
+  try {
+    if (typeof GM_openInTab !== 'undefined') {
+      return GM_openInTab(url, {
+        active: true,
+        insert: true,
+        setParent: true
+      })
+    }
+  } catch (error) {
+    console.log('openUpdatePageError: ', error)
+  }
+
+  return window.open(url, '_blank')
+}
+
+const fetchLatestScriptVersion = async() => {
+  const scriptInfo = getScriptInfo()
+  const requestUrl = scriptInfo.updateUrl || scriptInfo.downloadUrl
+
+  if (!requestUrl) {
+    return {
+      ok: false,
+      reason: 'missing-url',
+      currentVersion: config/* AppVersion */.bF
+    }
+  }
+
+  const responseText = await requestText(requestUrl)
+  if (!responseText) {
+    return {
+      ok: false,
+      reason: 'empty-response',
+      currentVersion: config/* AppVersion */.bF,
+      updateUrl: requestUrl
+    }
+  }
+
+  const meta = parseUserscriptMeta(responseText)
+  const latestVersion = normalizeString(meta.version)
+  const updateUrl = normalizeString(meta.updateURL) || scriptInfo.updateUrl || requestUrl
+  const downloadUrl = normalizeString(meta.downloadURL) || scriptInfo.downloadUrl || requestUrl
+  const homepageUrl = normalizeString(meta.homepageURL) || scriptInfo.homepageUrl
+  const supportUrl = normalizeString(meta.supportURL) || scriptInfo.supportUrl
+
+  if (!latestVersion) {
+    return {
+      ok: false,
+      reason: 'missing-version',
+      currentVersion: config/* AppVersion */.bF,
+      updateUrl,
+      downloadUrl,
+      homepageUrl,
+      supportUrl
+    }
+  }
+
+  return {
+    ok: true,
+    currentVersion: config/* AppVersion */.bF,
+    latestVersion,
+    hasUpdate: compareVersions(config/* AppVersion */.bF, latestVersion) < 0,
+    updateUrl,
+    downloadUrl,
+    homepageUrl,
+    supportUrl
+  }
+}
+
+const notifyLatestVersion = (currentVersion) => {
+  window.alert(`${config/* AppName */.lW} 当前已是最新版本（${currentVersion}）。`)
+}
+
+const confirmUpdate = (currentVersion, latestVersion) => {
+  return window.confirm(
+    `${config/* AppName */.lW} 检测到新版本。\n\n当前版本：${currentVersion}\n最新版本：${latestVersion}\n\n是否现在前往更新？`
+  )
+}
+
+const runScriptUpdateCheck = async({ manual = false } = {}) => {
+  if (config/* isDev */.r8) {
+    if (manual) {
+      window.alert('开发环境下不检查更新。')
+    }
+    return {
+      ok: false,
+      skipped: true,
+      reason: 'development'
+    }
+  }
+
+  const settings = getUpdateSettings()
+  const state = getUpdateCheckState()
+  const intervalHours = Math.max(1, Number(settings.checkIntervalHours) || updateSettingsDefault.checkIntervalHours)
+  const intervalMs = intervalHours * 60 * 60 * 1000
+  const lastCheckAt = Number(state.lastCheckAt || 0)
+
+  if (!manual) {
+    if (!settings.autoCheckOnLoad) {
+      return {
+        ok: false,
+        skipped: true,
+        reason: 'disabled'
+      }
+    }
+
+    if (Date.now() - lastCheckAt < intervalMs) {
+      return {
+        ok: false,
+        skipped: true,
+        reason: 'cooldown'
+      }
+    }
+  }
+
+  const result = await fetchLatestScriptVersion()
+  const nextState = {
+    lastCheckAt: Date.now()
+  }
+  if (result.ok) {
+    nextState.latestVersion = result.latestVersion || ''
+    nextState.latestDownloadUrl = result.downloadUrl || ''
+    nextState.latestUpdateUrl = result.updateUrl || ''
+  }
+  saveUpdateCheckState(nextState)
+
+  if (!result.ok) {
+    if (manual) {
+      window.alert('检查更新失败，请稍后重试。')
+    }
+    return result
+  }
+
+  if (!result.hasUpdate) {
+    if (manual) {
+      notifyLatestVersion(result.currentVersion)
+    }
+    return result
+  }
+
+  if (!manual && state.lastPromptVersion === result.latestVersion) {
+    return {
+      ...result,
+      skipped: true,
+      reason: 'already-prompted'
+    }
+  }
+
+  saveUpdateCheckState({
+    lastPromptVersion: result.latestVersion
+  })
+
+  const accepted = confirmUpdate(result.currentVersion, result.latestVersion)
+  if (accepted) {
+    openUpdatePage(result.downloadUrl || result.updateUrl || result.homepageUrl || result.supportUrl)
+  }
+
+  return {
+    ...result,
+    accepted
+  }
+}
 
 ;// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/importPage.vue?vue&type=template&id=3e5333e4&scoped=true&
 var importPagevue_type_template_id_3e5333e4_scoped_true_render = function () {
@@ -17979,8 +18369,34 @@ importPage_component.options.__file = "src/components/importPage.vue"
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* eslint-disable no-undef */
+
 
 
 
@@ -18014,6 +18430,10 @@ importPage_component.options.__file = "src/components/importPage.vue"
       followSettings: {
         autoCheckOnLoad: true,
         checkCooldownMinutes: 30
+      },
+      updateSettings: {
+        autoCheckOnLoad: true,
+        checkIntervalHours: 12
       },
       imgSplicingFlag: false,
       //
@@ -18119,6 +18539,9 @@ importPage_component.options.__file = "src/components/importPage.vue"
       this.metadataSettings.bangumiAccessToken = (this.metadataSettings.bangumiAccessToken || '').trim()
       this.onChangeData('metadataSettings', this.metadataSettings.bangumiAccessToken, 'bangumiAccessToken')
     },
+    async checkScriptUpdate() {
+      await runScriptUpdateCheck({ manual: true })
+    },
     exeFun(flag, basic) {
       let rightSize = 100; let centerSize = 100
       basic.rightSize ? rightSize = basic.rightSize : ''
@@ -18153,6 +18576,10 @@ importPage_component.options.__file = "src/components/importPage.vue"
         this.followSettings = {
           ...this.followSettings,
           ...(GM_getValue('followSettings') || {})
+        }
+        this.updateSettings = {
+          ...this.updateSettings,
+          ...(GM_getValue('updateSettings') || {})
         }
         //
         this.appLoadDefault = {
@@ -21318,10 +21745,9 @@ var global_update = injectStylesIntoStyleTag_default()(global/* default */.Z, gl
 
        /* harmony default export */ const styles_global = (global/* default */.Z && global/* default.locals */.Z.locals ? global/* default.locals */.Z.locals : undefined);
 
-// EXTERNAL MODULE: ./src/config/index.js
-var config = __webpack_require__(6758);
 ;// CONCATENATED MODULE: ./src/main.js
 /* eslint-disable no-undef */
+
 
 
 
@@ -21339,6 +21765,7 @@ var appVm = null
 var appLoadDefault = null
 var tryLoadTimes = 0
 var hasStartedFollowCheck = false
+var hasStartedUpdateCheck = false
 loadMenu(tryLoadTimes)
 
 function loadMenu() {
@@ -21350,6 +21777,7 @@ function loadMenu() {
     appLoadDefault = (0,setup/* getStorage */.cF)('appLoadDefault')
     GM_registerMenuCommand(`加载UI (Alt + ${appLoadDefault.loadHotKey})`, openUI)
     GM_registerMenuCommand(`重置所有数据`, setup/* setinit */.zU)
+    GM_registerMenuCommand('检查脚本更新', () => runScriptUpdateCheck({ manual: true }))
     document.addEventListener('keydown', (e) => {
       if (e.altKey && e.key.toUpperCase() === appLoadDefault.loadHotKey.toUpperCase()) {
         openUI(0)
@@ -21359,11 +21787,25 @@ function loadMenu() {
       openUI(0)
     }
     setTimeout(() => {
+      runUpdateCheck()
       runFollowCheck()
     }, 0)
   } catch (error) {
     console.log('loadError: ', error)
     openUI(tryLoadTimes)
+  }
+}
+
+async function runUpdateCheck() {
+  if (hasStartedUpdateCheck || config/* isDev */.r8) {
+    return
+  }
+
+  hasStartedUpdateCheck = true
+  try {
+    await runScriptUpdateCheck()
+  } catch (error) {
+    console.log('updateCheckError: ', error)
   }
 }
 

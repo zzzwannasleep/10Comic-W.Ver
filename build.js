@@ -14,6 +14,8 @@ const updateUrl = process.env.TAMPERMONKEY_UPDATE_URL || ''
 const downloadUrl = process.env.TAMPERMONKEY_DOWNLOAD_URL || ''
 
 const distFilePath = `./dist/${entryFile}`
+const metaFileName = entryFile.replace(/\.js$/, '.meta.js')
+const distMetaFilePath = `./dist/${metaFileName}`
 const app = fs.readFileSync(distFilePath, 'utf8')
 let tampermonkeyConfig = fs.readFileSync('./tampermonkey.js', 'utf8')
 tampermonkeyConfig = tampermonkeyConfig.replace('__APP_NAME__', appName)
@@ -26,9 +28,12 @@ tampermonkeyConfig = tampermonkeyConfig.replace(/\n{3,}/g, '\n\n')
 
 const output = tampermonkeyConfig + '\n' + app
 fs.writeFileSync(distFilePath, output)
+fs.writeFileSync(distMetaFilePath, `${tampermonkeyConfig}\n`)
 
 const releaseDir = './release'
 const releaseFile = entryFile.replace(/\.js$/, '.user.js')
+const releaseMetaFile = entryFile.replace(/\.js$/, '.meta.js')
 fs.mkdirSync(releaseDir, { recursive: true })
 fs.writeFileSync(path.join(releaseDir, releaseFile), output)
+fs.writeFileSync(path.join(releaseDir, releaseMetaFile), `${tampermonkeyConfig}\n`)
 console.log('build complete!')

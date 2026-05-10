@@ -10,12 +10,14 @@ import { loadStyle2, getType } from './utils'
 import { getStorage, appLoadinit, setinit } from '@/config/setup'
 import { canAutoCheckFollow, checkAllFollowItems } from '@/utils/follow'
 import { findWebByUrl } from '@/utils/comics'
+import { runScriptUpdateCheck } from '@/utils/updater'
 
 var id = null
 var appVm = null
 var appLoadDefault = null
 var tryLoadTimes = 0
 var hasStartedFollowCheck = false
+var hasStartedUpdateCheck = false
 loadMenu(tryLoadTimes)
 
 function loadMenu() {
@@ -27,6 +29,7 @@ function loadMenu() {
     appLoadDefault = getStorage('appLoadDefault')
     GM_registerMenuCommand(`加载UI (Alt + ${appLoadDefault.loadHotKey})`, openUI)
     GM_registerMenuCommand(`重置所有数据`, setinit)
+    GM_registerMenuCommand('检查脚本更新', () => runScriptUpdateCheck({ manual: true }))
     document.addEventListener('keydown', (e) => {
       if (e.altKey && e.key.toUpperCase() === appLoadDefault.loadHotKey.toUpperCase()) {
         openUI(0)
@@ -36,11 +39,25 @@ function loadMenu() {
       openUI(0)
     }
     setTimeout(() => {
+      runUpdateCheck()
       runFollowCheck()
     }, 0)
   } catch (error) {
     console.log('loadError: ', error)
     openUI(tryLoadTimes)
+  }
+}
+
+async function runUpdateCheck() {
+  if (hasStartedUpdateCheck || isDev) {
+    return
+  }
+
+  hasStartedUpdateCheck = true
+  try {
+    await runScriptUpdateCheck()
+  } catch (error) {
+    console.log('updateCheckError: ', error)
   }
 }
 
