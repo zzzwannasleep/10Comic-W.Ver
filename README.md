@@ -1,7 +1,7 @@
 # 10图漫
   使用 Vue + Vant 开发的油猴插件脚本（Tampermonkey）
 
-  基于浏览器油猴插件的使用，任意网页提供部分漫画网站搜索；漫画分章节多队列并行下载(可直接下载/压缩下载/拼接下载)，可用于动漫之家、极速漫画、腾讯漫画、哔哩哔哩等30+网站；对个别漫画网站修改阅读样式；可按需编写定义规则JSON导入以支持其他漫画网站
+  Browser userscript for multi-site comic search, chapter downloads, and custom rule imports.
 
   [![github](https://img.shields.io/badge/journey3510-10Comic_-blue?style=flat&logo=github)](https://github.com/journey3510/10Comic)
 [![github](https://img.shields.io/github/commit-activity/y/journey3510/10Comic?logo=github)](https://github.com/journey3510/10Comic)
@@ -80,9 +80,6 @@ npm run build
 ### 漫画网站列表
 | **网站** | **网站首页**                      |
 |-------------|-----------------------------------|
-| 动漫之家        | https://manhua.idmzj.com/        |
-| 动漫之家(手机)     | https://m.idmzj.com/       |
-| 动漫之家(访客)    | https://comic.idmzj.com/       |
 | Mangabz     | https://mangabz.com/       |
 | 再漫画        | https://manhua.zaimanhua.com/        |
 | 极速漫画        | https://www.1kkk.com/           |
@@ -93,9 +90,6 @@ npm run build
 | 咚漫          | https://www.dongmanmanhua.cn/   |
 | naver          | https://comic.naver.com/   |
 | webtoon          | https://www.webtoons.com/   |
-| 腾讯漫画        | https://ac.qq.com/              |
-| 哔哩哔哩        | https://manga.bilibili.com/     |
-| 哔哩哔哩漫画国际版   | https://www.bilibilicomics.com/ |
 | Komiic漫画        | https://komiic.com/     |
 | 百漫谷    | https://www.darpou.com/         |
 | 七夕漫画        | http://www.qiximh2.com/               |
@@ -117,7 +111,6 @@ npm run build
 | 爱国漫         | https://www.guoman.net/       |
 | 最次元         | https://zcymh.com/       |
 | 看漫画        | https://www.kanman.com/   |
-| 快看漫画        | https://www.kuaikanmanhua.com/  |
 | 好漫8         | https://www.haoman8.com/        |
 
 <br /><br />
@@ -130,3 +123,4 @@ npm run build
 ## 感谢
   - [Tampermonkey-Vue](https://github.com/huangxubo23/tampermonkey-vue)
   - [用JS实现多个任务并行执行的队列](https://juejin.cn/post/6844903961728647181)
+

@@ -68,9 +68,6 @@
 ## 漫画网站列表
 | **网站** | **首页**                    | **提示**                 |
 |-------------|---------------------------------|-----------------------------|
-| 动漫之家        | https://manhua.idmzj.com/        |                             |
-| 动漫之家(手机)     | https://m.idmzj.com/       |                             |
-| 动漫之家(访客)    | https://comic.idmzj.com/       |                             |
 | Mangabz     | https://mangabz.com/            |                             |
 | 再漫画        | https://manhua.zaimanhua.com/        |                       |
 | 动漫屋         | https://www.dm5.com/            |                             |
@@ -81,9 +78,6 @@
 | 咚漫          | https://www.dongmanmanhua.cn/   |                             |
 | webtoons    | https://www.webtoons.com/       | ？需要魔法？                      |
 | comic.naver | https://comic.naver.com/        | 找到漫画目录页再使用                  |
-| 腾讯漫画        | https://ac.qq.com/              | 2023.3.2起, 需要APP观看的章节无法完整下载 |
-| 哔哩哔哩        | ~~https://manga.bilibili.com/~~    |       已失效                      |
-| 哔哩哔哩漫画国际版   | ~~https://www.bilibilicomics.com/~~ |  已失效                      |
 | Komiic漫画    | https://komiic.com/             | SPA页面, 新页面需“重载列表”重新匹配新名称    |
 | 百漫谷      | https://www.darpou.com/         |                             |
 | 七夕漫画        | http://www.qiximh2.com/             |                             |
@@ -105,7 +99,6 @@
 | 爱国漫         | https://www.guoman.net/       |                              |
 | 最次元         | https://zcymh.com/       |                               |
 | 看漫画        | https://www.kanman.com/   |                             |
-| 快看漫画        | https://www.kuaikanmanhua.com/  |                             |
 | 好漫8         | https://www.haoman8.com/        |                             |
 
 
@@ -280,4 +273,5 @@
 ## 感谢
   - [Tampermonkey-Vue](https://github.com/huangxubo23/tampermonkey-vue)
   - [用JS实现多个任务并行执行的队列](https://juejin.cn/post/6844903961728647181)
+
 

@@ -71,112 +71,7 @@ const mergeKnownUrl = (item, chapterUrls) => {
   item.knownChapterUrls = [...urlSet]
 }
 
-const getComicIdByUrl = (url) => {
-  const match = url.match(/detail\/(\D*)(\d*)/)
-  return match ? parseInt(match[2]) : null
-}
-
-const buildBilibiliChapters = (comicName, comicId, epList, webRule, comicPageUrl) => {
-  const allList = []
-  epList.forEach(element => {
-    allList.push({
-      comicName,
-      authorName: '',
-      comicPageUrl,
-      webName: webRule.webName,
-      chapterName: trimSpecial(`${element.short_title || ''} ${element.title || ''}`.trim()),
-      chapterNumStr: '',
-      downChapterName: '',
-      url: `${webRule.homepage}mc${comicId}/${element.id}`,
-      readtype: webRule.readtype,
-      isPay: element.is_locked,
-      isSelect: false
-    })
-  })
-  return allList.reverse()
-}
-
-const getDmzjFollowInfo = async(comicPageUrl, webRule, fallbackComicName = '') => {
-  const arr = comicPageUrl.split('/')
-  let name = arr[arr.length - 1] ? arr[arr.length - 1] : arr[arr.length - 2]
-  name = name.split('.')[0]
-  const infoUrl = `https://m.idmzj.com/info/${name}.html`
-  const { responseText } = await request({ method: 'get', url: infoUrl })
-  const str2 = responseText.match(/initIntroData\((.*)\)/)[1]
-  const dataArr = JSON.parse(str2)
-  const comicList = dataArr[0]?.data || []
-  const comicList2 = dataArr[1]?.data || []
-  const chapterList = []
-
-  comicList.forEach(element => {
-    chapterList.push({
-      comicName: fallbackComicName,
-      authorName: '',
-      comicPageUrl,
-      webName: webRule.webName,
-      chapterName: trimSpecial(element.chapter_name),
-      chapterNumStr: '',
-      downChapterName: '',
-      url: `https://m.idmzj.com/view/${element.comic_id}/${element.id}.html/`,
-      readtype: webRule.readtype,
-      isPay: false,
-      isSelect: false,
-      characterType: 'one'
-    })
-  })
-  comicList2.forEach(element => {
-    chapterList.push({
-      comicName: fallbackComicName,
-      authorName: '',
-      comicPageUrl,
-      webName: webRule.webName,
-      chapterName: trimSpecial(element.chapter_name),
-      chapterNumStr: '',
-      downChapterName: '',
-      url: `https://m.idmzj.com/view/${element.comic_id}/${element.id}.html/`,
-      readtype: webRule.readtype,
-      isPay: false,
-      isSelect: false,
-      characterType: 'many'
-    })
-  })
-  return {
-    comicName: fallbackComicName,
-    authorName: '',
-    chapters: chapterList
-  }
-}
-
-const getBilibiliFollowInfo = async(comicPageUrl, webRule) => {
-  const comicId = getComicIdByUrl(comicPageUrl)
-  if (!comicId) {
-    return {
-      comicName: '',
-      authorName: '',
-      chapters: []
-    }
-  }
-  const data = new FormData()
-  data.append('comic_id', comicId)
-  const getUrl = `${webRule.homepage}twirp/comic.v1.Comic/ComicDetail?device=pc&platform=web`
-  const { responseText } = await request({ method: 'post', url: getUrl, data, headers: webRule.headers })
-  const comic = JSON.parse(responseText)
-  const comicName = trimSpecial(comic.data?.title || '')
-  return {
-    comicName,
-    authorName: '',
-    chapters: buildBilibiliChapters(comicName, comicId, comic.data?.ep_list || [], webRule, comicPageUrl)
-  }
-}
-
-const getFollowInfoByRequest = async(webRule, comicPageUrl, fallbackComicName = '') => {
-  if (webRule.homepage.includes('manga.bilibili.com') || webRule.homepage.includes('bilibilicomics.com')) {
-    return getBilibiliFollowInfo(comicPageUrl, webRule)
-  }
-  if (webRule.homepage.includes('idmzj.com')) {
-    return getDmzjFollowInfo(comicPageUrl, webRule, fallbackComicName)
-  }
-
+const getFollowInfoByRequest = async(webRule, comicPageUrl) => {
   const { responseText } = await request({ method: 'get', url: comicPageUrl, headers: webRule.headers || '' })
   return getComicInfoFromHtml(responseText, webRule, comicPageUrl)
 }
@@ -206,7 +101,7 @@ export const searchFollowCandidatesByKeyword = async(keyword, selectedWebNames =
     }
 
     try {
-      const info = await getFollowInfoByRequest(item.webRule || findWebByUrl(bestResult.url), bestResult.url, currentKeyword)
+      const info = await getFollowInfoByRequest(item.webRule || findWebByUrl(bestResult.url), bestResult.url)
       const chapterList = dedupeChapters(info.chapters || [])
       if (chapterList.length === 0) {
         skippedSites.push({
@@ -390,7 +285,7 @@ export const syncFollowItem = async(followItem) => {
     }
   }
 
-  const info = await getFollowInfoByRequest(webRule, followItem.comicPageUrl, followItem.comicName)
+  const info = await getFollowInfoByRequest(webRule, followItem.comicPageUrl)
   const chapterList = dedupeChapters(info.chapters || [])
   const knownUrlSet = new Set([...(followItem.knownChapterUrls || []), ...((followItem.pendingChapters || []).map(item => item.url))])
   const newChapters = chapterList.filter(item => !knownUrlSet.has(item.url))

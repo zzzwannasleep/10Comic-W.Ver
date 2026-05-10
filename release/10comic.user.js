@@ -2,12 +2,9 @@
 // @name         10图漫
 // @namespace    http://tampermonkey2.net/
 // @version      2.0.8
-// @description  任意网页提供部分漫画网站搜索；漫画分章节下载(可直接下载/压缩下载/拼接下载)，可用于动漫之家、极速漫画、腾讯漫画、哔哩哔哩等35多个网站；对个别漫画网站修改阅读样式；可按需编写定义规则JSON导入以支持其他漫画网站
+// @description  Multi-site comic search and chapter download userscript.
 // @author       journey3510
-// @homepageURL  https://github.com/zzzwannasleep/10Comic-W.Ver
-// @supportURL   https://github.com/zzzwannasleep/10Comic-W.Ver/issues
-// @updateURL    https://raw.githubusercontent.com/zzzwannasleep/10Comic-W.Ver/main/release/10comic.user.js
-// @downloadURL  https://raw.githubusercontent.com/zzzwannasleep/10Comic-W.Ver/main/release/10comic.user.js
+
 // @run-at       document-end
 // @grant        GM_getValue
 // @grant        GM_setValue
@@ -30,6 +27,7 @@
 // @connect      *
 // ==/UserScript==
 
+
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -46,7 +44,7 @@
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".van-cell__title {\n  text-align: left;\n}\n.van-cell-group__title--inset {\n  text-align: left;\n}\n.van-button--default {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled {\n  opacity: 1 !important;\n}\n.van-tag--default {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow {\n  color: #d9d9d9 !important;\n}\n.van-popover__content {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".van-cell__title {\n  text-align: left;\n}\n.van-cell-group__title--inset {\n  text-align: left;\n}\n.van-button--default {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled {\n  opacity: 1 !important;\n}\n.van-tag--default {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow {\n  color: #d9d9d9 !important;\n}\n.van-popover__content {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n.van-cell__title {\n  text-align: left;\n}\n.van-cell-group__title--inset {\n  text-align: left;\n}\n.van-button--default {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled {\n  opacity: 1 !important;\n}\n.van-tag--default {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow {\n  color: #d9d9d9 !important;\n}\n.van-popover__content {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -948,128 +946,6 @@ const searchComicOnWeb = async(webRule, keyword) => {
 
 const comicsWebInfo = [
   {
-    domain: 'manhua.idmzj.com',
-    homepage: 'https://manhua.idmzj.com/',
-    webName: '动漫之家',
-    comicNameCss: 'h1',
-    chapterCss: '.cartoon_online_border',
-    chapterCss_2: '.cartoon_online_border_other',
-    webDesc: '需要登录',
-    readtype: 1,
-    useFrame: true,
-    getComicInfo: async function(comic_name) {
-      const domain = (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .getdomain */ .m1)()
-      let text = ''
-      if (domain === 'm.idmzj.com') {
-        text = document.body.outerHTML
-      } else {
-        // 判断登录后是否有章节信息
-        const chapterList = unsafeWindow.__NUXT__?.data?.getCationDeatils?.comicInfo?.chapterList
-        if (chapterList) {
-          return false
-        }
-
-        const arr = window.location.href.split('/')
-        let name = arr[arr.length - 1] ? arr[arr.length - 1] : arr[arr.length - 2]
-        name = name.split('.')[0]
-        const comicUrl = `https://m.idmzj.com/info/${name}.html`
-        const htmldata = await (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .request */ .WY)('get', comicUrl)
-        text = htmldata.responseText
-      }
-
-      const str2 = text.match(/initIntroData\((.*)\)/)[1]
-      const comic_list = JSON.parse(str2)[0].data
-      let comic_list_2 = []
-      if (JSON.parse(str2)[1]) {
-        comic_list_2 = JSON.parse(str2)[1].data
-      }
-      const allList = []
-      comic_list.forEach(element => {
-        const url = `https://m.idmzj.com/view/${element.comic_id}/${element.id}.html/`
-        const data = {
-          comicName: comic_name,
-          chapterName: (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .trimSpecial */ .Sc)(element.chapter_name),
-          chapterNumStr: '',
-          url,
-          readtype: this.readtype,
-          isPay: false,
-          isSelect: false,
-          characterType: 'one'
-        }
-        allList.push(data)
-      })
-      comic_list_2.forEach(element => {
-        const url = `https://m.idmzj.com/view/${element.comic_id}/${element.id}.html/`
-        const data = {
-          comicName: comic_name,
-          chapterName: (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .trimSpecial */ .Sc)(element.chapter_name),
-          chapterNumStr: '',
-          url,
-          readtype: this.readtype,
-          isPay: false,
-          isSelect: false,
-          characterType: 'many'
-        }
-        allList.push(data)
-      })
-      return allList
-    },
-    getImgs: async function(context, processData) {
-      const chapterList = unsafeWindow.__NUXT__?.data?.getCationDeatils?.comicInfo?.chapterList
-
-      if (chapterList) {
-        const iframeWindow = document.getElementById(processData.frameId).contentWindow
-        await (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .doThingsEachSecond */ .w1)(10, () => iframeWindow?.__NUXT__?.data?.getchapters?.data?.chapterInfo?.page_url)
-        const imageArr = iframeWindow?.__NUXT__?.data?.getchapters?.data?.chapterInfo?.page_url
-        document.getElementById(processData.frameId).remove()
-        return imageArr
-      } else {
-        // 保留 m.dmzj.com 获取方法
-        const str = context.match(/mReader.initData\(.*"page_url":(.*?"]).*\)/)[1]
-        const imgs = JSON.parse(str)
-        document.getElementById(processData.frameId).remove()
-        return imgs
-      }
-    }
-  },
-  {
-    domain: ['m.dmzj.com', 'm.idmzj.com'],
-    homepage: 'https://m.idmzj.com/',
-    webName: '动漫之家(手机)',
-    comicNameCss: '#comicName',
-    chapterCss: '#list',
-    readtype: 1,
-    getImgs: async function(context) {
-      const str = context.match(/mReader.initData\(.*"page_url":(.*?"]).*\)/)[1]
-      const imgs = JSON.parse(str)
-      console.log('imgs: ', imgs)
-      return imgs
-    }
-  },
-  {
-    domain: ['comic.idmzj.com', 'www.idmzj.com'],
-    homepage: 'https://comic.idmzj.com/',
-    webName: '动漫之家(访客)',
-    comicNameCss: 'h1',
-    chapterCss: '.cartoon_online_border, .list_con_li',
-    readtype: 1,
-    getImgs: async function(context, processData) {
-      const group = processData.url.match(/idmzj.com\/(.*?)\/(\d+)/)
-      const DATA = (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .funstrToData */ .D)(context, /(function[\s\S]+?return [\s\S]*?}})(\([\s\S]+?\))/g)
-      const params = DATA.pinia['app-store'].publicParams
-
-      let reqUrl = `https://comic.idmzj.com/api/v1/s_comic/chapter/detail?channel=${params.channel}&app_name=${params.app_name}&version=${params.timestamp}&timestamp=${params.timestamp}&uid&comic_py=${group[1]}&chapter_id=${group[2]}`
-      if (unsafeWindow.location.host.includes('www')) {
-        const comic_id = unsafeWindow.__NUXT__.data.getcationDeatils.comicInfo.id
-        reqUrl = `https://www.idmzj.com/api/v1/comic1/chapter/detail?channel=${params.channel}&app_name=${params.app_name}&version=1.0.0&timestamp=${params.timestamp}&uid&comic_id=${comic_id}&chapter_id=${group[2]}`
-      }
-
-      const { response } = await (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .request */ .WY)('get', reqUrl)
-      const imgs = JSON.parse(response).data.chapterInfo.page_url
-      return imgs
-    }
-  },
-  {
     domain: ['mangabz.com', 'www.mangabz.com'],
     homepage: 'https://mangabz.com/',
     webName: 'Mangabz',
@@ -1356,191 +1232,6 @@ const comicsWebInfo = [
         imgUrlArr.push(item[1])
       }
       return imgUrlArr
-    }
-  },
-  {
-    domain: 'ac.qq.com',
-    homepage: 'https://ac.qq.com/',
-    webName: '腾讯漫画',
-    comicNameCss: '.works-intro-title.ui-left strong',
-    chapterCss: '.chapter-page-all.works-chapter-list',
-    headers: '',
-    readtype: 1,
-    webDesc: '2023.3.2起, 需要APP观看的章节无法完整下载',
-    hasSpend: true,
-    payKey: 'ui-icon-pay',
-    searchTemplate_1: {
-      search_add_url: 'Comic/searchList?search=',
-      alllist_dom_css: '.mod_book_list',
-      minlist_dom_css: 'li',
-      img_src: 'data-original'
-    },
-    getImgs: function(context) {
-      let nonce = context.match(/<script>\s*window.*?=(.*?)?;/)[1]
-      nonce = eval(nonce)
-      const dataStr = context.match(/DATA.*?'(.*)?'/)[1]
-      const data = dataStr.split('')
-      nonce = nonce.match(/\d+[a-zA-Z]+/g)
-      let len = nonce.length
-      let locate = null
-      let str = ''
-      while (len--) {
-        locate = parseInt(nonce[len]) & 255
-        str = nonce[len].replace(/\d+/g, '')
-        data.splice(locate, str.length)
-      }
-      const chapterStr = data.join('')
-      const chapterObj = JSON.parse(window.atob(chapterStr))
-      const imgarr = []
-      chapterObj.picture.forEach(element => {
-        imgarr.push(element.url)
-      })
-      return imgarr
-    }
-  },
-  {
-    domain: 'manga.bilibili.com',
-    homepage: 'https://manga.bilibili.com/',
-    webName: '哔哩哔哩',
-    comicNameCss: '.manga-info h1.manga-title',
-    chapterCss: '.episode-list .list-header',
-    headers: {
-      referer: 'https://manga.bilibili.com/'
-    },
-    readtype: 1,
-    searchFun: async function(keyword) {
-      const searchUrl = 'https://manga.bilibili.com/twirp/comic.v1.Comic/Search?device=pc&platform=web'
-      const data = new FormData()
-      data.append('key_word', keyword)
-      data.append('page_num', 1)
-      data.append('page_size', 8)
-      const { responseText } = await (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .request */ .WY)('post', searchUrl, data, this.headers)
-      const list = JSON.parse(responseText).data.list
-      const searchList = []
-      list.forEach(element => {
-        const obj = {}
-        obj.name = element.org_title
-        obj.url = this.homepage + 'detail/mc' + element.id
-        obj.imageUrl = element.vertical_cover
-        searchList.push(obj)
-      })
-      return new Promise((resolve, reject) => {
-        resolve(searchList)
-      })
-    },
-    getComicInfo: async function() {
-      const comicid = window.location.href.match(/detail\/(\D*)(\d*)/)[2]
-      const data = new FormData()
-      data.append('comic_id', parseInt(comicid))
-      const getUrl = 'https://manga.bilibili.com/twirp/comic.v1.Comic/ComicDetail?device=pc&platform=web'
-      const { responseText } = await (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .request */ .WY)('post', getUrl, data)
-      const comic = JSON.parse(responseText)
-      const comicName = (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .trimSpecial */ .Sc)(comic.data.title)
-      const comic_list = comic.data.ep_list
-      const allList = []
-      comic_list.forEach(element => {
-        const url = `https://manga.bilibili.com/mc${comicid}/${element.id}`
-        const data = {
-          comicName: comicName,
-          chapterName: (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .trimSpecial */ .Sc)(element.short_title + ' ' + element.title),
-          chapterNumStr: '',
-          url,
-          readtype: this.readtype,
-          isPay: element.is_locked,
-          isSelect: false
-        }
-        allList.push(data)
-      })
-      return allList.reverse()
-    },
-    getImgs: async function(context, processData) {
-      const { url, isPay } = processData
-      const chapter_id = parseInt(url.match(/.com\/(\D*)(\d*)\/(\d*)/)[3])
-      const data = new FormData()
-      data.append('ep_id', chapter_id)
-      const postUrl = 'https://manga.bilibili.com/twirp/comic.v1.Comic/GetImageIndex?device=pc&platform=web'
-      const { responseText } = await (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .request */ .WY)({ method: 'post', url: postUrl, data, useCookie: isPay })
-      const imgArray = JSON.parse(responseText).data.images
-      console.log('imgArray: ', imgArray)
-
-      const saveImg = []
-      const query = []
-      const imgPostUrl = 'https://manga.bilibili.com/twirp/comic.v1.Comic/ImageToken?device=pc&platform=web'
-      imgArray.forEach(item => {
-        query.push(item.path)
-      })
-      const img_data = new FormData()
-      img_data.append('urls', JSON.stringify(query))
-      const img_data_res = await (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .request */ .WY)('post', imgPostUrl, img_data)
-
-      console.log('img_data_res: ', img_data_res)
-
-      const imgObjArr = JSON.parse(img_data_res.responseText).data
-      imgObjArr.forEach(imgObj => {
-        saveImg.push(`${imgObj.url}?token=${imgObj.token}`)
-      })
-      return saveImg
-    }
-  },
-  {
-    domain: 'www.bilibilicomics.com',
-    homepage: 'https://www.bilibilicomics.com/',
-    webName: '哔哩哔哩漫画国际版',
-    comicNameCss: 'h1.manga-title',
-    chapterCss: '.episode-list .list-header',
-    headers: {
-      referer: 'https://www.bilibilicomics.com/'
-    },
-    webDesc: '？需要魔法？',
-    readtype: 1,
-    getComicInfo: async function() {
-      const comicid = window.location.href.match(/detail\/(\D*)(\d*)/)[2]
-      const data = new FormData()
-      data.append('comic_id', parseInt(comicid))
-      const getUrl = 'https://www.bilibilicomics.com/twirp/comic.v1.Comic/ComicDetail?device=pc&platform=web'
-      const { responseText } = await (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .request */ .WY)('post', getUrl, data)
-      const comic = JSON.parse(responseText)
-      const comicName = (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .trimSpecial */ .Sc)(comic.data.title)
-      const comic_list = comic.data.ep_list
-      const allList = []
-      comic_list.forEach(element => {
-        const url = `https://www.bilibilicomics.com/mc${comicid}/${element.id}`
-        const data = {
-          comicName: comicName,
-          chapterName: (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .trimSpecial */ .Sc)(element.short_title + ' ' + element.title),
-          chapterNumStr: '',
-          url,
-          readtype: this.readtype,
-          isPay: element.is_locked,
-          isSelect: false
-        }
-        allList.push(data)
-      })
-      return allList.reverse()
-    },
-    getImgs: async function(context, processData) {
-      const { url, isPay } = processData
-      const chapter_id = parseInt(url.match(/.com\/(\D*)(\d*)\/(\d*)/)[3])
-      const data = new FormData()
-      data.append('ep_id', chapter_id)
-      const postUrl = 'https://www.bilibilicomics.com/twirp/comic.v1.Comic/GetImageIndex?device=pc&platform=web'
-      const { responseText } = await (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .request */ .WY)({ method: 'post', url: postUrl, data, useCookie: isPay })
-      const imgArray = JSON.parse(responseText).data.images
-
-      const saveImg = []
-      const query = []
-      const imgPostUrl = 'https://www.bilibilicomics.com/twirp/comic.v1.Comic/ImageToken?device=pc&platform=web'
-      imgArray.forEach(item => {
-        query.push(item.path)
-      })
-      const img_data = new FormData()
-      img_data.append('urls', JSON.stringify(query))
-      const img_data_res = await (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .request */ .WY)('post', imgPostUrl, img_data)
-      const imgObjArr = JSON.parse(img_data_res.responseText).data
-      imgObjArr.forEach(imgObj => {
-        saveImg.push(`${imgObj.url}?token=${imgObj.token}`)
-      })
-      return saveImg
     }
   },
   {
@@ -2069,92 +1760,6 @@ const comicsWebInfo = [
         return element
       })
       return imgArray
-    }
-  },
-  {
-    domain: 'www.kuaikanmanhua.com',
-    homepage: 'https://www.kuaikanmanhua.com/',
-    webName: '快看漫画',
-    comicNameCss: 'h3.title',
-    chapterCss: '.episode-title',
-    readtype: 1,
-    hasSpend: true,
-    useFrame: true,
-    getComicInfo: async function() {
-      const list = unsafeWindow.__NUXT__.data[0].comics
-      const comicName = unsafeWindow.__NUXT__.data[0].topicInfo.title
-      const newList = []
-      list.forEach(element => {
-        const url = `https://www.kuaikanmanhua.com/web/comic/${element.id}/`
-        const data = {
-          comicName: comicName,
-          chapterName: element.title,
-          chapterNumStr: '',
-          url,
-          readtype: this.readtype,
-          isPay: element.locked,
-          isSelect: false
-        }
-        newList.push(data)
-      })
-      return newList
-    },
-    getImgs: async function(context, processData) {
-      const str = document.getElementById(processData.frameId).contentDocument.body.outerHTML
-      const data = (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .funstrToData */ .D)(str, /(function.*}})(\(.*)\);<\/script>/g)
-      let comicImages = data.data[0].comicInfo.comicImages
-      const imgarr = []
-      if (!comicImages) {
-        comicImages = data.data[0].imgList
-      }
-      comicImages.forEach(element => {
-        imgarr.push(element.url)
-      })
-      document.getElementById(processData.frameId).remove()
-      return imgarr
-    }
-  },
-  {
-    domain: 'm.kuaikanmanhua.com',
-    homepage: 'https://m.kuaikanmanhua.com/',
-    webName: '快看漫画m',
-    comicNameCss: '.mask p.title',
-    chapterCss: '',
-    readtype: 1,
-    hasSpend: true,
-    showInList: false,
-    useFrame: true,
-    getComicInfo: async function() {
-      const code = document.body.outerHTML.match(/\(function\(a,b,c.*?(\)\))/g)[0]
-      const data = eval(code)
-      const list = data.data[0].comicList
-      const comicName = (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .trimSpecial */ .Sc)(data.data[0].topicInfo.title)
-      const newlist = list.map((item) => {
-        return {
-          comicName: comicName,
-          chapterName: (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .trimSpecial */ .Sc)(item.title),
-          chapterNumStr: '',
-          url: 'https://m.kuaikanmanhua.com/mobile/comics/' + item.id,
-          readtype: 1,
-          isPay: !item.is_free,
-          isSelect: false
-        }
-      })
-      return newlist
-    },
-    getImgs: async function(context, processData) {
-      const str = document.getElementById(processData.frameId).contentDocument.body.outerHTML
-      const data = (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .funstrToData */ .D)(str, /(function.*}})(\(.*)\);<\/script>/g)
-      let comicImages = data.data[0].comicInfo.comicImages
-      const imgarr = []
-      if (!comicImages) {
-        comicImages = data.data[0].imgList
-      }
-      comicImages.forEach(element => {
-        imgarr.push(element.url)
-      })
-      document.getElementById(processData.frameId).remove()
-      return imgarr
     }
   },
   {
@@ -4441,112 +4046,7 @@ const mergeKnownUrl = (item, chapterUrls) => {
   item.knownChapterUrls = [...urlSet]
 }
 
-const getComicIdByUrl = (url) => {
-  const match = url.match(/detail\/(\D*)(\d*)/)
-  return match ? parseInt(match[2]) : null
-}
-
-const buildBilibiliChapters = (comicName, comicId, epList, webRule, comicPageUrl) => {
-  const allList = []
-  epList.forEach(element => {
-    allList.push({
-      comicName,
-      authorName: '',
-      comicPageUrl,
-      webName: webRule.webName,
-      chapterName: (0,utils/* trimSpecial */.Sc)(`${element.short_title || ''} ${element.title || ''}`.trim()),
-      chapterNumStr: '',
-      downChapterName: '',
-      url: `${webRule.homepage}mc${comicId}/${element.id}`,
-      readtype: webRule.readtype,
-      isPay: element.is_locked,
-      isSelect: false
-    })
-  })
-  return allList.reverse()
-}
-
-const getDmzjFollowInfo = async(comicPageUrl, webRule, fallbackComicName = '') => {
-  const arr = comicPageUrl.split('/')
-  let name = arr[arr.length - 1] ? arr[arr.length - 1] : arr[arr.length - 2]
-  name = name.split('.')[0]
-  const infoUrl = `https://m.idmzj.com/info/${name}.html`
-  const { responseText } = await (0,utils/* request */.WY)({ method: 'get', url: infoUrl })
-  const str2 = responseText.match(/initIntroData\((.*)\)/)[1]
-  const dataArr = JSON.parse(str2)
-  const comicList = dataArr[0]?.data || []
-  const comicList2 = dataArr[1]?.data || []
-  const chapterList = []
-
-  comicList.forEach(element => {
-    chapterList.push({
-      comicName: fallbackComicName,
-      authorName: '',
-      comicPageUrl,
-      webName: webRule.webName,
-      chapterName: (0,utils/* trimSpecial */.Sc)(element.chapter_name),
-      chapterNumStr: '',
-      downChapterName: '',
-      url: `https://m.idmzj.com/view/${element.comic_id}/${element.id}.html/`,
-      readtype: webRule.readtype,
-      isPay: false,
-      isSelect: false,
-      characterType: 'one'
-    })
-  })
-  comicList2.forEach(element => {
-    chapterList.push({
-      comicName: fallbackComicName,
-      authorName: '',
-      comicPageUrl,
-      webName: webRule.webName,
-      chapterName: (0,utils/* trimSpecial */.Sc)(element.chapter_name),
-      chapterNumStr: '',
-      downChapterName: '',
-      url: `https://m.idmzj.com/view/${element.comic_id}/${element.id}.html/`,
-      readtype: webRule.readtype,
-      isPay: false,
-      isSelect: false,
-      characterType: 'many'
-    })
-  })
-  return {
-    comicName: fallbackComicName,
-    authorName: '',
-    chapters: chapterList
-  }
-}
-
-const getBilibiliFollowInfo = async(comicPageUrl, webRule) => {
-  const comicId = getComicIdByUrl(comicPageUrl)
-  if (!comicId) {
-    return {
-      comicName: '',
-      authorName: '',
-      chapters: []
-    }
-  }
-  const data = new FormData()
-  data.append('comic_id', comicId)
-  const getUrl = `${webRule.homepage}twirp/comic.v1.Comic/ComicDetail?device=pc&platform=web`
-  const { responseText } = await (0,utils/* request */.WY)({ method: 'post', url: getUrl, data, headers: webRule.headers })
-  const comic = JSON.parse(responseText)
-  const comicName = (0,utils/* trimSpecial */.Sc)(comic.data?.title || '')
-  return {
-    comicName,
-    authorName: '',
-    chapters: buildBilibiliChapters(comicName, comicId, comic.data?.ep_list || [], webRule, comicPageUrl)
-  }
-}
-
-const getFollowInfoByRequest = async(webRule, comicPageUrl, fallbackComicName = '') => {
-  if (webRule.homepage.includes('manga.bilibili.com') || webRule.homepage.includes('bilibilicomics.com')) {
-    return getBilibiliFollowInfo(comicPageUrl, webRule)
-  }
-  if (webRule.homepage.includes('idmzj.com')) {
-    return getDmzjFollowInfo(comicPageUrl, webRule, fallbackComicName)
-  }
-
+const getFollowInfoByRequest = async(webRule, comicPageUrl) => {
   const { responseText } = await (0,utils/* request */.WY)({ method: 'get', url: comicPageUrl, headers: webRule.headers || '' })
   return (0,comics/* getComicInfoFromHtml */.KK)(responseText, webRule, comicPageUrl)
 }
@@ -4576,7 +4076,7 @@ const searchFollowCandidatesByKeyword = async(keyword, selectedWebNames = []) =>
     }
 
     try {
-      const info = await getFollowInfoByRequest(item.webRule || (0,comics/* findWebByUrl */.jL)(bestResult.url), bestResult.url, currentKeyword)
+      const info = await getFollowInfoByRequest(item.webRule || (0,comics/* findWebByUrl */.jL)(bestResult.url), bestResult.url)
       const chapterList = dedupeChapters(info.chapters || [])
       if (chapterList.length === 0) {
         skippedSites.push({
@@ -4760,7 +4260,7 @@ const syncFollowItem = async(followItem) => {
     }
   }
 
-  const info = await getFollowInfoByRequest(webRule, followItem.comicPageUrl, followItem.comicName)
+  const info = await getFollowInfoByRequest(webRule, followItem.comicPageUrl)
   const chapterList = dedupeChapters(info.chapters || [])
   const knownUrlSet = new Set([...(followItem.knownChapterUrls || []), ...((followItem.pendingChapters || []).map(item => item.url))])
   const newChapters = chapterList.filter(item => !knownUrlSet.has(item.url))
