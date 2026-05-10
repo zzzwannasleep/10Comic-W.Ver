@@ -108,8 +108,10 @@ export const request = async function request(...details) {
   let method, url, data, headers, responseType, timeout, useCookie, cookie, onload, onerror, ontimeout, tail
   // 只有一个参数
   if (details.length === 1) {
-    ({ method, url, data, headers, responseType, timeout, useCookie, onload, onerror, ontimeout } = details[0])
-    useCookie ? cookie = document.cookie : ''
+    ({ method, url, data, headers, responseType, timeout, useCookie, cookie, onload, onerror, ontimeout } = details[0])
+    if (useCookie && !cookie) {
+      cookie = document.cookie
+    }
   } else { // 含多个参数时 [*method, *url, data, headers]
     [method, url, ...tail] = details
     if (tail) {

@@ -35,6 +35,9 @@
           <van-swipe-item class="swipeitem">
             <Metadata />
           </van-swipe-item>
+          <van-swipe-item class="swipeitem">
+            <Pan />
+          </van-swipe-item>
         </van-swipe>
 
         <div class="app-container">
@@ -52,6 +55,7 @@
             <van-tabbar-item icon="clock-o" />
             <van-tabbar-item icon="setting-o" />
             <van-tabbar-item icon="description" />
+            <van-tabbar-item icon="share-o" />
           </van-tabbar>
         </div>
 
@@ -81,6 +85,7 @@ import Down from '@/views/down.vue'
 import Follow from '@/views/follow.vue'
 import Setting from '@/views/setting.vue'
 import Metadata from '@/views/metadata.vue'
+import Pan from '@/views/pan.vue'
 
 import Search from '@/components/search.vue'
 
@@ -96,6 +101,7 @@ export default {
     Follow,
     Setting,
     Metadata,
+    Pan,
     Search
   },
   data() {
@@ -103,7 +109,7 @@ export default {
       isHide: true,
       showSearchPage: false,
       active: 1,
-      titles: ['漫画网站', '加载', '封面', '下载', '追更', '设置', '元数据'],
+      titles: ['漫画网站', '加载', '封面', '下载', '追更', '设置', '元数据', '网盘'],
       comicInfo: {}
     }
   },
