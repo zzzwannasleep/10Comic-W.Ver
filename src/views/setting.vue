@@ -663,6 +663,43 @@
             <van-cell
               title-class="cellleftvalue"
               value-class="cellrightvalue"
+              label="单位：小时；检查失败后会在较短时间内自动重试"
+              center
+            >
+              <template #title>
+                <span class="custom-title">检查间隔</span>
+              </template>
+
+              <template #default>
+                <input
+                  v-model="updateSettings.checkIntervalHours"
+                  class="rightbutton"
+                  type="number"
+                  min="1"
+                  onkeyup="value=value.replace(/^(0+)|[^\d]+/g,'')"
+                  @blur="updateIntervalBlur"
+                >
+              </template>
+            </van-cell>
+
+            <van-cell
+              title-class="cellleftvalue"
+              value-class="cellrightvalue"
+              :label="getUpdateStatusLabel()"
+              center
+            >
+              <template #title>
+                <span class="custom-title">最近检查状态</span>
+              </template>
+
+              <template #default>
+                <span>{{ getUpdateStatusText() }}</span>
+              </template>
+            </van-cell>
+
+            <van-cell
+              title-class="cellleftvalue"
+              value-class="cellrightvalue"
               title="立即检查更新"
               is-link
               center
@@ -716,7 +753,7 @@ import { currentComics } from '@/utils/comics'
 import { setinit, setStorage } from '@/config/setup'
 import { loadStyle } from '@/utils/index'
 import { defaultZipNameTemplate, metadataSettingsDefault } from '@/utils/metadata'
-import { runScriptUpdateCheck } from '@/utils/updater'
+import { getStoredUpdateCheckState, runScriptUpdateCheck } from '@/utils/updater'
 
 import { Dialog } from 'vant'
 
@@ -750,6 +787,18 @@ export default {
       updateSettings: {
         autoCheckOnLoad: true,
         checkIntervalHours: 12
+      },
+      updateCheckState: {
+        lastCheckAt: 0,
+        lastSuccessCheckAt: 0,
+        lastFailureCheckAt: 0,
+        lastPromptVersion: '',
+        latestVersion: '',
+        latestDownloadUrl: '',
+        latestUpdateUrl: '',
+        lastResult: 'idle',
+        lastReason: '',
+        lastSourceUrl: ''
       },
       imgSplicingFlag: false,
       //
@@ -851,12 +900,77 @@ export default {
       this.followSettings.checkCooldownMinutes = value
       this.onChangeData('followSettings', value, 'checkCooldownMinutes')
     },
+    updateIntervalBlur() {
+      let value = parseInt(this.updateSettings.checkIntervalHours || 0)
+      if (Number.isNaN(value) || value < 1) {
+        value = 1
+      }
+      this.updateSettings.checkIntervalHours = value
+      this.onChangeData('updateSettings', value, 'checkIntervalHours')
+    },
     bangumiTokenBlur() {
       this.metadataSettings.bangumiAccessToken = (this.metadataSettings.bangumiAccessToken || '').trim()
       this.onChangeData('metadataSettings', this.metadataSettings.bangumiAccessToken, 'bangumiAccessToken')
     },
     async checkScriptUpdate() {
       await runScriptUpdateCheck({ manual: true })
+      this.syncUpdateCheckState()
+    },
+    syncUpdateCheckState() {
+      this.updateCheckState = {
+        ...this.updateCheckState,
+        ...getStoredUpdateCheckState()
+      }
+    },
+    formatUpdateTime(timestamp) {
+      const value = Number(timestamp || 0)
+      if (!value) {
+        return '未检查'
+      }
+
+      const date = new Date(value)
+      if (Number.isNaN(date.getTime())) {
+        return '未检查'
+      }
+
+      const pad = (num) => String(num).padStart(2, '0')
+      return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}`
+    },
+    getUpdateReasonText(reason) {
+      const reasonMap = {
+        'missing-url': '未配置更新地址',
+        'empty-response': '更新源没有返回内容',
+        'missing-version': '更新源里没有解析到版本号'
+      }
+
+      return reasonMap[reason] || '未知错误'
+    },
+    getUpdateStatusText() {
+      const state = this.updateCheckState || {}
+
+      if (state.lastResult === 'update-available' && state.latestVersion) {
+        return `发现新版本 ${state.latestVersion}`
+      }
+
+      if (state.lastResult === 'up-to-date') {
+        return state.latestVersion ? `已是最新版本 ${state.latestVersion}` : '已是最新版本'
+      }
+
+      if (state.lastResult === 'error') {
+        return '检查失败'
+      }
+
+      return '未检查'
+    },
+    getUpdateStatusLabel() {
+      const state = this.updateCheckState || {}
+      const checkedAtText = this.formatUpdateTime(state.lastCheckAt)
+
+      if (state.lastResult === 'error') {
+        return `上次检查：${checkedAtText}；失败原因：${this.getUpdateReasonText(state.lastReason)}`
+      }
+
+      return `上次检查：${checkedAtText}`
     },
     exeFun(flag, basic) {
       let rightSize = 100; let centerSize = 100
@@ -897,6 +1011,7 @@ export default {
           ...this.updateSettings,
           ...(GM_getValue('updateSettings') || {})
         }
+        this.syncUpdateCheckState()
         //
         this.appLoadDefault = {
           ...this.appLoadDefault,

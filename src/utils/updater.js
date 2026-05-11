@@ -15,22 +15,45 @@ const updateSettingsDefault = {
   checkIntervalHours: 12
 }
 
+const updateRetryIntervalMinutes = 30
+
 const updateCheckStateDefault = {
   lastCheckAt: 0,
+  lastSuccessCheckAt: 0,
+  lastFailureCheckAt: 0,
   lastPromptVersion: '',
   latestVersion: '',
   latestDownloadUrl: '',
-  latestUpdateUrl: ''
+  latestUpdateUrl: '',
+  lastResult: 'idle',
+  lastReason: '',
+  lastSourceUrl: ''
 }
 
 const normalizeString = (value) => typeof value === 'string' ? value.trim() : ''
 
-const getUpdateSettings = () => ({
+const uniqueStrings = (values) => {
+  const result = []
+  const seen = new Set()
+
+  values.forEach((value) => {
+    const normalized = normalizeString(value)
+    if (!normalized || seen.has(normalized)) {
+      return
+    }
+    seen.add(normalized)
+    result.push(normalized)
+  })
+
+  return result
+}
+
+export const getStoredUpdateSettings = () => ({
   ...updateSettingsDefault,
   ...(getStorage('updateSettings') || {})
 })
 
-const getUpdateCheckState = () => ({
+export const getStoredUpdateCheckState = () => ({
   ...updateCheckStateDefault,
   ...(getStorage('updateCheckState') || {})
 })
@@ -52,16 +75,19 @@ const getScriptInfo = () => {
   }
 
   return {
-    updateUrl: normalizeString(AppUpdateUrl) || normalizeString(scriptInfo.updateURL),
-    downloadUrl: normalizeString(AppDownloadUrl) || normalizeString(scriptInfo.downloadURL),
-    homepageUrl: normalizeString(AppHomepageUrl) || normalizeString(scriptInfo.homepageURL),
-    supportUrl: normalizeString(AppSupportUrl) || normalizeString(scriptInfo.supportURL)
+    updateUrl: normalizeString(AppUpdateUrl) || normalizeString(scriptInfo.updateURL) || normalizeString(scriptInfo.updateUrl),
+    downloadUrl: normalizeString(AppDownloadUrl) || normalizeString(scriptInfo.downloadURL) || normalizeString(scriptInfo.downloadUrl),
+    homepageUrl: normalizeString(AppHomepageUrl) || normalizeString(scriptInfo.homepageURL) || normalizeString(scriptInfo.homepageUrl),
+    supportUrl: normalizeString(AppSupportUrl) || normalizeString(scriptInfo.supportURL) || normalizeString(scriptInfo.supportUrl)
   }
 }
 
 const requestText = (url) => {
   if (!url) {
-    return Promise.resolve('')
+    return Promise.resolve({
+      responseText: '',
+      finalUrl: ''
+    })
   }
 
   return new Promise((resolve) => {
@@ -74,10 +100,19 @@ const requestText = (url) => {
         'cache-control': 'no-cache'
       },
       onload: (response) => {
-        resolve(response?.responseText || '')
+        resolve({
+          responseText: response?.responseText || '',
+          finalUrl: response?.finalUrl || response?.responseURL || url
+        })
       },
-      onerror: () => resolve(''),
-      ontimeout: () => resolve('')
+      onerror: () => resolve({
+        responseText: '',
+        finalUrl: url
+      }),
+      ontimeout: () => resolve({
+        responseText: '',
+        finalUrl: url
+      })
     })
   })
 }
@@ -102,7 +137,7 @@ const parseUserscriptMeta = (content) => {
 const toVersionParts = (version) => {
   return normalizeString(version)
     .split(/[.-]/)
-    .map(part => {
+    .map((part) => {
       const num = parseInt(part, 10)
       return Number.isNaN(num) ? 0 : num
     })
@@ -129,21 +164,146 @@ export const compareVersions = (currentVersion, nextVersion) => {
 }
 
 const saveUpdateCheckState = (nextState) => {
-  const currentState = getUpdateCheckState()
+  const currentState = getStoredUpdateCheckState()
   setStorage('updateCheckState', {
     ...currentState,
     ...nextState
   })
 }
 
-const openUpdatePage = (url) => {
-  if (!url) {
+const rawGithubToJsdelivr = (url) => {
+  const matched = normalizeString(url).match(/^https:\/\/raw\.githubusercontent\.com\/([^/]+)\/([^/]+)\/([^/]+)\/(.+)$/i)
+  if (!matched) {
+    return ''
+  }
+
+  const [, owner, repo, branch, filePath] = matched
+  return `https://cdn.jsdelivr.net/gh/${owner}/${repo}@${branch}/${filePath}`
+}
+
+const jsdelivrToRawGithub = (url) => {
+  const matched = normalizeString(url).match(/^https:\/\/(?:cdn|fastly)\.jsdelivr\.net\/gh\/([^/]+)\/([^@/]+)@([^/]+)\/(.+)$/i)
+  if (!matched) {
+    return ''
+  }
+
+  const [, owner, repo, branch, filePath] = matched
+  return `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${filePath}`
+}
+
+const swapMetaToUserScriptUrl = (url) => {
+  const normalized = normalizeString(url)
+  if (!normalized) {
+    return ''
+  }
+
+  if (/\.meta\.js(?:[?#].*)?$/i.test(normalized)) {
+    return normalized.replace(/\.meta\.js(?=($|[?#]))/i, '.user.js')
+  }
+
+  return normalized
+}
+
+const buildUrlVariants = (url) => uniqueStrings([
+  normalizeString(url),
+  rawGithubToJsdelivr(url),
+  jsdelivrToRawGithub(url)
+])
+
+const buildRequestUrlCandidates = (scriptInfo) => uniqueStrings([
+  ...buildUrlVariants(scriptInfo.updateUrl),
+  ...buildUrlVariants(scriptInfo.downloadUrl)
+])
+
+const buildInstallUrlCandidates = (downloadUrl, updateUrl, sourceUrl, homepageUrl) => uniqueStrings([
+  ...buildUrlVariants(downloadUrl),
+  ...buildUrlVariants(swapMetaToUserScriptUrl(updateUrl)),
+  ...buildUrlVariants(swapMetaToUserScriptUrl(sourceUrl)),
+  normalizeString(homepageUrl)
+])
+
+const fetchMetaFromCandidates = async(candidates) => {
+  const triedUrls = []
+  let lastReason = 'missing-url'
+
+  for (const candidate of candidates) {
+    triedUrls.push(candidate)
+    const response = await requestText(candidate)
+    const content = normalizeString(response.responseText)
+
+    if (!content) {
+      lastReason = 'empty-response'
+      continue
+    }
+
+    const meta = parseUserscriptMeta(content)
+    const latestVersion = normalizeString(meta.version)
+    if (!latestVersion) {
+      lastReason = 'missing-version'
+      continue
+    }
+
+    return {
+      ok: true,
+      meta,
+      sourceUrl: candidate,
+      finalUrl: response.finalUrl,
+      triedUrls
+    }
+  }
+
+  return {
+    ok: false,
+    reason: lastReason,
+    triedUrls
+  }
+}
+
+const getMetaField = (meta, fieldName) => {
+  const aliasFieldName = fieldName.replace(/URL$/, 'Url')
+  return normalizeString(meta[fieldName]) || normalizeString(meta[aliasFieldName])
+}
+
+const getPrimaryInstallUrl = (installUrlCandidates, fallbackUrl) => installUrlCandidates[0] || normalizeString(fallbackUrl) || ''
+
+const getRequestFailureMessage = (reason) => {
+  const reasonMap = {
+    'missing-url': '未配置更新地址',
+    'empty-response': '更新源没有返回内容',
+    'missing-version': '更新源里没有解析到版本号'
+  }
+
+  return reasonMap[reason] || '未知错误'
+}
+
+const getAutoCheckSkipReason = (state, intervalMs, retryIntervalMs) => {
+  const rawLastCheckAt = Number(state.lastCheckAt || 0)
+  const lastFailureCheckAt = Number(state.lastFailureCheckAt || (state.lastResult === 'error' ? rawLastCheckAt : 0))
+  const lastSuccessCheckAt = Number(state.lastSuccessCheckAt || (lastFailureCheckAt > 0 ? 0 : rawLastCheckAt))
+  const now = Date.now()
+
+  if (lastFailureCheckAt > lastSuccessCheckAt && now - lastFailureCheckAt < retryIntervalMs) {
+    return 'retry-cooldown'
+  }
+
+  if (lastSuccessCheckAt > 0 && now - lastSuccessCheckAt < intervalMs) {
+    return 'cooldown'
+  }
+
+  return ''
+}
+
+const openUpdatePage = (urls) => {
+  const candidates = Array.isArray(urls) ? urls : [urls]
+  const targetUrl = candidates.find(url => normalizeString(url))
+
+  if (!targetUrl) {
     return null
   }
 
   try {
     if (typeof GM_openInTab !== 'undefined') {
-      return GM_openInTab(url, {
+      return GM_openInTab(targetUrl, {
         active: true,
         insert: true,
         setParent: true
@@ -153,49 +313,39 @@ const openUpdatePage = (url) => {
     console.log('openUpdatePageError: ', error)
   }
 
-  return window.open(url, '_blank')
+  return window.open(targetUrl, '_blank')
 }
 
 export const fetchLatestScriptVersion = async() => {
   const scriptInfo = getScriptInfo()
-  const requestUrl = scriptInfo.updateUrl || scriptInfo.downloadUrl
+  const requestCandidates = buildRequestUrlCandidates(scriptInfo)
 
-  if (!requestUrl) {
+  if (requestCandidates.length === 0) {
     return {
       ok: false,
       reason: 'missing-url',
-      currentVersion: AppVersion
+      currentVersion: AppVersion,
+      triedUrls: []
     }
   }
 
-  const responseText = await requestText(requestUrl)
-  if (!responseText) {
+  const metaResult = await fetchMetaFromCandidates(requestCandidates)
+  if (!metaResult.ok) {
     return {
       ok: false,
-      reason: 'empty-response',
+      reason: metaResult.reason,
       currentVersion: AppVersion,
-      updateUrl: requestUrl
+      triedUrls: metaResult.triedUrls || []
     }
   }
 
-  const meta = parseUserscriptMeta(responseText)
+  const meta = metaResult.meta
   const latestVersion = normalizeString(meta.version)
-  const updateUrl = normalizeString(meta.updateURL) || scriptInfo.updateUrl || requestUrl
-  const downloadUrl = normalizeString(meta.downloadURL) || scriptInfo.downloadUrl || requestUrl
-  const homepageUrl = normalizeString(meta.homepageURL) || scriptInfo.homepageUrl
-  const supportUrl = normalizeString(meta.supportURL) || scriptInfo.supportUrl
-
-  if (!latestVersion) {
-    return {
-      ok: false,
-      reason: 'missing-version',
-      currentVersion: AppVersion,
-      updateUrl,
-      downloadUrl,
-      homepageUrl,
-      supportUrl
-    }
-  }
+  const updateUrl = getMetaField(meta, 'updateURL') || scriptInfo.updateUrl || metaResult.sourceUrl
+  const downloadUrl = getMetaField(meta, 'downloadURL') || scriptInfo.downloadUrl || swapMetaToUserScriptUrl(updateUrl) || metaResult.sourceUrl
+  const homepageUrl = getMetaField(meta, 'homepageURL') || scriptInfo.homepageUrl
+  const supportUrl = getMetaField(meta, 'supportURL') || scriptInfo.supportUrl
+  const installUrlCandidates = buildInstallUrlCandidates(downloadUrl, updateUrl, metaResult.sourceUrl, homepageUrl)
 
   return {
     ok: true,
@@ -205,7 +355,11 @@ export const fetchLatestScriptVersion = async() => {
     updateUrl,
     downloadUrl,
     homepageUrl,
-    supportUrl
+    supportUrl,
+    sourceUrl: metaResult.sourceUrl || metaResult.finalUrl || '',
+    triedUrls: metaResult.triedUrls || requestCandidates,
+    installUrlCandidates,
+    installUrl: getPrimaryInstallUrl(installUrlCandidates, downloadUrl || updateUrl || homepageUrl || supportUrl)
   }
 }
 
@@ -231,11 +385,11 @@ export const runScriptUpdateCheck = async({ manual = false } = {}) => {
     }
   }
 
-  const settings = getUpdateSettings()
-  const state = getUpdateCheckState()
+  const settings = getStoredUpdateSettings()
+  const state = getStoredUpdateCheckState()
   const intervalHours = Math.max(1, Number(settings.checkIntervalHours) || updateSettingsDefault.checkIntervalHours)
   const intervalMs = intervalHours * 60 * 60 * 1000
-  const lastCheckAt = Number(state.lastCheckAt || 0)
+  const retryIntervalMs = updateRetryIntervalMinutes * 60 * 1000
 
   if (!manual) {
     if (!settings.autoCheckOnLoad) {
@@ -246,32 +400,47 @@ export const runScriptUpdateCheck = async({ manual = false } = {}) => {
       }
     }
 
-    if (Date.now() - lastCheckAt < intervalMs) {
+    const skipReason = getAutoCheckSkipReason(state, intervalMs, retryIntervalMs)
+    if (skipReason) {
       return {
         ok: false,
         skipped: true,
-        reason: 'cooldown'
+        reason: skipReason
       }
     }
   }
 
+  const checkedAt = Date.now()
   const result = await fetchLatestScriptVersion()
-  const nextState = {
-    lastCheckAt: Date.now()
-  }
-  if (result.ok) {
-    nextState.latestVersion = result.latestVersion || ''
-    nextState.latestDownloadUrl = result.downloadUrl || ''
-    nextState.latestUpdateUrl = result.updateUrl || ''
-  }
-  saveUpdateCheckState(nextState)
 
   if (!result.ok) {
+    saveUpdateCheckState({
+      lastCheckAt: checkedAt,
+      lastFailureCheckAt: checkedAt,
+      lastResult: 'error',
+      lastReason: result.reason || '',
+      lastSourceUrl: (result.triedUrls && result.triedUrls[0]) || ''
+    })
+
     if (manual) {
-      window.alert('检查更新失败，请稍后重试。')
+      const triedUrlsText = (result.triedUrls || []).slice(0, 3).join('\n')
+      const triedSuffix = triedUrlsText ? `\n\n已尝试：\n${triedUrlsText}` : ''
+      window.alert(`检查更新失败：${getRequestFailureMessage(result.reason)}。${triedSuffix}`)
     }
     return result
   }
+
+  saveUpdateCheckState({
+    lastCheckAt: checkedAt,
+    lastSuccessCheckAt: checkedAt,
+    lastFailureCheckAt: 0,
+    latestVersion: result.latestVersion || '',
+    latestDownloadUrl: result.downloadUrl || '',
+    latestUpdateUrl: result.updateUrl || '',
+    lastResult: result.hasUpdate ? 'update-available' : 'up-to-date',
+    lastReason: '',
+    lastSourceUrl: result.sourceUrl || ''
+  })
 
   if (!result.hasUpdate) {
     if (manual) {
@@ -294,11 +463,17 @@ export const runScriptUpdateCheck = async({ manual = false } = {}) => {
 
   const accepted = confirmUpdate(result.currentVersion, result.latestVersion)
   if (accepted) {
-    openUpdatePage(result.downloadUrl || result.updateUrl || result.homepageUrl || result.supportUrl)
+    openUpdatePage(result.installUrlCandidates || [result.installUrl || result.downloadUrl || result.updateUrl || result.homepageUrl || result.supportUrl])
   }
 
   return {
     ...result,
     accepted
   }
+}
+
+export {
+  updateSettingsDefault,
+  updateCheckStateDefault,
+  updateRetryIntervalMinutes
 }

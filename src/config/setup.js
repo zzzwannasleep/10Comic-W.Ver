@@ -54,10 +54,15 @@ const configDefault = {
   },
   updateCheckState: {
     lastCheckAt: 0,
+    lastSuccessCheckAt: 0,
+    lastFailureCheckAt: 0,
     lastPromptVersion: '',
     latestVersion: '',
     latestDownloadUrl: '',
-    latestUpdateUrl: ''
+    latestUpdateUrl: '',
+    lastResult: 'idle',
+    lastReason: '',
+    lastSourceUrl: ''
   },
   followList: [],
   followSearchWebNames: [],
