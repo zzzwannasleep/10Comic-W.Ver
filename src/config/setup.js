@@ -8,7 +8,9 @@ export const defaultPanSettings = {
   quarkCookie: '',
   quarkTargetDirId: '0',
   ucCookie: '',
-  ucTargetDirId: '0'
+  ucTargetDirId: '0',
+  pan123Cookie: '',
+  pan123TargetDirId: '0'
 }
 
 const configDefault = {
