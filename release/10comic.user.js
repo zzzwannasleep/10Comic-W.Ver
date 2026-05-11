@@ -2319,7 +2319,7 @@ function BufferBigIntNotDefined () {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".van-cell__title {\n  text-align: left;\n}\n.van-cell-group__title--inset {\n  text-align: left;\n}\n.van-button--default {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled {\n  opacity: 1 !important;\n}\n.van-tag--default {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow {\n  color: #d9d9d9 !important;\n}\n.van-popover__content {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".van-cell__title {\n  text-align: left;\n}\n.van-cell-group__title--inset {\n  text-align: left;\n}\n.van-button--default {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled {\n  opacity: 1 !important;\n}\n.van-tag--default {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow {\n  color: #d9d9d9 !important;\n}\n.van-popover__content {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n.van-cell__title {\n  text-align: left;\n}\n.van-cell-group__title--inset {\n  text-align: left;\n}\n.van-button--default {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled {\n  opacity: 1 !important;\n}\n.van-tag--default {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow {\n  color: #d9d9d9 !important;\n}\n.van-popover__content {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -2539,7 +2539,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, ".metadata-page[data-v-78dd89c9] {\n  m
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".pan-page[data-v-27ff97f3] {\n  margin: 15px;\n  max-height: 680px;\n  overflow: auto;\n  display: flex;\n  flex-direction: column;\n  gap: 12px;\n}\n.pan-card[data-v-27ff97f3] {\n  padding: 12px;\n  background: #fff;\n  border-radius: 14px;\n}\n.pan-card__title[data-v-27ff97f3] {\n  color: #333;\n  font-size: 15px;\n  font-weight: 600;\n}\n.pan-card__hint[data-v-27ff97f3] {\n  margin-top: 6px;\n  color: #666;\n  font-size: 12px;\n  line-height: 1.6;\n  white-space: pre-wrap;\n}\n.pan-actions[data-v-27ff97f3] {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 8px;\n  margin-top: 12px;\n}\n.pan-inline-note[data-v-27ff97f3] {\n  margin-top: 10px;\n  color: #1989fa;\n  font-size: 12px;\n  line-height: 1.5;\n  word-break: break-all;\n}\n.pan-empty-hint[data-v-27ff97f3] {\n  margin-top: 10px;\n  color: #999;\n  font-size: 12px;\n  line-height: 1.6;\n}\n.pan-folder-list[data-v-27ff97f3] {\n  margin-top: 10px;\n}\n.pan-card--logs[data-v-27ff97f3] {\n  min-height: 180px;\n}\n.pan-log-list[data-v-27ff97f3] {\n  margin-top: 10px;\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n}\n.pan-log-item[data-v-27ff97f3] {\n  padding: 8px 10px;\n  border-radius: 10px;\n  background: #f6f7fb;\n  color: #444;\n  font-size: 12px;\n  line-height: 1.5;\n  word-break: break-word;\n}\n.pan-log-item--success[data-v-27ff97f3] {\n  background: #eef8f2;\n  color: #1f8a4c;\n}\n.pan-log-item--error[data-v-27ff97f3] {\n  background: #fff1f0;\n  color: #cf3d34;\n}\n.pan-log-time[data-v-27ff97f3] {\n  margin-right: 8px;\n  color: inherit;\n  opacity: 0.75;\n}\n.pan-log-text[data-v-27ff97f3] {\n  color: inherit;\n}\n.van-cell__title[data-v-27ff97f3] {\n  text-align: left;\n}\n.van-cell-group__title--inset[data-v-27ff97f3] {\n  text-align: left;\n}\n.van-button--default[data-v-27ff97f3] {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled[data-v-27ff97f3] {\n  opacity: 1 !important;\n}\n.van-tag--default[data-v-27ff97f3] {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon[data-v-27ff97f3] {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light[data-v-27ff97f3] {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow[data-v-27ff97f3] {\n  color: #d9d9d9 !important;\n}\n.van-popover__content[data-v-27ff97f3] {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n.van-cell__title[data-v-27ff97f3] {\n  text-align: left;\n}\n.van-cell-group__title--inset[data-v-27ff97f3] {\n  text-align: left;\n}\n.van-button--default[data-v-27ff97f3] {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled[data-v-27ff97f3] {\n  opacity: 1 !important;\n}\n.van-tag--default[data-v-27ff97f3] {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon[data-v-27ff97f3] {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light[data-v-27ff97f3] {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow[data-v-27ff97f3] {\n  color: #d9d9d9 !important;\n}\n.van-popover__content[data-v-27ff97f3] {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".pan-page[data-v-27ff97f3] {\n  margin: 15px;\n  max-height: 680px;\n  overflow: auto;\n  display: flex;\n  flex-direction: column;\n  gap: 12px;\n}\n.pan-card[data-v-27ff97f3] {\n  padding: 12px;\n  background: #fff;\n  border-radius: 14px;\n}\n.pan-card__title[data-v-27ff97f3] {\n  color: #333;\n  font-size: 15px;\n  font-weight: 600;\n}\n.pan-card__hint[data-v-27ff97f3] {\n  margin-top: 6px;\n  color: #666;\n  font-size: 12px;\n  line-height: 1.6;\n  white-space: pre-wrap;\n}\n.pan-actions[data-v-27ff97f3] {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 8px;\n  margin-top: 12px;\n}\n.pan-provider-group[data-v-27ff97f3] {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 12px;\n  margin-top: 12px;\n}\n.pan-provider-radio[data-v-27ff97f3] {\n  margin-right: 0;\n}\n.pan-inline-note[data-v-27ff97f3] {\n  margin-top: 10px;\n  color: #1989fa;\n  font-size: 12px;\n  line-height: 1.5;\n  word-break: break-all;\n}\n.pan-empty-hint[data-v-27ff97f3] {\n  margin-top: 10px;\n  color: #999;\n  font-size: 12px;\n  line-height: 1.6;\n}\n.pan-folder-list[data-v-27ff97f3] {\n  margin-top: 10px;\n}\n.pan-card--logs[data-v-27ff97f3] {\n  min-height: 180px;\n}\n.pan-log-list[data-v-27ff97f3] {\n  margin-top: 10px;\n  display: flex;\n  flex-direction: column;\n  gap: 8px;\n}\n.pan-log-item[data-v-27ff97f3] {\n  padding: 8px 10px;\n  border-radius: 10px;\n  background: #f6f7fb;\n  color: #444;\n  font-size: 12px;\n  line-height: 1.5;\n  word-break: break-word;\n}\n.pan-log-item--success[data-v-27ff97f3] {\n  background: #eef8f2;\n  color: #1f8a4c;\n}\n.pan-log-item--error[data-v-27ff97f3] {\n  background: #fff1f0;\n  color: #cf3d34;\n}\n.pan-log-time[data-v-27ff97f3] {\n  margin-right: 8px;\n  color: inherit;\n  opacity: 0.75;\n}\n.pan-log-text[data-v-27ff97f3] {\n  color: inherit;\n}\n.van-cell__title[data-v-27ff97f3] {\n  text-align: left;\n}\n.van-cell-group__title--inset[data-v-27ff97f3] {\n  text-align: left;\n}\n.van-button--default[data-v-27ff97f3] {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled[data-v-27ff97f3] {\n  opacity: 1 !important;\n}\n.van-tag--default[data-v-27ff97f3] {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon[data-v-27ff97f3] {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light[data-v-27ff97f3] {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow[data-v-27ff97f3] {\n  color: #d9d9d9 !important;\n}\n.van-popover__content[data-v-27ff97f3] {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n.van-cell__title[data-v-27ff97f3] {\n  text-align: left;\n}\n.van-cell-group__title--inset[data-v-27ff97f3] {\n  text-align: left;\n}\n.van-button--default[data-v-27ff97f3] {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled[data-v-27ff97f3] {\n  opacity: 1 !important;\n}\n.van-tag--default[data-v-27ff97f3] {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon[data-v-27ff97f3] {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light[data-v-27ff97f3] {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow[data-v-27ff97f3] {\n  color: #d9d9d9 !important;\n}\n.van-popover__content[data-v-27ff97f3] {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -6016,8 +6016,11 @@ const isDev = AppEnv === 'development'
 
 
 const defaultPanSettings = {
+  activeProvider: 'quark',
   quarkCookie: '',
-  quarkTargetDirId: '0'
+  quarkTargetDirId: '0',
+  ucCookie: '',
+  ucTargetDirId: '0'
 }
 
 const configDefault = {
@@ -19901,11 +19904,56 @@ var panvue_type_template_id_27ff97f3_scoped_true_render = function () {
       "div",
       { staticClass: "pan-card" },
       [
-        _c("div", { staticClass: "pan-card__title" }, [_vm._v("夸克配置")]),
+        _c("div", { staticClass: "pan-card__title" }, [_vm._v("网盘类型")]),
         _vm._v(" "),
         _c("div", { staticClass: "pan-card__hint" }, [
           _vm._v(
-            "\n      建议从夸克网页请求头里复制完整 Cookie。根目录 fid 为 `0`，不填时默认转存到根目录。\n    "
+            "\n      目前已支持夸克网盘与 UC 网盘。Cookie、目标目录和待转存链接都会分别保留，不会互相覆盖。\n    "
+          ),
+        ]),
+        _vm._v(" "),
+        _c(
+          "van-radio-group",
+          {
+            staticClass: "pan-provider-group",
+            attrs: { direction: "horizontal" },
+            on: { change: _vm.handleProviderChange },
+            model: {
+              value: _vm.panSettings.activeProvider,
+              callback: function ($$v) {
+                _vm.$set(_vm.panSettings, "activeProvider", $$v)
+              },
+              expression: "panSettings.activeProvider",
+            },
+          },
+          _vm._l(_vm.providerList, function (item) {
+            return _c(
+              "van-radio",
+              {
+                key: item.key,
+                staticClass: "pan-provider-radio",
+                attrs: { name: item.key },
+              },
+              [_vm._v("\n        " + _vm._s(item.label) + "\n      ")]
+            )
+          }),
+          1
+        ),
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "pan-card" },
+      [
+        _c("div", { staticClass: "pan-card__title" }, [
+          _vm._v(_vm._s(_vm.currentProvider.label) + " 配置"),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "pan-card__hint" }, [
+          _vm._v(
+            "\n      " + _vm._s(_vm.currentProvider.cookieHint) + "\n    "
           ),
         ]),
         _vm._v(" "),
@@ -19915,25 +19963,25 @@ var panvue_type_template_id_27ff97f3_scoped_true_render = function () {
             rows: "4",
             autosize: "",
             label: "Cookie",
-            placeholder: "粘贴夸克请求头里的完整 Cookie",
+            placeholder: _vm.currentProvider.cookiePlaceholder,
           },
           model: {
-            value: _vm.panSettings.quarkCookie,
+            value: _vm.currentCookie,
             callback: function ($$v) {
-              _vm.$set(_vm.panSettings, "quarkCookie", $$v)
+              _vm.currentCookie = $$v
             },
-            expression: "panSettings.quarkCookie",
+            expression: "currentCookie",
           },
         }),
         _vm._v(" "),
         _c("van-field", {
           attrs: { label: "目标 fid", placeholder: "默认 0" },
           model: {
-            value: _vm.panSettings.quarkTargetDirId,
+            value: _vm.currentTargetDirId,
             callback: function ($$v) {
-              _vm.$set(_vm.panSettings, "quarkTargetDirId", $$v)
+              _vm.currentTargetDirId = $$v
             },
-            expression: "panSettings.quarkTargetDirId",
+            expression: "currentTargetDirId",
           },
         }),
         _vm._v(" "),
@@ -19947,7 +19995,7 @@ var panvue_type_template_id_27ff97f3_scoped_true_render = function () {
                 attrs: { size: "small", round: "", type: "primary" },
                 on: { click: _vm.saveSettings },
               },
-              [_vm._v("保存配置")]
+              [_vm._v(_vm._s(_vm.currentProvider.shortName) + " 配置保存")]
             ),
             _vm._v(" "),
             _c(
@@ -19971,10 +20019,12 @@ var panvue_type_template_id_27ff97f3_scoped_true_render = function () {
           1
         ),
         _vm._v(" "),
-        _vm.accountLabel
+        _vm.currentAccountLabel
           ? _c("div", { staticClass: "pan-inline-note" }, [
               _vm._v(
-                "\n      当前 Cookie: " + _vm._s(_vm.accountLabel) + "\n    "
+                "\n      当前 Cookie: " +
+                  _vm._s(_vm.currentAccountLabel) +
+                  "\n    "
               ),
             ])
           : _vm._e(),
@@ -20060,9 +20110,7 @@ var panvue_type_template_id_27ff97f3_scoped_true_render = function () {
         _c("div", { staticClass: "pan-card__title" }, [_vm._v("手动转存")]),
         _vm._v(" "),
         _c("div", { staticClass: "pan-card__hint" }, [
-          _vm._v(
-            "\n      每行一个夸克分享链接，支持在同一行附带提取码，例如 `https://pan.quark.cn/s/xxxx 提取码: abcd`。\n    "
-          ),
+          _vm._v("\n      " + _vm._s(_vm.currentProvider.shareHint) + "\n    "),
         ]),
         _vm._v(" "),
         _c("van-field", {
@@ -20071,14 +20119,14 @@ var panvue_type_template_id_27ff97f3_scoped_true_render = function () {
             rows: "5",
             autosize: "",
             label: "分享链接",
-            placeholder: "每行一个夸克分享链接",
+            placeholder: _vm.currentProvider.sharePlaceholder,
           },
           model: {
-            value: _vm.shareInput,
+            value: _vm.currentShareInput,
             callback: function ($$v) {
-              _vm.shareInput = $$v
+              _vm.currentShareInput = $$v
             },
-            expression: "shareInput",
+            expression: "currentShareInput",
           },
         }),
         _vm._v(" "),
@@ -20179,34 +20227,120 @@ panvue_type_template_id_27ff97f3_scoped_true_render._withStripped = true
 
 ;// CONCATENATED MODULE: ./src/views/pan.vue?vue&type=template&id=27ff97f3&scoped=true&
 
-;// CONCATENATED MODULE: ./src/utils/quark.js
+;// CONCATENATED MODULE: ./src/utils/pan.js
 
 
-const QUARK_HOSTS = {
-  account: 'https://pan.quark.cn',
-  drivePc: 'https://drive-pc.quark.cn',
-  driveShare: 'https://drive-h.quark.cn'
+const DEFAULT_PAN_PROVIDER = 'quark'
+
+const PAN_PROVIDER_MAP = {
+  quark: {
+    key: 'quark',
+    label: '夸克网盘',
+    shortName: '夸克',
+    cookieKey: 'quarkCookie',
+    targetDirKey: 'quarkTargetDirId',
+    hosts: {
+      account: 'https://pan.quark.cn',
+      drivePc: 'https://drive-pc.quark.cn',
+      driveShare: 'https://drive-h.quark.cn'
+    },
+    origin: 'https://pan.quark.cn',
+    homeReferer: 'https://pan.quark.cn/',
+    sharePageBaseUrl: 'https://pan.quark.cn/s/',
+    shareUrlPattern: /https?:\/\/pan\.quark\.cn\/s\/[A-Za-z0-9]+(?:[^\s]*)?/i,
+    shareIdPattern: /pan\.quark\.cn\/s\/([A-Za-z0-9]+)/i,
+    shareDirPattern: /#\/list\/share\/([^/?#]+)/i,
+    commonParams: {
+      pr: 'ucpro',
+      fr: 'pc',
+      uc_param_str: ''
+    },
+    accountInfoPath: '/account/info',
+    accountInfoParams: {
+      platform: 'pc',
+      fr: 'pc'
+    },
+    cookieHint: '建议从夸克网页请求头里复制完整 Cookie。根目录 fid 为 `0`，不填时默认转存到根目录。',
+    cookiePlaceholder: '粘贴夸克请求头里的完整 Cookie',
+    shareHint: '每行一个夸克分享链接，支持在同一行附带提取码，例如 `https://pan.quark.cn/s/xxxx 提取码: abcd`。',
+    sharePlaceholder: '每行一个夸克分享链接',
+    shareExample: 'https://pan.quark.cn/s/xxxx 提取码: abcd'
+  },
+  uc: {
+    key: 'uc',
+    label: 'UC网盘',
+    shortName: 'UC',
+    cookieKey: 'ucCookie',
+    targetDirKey: 'ucTargetDirId',
+    hosts: {
+      account: 'https://drive.uc.cn',
+      drivePc: 'https://pc-api.uc.cn',
+      driveShare: 'https://pc-api.uc.cn'
+    },
+    origin: 'https://drive.uc.cn',
+    homeReferer: 'https://drive.uc.cn/',
+    sharePageBaseUrl: 'https://drive.uc.cn/s/',
+    shareUrlPattern: /https?:\/\/drive\.uc\.cn\/s\/[A-Za-z0-9]+(?:[^\s]*)?/i,
+    shareIdPattern: /drive\.uc\.cn\/s\/([A-Za-z0-9]+)/i,
+    shareDirPattern: /#\/list\/share\/([^/?#]+)/i,
+    commonParams: {
+      pr: 'UCBrowser',
+      fr: 'pc'
+    },
+    accountInfoPath: '/account/info',
+    accountInfoParams: {
+      platform: 'pc',
+      fr: 'pc'
+    },
+    cookieHint: '建议从 UC 网盘网页请求头里复制完整 Cookie。根目录 fid 为 `0`，不填时默认转存到根目录。',
+    cookiePlaceholder: '粘贴 UC 网盘请求头里的完整 Cookie',
+    shareHint: '每行一个 UC 网盘分享链接，支持在同一行附带提取码，例如 `https://drive.uc.cn/s/xxxx 提取码: abcd`。',
+    sharePlaceholder: '每行一个 UC 网盘分享链接',
+    shareExample: 'https://drive.uc.cn/s/xxxx 提取码: abcd'
+  }
 }
+
+const PAN_PROVIDER_LIST = Object.values(PAN_PROVIDER_MAP).map((provider) => ({
+  key: provider.key,
+  label: provider.label,
+  shortName: provider.shortName,
+  cookieKey: provider.cookieKey,
+  targetDirKey: provider.targetDirKey,
+  cookieHint: provider.cookieHint,
+  cookiePlaceholder: provider.cookiePlaceholder,
+  shareHint: provider.shareHint,
+  sharePlaceholder: provider.sharePlaceholder,
+  shareExample: provider.shareExample
+}))
 
 const SHARE_PAGE_SIZE = 100
 const SAVE_BATCH_SIZE = 100
 const TASK_POLL_INTERVAL_SECONDS = 1.2
 const TASK_MAX_ATTEMPTS = 60
 
-const buildCommonParams = (params = {}) => {
+const normalizePanProviderKey = (providerKey = '') => {
+  return PAN_PROVIDER_MAP[providerKey] ? providerKey : DEFAULT_PAN_PROVIDER
+}
+
+const getPanProvider = (providerKey = '') => {
+  if (providerKey && typeof providerKey === 'object' && providerKey.key && PAN_PROVIDER_MAP[providerKey.key]) {
+    return PAN_PROVIDER_MAP[providerKey.key]
+  }
+  return PAN_PROVIDER_MAP[normalizePanProviderKey(providerKey)]
+}
+
+const buildCommonParams = (provider, params = {}) => {
   return {
-    pr: 'ucpro',
-    fr: 'pc',
-    uc_param_str: '',
+    ...provider.commonParams,
     __dt: Math.floor(Math.random() * 9000) + 1000,
     __t: Date.now(),
     ...params
   }
 }
 
-const buildUrl = (host, path, params = {}) => {
+const buildUrl = (provider, host, path, params = {}) => {
   const url = new URL(`${host}${path}`)
-  const query = buildCommonParams(params)
+  const query = buildCommonParams(provider, params)
   Object.keys(query).forEach((key) => {
     const value = query[key]
     if (value === undefined || value === null || value === '') {
@@ -20239,10 +20373,10 @@ const createBody = (payload = {}) => {
   return body.toString()
 }
 
-const createHeaders = (referer, isPost = false) => {
+const createHeaders = (provider, referer, isPost = false) => {
   const headers = {
     accept: 'application/json, text/plain, */*',
-    origin: 'https://pan.quark.cn',
+    origin: provider.origin,
     referer
   }
 
@@ -20253,13 +20387,13 @@ const createHeaders = (referer, isPost = false) => {
   return headers
 }
 
-const parseJsonResponse = (response) => {
+const parseJsonResponse = (provider, response) => {
   if (!response || response === 'onerror' || response === 'timeout') {
-    throw new Error('夸克请求失败，请稍后重试')
+    throw new Error(`${provider.shortName} 请求失败，请稍后重试`)
   }
 
   if (response.status && response.status >= 400) {
-    throw new Error(`夸克请求失败 (${response.status})`)
+    throw new Error(`${provider.shortName} 请求失败 (${response.status})`)
   }
 
   const payload = response.response ?? response.responseText ?? response
@@ -20269,70 +20403,73 @@ const parseJsonResponse = (response) => {
   return payload
 }
 
-const unwrapResponseData = (payload) => {
+const unwrapResponseData = (provider, payload) => {
   if (!payload || typeof payload !== 'object') {
-    throw new Error('夸克返回了无效数据')
+    throw new Error(`${provider.shortName} 返回了无效数据`)
   }
 
   const status = payload.status
   if (typeof status === 'number' && status !== 200) {
-    throw new Error(payload.message || `夸克请求失败 (${status})`)
+    throw new Error(payload.message || `${provider.shortName} 请求失败 (${status})`)
   }
 
   const code = payload.code
   if (typeof code === 'number' && code !== 0) {
-    throw new Error(payload.message || `夸克接口返回错误 (${code})`)
+    throw new Error(payload.message || `${provider.shortName} 接口返回错误 (${code})`)
   }
 
   return payload.data ?? payload
 }
 
-const quarkRequest = async({
+const panRequest = async({
+  provider,
   method = 'GET',
-  host = QUARK_HOSTS.drivePc,
+  host,
   path,
   params = {},
   data = null,
   cookie = '',
-  referer = 'https://pan.quark.cn/'
+  referer
 }) => {
+  const normalizedProvider = getPanProvider(provider)
   const normalizedCookie = normalizeCookie(cookie)
   if (!normalizedCookie) {
-    throw new Error('请先填写夸克 Cookie')
+    throw new Error(`请先填写${normalizedProvider.shortName} Cookie`)
   }
 
   const upperMethod = method.toUpperCase()
   const response = await (0,utils/* request */.WY)({
     method: upperMethod,
-    url: buildUrl(host, path, params),
+    url: buildUrl(normalizedProvider, host || normalizedProvider.hosts.drivePc, path, params),
     data: upperMethod === 'GET' || !data ? null : createBody(data),
-    headers: createHeaders(referer, upperMethod !== 'GET'),
+    headers: createHeaders(normalizedProvider, referer || normalizedProvider.homeReferer, upperMethod !== 'GET'),
     cookie: normalizedCookie,
     timeout: 60 * 1000
   })
-  return unwrapResponseData(parseJsonResponse(response))
+  return unwrapResponseData(normalizedProvider, parseJsonResponse(normalizedProvider, response))
 }
 
 const isFolderItem = (item) => {
   return item?.dir === true || item?.file_type === 0 || item?.obj_category === 'dir'
 }
 
-const getShareToken = async(cookie, shareId, passcode = '') => {
-  const data = await quarkRequest({
+const getShareToken = async(provider, cookie, shareId, passcode = '') => {
+  const data = await panRequest({
+    provider,
     method: 'POST',
-    host: QUARK_HOSTS.driveShare,
+    host: provider.hosts.driveShare,
     path: '/1/clouddrive/share/sharepage/token',
     data: {
       pwd_id: shareId,
       passcode
     },
     cookie,
-    referer: `https://pan.quark.cn/s/${shareId}`
+    referer: `${provider.sharePageBaseUrl}${shareId}`
   })
 
   const stoken = data.stoken || data.share_token || data.token
   if (!stoken) {
-    throw new Error('未拿到分享令牌，Cookie 可能失效或分享链接需要验证')
+    throw new Error(`未拿到${provider.shortName}分享令牌，Cookie 可能失效或分享链接需要验证`)
   }
 
   return {
@@ -20341,10 +20478,11 @@ const getShareToken = async(cookie, shareId, passcode = '') => {
   }
 }
 
-const getShareDetailPage = async(cookie, share, stoken, page = 1) => {
-  return quarkRequest({
+const getShareDetailPage = async(provider, cookie, share, stoken, page = 1) => {
+  return panRequest({
+    provider,
     method: 'GET',
-    host: QUARK_HOSTS.driveShare,
+    host: provider.hosts.driveShare,
     path: '/1/clouddrive/share/sharepage/detail',
     params: {
       pwd_id: share.shareId,
@@ -20358,27 +20496,28 @@ const getShareDetailPage = async(cookie, share, stoken, page = 1) => {
       _sort: 'file_type:asc,file_name:asc'
     },
     cookie,
-    referer: `https://pan.quark.cn/s/${share.shareId}`
+    referer: `${provider.sharePageBaseUrl}${share.shareId}`
   })
 }
 
-const getTaskResult = async(cookie, taskId, retryIndex = 0) => {
-  return quarkRequest({
+const getTaskResult = async(provider, cookie, taskId, retryIndex = 0) => {
+  return panRequest({
+    provider,
     method: 'GET',
-    host: QUARK_HOSTS.drivePc,
+    host: provider.hosts.drivePc,
     path: '/1/clouddrive/task',
     params: {
       task_id: taskId,
       retry_index: retryIndex
     },
     cookie,
-    referer: 'https://pan.quark.cn/'
+    referer: provider.homeReferer
   })
 }
 
-const waitForTask = async(cookie, taskId) => {
+const waitForTask = async(provider, cookie, taskId) => {
   for (let retryIndex = 0; retryIndex < TASK_MAX_ATTEMPTS; retryIndex += 1) {
-    const task = await getTaskResult(cookie, taskId, retryIndex)
+    const task = await getTaskResult(provider, cookie, taskId, retryIndex)
     const status = Number(task?.status)
 
     if (status === 2) {
@@ -20386,13 +20525,13 @@ const waitForTask = async(cookie, taskId) => {
     }
 
     if ([3, 4, -1].includes(status)) {
-      throw new Error(task?.message || task?.title || '夸克转存任务失败')
+      throw new Error(task?.message || task?.title || `${provider.shortName} 转存任务失败`)
     }
 
     await (0,utils/* delay */.gw)(TASK_POLL_INTERVAL_SECONDS)
   }
 
-  throw new Error('夸克转存任务超时，请稍后去网盘确认结果')
+  throw new Error(`${provider.shortName} 转存任务超时，请稍后去网盘确认结果`)
 }
 
 const chunkItems = (items, size) => {
@@ -20403,8 +20542,8 @@ const chunkItems = (items, size) => {
   return list
 }
 
-const extractShareUrl = (text = '') => {
-  const match = String(text).match(/https?:\/\/pan\.quark\.cn\/s\/[A-Za-z0-9]+(?:[^\s]*)?/i)
+const extractShareUrl = (provider, text = '') => {
+  const match = String(text).match(provider.shareUrlPattern)
   return match ? match[0] : ''
 }
 
@@ -20425,20 +20564,21 @@ const extractPasscode = (text = '', url = '') => {
   return match ? match[1] : ''
 }
 
-const parseQuarkShareLine = (line = '') => {
+const parsePanShareLine = (providerKey = DEFAULT_PAN_PROVIDER, line = '') => {
+  const provider = getPanProvider(providerKey)
   const raw = String(line || '').trim()
   if (!raw) {
     return null
   }
 
-  const shareUrl = extractShareUrl(raw)
+  const shareUrl = extractShareUrl(provider, raw)
   const url = shareUrl || raw
-  const urlMatch = url.match(/pan\.quark\.cn\/s\/([A-Za-z0-9]+)/i)
+  const urlMatch = url.match(provider.shareIdPattern)
   if (!urlMatch) {
-    throw new Error(`未识别到夸克分享链接: ${raw}`)
+    throw new Error(`未识别到${provider.shortName}分享链接: ${raw}`)
   }
 
-  const hashMatch = url.match(/#\/list\/share\/([^/?#]+)/i)
+  const hashMatch = url.match(provider.shareDirPattern)
   return {
     raw,
     url,
@@ -20448,43 +20588,45 @@ const parseQuarkShareLine = (line = '') => {
   }
 }
 
-const parseQuarkShareInput = (text = '') => {
+const parsePanShareInput = (providerKey = DEFAULT_PAN_PROVIDER, text = '') => {
+  const provider = getPanProvider(providerKey)
   const lineList = String(text || '')
     .split(/\r?\n/)
     .map(item => item.trim())
     .filter(Boolean)
 
   if (lineList.length === 0) {
-    throw new Error('请先输入夸克分享链接')
+    throw new Error(`请先输入${provider.shortName}分享链接`)
   }
 
   return lineList
-    .map(parseQuarkShareLine)
+    .map(line => parsePanShareLine(provider.key, line))
     .filter(Boolean)
 }
 
-const verifyQuarkCookie = async(cookie) => {
-  return quarkRequest({
+const verifyPanCookie = async(providerKey = DEFAULT_PAN_PROVIDER, cookie = '') => {
+  const provider = getPanProvider(providerKey)
+  return panRequest({
+    provider,
     method: 'GET',
-    host: QUARK_HOSTS.account,
-    path: '/account/info',
-    params: {
-      platform: 'pc',
-      fr: 'pc'
-    },
+    host: provider.hosts.account,
+    path: provider.accountInfoPath,
+    params: provider.accountInfoParams,
     cookie,
-    referer: 'https://pan.quark.cn/'
+    referer: provider.homeReferer
   })
 }
 
-const listQuarkDirectoryFolders = async(cookie, pdirFid = '0') => {
+const listPanDirectoryFolders = async(providerKey = DEFAULT_PAN_PROVIDER, cookie = '', pdirFid = '0') => {
+  const provider = getPanProvider(providerKey)
   let page = 1
   const folderList = []
 
   while (true) {
-    const data = await quarkRequest({
+    const data = await panRequest({
+      provider,
       method: 'GET',
-      host: QUARK_HOSTS.drivePc,
+      host: provider.hosts.drivePc,
       path: '/1/clouddrive/file/sort',
       params: {
         pdir_fid: String(pdirFid || '0'),
@@ -20495,7 +20637,7 @@ const listQuarkDirectoryFolders = async(cookie, pdirFid = '0') => {
         _sort: 'file_type:asc,updated_at:desc'
       },
       cookie,
-      referer: 'https://pan.quark.cn/'
+      referer: provider.homeReferer
     })
 
     const currentList = Array.isArray(data?.list) ? data.list : []
@@ -20510,15 +20652,15 @@ const listQuarkDirectoryFolders = async(cookie, pdirFid = '0') => {
   return folderList
 }
 
-const getShareItems = async(cookie, share, onProgress = null) => {
-  const tokenData = await getShareToken(cookie, share.shareId, share.passcode)
+const getShareItems = async(provider, cookie, share, onProgress = null) => {
+  const tokenData = await getShareToken(provider, cookie, share.shareId, share.passcode)
   const stoken = tokenData.stoken
   const itemList = []
   let page = 1
   let shareInfo = tokenData.share || null
 
   while (true) {
-    const detailData = await getShareDetailPage(cookie, share, stoken, page)
+    const detailData = await getShareDetailPage(provider, cookie, share, stoken, page)
     const currentList = Array.isArray(detailData?.list) ? detailData.list : []
     if (detailData?.share) {
       shareInfo = detailData.share
@@ -20546,22 +20688,24 @@ const getShareItems = async(cookie, share, onProgress = null) => {
   }
 }
 
-const transferQuarkShare = async({
+const transferPanShare = async({
+  providerKey = DEFAULT_PAN_PROVIDER,
   cookie,
   shareInput,
   toPdirFid = '0',
   onProgress = null
 }) => {
-  const share = typeof shareInput === 'string' ? parseQuarkShareLine(shareInput) : shareInput
+  const provider = getPanProvider(providerKey)
+  const share = typeof shareInput === 'string' ? parsePanShareLine(provider.key, shareInput) : shareInput
   if (!share) {
-    throw new Error('请先输入夸克分享链接')
+    throw new Error(`请先输入${provider.shortName}分享链接`)
   }
 
   if (typeof onProgress === 'function') {
-    onProgress(`开始处理分享 ${share.shareId}`)
+    onProgress(`开始处理分享: ${share.shareId}`)
   }
 
-  const { shareInfo, stoken, items } = await getShareItems(cookie, share, onProgress)
+  const { shareInfo, stoken, items } = await getShareItems(provider, cookie, share, onProgress)
   const batches = chunkItems(items, SAVE_BATCH_SIZE)
 
   for (let index = 0; index < batches.length; index += 1) {
@@ -20577,9 +20721,10 @@ const transferQuarkShare = async({
       onProgress(`正在转存第 ${index + 1}/${batches.length} 批，共 ${batch.length} 项`)
     }
 
-    const saveData = await quarkRequest({
+    const saveData = await panRequest({
+      provider,
       method: 'POST',
-      host: QUARK_HOSTS.drivePc,
+      host: provider.hosts.drivePc,
       path: '/1/clouddrive/share/sharepage/save',
       data: {
         pwd_id: share.shareId,
@@ -20591,16 +20736,17 @@ const transferQuarkShare = async({
         fid_token_list: fidTokenList
       },
       cookie,
-      referer: `https://pan.quark.cn/s/${share.shareId}`
+      referer: `${provider.sharePageBaseUrl}${share.shareId}`
     })
 
     const taskId = saveData?.task_id
     if (taskId) {
-      await waitForTask(cookie, taskId)
+      await waitForTask(provider, cookie, taskId)
     }
   }
 
   return {
+    providerKey: provider.key,
     share,
     shareInfo,
     itemCount: items.length,
@@ -20610,6 +20756,24 @@ const transferQuarkShare = async({
 }
 
 ;// CONCATENATED MODULE: ./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/views/pan.vue?vue&type=script&lang=js&
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -20742,13 +20906,24 @@ const normalizeCookieInput = (value) => {
     .trim()
 }
 
+const normalizeTargetDirId = (value) => {
+  return String(value || '0').trim() || '0'
+}
+
+const buildProviderStateMap = (initialValue = '') => {
+  return PAN_PROVIDER_LIST.reduce((result, provider) => {
+    result[provider.key] = initialValue
+    return result
+  }, {})
+}
+
 /* harmony default export */ const panvue_type_script_lang_js_ = ({
   name: 'Pan',
   data() {
     return {
       panSettings: { ...setup/* defaultPanSettings */.z1 },
-      shareInput: '',
-      accountLabel: '',
+      shareInputMap: buildProviderStateMap(''),
+      accountLabelMap: buildProviderStateMap(''),
       folderList: [],
       testingCookie: false,
       browsingFolder: false,
@@ -20758,8 +20933,41 @@ const normalizeCookieInput = (value) => {
     }
   },
   computed: {
-    currentTargetDirId() {
-      return String(this.panSettings.quarkTargetDirId || '0').trim() || '0'
+    providerList() {
+      return PAN_PROVIDER_LIST
+    },
+    currentProviderKey() {
+      return normalizePanProviderKey(this.panSettings.activeProvider)
+    },
+    currentProvider() {
+      return getPanProvider(this.currentProviderKey)
+    },
+    currentCookie: {
+      get() {
+        return this.panSettings[this.currentProvider.cookieKey] || ''
+      },
+      set(value) {
+        this.$set(this.panSettings, this.currentProvider.cookieKey, value)
+      }
+    },
+    currentTargetDirId: {
+      get() {
+        return normalizeTargetDirId(this.panSettings[this.currentProvider.targetDirKey])
+      },
+      set(value) {
+        this.$set(this.panSettings, this.currentProvider.targetDirKey, normalizeTargetDirId(value))
+      }
+    },
+    currentShareInput: {
+      get() {
+        return this.shareInputMap[this.currentProviderKey] || ''
+      },
+      set(value) {
+        this.$set(this.shareInputMap, this.currentProviderKey, value)
+      }
+    },
+    currentAccountLabel() {
+      return this.accountLabelMap[this.currentProviderKey] || ''
     }
   },
   mounted() {
@@ -20767,21 +20975,35 @@ const normalizeCookieInput = (value) => {
   },
   methods: {
     loadSettings() {
-      this.panSettings = {
+      const storedSettings = (0,setup/* getStorage */.cF)('panSettings') || {}
+      const panSettings = {
         ...setup/* defaultPanSettings */.z1,
-        ...((0,setup/* getStorage */.cF)('panSettings') || {})
+        ...storedSettings
       }
-      this.panSettings.quarkTargetDirId = this.currentTargetDirId
+
+      panSettings.activeProvider = normalizePanProviderKey(panSettings.activeProvider)
+      this.providerList.forEach((provider) => {
+        panSettings[provider.cookieKey] = normalizeCookieInput(panSettings[provider.cookieKey])
+        panSettings[provider.targetDirKey] = normalizeTargetDirId(panSettings[provider.targetDirKey])
+      })
+
+      this.panSettings = panSettings
     },
     saveSettings(showToast = true) {
-      this.panSettings = {
+      const nextSettings = {
         ...this.panSettings,
-        quarkCookie: normalizeCookieInput(this.panSettings.quarkCookie),
-        quarkTargetDirId: this.currentTargetDirId
+        activeProvider: this.currentProviderKey
       }
-      ;(0,setup/* setStorage */.po)('panSettings', this.panSettings)
+
+      this.providerList.forEach((provider) => {
+        nextSettings[provider.cookieKey] = normalizeCookieInput(nextSettings[provider.cookieKey])
+        nextSettings[provider.targetDirKey] = normalizeTargetDirId(nextSettings[provider.targetDirKey])
+      })
+
+      this.panSettings = nextSettings
+      ;(0,setup/* setStorage */.po)('panSettings', nextSettings)
       if (showToast) {
-        createToast('夸克配置已保存')
+        createToast(`${this.currentProvider.label} 配置已保存`)
       }
     },
     appendLog(message, type = 'info') {
@@ -20795,24 +21017,31 @@ const normalizeCookieInput = (value) => {
       })
       this.logList = this.logList.slice(0, 200)
     },
+    handleProviderChange(value) {
+      this.panSettings.activeProvider = normalizePanProviderKey(value)
+      this.folderList = []
+      this.transferSummary = ''
+      this.saveSettings(false)
+      this.appendLog(`已切换到 ${this.currentProvider.label}`, 'success')
+    },
     ensureCookieReady() {
       this.saveSettings(false)
-      if (!this.panSettings.quarkCookie) {
-        createToast('请先填写夸克 Cookie')
+      if (!this.currentCookie) {
+        createToast(`请先填写${this.currentProvider.shortName} Cookie`)
         return false
       }
       return true
     },
     useRootFolder() {
-      this.panSettings.quarkTargetDirId = '0'
+      this.currentTargetDirId = '0'
       this.saveSettings(false)
-      this.appendLog('已切换到根目录 fid: 0')
+      this.appendLog(`已切换到 ${this.currentProvider.label} 根目录 fid: 0`)
     },
     clearFolderList() {
       this.folderList = []
     },
     clearShareInput() {
-      this.shareInput = ''
+      this.currentShareInput = ''
     },
     clearLogs() {
       this.logList = []
@@ -20823,14 +21052,15 @@ const normalizeCookieInput = (value) => {
       }
 
       this.testingCookie = true
-      this.appendLog('开始校验夸克 Cookie')
+      this.appendLog(`开始校验 ${this.currentProvider.label} Cookie`)
       try {
-        const data = await verifyQuarkCookie(this.panSettings.quarkCookie)
-        this.accountLabel = data.nickname || data.name || data.mobile || data.user_name || '已登录用户'
-        this.appendLog(`Cookie 校验成功: ${this.accountLabel}`, 'success')
+        const data = await verifyPanCookie(this.currentProviderKey, this.currentCookie)
+        const accountLabel = data.nickname || data.name || data.mobile || data.user_name || data.uid || '已登录用户'
+        this.$set(this.accountLabelMap, this.currentProviderKey, accountLabel)
+        this.appendLog(`Cookie 校验成功: ${accountLabel}`, 'success')
         createToast('Cookie 可用')
       } catch (error) {
-        this.accountLabel = ''
+        this.$set(this.accountLabelMap, this.currentProviderKey, '')
         this.appendLog(`Cookie 校验失败: ${error.message || error}`, 'error')
         createToast(error.message || 'Cookie 校验失败')
       } finally {
@@ -20843,13 +21073,13 @@ const normalizeCookieInput = (value) => {
       }
 
       this.browsingFolder = true
-      this.appendLog(`开始读取目录 ${this.currentTargetDirId}`)
+      this.appendLog(`开始读取 ${this.currentProvider.label} 目录 ${this.currentTargetDirId}`)
       try {
-        const folderList = await listQuarkDirectoryFolders(this.panSettings.quarkCookie, this.currentTargetDirId)
+        const folderList = await listPanDirectoryFolders(this.currentProviderKey, this.currentCookie, this.currentTargetDirId)
         this.folderList = folderList
         this.appendLog(`目录 ${this.currentTargetDirId} 读取成功，找到 ${folderList.length} 个子文件夹`, 'success')
         if (folderList.length === 0) {
-          createToast('读取成功，该目录下暂无子文件夹')
+          createToast('读取成功，该目录下暂时无子文件夹')
         } else {
           createToast(`读取到 ${folderList.length} 个文件夹`)
         }
@@ -20861,7 +21091,7 @@ const normalizeCookieInput = (value) => {
       }
     },
     selectFolder(item) {
-      this.panSettings.quarkTargetDirId = String(item.fid)
+      this.currentTargetDirId = String(item.fid)
       this.saveSettings(false)
       this.appendLog(`已选择目录: ${item.file_name || item.title || item.fid} (${item.fid})`, 'success')
     },
@@ -20872,7 +21102,7 @@ const normalizeCookieInput = (value) => {
 
       let shareList = []
       try {
-        shareList = parseQuarkShareInput(this.shareInput)
+        shareList = parsePanShareInput(this.currentProviderKey, this.currentShareInput)
       } catch (error) {
         createToast(error.message || '分享链接格式不正确')
         return
@@ -20883,15 +21113,16 @@ const normalizeCookieInput = (value) => {
       let successCount = 0
       let failedCount = 0
 
-      this.appendLog(`准备开始转存，共 ${shareList.length} 条链接，目标目录 fid: ${this.currentTargetDirId}`)
+      this.appendLog(`准备开始转存 ${this.currentProvider.label} 链接，共 ${shareList.length} 条，目标目录 fid: ${this.currentTargetDirId}`)
 
       for (let index = 0; index < shareList.length; index += 1) {
         const share = shareList[index]
         const prefix = `[${index + 1}/${shareList.length}]`
         this.appendLog(`${prefix} 开始处理 ${share.url}`)
         try {
-          const result = await transferQuarkShare({
-            cookie: this.panSettings.quarkCookie,
+          const result = await transferPanShare({
+            providerKey: this.currentProviderKey,
+            cookie: this.currentCookie,
             shareInput: share,
             toPdirFid: this.currentTargetDirId,
             onProgress: (message) => {
@@ -20906,7 +21137,7 @@ const normalizeCookieInput = (value) => {
         }
       }
 
-      this.transferSummary = `本次转存结束: 成功 ${successCount} 条，失败 ${failedCount} 条`
+      this.transferSummary = `${this.currentProvider.label} 本次转存结束: 成功 ${successCount} 条，失败 ${failedCount} 条`
       this.appendLog(this.transferSummary, failedCount > 0 ? 'error' : 'success')
       createToast(this.transferSummary)
       this.transferring = false

@@ -4,8 +4,11 @@
 import { AppVersion, isDev } from '@/config/index'
 
 export const defaultPanSettings = {
+  activeProvider: 'quark',
   quarkCookie: '',
-  quarkTargetDirId: '0'
+  quarkTargetDirId: '0',
+  ucCookie: '',
+  ucTargetDirId: '0'
 }
 
 const configDefault = {
