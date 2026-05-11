@@ -4,7 +4,6 @@
   "description": "Vue + Vant userscript for multi-site comic search and chapter downloads.",
   "author": "journey3510",
   "private": true,
-  "main": "/src/main.js",
   "keywords": [
     "tampermonkey",
     "webpack",
