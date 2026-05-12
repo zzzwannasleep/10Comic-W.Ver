@@ -178,13 +178,13 @@ export default class Queue {
     if (enableSeriesJson && !this.seriesJsonCache.has(metadataKey)) {
       const seriesJson = buildSeriesJson(worker, externalMetadata)
       const jsonBlob = new Blob([seriesJson], { type: 'application/json' })
-      await this.downloadFile(worker.comicName + '\\series.json', jsonBlob)
+      await this.downloadFile(this.getComicFolderPath(worker) + '\\series.json', jsonBlob)
       this.seriesJsonCache.add(metadataKey)
     }
 
     if (enableSeriesCover && externalMetadata?.coverUrl && !this.seriesCoverCache.has(metadataKey)) {
       const coverFileName = this.getCoverFileName(externalMetadata.coverUrl)
-      const result = await this.downloadRemoteFile(worker.comicName + '\\' + coverFileName, externalMetadata.coverUrl)
+      const result = await this.downloadRemoteFile(this.getComicFolderPath(worker) + '\\' + coverFileName, externalMetadata.coverUrl)
       if (result) {
         this.seriesCoverCache.add(metadataKey)
       }
@@ -268,6 +268,63 @@ export default class Queue {
     this.worker.splice(0, 0)
   }
 
+  isArchiveDownloadType(downType) {
+    return downType === 1
+  }
+
+  isSpliceDownloadType(downType) {
+    return downType === 2
+  }
+
+  isBufferDownloadType(downType) {
+    return this.isArchiveDownloadType(downType) || this.isSpliceDownloadType(downType)
+  }
+
+  sanitizePathSegment(value, fallback = 'untitled') {
+    const text = String(value || '')
+      .replace(/[\\/:*?"<>|]/g, ' ')
+      .replace(/\s{2,}/g, ' ')
+      .replace(/[. ]+$/g, '')
+      .trim()
+    return text || fallback
+  }
+
+  getBatchFolderPrefix() {
+    const value = getStorage('batchFolderPrefix')
+    if (value === undefined || value === null) {
+      return '#'
+    }
+    return String(value)
+  }
+
+  getBatchFolderIndex(worker = {}) {
+    const batchFolderIndex = parseInt(worker.batchFolderIndex, 10)
+    if (Number.isInteger(batchFolderIndex) && batchFolderIndex > 0) {
+      return batchFolderIndex
+    }
+    const chapterIndex = parseInt(worker.chapterIndex, 10)
+    if (Number.isInteger(chapterIndex) && chapterIndex > 0) {
+      return chapterIndex
+    }
+    return 1
+  }
+
+  getChapterFolderName(worker) {
+    if (worker.downType === 3) {
+      const folderNum = addZeroForNum(this.getBatchFolderIndex(worker), this.imgIndexBitNum)
+      return this.sanitizePathSegment(`${this.getBatchFolderPrefix()}${folderNum}`, `chapter-${folderNum}`)
+    }
+    return this.sanitizePathSegment(worker.downChapterName, 'chapter')
+  }
+
+  getComicFolderPath(worker) {
+    return this.sanitizePathSegment(worker.comicName, 'comic')
+  }
+
+  getChapterFolderPath(worker) {
+    return this.getComicFolderPath(worker) + '\\' + this.getChapterFolderName(worker)
+  }
+
   // 直接下载图片 Promise
   addImgDownPromise(index, imgurl, imgIndex, newHeaders, retryTimes) {
     const headers = {
@@ -288,8 +345,7 @@ export default class Queue {
         headers: newHeaders || headers,
         timeout: 60 * 1000
       }).then((res) => {
-        const name = this.worker[index].comicName + '\\' + this.worker[index].downChapterName + '\\' +
-        addZeroForNum(imgIndex, this.imgIndexBitNum) + '.'
+        const name = this.getChapterFolderPath(this.worker[index]) + '\\' + addZeroForNum(imgIndex, this.imgIndexBitNum) + '.'
 
         let suffix = this.getSuffix(res.finalUrl)
 
@@ -406,7 +462,7 @@ export default class Queue {
           break
         }
         const imgIndex = ++this.worker[workerId].imgIndex
-        if (downType) {
+        if (this.isBufferDownloadType(downType)) {
           promise.push(this.addImgPromise(workerId, imgUrlArr[0], downHeaders))
         } else {
           promise.push(this.addImgDownPromise(workerId, imgUrlArr[0], imgIndex, downHeaders))
@@ -431,12 +487,12 @@ export default class Queue {
       })
     } else {
       // 压缩
-      if (downType === 1) {
+      if (this.isArchiveDownloadType(downType)) {
         const result = await this.makeZip(workerId)
         return new Promise((resolve, reject) => {
           resolve(result)
         })
-      } else if (downType === 2) { // 拼接
+      } else if (this.isSpliceDownloadType(downType)) { // 拼接
         await this.combineImages(workerId)
         return new Promise((resolve, reject) => {
           resolve()
@@ -459,7 +515,7 @@ export default class Queue {
     while (pictureNum-- && len > 0) {
       // 是否压缩
       const imgIndex = ++this.worker[workerId].imgIndex
-      if (downType) {
+      if (this.isBufferDownloadType(downType)) {
         promise.push(this.addImgPromise(workerId, imgs[0], downHeaders))
       } else {
         promise.push(this.addImgDownPromise(workerId, imgs[0], imgIndex, downHeaders))
@@ -484,12 +540,12 @@ export default class Queue {
     }
 
     // 压缩
-    if (downType === 1) {
+    if (this.isArchiveDownloadType(downType)) {
       const result = await this.makeZip(workerId)
       return new Promise((resolve, reject) => {
         resolve(result)
       })
-    } else if (downType === 2) { // 拼接
+    } else if (this.isSpliceDownloadType(downType)) { // 拼接
       await this.combineImages(workerId)
       return new Promise((resolve, reject) => {
         resolve()
@@ -515,9 +571,11 @@ export default class Queue {
           authorName: item.authorName,
           webName: item.webName,
           comicPageUrl: item.comicPageUrl,
+          chapterIndex: item.chapterIndex,
           chapterName: item.chapterName,
           chapterNumStr: item.chapterNumStr,
           downChapterName: item.downChapterName,
+          batchFolderIndex: item.batchFolderIndex,
           url: item.url,
           isPay: item.isPay, // 是否付费章节
           imgIndex: 0, // 图片序号
@@ -527,7 +585,7 @@ export default class Queue {
           progress: 0, // 进度百分比
           readtype: item.readtype, // 阅读(下载)方式类型
           func: this.exeDown(i),
-          downType: item.downType, // 下载方式 0：直接  1：压缩  2：拼接
+          downType: item.downType, // 下载方式 0：直接  1：压缩  2：拼接  3：批量
           hasError: false,
           imageSource: item.imageSource,
           downHeaders: item.downHeaders,
@@ -595,7 +653,7 @@ export default class Queue {
       }
     })
     const archiveName = buildArchiveName(this.worker[workerId], this.worker[workerId].totalNumber)
-    const archiveBasePath = comicName + '\\' + archiveName
+    const archiveBasePath = this.getComicFolderPath(this.worker[workerId]) + '\\' + archiveName
     await this.downloadFile(archiveBasePath + '.cbz', zipblob)
     await this.writeBookCoverFile(workerId, archiveBasePath)
     return true
@@ -603,7 +661,7 @@ export default class Queue {
 
   async combineImages(workerId) {
     const maxSplicingHeight = getStorage('maxSplicingHeight')
-    const { comicName, downChapterName } = this.worker[workerId]
+    const chapterFolderPath = this.getChapterFolderPath(this.worker[workerId])
     let imgNum = 0
     let curHeight = 0
     let totalHeight = 0
@@ -639,7 +697,7 @@ export default class Queue {
       // 去除不是图片类型
       if (data.blob === 1 || data.blob === 0 || !data.blob.type.includes('image')) {
         this.worker[workerId].hasError = true
-        const error_name = comicName + '\\' + downChapterName + '\\error_' + addZeroForNum(index + 1, this.imgIndexBitNum) + '.txt'
+        const error_name = chapterFolderPath + '\\error_' + addZeroForNum(index + 1, this.imgIndexBitNum) + '.txt'
         const imgurl = this.workerDownInfo[workerId][index].imgurl
         const newBlob = new Blob([imgurl], { type: 'text/plain' })
         _this.downloadFile(error_name, newBlob)
@@ -684,7 +742,7 @@ export default class Queue {
         context.drawImage(element, 0, offsetY, element.width, element.height)
         offsetY = offsetY + parseInt(element.height)
       }
-      const name = comicName + '\\' + downChapterName + '\\' + addZeroForNum(item.num + 1, this.imgIndexBitNum) + '.jpg'
+      const name = chapterFolderPath + '\\' + addZeroForNum(item.num + 1, this.imgIndexBitNum) + '.jpg'
       await asyncCanvas(canvas, name)
     }
 

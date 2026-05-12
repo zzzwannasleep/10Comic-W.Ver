@@ -26,6 +26,7 @@ const configDefault = {
   downType: 0,
   maxSplicingHeight: 20000,
   imgIndexBitNum: 3,
+  batchFolderPrefix: '#',
   imgSplicingFlag: true,
   imgDownRange: [1, -1],
   zipNameTemplate: '[站点名字][作者名][漫画名称][章节名称][多少P]',
@@ -69,7 +70,7 @@ const configDefault = {
   bangumiMetadataCache: {},
   panSettings: { ...defaultPanSettings },
   userWebInfo: [],
-  rootDir: '10Comic'
+  rootDir: ''
 }
 
 const localStorageDefault = {
@@ -93,6 +94,10 @@ export const appLoadinit = () => {
     if (GM_getValue(key) === undefined) {
       GM_setValue(key, configDefault[key])
     }
+  }
+
+  if (GM_getValue('rootDir') === '10Comic') {
+    GM_setValue('rootDir', '')
   }
 
   if (GM_getValue('version') !== undefined && GM_getValue('version') === AppVersion) {

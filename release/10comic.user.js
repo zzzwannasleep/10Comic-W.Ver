@@ -2319,7 +2319,7 @@ function BufferBigIntNotDefined () {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".van-cell__title {\n  text-align: left;\n}\n.van-cell-group__title--inset {\n  text-align: left;\n}\n.van-button--default {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled {\n  opacity: 1 !important;\n}\n.van-tag--default {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow {\n  color: #d9d9d9 !important;\n}\n.van-popover__content {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".van-cell__title {\n  text-align: left;\n}\n.van-cell-group__title--inset {\n  text-align: left;\n}\n.van-button--default {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled {\n  opacity: 1 !important;\n}\n.van-tag--default {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow {\n  color: #d9d9d9 !important;\n}\n.van-popover__content {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n.van-cell__title {\n  text-align: left;\n}\n.van-cell-group__title--inset {\n  text-align: left;\n}\n.van-button--default {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled {\n  opacity: 1 !important;\n}\n.van-tag--default {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow {\n  color: #d9d9d9 !important;\n}\n.van-popover__content {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -6038,6 +6038,7 @@ const configDefault = {
   downType: 0,
   maxSplicingHeight: 20000,
   imgIndexBitNum: 3,
+  batchFolderPrefix: '#',
   imgSplicingFlag: true,
   imgDownRange: [1, -1],
   zipNameTemplate: '[站点名字][作者名][漫画名称][章节名称][多少P]',
@@ -6081,7 +6082,7 @@ const configDefault = {
   bangumiMetadataCache: {},
   panSettings: { ...defaultPanSettings },
   userWebInfo: [],
-  rootDir: '10Comic'
+  rootDir: ''
 }
 
 const localStorageDefault = {
@@ -6105,6 +6106,10 @@ const appLoadinit = () => {
     if (GM_getValue(key) === undefined) {
       GM_setValue(key, configDefault[key])
     }
+  }
+
+  if (GM_getValue('rootDir') === '10Comic') {
+    GM_setValue('rootDir', '')
   }
 
   if (GM_getValue('version') !== undefined && GM_getValue('version') === _config_index__WEBPACK_IMPORTED_MODULE_0__/* .AppVersion */ .bF) {
@@ -8336,12 +8341,16 @@ const openVerifyPage = (url) => {
   return window.open(url, '_blank')
 }
 
-let rootDir = '10Comic'
-
-try {
-  rootDir = (0,_config_setup__WEBPACK_IMPORTED_MODULE_1__/* .getStorage */ .cF)('rootDir')
-} catch (error) {
-  //
+const getRootDir = () => {
+  try {
+    const value = String((0,_config_setup__WEBPACK_IMPORTED_MODULE_1__/* .getStorage */ .cF)('rootDir') || '').trim()
+    if (value === '10Comic') {
+      return ''
+    }
+    return value
+  } catch (error) {
+    return ''
+  }
 }
 
 const downFile = async(...detail) => {
@@ -8353,12 +8362,14 @@ const downFile = async(...detail) => {
     name = detail[1]
   }
   name = name.replace(/\s+/ig, ' ')
+  const rootDir = getRootDir()
+  const downloadName = rootDir ? rootDir + '\\' + name : name
 
   return new Promise((resolve, reject) => {
     // eslint-disable-next-line no-undef
     GM_download({
       url,
-      name: rootDir + '\\' + name,
+      name: downloadName,
       headers: headers,
       onload: (onload || function(res) {
         resolve(true)
@@ -9455,6 +9466,18 @@ var tablevue_type_template_id_657d4b24_scoped_true_render = function () {
                                 }),
                               ],
                               1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "van-radio",
+                              {
+                                attrs: {
+                                  name: 3,
+                                  title:
+                                    "创建漫画总文件夹，并在里面按章节生成子文件夹",
+                                },
+                              },
+                              [_vm._v("批量下载")]
                             ),
                           ],
                           1
@@ -10760,6 +10783,7 @@ var external_vant_ = __webpack_require__(8871);
 //
 //
 //
+//
 
 
 
@@ -10906,12 +10930,13 @@ var external_vant_ = __webpack_require__(8871);
       const followItem = findFollowItem(window.location.href, comics/* currentComics.webName */.Po.webName, this.comicName)
       const authorName = followItem?.authorName || this.authorName || ''
       const seriesChapterCount = list.length
-      return list.map((item) => {
+      return list.map((item, index) => {
         return {
           webName: comics/* currentComics.webName */.Po.webName,
           authorName,
           comicPageUrl: window.location.href,
           seriesChapterCount,
+          chapterIndex: item.chapterIndex || (index + 1),
           ...item,
           imageSource: item.imageSource || this.getSelectedImageSource()
         }
@@ -11218,6 +11243,7 @@ var external_vant_ = __webpack_require__(8871);
         webName: comics/* currentComics.webName */.Po.webName,
         comicPageUrl: window.location.href,
         seriesChapterCount: 1,
+        chapterIndex: 1,
         chapterNumStr: '',
         chapterName: this.definechapterName,
         downChapterName: this.definechapterName,
@@ -11321,6 +11347,7 @@ var external_vant_ = __webpack_require__(8871);
       this.getSelectList()
     },
     characterSequenceChange() {
+      const bitNum = (0,setup/* getStorage */.cF)('imgIndexBitNum') || 3
       if (!this.useCharacterNum) {
         // 删除 前几个字符
         this.list.forEach((item, index) => {
@@ -11332,11 +11359,11 @@ var external_vant_ = __webpack_require__(8871);
       if (this.characterNumSequence === true) {
         const len = this.list.length
         this.list.forEach((item, index) => {
-          item.chapterNumStr = (0,utils/* addZeroForNum */.xo)(len - index, 3)
+          item.chapterNumStr = (0,utils/* addZeroForNum */.xo)(len - index, bitNum)
         })
       } else {
         this.list.forEach((item, index) => {
-          item.chapterNumStr = (0,utils/* addZeroForNum */.xo)(index + 1, 3)
+          item.chapterNumStr = (0,utils/* addZeroForNum */.xo)(index + 1, bitNum)
         })
       }
     }
@@ -13427,13 +13454,13 @@ class Queue {
     if (enableSeriesJson && !this.seriesJsonCache.has(metadataKey)) {
       const seriesJson = buildSeriesJson(worker, externalMetadata)
       const jsonBlob = new Blob([seriesJson], { type: 'application/json' })
-      await this.downloadFile(worker.comicName + '\\series.json', jsonBlob)
+      await this.downloadFile(this.getComicFolderPath(worker) + '\\series.json', jsonBlob)
       this.seriesJsonCache.add(metadataKey)
     }
 
     if (enableSeriesCover && externalMetadata?.coverUrl && !this.seriesCoverCache.has(metadataKey)) {
       const coverFileName = this.getCoverFileName(externalMetadata.coverUrl)
-      const result = await this.downloadRemoteFile(worker.comicName + '\\' + coverFileName, externalMetadata.coverUrl)
+      const result = await this.downloadRemoteFile(this.getComicFolderPath(worker) + '\\' + coverFileName, externalMetadata.coverUrl)
       if (result) {
         this.seriesCoverCache.add(metadataKey)
       }
@@ -13517,6 +13544,63 @@ class Queue {
     this.worker.splice(0, 0)
   }
 
+  isArchiveDownloadType(downType) {
+    return downType === 1
+  }
+
+  isSpliceDownloadType(downType) {
+    return downType === 2
+  }
+
+  isBufferDownloadType(downType) {
+    return this.isArchiveDownloadType(downType) || this.isSpliceDownloadType(downType)
+  }
+
+  sanitizePathSegment(value, fallback = 'untitled') {
+    const text = String(value || '')
+      .replace(/[\\/:*?"<>|]/g, ' ')
+      .replace(/\s{2,}/g, ' ')
+      .replace(/[. ]+$/g, '')
+      .trim()
+    return text || fallback
+  }
+
+  getBatchFolderPrefix() {
+    const value = (0,setup/* getStorage */.cF)('batchFolderPrefix')
+    if (value === undefined || value === null) {
+      return '#'
+    }
+    return String(value)
+  }
+
+  getBatchFolderIndex(worker = {}) {
+    const batchFolderIndex = parseInt(worker.batchFolderIndex, 10)
+    if (Number.isInteger(batchFolderIndex) && batchFolderIndex > 0) {
+      return batchFolderIndex
+    }
+    const chapterIndex = parseInt(worker.chapterIndex, 10)
+    if (Number.isInteger(chapterIndex) && chapterIndex > 0) {
+      return chapterIndex
+    }
+    return 1
+  }
+
+  getChapterFolderName(worker) {
+    if (worker.downType === 3) {
+      const folderNum = (0,utils/* addZeroForNum */.xo)(this.getBatchFolderIndex(worker), this.imgIndexBitNum)
+      return this.sanitizePathSegment(`${this.getBatchFolderPrefix()}${folderNum}`, `chapter-${folderNum}`)
+    }
+    return this.sanitizePathSegment(worker.downChapterName, 'chapter')
+  }
+
+  getComicFolderPath(worker) {
+    return this.sanitizePathSegment(worker.comicName, 'comic')
+  }
+
+  getChapterFolderPath(worker) {
+    return this.getComicFolderPath(worker) + '\\' + this.getChapterFolderName(worker)
+  }
+
   // 直接下载图片 Promise
   addImgDownPromise(index, imgurl, imgIndex, newHeaders, retryTimes) {
     const headers = {
@@ -13537,8 +13621,7 @@ class Queue {
         headers: newHeaders || headers,
         timeout: 60 * 1000
       }).then((res) => {
-        const name = this.worker[index].comicName + '\\' + this.worker[index].downChapterName + '\\' +
-        (0,utils/* addZeroForNum */.xo)(imgIndex, this.imgIndexBitNum) + '.'
+        const name = this.getChapterFolderPath(this.worker[index]) + '\\' + (0,utils/* addZeroForNum */.xo)(imgIndex, this.imgIndexBitNum) + '.'
 
         let suffix = this.getSuffix(res.finalUrl)
 
@@ -13655,7 +13738,7 @@ class Queue {
           break
         }
         const imgIndex = ++this.worker[workerId].imgIndex
-        if (downType) {
+        if (this.isBufferDownloadType(downType)) {
           promise.push(this.addImgPromise(workerId, imgUrlArr[0], downHeaders))
         } else {
           promise.push(this.addImgDownPromise(workerId, imgUrlArr[0], imgIndex, downHeaders))
@@ -13680,12 +13763,12 @@ class Queue {
       })
     } else {
       // 压缩
-      if (downType === 1) {
+      if (this.isArchiveDownloadType(downType)) {
         const result = await this.makeZip(workerId)
         return new Promise((resolve, reject) => {
           resolve(result)
         })
-      } else if (downType === 2) { // 拼接
+      } else if (this.isSpliceDownloadType(downType)) { // 拼接
         await this.combineImages(workerId)
         return new Promise((resolve, reject) => {
           resolve()
@@ -13708,7 +13791,7 @@ class Queue {
     while (pictureNum-- && len > 0) {
       // 是否压缩
       const imgIndex = ++this.worker[workerId].imgIndex
-      if (downType) {
+      if (this.isBufferDownloadType(downType)) {
         promise.push(this.addImgPromise(workerId, imgs[0], downHeaders))
       } else {
         promise.push(this.addImgDownPromise(workerId, imgs[0], imgIndex, downHeaders))
@@ -13733,12 +13816,12 @@ class Queue {
     }
 
     // 压缩
-    if (downType === 1) {
+    if (this.isArchiveDownloadType(downType)) {
       const result = await this.makeZip(workerId)
       return new Promise((resolve, reject) => {
         resolve(result)
       })
-    } else if (downType === 2) { // 拼接
+    } else if (this.isSpliceDownloadType(downType)) { // 拼接
       await this.combineImages(workerId)
       return new Promise((resolve, reject) => {
         resolve()
@@ -13764,9 +13847,11 @@ class Queue {
           authorName: item.authorName,
           webName: item.webName,
           comicPageUrl: item.comicPageUrl,
+          chapterIndex: item.chapterIndex,
           chapterName: item.chapterName,
           chapterNumStr: item.chapterNumStr,
           downChapterName: item.downChapterName,
+          batchFolderIndex: item.batchFolderIndex,
           url: item.url,
           isPay: item.isPay, // 是否付费章节
           imgIndex: 0, // 图片序号
@@ -13776,7 +13861,7 @@ class Queue {
           progress: 0, // 进度百分比
           readtype: item.readtype, // 阅读(下载)方式类型
           func: this.exeDown(i),
-          downType: item.downType, // 下载方式 0：直接  1：压缩  2：拼接
+          downType: item.downType, // 下载方式 0：直接  1：压缩  2：拼接  3：批量
           hasError: false,
           imageSource: item.imageSource,
           downHeaders: item.downHeaders,
@@ -13844,7 +13929,7 @@ class Queue {
       }
     })
     const archiveName = buildArchiveName(this.worker[workerId], this.worker[workerId].totalNumber)
-    const archiveBasePath = comicName + '\\' + archiveName
+    const archiveBasePath = this.getComicFolderPath(this.worker[workerId]) + '\\' + archiveName
     await this.downloadFile(archiveBasePath + '.cbz', zipblob)
     await this.writeBookCoverFile(workerId, archiveBasePath)
     return true
@@ -13852,7 +13937,7 @@ class Queue {
 
   async combineImages(workerId) {
     const maxSplicingHeight = (0,setup/* getStorage */.cF)('maxSplicingHeight')
-    const { comicName, downChapterName } = this.worker[workerId]
+    const chapterFolderPath = this.getChapterFolderPath(this.worker[workerId])
     let imgNum = 0
     let curHeight = 0
     let totalHeight = 0
@@ -13888,7 +13973,7 @@ class Queue {
       // 去除不是图片类型
       if (data.blob === 1 || data.blob === 0 || !data.blob.type.includes('image')) {
         this.worker[workerId].hasError = true
-        const error_name = comicName + '\\' + downChapterName + '\\error_' + (0,utils/* addZeroForNum */.xo)(index + 1, this.imgIndexBitNum) + '.txt'
+        const error_name = chapterFolderPath + '\\error_' + (0,utils/* addZeroForNum */.xo)(index + 1, this.imgIndexBitNum) + '.txt'
         const imgurl = this.workerDownInfo[workerId][index].imgurl
         const newBlob = new Blob([imgurl], { type: 'text/plain' })
         _this.downloadFile(error_name, newBlob)
@@ -13933,7 +14018,7 @@ class Queue {
         context.drawImage(element, 0, offsetY, element.width, element.height)
         offsetY = offsetY + parseInt(element.height)
       }
-      const name = comicName + '\\' + downChapterName + '\\' + (0,utils/* addZeroForNum */.xo)(item.num + 1, this.imgIndexBitNum) + '.jpg'
+      const name = chapterFolderPath + '\\' + (0,utils/* addZeroForNum */.xo)(item.num + 1, this.imgIndexBitNum) + '.jpg'
       await asyncCanvas(canvas, name)
     }
 
@@ -14090,11 +14175,27 @@ class Queue {
     getComicName(value) {
       if (value !== '------') { this.comicName = value }
     },
+    normalizeBatchDownloadItems(list = []) {
+      const groupCounterMap = new Map()
+      return list.map((item) => {
+        if (item?.downType !== 3) {
+          return item
+        }
+        const groupKey = `${item.webName || ''}__${item.comicPageUrl || item.comicName || ''}`
+        const nextIndex = (groupCounterMap.get(groupKey) || 0) + 1
+        groupCounterMap.set(groupKey, nextIndex)
+        const chapterIndex = parseInt(item.chapterIndex, 10)
+        return {
+          ...item,
+          batchFolderIndex: Number.isInteger(chapterIndex) && chapterIndex > 0 ? chapterIndex : nextIndex
+        }
+      })
+    },
     downInit(arr) {
-      const downloadItems = (arr || []).map(item => ({
+      const downloadItems = this.normalizeBatchDownloadItems((arr || []).map(item => ({
         originTab: item?.originTab ?? 3,
         ...item
-      }))
+      })))
       if (shouldPreviewMetadataForItems(downloadItems)) {
         this.$bus.$emit('openMetadataPreview', downloadItems)
         this.$bus.$emit('changTab', 6)
@@ -16107,6 +16208,59 @@ var settingvue_type_template_id_234d1526_scoped_true_render = function () {
                                     _vm.imgIndexBitNum = $$v
                                   },
                                   expression: "imgIndexBitNum",
+                                },
+                              }),
+                            ]
+                          },
+                          proxy: true,
+                        },
+                      ]),
+                    }),
+                    _vm._v(" "),
+                    _c("van-cell", {
+                      attrs: {
+                        "title-class": "cellleftvalue",
+                        "value-class": "cellrightvalue",
+                        label:
+                          "*批量下载章节子文件夹会生成成 #001 / Vol.001 这种格式",
+                        center: "",
+                      },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "title",
+                          fn: function () {
+                            return [
+                              _c("span", { staticClass: "custom-title" }, [
+                                _vm._v("批量文件夹前缀"),
+                              ]),
+                            ]
+                          },
+                          proxy: true,
+                        },
+                        {
+                          key: "default",
+                          fn: function () {
+                            return [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.batchFolderPrefix,
+                                    expression: "batchFolderPrefix",
+                                  },
+                                ],
+                                staticClass: "rightbutton",
+                                attrs: { type: "text", maxlength: "12" },
+                                domProps: { value: _vm.batchFolderPrefix },
+                                on: {
+                                  blur: _vm.batchFolderPrefixBlur,
+                                  input: function ($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.batchFolderPrefix = $event.target.value
+                                  },
                                 },
                               }),
                             ]
@@ -18710,6 +18864,27 @@ importPage_component.options.__file = "src/components/importPage.vue"
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* eslint-disable no-undef */
 
@@ -18740,6 +18915,7 @@ importPage_component.options.__file = "src/components/importPage.vue"
       maxChapterNum: 1,
       maxPictureNum: 2,
       imgIndexBitNum: 3,
+      batchFolderPrefix: '#',
       imgDownRange: [1, -1],
       zipNameTemplate: '',
       metadataSettings: { ...metadataSettingsDefault },
@@ -18779,7 +18955,8 @@ importPage_component.options.__file = "src/components/importPage.vue"
       dropItem: [
         { Text: '直接下载', value: 0 },
         { Text: '压缩下载', value: 1 },
-        { Text: '拼接下载', value: 2, hint: '拼接后单张高度不超过 10000 像素' }
+        { Text: '拼接下载', value: 2, hint: '拼接后单张高度不超过 10000 像素' },
+        { Text: '批量下载', value: 3, hint: '创建漫画总文件夹，并在里面按章节生成子文件夹' }
       ]
 
     }
@@ -18848,6 +19025,10 @@ importPage_component.options.__file = "src/components/importPage.vue"
       if (val < 10000) this.maxSplicingHeight = 10000
       if (val > 65530) this.maxSplicingHeight = 65530
       this.onChangeData('maxSplicingHeight', this.maxSplicingHeight)
+    },
+    batchFolderPrefixBlur() {
+      this.batchFolderPrefix = String(this.batchFolderPrefix || '').trim() || '#'
+      this.onChangeData('batchFolderPrefix', this.batchFolderPrefix)
     },
     imgDownRangeBlur() {
       if (this.imgDownRange[0] < 1) this.imgDownRange[0] = 1
@@ -18954,6 +19135,7 @@ importPage_component.options.__file = "src/components/importPage.vue"
         this.downType = GM_getValue('downType') ?? this.downType
         this.maxSplicingHeight = GM_getValue('maxSplicingHeight') ?? this.maxSplicingHeight
         this.imgIndexBitNum = GM_getValue('imgIndexBitNum') ?? this.imgIndexBitNum
+        this.batchFolderPrefix = GM_getValue('batchFolderPrefix') ?? this.batchFolderPrefix
         this.imgSplicingFlag = GM_getValue('imgSplicingFlag') ?? this.imgSplicingFlag
 
         this.imgDownRange = GM_getValue('imgDownRange') ?? this.imgDownRange

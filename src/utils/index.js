@@ -179,12 +179,16 @@ export const openVerifyPage = (url) => {
   return window.open(url, '_blank')
 }
 
-let rootDir = '10Comic'
-
-try {
-  rootDir = getStorage('rootDir')
-} catch (error) {
-  //
+const getRootDir = () => {
+  try {
+    const value = String(getStorage('rootDir') || '').trim()
+    if (value === '10Comic') {
+      return ''
+    }
+    return value
+  } catch (error) {
+    return ''
+  }
 }
 
 export const downFile = async(...detail) => {
@@ -196,12 +200,14 @@ export const downFile = async(...detail) => {
     name = detail[1]
   }
   name = name.replace(/\s+/ig, ' ')
+  const rootDir = getRootDir()
+  const downloadName = rootDir ? rootDir + '\\' + name : name
 
   return new Promise((resolve, reject) => {
     // eslint-disable-next-line no-undef
     GM_download({
       url,
-      name: rootDir + '\\' + name,
+      name: downloadName,
       headers: headers,
       onload: (onload || function(res) {
         resolve(true)

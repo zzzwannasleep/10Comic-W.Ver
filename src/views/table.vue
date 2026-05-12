@@ -23,6 +23,7 @@
               <van-radio :name="0">直接下载</van-radio>
               <van-radio :name="1">压缩下载</van-radio>
               <van-radio :name="2" title="拼接后单张高度不超过 10000 像素">拼接下载<van-icon name="info-o" color="red" /></van-radio>
+              <van-radio :name="3" title="创建漫画总文件夹，并在里面按章节生成子文件夹">批量下载</van-radio>
             </van-radio-group>
           </template>
         </van-cell>
@@ -414,12 +415,13 @@ export default {
       const followItem = findFollowItem(window.location.href, currentComics.webName, this.comicName)
       const authorName = followItem?.authorName || this.authorName || ''
       const seriesChapterCount = list.length
-      return list.map((item) => {
+      return list.map((item, index) => {
         return {
           webName: currentComics.webName,
           authorName,
           comicPageUrl: window.location.href,
           seriesChapterCount,
+          chapterIndex: item.chapterIndex || (index + 1),
           ...item,
           imageSource: item.imageSource || this.getSelectedImageSource()
         }
@@ -726,6 +728,7 @@ export default {
         webName: currentComics.webName,
         comicPageUrl: window.location.href,
         seriesChapterCount: 1,
+        chapterIndex: 1,
         chapterNumStr: '',
         chapterName: this.definechapterName,
         downChapterName: this.definechapterName,
@@ -829,6 +832,7 @@ export default {
       this.getSelectList()
     },
     characterSequenceChange() {
+      const bitNum = getStorage('imgIndexBitNum') || 3
       if (!this.useCharacterNum) {
         // 删除 前几个字符
         this.list.forEach((item, index) => {
@@ -840,11 +844,11 @@ export default {
       if (this.characterNumSequence === true) {
         const len = this.list.length
         this.list.forEach((item, index) => {
-          item.chapterNumStr = addZeroForNum(len - index, 3)
+          item.chapterNumStr = addZeroForNum(len - index, bitNum)
         })
       } else {
         this.list.forEach((item, index) => {
-          item.chapterNumStr = addZeroForNum(index + 1, 3)
+          item.chapterNumStr = addZeroForNum(index + 1, bitNum)
         })
       }
     }

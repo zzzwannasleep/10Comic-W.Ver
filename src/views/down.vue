@@ -144,11 +144,27 @@ export default {
     getComicName(value) {
       if (value !== '------') { this.comicName = value }
     },
+    normalizeBatchDownloadItems(list = []) {
+      const groupCounterMap = new Map()
+      return list.map((item) => {
+        if (item?.downType !== 3) {
+          return item
+        }
+        const groupKey = `${item.webName || ''}__${item.comicPageUrl || item.comicName || ''}`
+        const nextIndex = (groupCounterMap.get(groupKey) || 0) + 1
+        groupCounterMap.set(groupKey, nextIndex)
+        const chapterIndex = parseInt(item.chapterIndex, 10)
+        return {
+          ...item,
+          batchFolderIndex: Number.isInteger(chapterIndex) && chapterIndex > 0 ? chapterIndex : nextIndex
+        }
+      })
+    },
     downInit(arr) {
-      const downloadItems = (arr || []).map(item => ({
+      const downloadItems = this.normalizeBatchDownloadItems((arr || []).map(item => ({
         originTab: item?.originTab ?? 3,
         ...item
-      }))
+      })))
       if (shouldPreviewMetadataForItems(downloadItems)) {
         this.$bus.$emit('openMetadataPreview', downloadItems)
         this.$bus.$emit('changTab', 6)

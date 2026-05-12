@@ -314,6 +314,27 @@
               </template>
             </van-cell>
 
+            <van-cell
+              title-class="cellleftvalue"
+              value-class="cellrightvalue"
+              label="*批量下载章节子文件夹会生成成 #001 / Vol.001 这种格式"
+              center
+            >
+              <template #title>
+                <span class="custom-title">批量文件夹前缀</span>
+              </template>
+
+              <template #default>
+                <input
+                  v-model="batchFolderPrefix"
+                  class="rightbutton"
+                  type="text"
+                  maxlength="12"
+                  @blur="batchFolderPrefixBlur"
+                >
+              </template>
+            </van-cell>
+
             <!-- 图片下载范围 -->
             <van-cell
               title-class="cellleftvalue"
@@ -777,6 +798,7 @@ export default {
       maxChapterNum: 1,
       maxPictureNum: 2,
       imgIndexBitNum: 3,
+      batchFolderPrefix: '#',
       imgDownRange: [1, -1],
       zipNameTemplate: '',
       metadataSettings: { ...metadataSettingsDefault },
@@ -816,7 +838,8 @@ export default {
       dropItem: [
         { Text: '直接下载', value: 0 },
         { Text: '压缩下载', value: 1 },
-        { Text: '拼接下载', value: 2, hint: '拼接后单张高度不超过 10000 像素' }
+        { Text: '拼接下载', value: 2, hint: '拼接后单张高度不超过 10000 像素' },
+        { Text: '批量下载', value: 3, hint: '创建漫画总文件夹，并在里面按章节生成子文件夹' }
       ]
 
     }
@@ -885,6 +908,10 @@ export default {
       if (val < 10000) this.maxSplicingHeight = 10000
       if (val > 65530) this.maxSplicingHeight = 65530
       this.onChangeData('maxSplicingHeight', this.maxSplicingHeight)
+    },
+    batchFolderPrefixBlur() {
+      this.batchFolderPrefix = String(this.batchFolderPrefix || '').trim() || '#'
+      this.onChangeData('batchFolderPrefix', this.batchFolderPrefix)
     },
     imgDownRangeBlur() {
       if (this.imgDownRange[0] < 1) this.imgDownRange[0] = 1
@@ -991,6 +1018,7 @@ export default {
         this.downType = GM_getValue('downType') ?? this.downType
         this.maxSplicingHeight = GM_getValue('maxSplicingHeight') ?? this.maxSplicingHeight
         this.imgIndexBitNum = GM_getValue('imgIndexBitNum') ?? this.imgIndexBitNum
+        this.batchFolderPrefix = GM_getValue('batchFolderPrefix') ?? this.batchFolderPrefix
         this.imgSplicingFlag = GM_getValue('imgSplicingFlag') ?? this.imgSplicingFlag
 
         this.imgDownRange = GM_getValue('imgDownRange') ?? this.imgDownRange
