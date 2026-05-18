@@ -1,8 +1,12 @@
 // ==UserScript==
 // @name         10图漫
 // @namespace    http://tampermonkey2.net/
+<<<<<<< HEAD
 // @version      2.0.12.20260518042326
 // @build        20260518042326
+=======
+// @version      2.0.12
+>>>>>>> 2c10681507d63936352538a7cf25b12f2cb2721b
 // @description  Multi-site comic search and chapter download userscript.
 // @author       journey3510
 // @homepageURL  https://github.com/zzzwannasleep/10Comic-W.Ver
@@ -5989,8 +5993,11 @@ module.exports = styleTagTransform;
 /* eslint-disable no-undef */
 const AppName = "10图漫"
 const AppVersion = "2.0.12"
+<<<<<<< HEAD
 const AppReleaseVersion = "2.0.12.20260518042326"
 const AppBuildId = "20260518042326"
+=======
+>>>>>>> 2c10681507d63936352538a7cf25b12f2cb2721b
 const AppEnv = "production"
 const AppHomepageUrl = "https://github.com/zzzwannasleep/10Comic-W.Ver"
 const AppSupportUrl = "https://github.com/zzzwannasleep/10Comic-W.Ver/issues"
