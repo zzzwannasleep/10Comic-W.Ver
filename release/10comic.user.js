@@ -1,7 +1,8 @@
 // ==UserScript==
 // @name         10图漫
 // @namespace    http://tampermonkey2.net/
-// @version      2.0.11
+// @version      2.0.12.20260518042326
+// @build        20260518042326
 // @description  Multi-site comic search and chapter download userscript.
 // @author       journey3510
 // @homepageURL  https://github.com/zzzwannasleep/10Comic-W.Ver
@@ -2319,7 +2320,7 @@ function BufferBigIntNotDefined () {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".van-cell__title {\n  text-align: left;\n}\n.van-cell-group__title--inset {\n  text-align: left;\n}\n.van-button--default {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled {\n  opacity: 1 !important;\n}\n.van-tag--default {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow {\n  color: #d9d9d9 !important;\n}\n.van-popover__content {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".van-cell__title {\n  text-align: left;\n}\n.van-cell-group__title--inset {\n  text-align: left;\n}\n.van-button--default {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled {\n  opacity: 1 !important;\n}\n.van-tag--default {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow {\n  color: #d9d9d9 !important;\n}\n.van-popover__content {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n.van-cell__title {\n  text-align: left;\n}\n.van-cell-group__title--inset {\n  text-align: left;\n}\n.van-button--default {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled {\n  opacity: 1 !important;\n}\n.van-tag--default {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow {\n  color: #d9d9d9 !important;\n}\n.van-popover__content {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -5977,6 +5978,8 @@ module.exports = styleTagTransform;
 /* harmony export */   "Hi": () => (/* binding */ AppDownloadUrl),
 /* harmony export */   "KR": () => (/* binding */ AppSupportUrl),
 /* harmony export */   "QW": () => (/* binding */ AppUpdateUrl),
+/* harmony export */   "W1": () => (/* binding */ AppReleaseVersion),
+/* harmony export */   "YQ": () => (/* binding */ AppBuildId),
 /* harmony export */   "bF": () => (/* binding */ AppVersion),
 /* harmony export */   "lW": () => (/* binding */ AppName),
 /* harmony export */   "r8": () => (/* binding */ isDev),
@@ -5985,7 +5988,9 @@ module.exports = styleTagTransform;
 /* unused harmony export AppEnv */
 /* eslint-disable no-undef */
 const AppName = "10图漫"
-const AppVersion = "2.0.11"
+const AppVersion = "2.0.12"
+const AppReleaseVersion = "2.0.12.20260518042326"
+const AppBuildId = "20260518042326"
 const AppEnv = "production"
 const AppHomepageUrl = "https://github.com/zzzwannasleep/10Comic-W.Ver"
 const AppSupportUrl = "https://github.com/zzzwannasleep/10Comic-W.Ver/issues"
@@ -6070,7 +6075,9 @@ const configDefault = {
     lastSuccessCheckAt: 0,
     lastFailureCheckAt: 0,
     lastPromptVersion: '',
+    lastPromptReleaseKey: '',
     latestVersion: '',
+    latestBuildId: '',
     latestDownloadUrl: '',
     latestUpdateUrl: '',
     lastResult: 'idle',
@@ -18315,7 +18322,9 @@ const updateCheckStateDefault = {
   lastSuccessCheckAt: 0,
   lastFailureCheckAt: 0,
   lastPromptVersion: '',
+  lastPromptReleaseKey: '',
   latestVersion: '',
+  latestBuildId: '',
   latestDownloadUrl: '',
   latestUpdateUrl: '',
   lastResult: 'idle',
@@ -18368,10 +18377,12 @@ const getScriptInfo = () => {
   }
 
   return {
-    updateUrl: normalizeString(config/* AppUpdateUrl */.QW) || normalizeString(scriptInfo.updateURL) || normalizeString(scriptInfo.updateUrl),
-    downloadUrl: normalizeString(config/* AppDownloadUrl */.Hi) || normalizeString(scriptInfo.downloadURL) || normalizeString(scriptInfo.downloadUrl),
-    homepageUrl: normalizeString(config/* AppHomepageUrl */.x5) || normalizeString(scriptInfo.homepageURL) || normalizeString(scriptInfo.homepageUrl),
-    supportUrl: normalizeString(config/* AppSupportUrl */.KR) || normalizeString(scriptInfo.supportURL) || normalizeString(scriptInfo.supportUrl)
+    version: normalizeString(scriptInfo.version) || normalizeString(config/* AppReleaseVersion */.W1) || normalizeString(config/* AppVersion */.bF),
+    buildId: normalizeString(scriptInfo.build) || normalizeString(scriptInfo.buildId) || normalizeString(config/* AppBuildId */.YQ),
+    updateUrl: normalizeString(scriptInfo.updateURL) || normalizeString(scriptInfo.updateUrl) || normalizeString(config/* AppUpdateUrl */.QW),
+    downloadUrl: normalizeString(scriptInfo.downloadURL) || normalizeString(scriptInfo.downloadUrl) || normalizeString(config/* AppDownloadUrl */.Hi),
+    homepageUrl: normalizeString(scriptInfo.homepageURL) || normalizeString(scriptInfo.homepageUrl) || normalizeString(config/* AppHomepageUrl */.x5),
+    supportUrl: normalizeString(scriptInfo.supportURL) || normalizeString(scriptInfo.supportUrl) || normalizeString(config/* AppSupportUrl */.KR)
   }
 }
 
@@ -18454,6 +18465,42 @@ const compareVersions = (currentVersion, nextVersion) => {
   }
 
   return 0
+}
+
+const compareReleaseVersions = (currentVersion, nextVersion, currentBuildId = '', nextBuildId = '') => {
+  const versionCompareResult = compareVersions(currentVersion, nextVersion)
+  if (versionCompareResult !== 0) {
+    return versionCompareResult
+  }
+
+  const normalizedCurrentBuildId = normalizeString(currentBuildId)
+  const normalizedNextBuildId = normalizeString(nextBuildId)
+
+  if (!normalizedCurrentBuildId || !normalizedNextBuildId) {
+    return 0
+  }
+
+  return compareVersions(normalizedCurrentBuildId, normalizedNextBuildId)
+}
+
+const buildReleaseKey = (version, buildId = '') => {
+  const parts = [normalizeString(version), normalizeString(buildId)].filter(Boolean)
+  return parts.join('#')
+}
+
+const formatReleaseVersion = (version, buildId = '') => {
+  const normalizedVersion = normalizeString(version)
+  const normalizedBuildId = normalizeString(buildId)
+
+  if (!normalizedVersion) {
+    return ''
+  }
+
+  if (!normalizedBuildId || normalizedVersion.endsWith(`.${normalizedBuildId}`)) {
+    return normalizedVersion
+  }
+
+  return `${normalizedVersion}.${normalizedBuildId}`
 }
 
 const saveUpdateCheckState = (nextState) => {
@@ -18612,12 +18659,15 @@ const openUpdatePage = (urls) => {
 const fetchLatestScriptVersion = async() => {
   const scriptInfo = getScriptInfo()
   const requestCandidates = buildRequestUrlCandidates(scriptInfo)
+  const currentVersion = scriptInfo.version || config/* AppReleaseVersion */.W1 || config/* AppVersion */.bF
+  const currentBuildId = scriptInfo.buildId || config/* AppBuildId */.YQ
 
   if (requestCandidates.length === 0) {
     return {
       ok: false,
       reason: 'missing-url',
-      currentVersion: config/* AppVersion */.bF,
+      currentVersion,
+      currentBuildId,
       triedUrls: []
     }
   }
@@ -18627,24 +18677,32 @@ const fetchLatestScriptVersion = async() => {
     return {
       ok: false,
       reason: metaResult.reason,
-      currentVersion: config/* AppVersion */.bF,
+      currentVersion,
+      currentBuildId,
       triedUrls: metaResult.triedUrls || []
     }
   }
 
   const meta = metaResult.meta
   const latestVersion = normalizeString(meta.version)
+  const latestBuildId = getMetaField(meta, 'build') || getMetaField(meta, 'buildId')
   const updateUrl = getMetaField(meta, 'updateURL') || scriptInfo.updateUrl || metaResult.sourceUrl
   const downloadUrl = getMetaField(meta, 'downloadURL') || scriptInfo.downloadUrl || swapMetaToUserScriptUrl(updateUrl) || metaResult.sourceUrl
   const homepageUrl = getMetaField(meta, 'homepageURL') || scriptInfo.homepageUrl
   const supportUrl = getMetaField(meta, 'supportURL') || scriptInfo.supportUrl
   const installUrlCandidates = buildInstallUrlCandidates(downloadUrl, updateUrl, metaResult.sourceUrl, homepageUrl)
+  const releaseCompareResult = compareReleaseVersions(currentVersion, latestVersion, currentBuildId, latestBuildId)
 
   return {
     ok: true,
-    currentVersion: config/* AppVersion */.bF,
+    currentVersion,
+    currentBuildId,
+    currentDisplayVersion: formatReleaseVersion(currentVersion, currentBuildId),
     latestVersion,
-    hasUpdate: compareVersions(config/* AppVersion */.bF, latestVersion) < 0,
+    latestBuildId,
+    latestDisplayVersion: formatReleaseVersion(latestVersion, latestBuildId),
+    hasUpdate: releaseCompareResult < 0,
+    releaseKey: buildReleaseKey(latestVersion, latestBuildId),
     updateUrl,
     downloadUrl,
     homepageUrl,
@@ -18727,7 +18785,8 @@ const runScriptUpdateCheck = async({ manual = false } = {}) => {
     lastCheckAt: checkedAt,
     lastSuccessCheckAt: checkedAt,
     lastFailureCheckAt: 0,
-    latestVersion: result.latestVersion || '',
+    latestVersion: result.latestDisplayVersion || result.latestVersion || '',
+    latestBuildId: result.latestBuildId || '',
     latestDownloadUrl: result.downloadUrl || '',
     latestUpdateUrl: result.updateUrl || '',
     lastResult: result.hasUpdate ? 'update-available' : 'up-to-date',
@@ -18737,12 +18796,15 @@ const runScriptUpdateCheck = async({ manual = false } = {}) => {
 
   if (!result.hasUpdate) {
     if (manual) {
-      notifyLatestVersion(result.currentVersion)
+      notifyLatestVersion(result.currentDisplayVersion || result.currentVersion)
     }
     return result
   }
 
-  if (!manual && state.lastPromptVersion === result.latestVersion) {
+  const latestReleaseKey = result.releaseKey || buildReleaseKey(result.latestVersion, result.latestBuildId)
+  const lastPromptReleaseKey = state.lastPromptReleaseKey || state.lastPromptVersion
+
+  if (!manual && lastPromptReleaseKey === latestReleaseKey) {
     return {
       ...result,
       skipped: true,
@@ -18751,10 +18813,14 @@ const runScriptUpdateCheck = async({ manual = false } = {}) => {
   }
 
   saveUpdateCheckState({
-    lastPromptVersion: result.latestVersion
+    lastPromptVersion: result.latestVersion,
+    lastPromptReleaseKey: latestReleaseKey
   })
 
-  const accepted = confirmUpdate(result.currentVersion, result.latestVersion)
+  const accepted = confirmUpdate(
+    result.currentDisplayVersion || result.currentVersion,
+    result.latestDisplayVersion || result.latestVersion
+  )
   if (accepted) {
     openUpdatePage(result.installUrlCandidates || [result.installUrl || result.downloadUrl || result.updateUrl || result.homepageUrl || result.supportUrl])
   }
@@ -19694,7 +19760,9 @@ importPage_component.options.__file = "src/components/importPage.vue"
         lastSuccessCheckAt: 0,
         lastFailureCheckAt: 0,
         lastPromptVersion: '',
+        lastPromptReleaseKey: '',
         latestVersion: '',
+        latestBuildId: '',
         latestDownloadUrl: '',
         latestUpdateUrl: '',
         lastResult: 'idle',

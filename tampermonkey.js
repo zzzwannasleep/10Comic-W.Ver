@@ -1,7 +1,8 @@
 // ==UserScript==
 // @name         __APP_NAME__
 // @namespace    http://tampermonkey2.net/
-// @version      __APP_VERSION__
+// @version      __APP_RELEASE_VERSION__
+// @build        __APP_BUILD_ID__
 // @description  Multi-site comic search and chapter download userscript.
 // @author       journey3510
 __APP_HOMEPAGE_URL_LINE__

@@ -2,6 +2,8 @@
 import {
   AppName,
   AppVersion,
+  AppReleaseVersion,
+  AppBuildId,
   AppHomepageUrl,
   AppSupportUrl,
   AppUpdateUrl,
@@ -22,7 +24,9 @@ const updateCheckStateDefault = {
   lastSuccessCheckAt: 0,
   lastFailureCheckAt: 0,
   lastPromptVersion: '',
+  lastPromptReleaseKey: '',
   latestVersion: '',
+  latestBuildId: '',
   latestDownloadUrl: '',
   latestUpdateUrl: '',
   lastResult: 'idle',
@@ -75,10 +79,12 @@ const getScriptInfo = () => {
   }
 
   return {
-    updateUrl: normalizeString(AppUpdateUrl) || normalizeString(scriptInfo.updateURL) || normalizeString(scriptInfo.updateUrl),
-    downloadUrl: normalizeString(AppDownloadUrl) || normalizeString(scriptInfo.downloadURL) || normalizeString(scriptInfo.downloadUrl),
-    homepageUrl: normalizeString(AppHomepageUrl) || normalizeString(scriptInfo.homepageURL) || normalizeString(scriptInfo.homepageUrl),
-    supportUrl: normalizeString(AppSupportUrl) || normalizeString(scriptInfo.supportURL) || normalizeString(scriptInfo.supportUrl)
+    version: normalizeString(scriptInfo.version) || normalizeString(AppReleaseVersion) || normalizeString(AppVersion),
+    buildId: normalizeString(scriptInfo.build) || normalizeString(scriptInfo.buildId) || normalizeString(AppBuildId),
+    updateUrl: normalizeString(scriptInfo.updateURL) || normalizeString(scriptInfo.updateUrl) || normalizeString(AppUpdateUrl),
+    downloadUrl: normalizeString(scriptInfo.downloadURL) || normalizeString(scriptInfo.downloadUrl) || normalizeString(AppDownloadUrl),
+    homepageUrl: normalizeString(scriptInfo.homepageURL) || normalizeString(scriptInfo.homepageUrl) || normalizeString(AppHomepageUrl),
+    supportUrl: normalizeString(scriptInfo.supportURL) || normalizeString(scriptInfo.supportUrl) || normalizeString(AppSupportUrl)
   }
 }
 
@@ -161,6 +167,42 @@ export const compareVersions = (currentVersion, nextVersion) => {
   }
 
   return 0
+}
+
+const compareReleaseVersions = (currentVersion, nextVersion, currentBuildId = '', nextBuildId = '') => {
+  const versionCompareResult = compareVersions(currentVersion, nextVersion)
+  if (versionCompareResult !== 0) {
+    return versionCompareResult
+  }
+
+  const normalizedCurrentBuildId = normalizeString(currentBuildId)
+  const normalizedNextBuildId = normalizeString(nextBuildId)
+
+  if (!normalizedCurrentBuildId || !normalizedNextBuildId) {
+    return 0
+  }
+
+  return compareVersions(normalizedCurrentBuildId, normalizedNextBuildId)
+}
+
+const buildReleaseKey = (version, buildId = '') => {
+  const parts = [normalizeString(version), normalizeString(buildId)].filter(Boolean)
+  return parts.join('#')
+}
+
+const formatReleaseVersion = (version, buildId = '') => {
+  const normalizedVersion = normalizeString(version)
+  const normalizedBuildId = normalizeString(buildId)
+
+  if (!normalizedVersion) {
+    return ''
+  }
+
+  if (!normalizedBuildId || normalizedVersion.endsWith(`.${normalizedBuildId}`)) {
+    return normalizedVersion
+  }
+
+  return `${normalizedVersion}.${normalizedBuildId}`
 }
 
 const saveUpdateCheckState = (nextState) => {
@@ -319,12 +361,15 @@ const openUpdatePage = (urls) => {
 export const fetchLatestScriptVersion = async() => {
   const scriptInfo = getScriptInfo()
   const requestCandidates = buildRequestUrlCandidates(scriptInfo)
+  const currentVersion = scriptInfo.version || AppReleaseVersion || AppVersion
+  const currentBuildId = scriptInfo.buildId || AppBuildId
 
   if (requestCandidates.length === 0) {
     return {
       ok: false,
       reason: 'missing-url',
-      currentVersion: AppVersion,
+      currentVersion,
+      currentBuildId,
       triedUrls: []
     }
   }
@@ -334,24 +379,32 @@ export const fetchLatestScriptVersion = async() => {
     return {
       ok: false,
       reason: metaResult.reason,
-      currentVersion: AppVersion,
+      currentVersion,
+      currentBuildId,
       triedUrls: metaResult.triedUrls || []
     }
   }
 
   const meta = metaResult.meta
   const latestVersion = normalizeString(meta.version)
+  const latestBuildId = getMetaField(meta, 'build') || getMetaField(meta, 'buildId')
   const updateUrl = getMetaField(meta, 'updateURL') || scriptInfo.updateUrl || metaResult.sourceUrl
   const downloadUrl = getMetaField(meta, 'downloadURL') || scriptInfo.downloadUrl || swapMetaToUserScriptUrl(updateUrl) || metaResult.sourceUrl
   const homepageUrl = getMetaField(meta, 'homepageURL') || scriptInfo.homepageUrl
   const supportUrl = getMetaField(meta, 'supportURL') || scriptInfo.supportUrl
   const installUrlCandidates = buildInstallUrlCandidates(downloadUrl, updateUrl, metaResult.sourceUrl, homepageUrl)
+  const releaseCompareResult = compareReleaseVersions(currentVersion, latestVersion, currentBuildId, latestBuildId)
 
   return {
     ok: true,
-    currentVersion: AppVersion,
+    currentVersion,
+    currentBuildId,
+    currentDisplayVersion: formatReleaseVersion(currentVersion, currentBuildId),
     latestVersion,
-    hasUpdate: compareVersions(AppVersion, latestVersion) < 0,
+    latestBuildId,
+    latestDisplayVersion: formatReleaseVersion(latestVersion, latestBuildId),
+    hasUpdate: releaseCompareResult < 0,
+    releaseKey: buildReleaseKey(latestVersion, latestBuildId),
     updateUrl,
     downloadUrl,
     homepageUrl,
@@ -434,7 +487,8 @@ export const runScriptUpdateCheck = async({ manual = false } = {}) => {
     lastCheckAt: checkedAt,
     lastSuccessCheckAt: checkedAt,
     lastFailureCheckAt: 0,
-    latestVersion: result.latestVersion || '',
+    latestVersion: result.latestDisplayVersion || result.latestVersion || '',
+    latestBuildId: result.latestBuildId || '',
     latestDownloadUrl: result.downloadUrl || '',
     latestUpdateUrl: result.updateUrl || '',
     lastResult: result.hasUpdate ? 'update-available' : 'up-to-date',
@@ -444,12 +498,15 @@ export const runScriptUpdateCheck = async({ manual = false } = {}) => {
 
   if (!result.hasUpdate) {
     if (manual) {
-      notifyLatestVersion(result.currentVersion)
+      notifyLatestVersion(result.currentDisplayVersion || result.currentVersion)
     }
     return result
   }
 
-  if (!manual && state.lastPromptVersion === result.latestVersion) {
+  const latestReleaseKey = result.releaseKey || buildReleaseKey(result.latestVersion, result.latestBuildId)
+  const lastPromptReleaseKey = state.lastPromptReleaseKey || state.lastPromptVersion
+
+  if (!manual && lastPromptReleaseKey === latestReleaseKey) {
     return {
       ...result,
       skipped: true,
@@ -458,10 +515,14 @@ export const runScriptUpdateCheck = async({ manual = false } = {}) => {
   }
 
   saveUpdateCheckState({
-    lastPromptVersion: result.latestVersion
+    lastPromptVersion: result.latestVersion,
+    lastPromptReleaseKey: latestReleaseKey
   })
 
-  const accepted = confirmUpdate(result.currentVersion, result.latestVersion)
+  const accepted = confirmUpdate(
+    result.currentDisplayVersion || result.currentVersion,
+    result.latestDisplayVersion || result.latestVersion
+  )
   if (accepted) {
     openUpdatePage(result.installUrlCandidates || [result.installUrl || result.downloadUrl || result.updateUrl || result.homepageUrl || result.supportUrl])
   }

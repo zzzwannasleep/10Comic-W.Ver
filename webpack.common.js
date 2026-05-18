@@ -2,6 +2,7 @@ const path = require('path')
 const webpack = require('webpack')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const { resolveBuildMeta } = require('./scripts/build-meta')
 
 // const pathResolve = (dir) => {
 //   return path.resolve(__dirname, '..', dir)
@@ -10,6 +11,8 @@ const less = path.resolve(__dirname, 'src/styles/global.less')
 
 module.exports = () => {
   const entryFile = process.env.TAMPERMONKEY_ENTRY_FILE
+  const buildMeta = resolveBuildMeta()
+
   return {
     entry: {
       app: './src/main.js'
@@ -87,7 +90,9 @@ module.exports = () => {
       new webpack.DefinePlugin({
         __APP_NAME__: JSON.stringify(process.env.TAMPERMONKEY_APP_NAME),
         __APP_ENVIRONMENT__: JSON.stringify(process.env.TAMPERMONKEY_APP_ENVIRONMENT),
-        __APP_VERSION__: JSON.stringify(require('./package.json').version),
+        __APP_VERSION__: JSON.stringify(buildMeta.baseVersion),
+        __APP_RELEASE_VERSION__: JSON.stringify(buildMeta.releaseVersion),
+        __APP_BUILD_ID__: JSON.stringify(buildMeta.buildId),
         __APP_HOMEPAGE_URL__: JSON.stringify(process.env.TAMPERMONKEY_HOMEPAGE_URL || ''),
         __APP_SUPPORT_URL__: JSON.stringify(process.env.TAMPERMONKEY_SUPPORT_URL || ''),
         __APP_UPDATE_URL__: JSON.stringify(process.env.TAMPERMONKEY_UPDATE_URL || ''),

@@ -12,8 +12,8 @@
   ],
   "scripts": {
     "dev": "dotenv -e .env.dev -- webpack-dev-server --open --config webpack.dev.js",
-    "build": "dotenv -e .env -- webpack --config webpack.prod.js && dotenv -e .env -- node build.js",
-    "build:dev": "dotenv -e .env.dev -- webpack --config webpack.prod.js && dotenv -e .env.dev -- node build.js",
+    "build": "node scripts/prepare-build.js && dotenv -e .env -- webpack --config webpack.prod.js && dotenv -e .env -- node build.js",
+    "build:dev": "node scripts/prepare-build.js && dotenv -e .env.dev -- webpack --config webpack.prod.js && dotenv -e .env.dev -- node build.js",
     "test": "dotenv -e .env.test -- webpack --config webpack.test.js --watch"
   },
   "license": "MIT",
