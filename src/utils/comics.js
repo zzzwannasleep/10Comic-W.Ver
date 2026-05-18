@@ -591,8 +591,8 @@ const getNhentaiMetadata = async(downloadItem = {}) => {
   }
 }
 
-const EHENTAI_API_URL = 'https://api.e-hentai.org/api.php'
 const EHENTAI_HOMEPAGE = 'https://e-hentai.org/'
+const EHENTAI_API_URL = 'https://api.e-hentai.org/api.php'
 const EHENTAI_GALLERY_PAGE_SIZE = 20
 const EHENTAI_IMAGE_LINK_TEXT_REG = /download original|full[-\s]size image|open full[-\s]size image/i
 const EHENTAI_IMAGE_PLACEHOLDER_REG = /\/(?:blank|mr)\.gif(?:$|[?#])/i
@@ -882,23 +882,16 @@ const getEhentaiReaderImageUrlFromRoot = (root, pageUrl = '') => {
   return ''
 }
 
-const getEhentaiGalleryTokenByReaderPageUrl = async(pageUrl = '') => {
-  const readerInfo = getEhentaiReaderMatch(pageUrl)
-  if (!readerInfo?.gid || !readerInfo?.pageToken || !readerInfo?.pageNumber) {
-    return ''
+const getEhentaiResolvedGalleryUrl = async(pageUrl, responseText = '') => {
+  const currentPageUrl = pageUrl || window.location.href
+  const currentRoot = responseText ? parseToDOM(responseText) : null
+
+  const galleryUrlFromRoot = getEhentaiGalleryUrlFromRoot(currentRoot, currentPageUrl)
+  if (galleryUrlFromRoot) {
+    return galleryUrlFromRoot
   }
 
-  try {
-    const result = await getEhentaiApiJson({
-      method: 'gtoken',
-      pagelist: [[parseInt(readerInfo.gid), readerInfo.pageToken, readerInfo.pageNumber]]
-    }, `E-Hentai gallery token ${readerInfo.gid}`)
-
-    return toCleanText(result?.tokenlist?.[0]?.token || '')
-  } catch (error) {
-    console.log('getEhentaiGalleryTokenByReaderPageUrl-e: ', error)
-    return ''
-  }
+  return ''
 }
 
 const getEhentaiGalleryMetadataByApi = async(galleryUrl = '') => {
@@ -920,27 +913,6 @@ const getEhentaiGalleryMetadataByApi = async(galleryUrl = '') => {
   }
 
   return metadata
-}
-
-const getEhentaiResolvedGalleryUrl = async(pageUrl, responseText = '') => {
-  const currentPageUrl = pageUrl || window.location.href
-  const currentRoot = responseText ? parseToDOM(responseText) : null
-
-  const galleryUrlFromRoot = getEhentaiGalleryUrlFromRoot(currentRoot, currentPageUrl)
-  if (galleryUrlFromRoot) {
-    return galleryUrlFromRoot
-  }
-
-  if (!getEhentaiReaderMatch(currentPageUrl)) {
-    return ''
-  }
-
-  const galleryToken = await getEhentaiGalleryTokenByReaderPageUrl(currentPageUrl)
-  if (!galleryToken) {
-    return ''
-  }
-
-  return getEhentaiGalleryBaseUrl(currentPageUrl, galleryToken)
 }
 
 const getEhentaiGalleryReaderPageUrls = async(pageUrl, responseText = '', resolvedGalleryUrl = '') => {
@@ -1171,14 +1143,6 @@ const getEhentaiTagMapFromRoot = (root) => {
   return tagMap
 }
 
-const getEhentaiNamespaceValuesFromApi = (tagList = [], namespace = '') => {
-  const prefix = `${namespace}:`
-  return uniqUrlList((tagList || [])
-    .filter(tag => String(tag || '').startsWith(prefix))
-    .map(tag => String(tag || '').slice(prefix.length).trim())
-    .filter(Boolean))
-}
-
 const getEhentaiLanguageIsoByText = (value = '') => {
   const text = String(value || '').trim().toLowerCase()
   const languageMap = {
@@ -1280,10 +1244,17 @@ const getEhentaiMetadata = async(downloadItem = {}) => {
   const domArtistList = tagMap.artist || []
   const domGroupList = tagMap.group || []
   const apiTagList = Array.isArray(apiMetadata?.tags) ? apiMetadata.tags.filter(Boolean) : []
-  const artistList = apiTagList.length > 0 ? getEhentaiNamespaceValuesFromApi(apiTagList, 'artist') : domArtistList
-  const groupList = apiTagList.length > 0 ? getEhentaiNamespaceValuesFromApi(apiTagList, 'group') : domGroupList
+  const getNamespaceValuesFromApi = (namespace) => {
+    const prefix = `${namespace}:`
+    return uniqUrlList(apiTagList
+      .filter(tag => String(tag || '').startsWith(prefix))
+      .map(tag => String(tag || '').slice(prefix.length).trim())
+      .filter(Boolean))
+  }
+  const artistList = apiTagList.length > 0 ? getNamespaceValuesFromApi('artist') : domArtistList
+  const groupList = apiTagList.length > 0 ? getNamespaceValuesFromApi('group') : domGroupList
   const languageText = apiTagList.length > 0
-    ? (getEhentaiNamespaceValuesFromApi(apiTagList, 'language')[0] || detailMap.language || '')
+    ? (getNamespaceValuesFromApi('language')[0] || (tagMap.language || [])[0] || detailMap.language || '')
     : ((tagMap.language || [])[0] || detailMap.language || '')
   const domTagList = Object.entries(tagMap).flatMap(([namespace, valueList]) => {
     if (['artist', 'group', 'language'].includes(namespace)) {

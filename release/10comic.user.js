@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         10图漫
 // @namespace    http://tampermonkey2.net/
-// @version      2.0.12.20260518043503
-// @build        20260518043503
+// @version      2.0.12.20260518051740
+// @build        20260518051740
 // @description  Multi-site comic search and chapter download userscript.
 // @author       journey3510
 // @homepageURL  https://github.com/zzzwannasleep/10Comic-W.Ver
@@ -2320,7 +2320,7 @@ function BufferBigIntNotDefined () {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".van-cell__title {\n  text-align: left;\n}\n.van-cell-group__title--inset {\n  text-align: left;\n}\n.van-button--default {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled {\n  opacity: 1 !important;\n}\n.van-tag--default {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow {\n  color: #d9d9d9 !important;\n}\n.van-popover__content {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".van-cell__title {\n  text-align: left;\n}\n.van-cell-group__title--inset {\n  text-align: left;\n}\n.van-button--default {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled {\n  opacity: 1 !important;\n}\n.van-tag--default {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow {\n  color: #d9d9d9 !important;\n}\n.van-popover__content {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n.van-cell__title {\n  text-align: left;\n}\n.van-cell-group__title--inset {\n  text-align: left;\n}\n.van-button--default {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled {\n  opacity: 1 !important;\n}\n.van-tag--default {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow {\n  color: #d9d9d9 !important;\n}\n.van-popover__content {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -5989,8 +5989,8 @@ module.exports = styleTagTransform;
 /* eslint-disable no-undef */
 const AppName = "10图漫"
 const AppVersion = "2.0.12"
-const AppReleaseVersion = "2.0.12.20260518043503"
-const AppBuildId = "20260518043503"
+const AppReleaseVersion = "2.0.12.20260518051740"
+const AppBuildId = "20260518051740"
 const AppEnv = "production"
 const AppHomepageUrl = "https://github.com/zzzwannasleep/10Comic-W.Ver"
 const AppSupportUrl = "https://github.com/zzzwannasleep/10Comic-W.Ver/issues"
@@ -6780,8 +6780,8 @@ const getNhentaiMetadata = async(downloadItem = {}) => {
   }
 }
 
-const EHENTAI_API_URL = 'https://api.e-hentai.org/api.php'
 const EHENTAI_HOMEPAGE = 'https://e-hentai.org/'
+const EHENTAI_API_URL = 'https://api.e-hentai.org/api.php'
 const EHENTAI_GALLERY_PAGE_SIZE = 20
 const EHENTAI_IMAGE_LINK_TEXT_REG = /download original|full[-\s]size image|open full[-\s]size image/i
 const EHENTAI_IMAGE_PLACEHOLDER_REG = /\/(?:blank|mr)\.gif(?:$|[?#])/i
@@ -7071,23 +7071,16 @@ const getEhentaiReaderImageUrlFromRoot = (root, pageUrl = '') => {
   return ''
 }
 
-const getEhentaiGalleryTokenByReaderPageUrl = async(pageUrl = '') => {
-  const readerInfo = getEhentaiReaderMatch(pageUrl)
-  if (!readerInfo?.gid || !readerInfo?.pageToken || !readerInfo?.pageNumber) {
-    return ''
+const getEhentaiResolvedGalleryUrl = async(pageUrl, responseText = '') => {
+  const currentPageUrl = pageUrl || window.location.href
+  const currentRoot = responseText ? (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .parseToDOM */ .U3)(responseText) : null
+
+  const galleryUrlFromRoot = getEhentaiGalleryUrlFromRoot(currentRoot, currentPageUrl)
+  if (galleryUrlFromRoot) {
+    return galleryUrlFromRoot
   }
 
-  try {
-    const result = await getEhentaiApiJson({
-      method: 'gtoken',
-      pagelist: [[parseInt(readerInfo.gid), readerInfo.pageToken, readerInfo.pageNumber]]
-    }, `E-Hentai gallery token ${readerInfo.gid}`)
-
-    return toCleanText(result?.tokenlist?.[0]?.token || '')
-  } catch (error) {
-    console.log('getEhentaiGalleryTokenByReaderPageUrl-e: ', error)
-    return ''
-  }
+  return ''
 }
 
 const getEhentaiGalleryMetadataByApi = async(galleryUrl = '') => {
@@ -7109,27 +7102,6 @@ const getEhentaiGalleryMetadataByApi = async(galleryUrl = '') => {
   }
 
   return metadata
-}
-
-const getEhentaiResolvedGalleryUrl = async(pageUrl, responseText = '') => {
-  const currentPageUrl = pageUrl || window.location.href
-  const currentRoot = responseText ? (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .parseToDOM */ .U3)(responseText) : null
-
-  const galleryUrlFromRoot = getEhentaiGalleryUrlFromRoot(currentRoot, currentPageUrl)
-  if (galleryUrlFromRoot) {
-    return galleryUrlFromRoot
-  }
-
-  if (!getEhentaiReaderMatch(currentPageUrl)) {
-    return ''
-  }
-
-  const galleryToken = await getEhentaiGalleryTokenByReaderPageUrl(currentPageUrl)
-  if (!galleryToken) {
-    return ''
-  }
-
-  return getEhentaiGalleryBaseUrl(currentPageUrl, galleryToken)
 }
 
 const getEhentaiGalleryReaderPageUrls = async(pageUrl, responseText = '', resolvedGalleryUrl = '') => {
@@ -7360,14 +7332,6 @@ const getEhentaiTagMapFromRoot = (root) => {
   return tagMap
 }
 
-const getEhentaiNamespaceValuesFromApi = (tagList = [], namespace = '') => {
-  const prefix = `${namespace}:`
-  return uniqUrlList((tagList || [])
-    .filter(tag => String(tag || '').startsWith(prefix))
-    .map(tag => String(tag || '').slice(prefix.length).trim())
-    .filter(Boolean))
-}
-
 const getEhentaiLanguageIsoByText = (value = '') => {
   const text = String(value || '').trim().toLowerCase()
   const languageMap = {
@@ -7469,10 +7433,17 @@ const getEhentaiMetadata = async(downloadItem = {}) => {
   const domArtistList = tagMap.artist || []
   const domGroupList = tagMap.group || []
   const apiTagList = Array.isArray(apiMetadata?.tags) ? apiMetadata.tags.filter(Boolean) : []
-  const artistList = apiTagList.length > 0 ? getEhentaiNamespaceValuesFromApi(apiTagList, 'artist') : domArtistList
-  const groupList = apiTagList.length > 0 ? getEhentaiNamespaceValuesFromApi(apiTagList, 'group') : domGroupList
+  const getNamespaceValuesFromApi = (namespace) => {
+    const prefix = `${namespace}:`
+    return uniqUrlList(apiTagList
+      .filter(tag => String(tag || '').startsWith(prefix))
+      .map(tag => String(tag || '').slice(prefix.length).trim())
+      .filter(Boolean))
+  }
+  const artistList = apiTagList.length > 0 ? getNamespaceValuesFromApi('artist') : domArtistList
+  const groupList = apiTagList.length > 0 ? getNamespaceValuesFromApi('group') : domGroupList
   const languageText = apiTagList.length > 0
-    ? (getEhentaiNamespaceValuesFromApi(apiTagList, 'language')[0] || detailMap.language || '')
+    ? (getNamespaceValuesFromApi('language')[0] || (tagMap.language || [])[0] || detailMap.language || '')
     : ((tagMap.language || [])[0] || detailMap.language || '')
   const domTagList = Object.entries(tagMap).flatMap(([namespace, valueList]) => {
     if (['artist', 'group', 'language'].includes(namespace)) {
