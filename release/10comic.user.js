@@ -6223,6 +6223,12 @@ const getSearchResultAnchor = (element, namelinkIndex = 0) => {
   return targetAnchor || anchorList[namelinkIndex] || anchorList[0] || null
 }
 
+const toCleanText = (value = '') => {
+  return String(value || '')
+    .replace(/\r|\n/g, '')
+    .trim()
+}
+
 const toUint8Array = (value) => {
   if (!value) {
     return new Uint8Array()
@@ -6767,6 +6773,740 @@ const getNhentaiMetadata = async(downloadItem = {}) => {
   }
 }
 
+const EHENTAI_API_URL = 'https://api.e-hentai.org/api.php'
+const EHENTAI_HOMEPAGE = 'https://e-hentai.org/'
+const EHENTAI_GALLERY_PAGE_SIZE = 20
+const EHENTAI_IMAGE_LINK_TEXT_REG = /download original|full[-\s]size image|open full[-\s]size image/i
+const EHENTAI_IMAGE_PLACEHOLDER_REG = /\/(?:blank|mr)\.gif(?:$|[?#])/i
+
+const postJsonByGuard = async(url, payload, purpose, headers = {}) => {
+  const responseText = await requestTextWithGuard({
+    method: 'post',
+    url,
+    headers: {
+      'Content-Type': 'application/json',
+      ...headers
+    },
+    data: JSON.stringify(payload || {}),
+    purpose,
+    verifyUrl: EHENTAI_HOMEPAGE
+  })
+
+  try {
+    return JSON.parse(responseText)
+  } catch (error) {
+    throw new Error(`${purpose} response is not valid JSON`)
+  }
+}
+
+const getEhentaiApiJson = async(payload, purpose) => {
+  return postJsonByGuard(EHENTAI_API_URL, payload, purpose)
+}
+
+const getEhentaiGalleryMatch = (url = '') => {
+  return String(url || '').match(/\/g\/(\d+)\/([^/?#]+)/i)
+}
+
+const getEhentaiGalleryId = (url = '') => {
+  return getEhentaiGalleryMatch(url)?.[1] || ''
+}
+
+const getEhentaiGalleryToken = (url = '') => {
+  return getEhentaiGalleryMatch(url)?.[2] || ''
+}
+
+const getEhentaiReaderMatch = (url = '') => {
+  const match = String(url || '').match(/\/s\/([^/?#]+)\/(\d+)-(\d+)/i)
+  if (!match) {
+    return null
+  }
+
+  return {
+    pageToken: match[1],
+    gid: match[2],
+    pageNumber: parseInt(match[3]) || 0
+  }
+}
+
+const getEhentaiGalleryBaseUrl = (url = '', galleryToken = '') => {
+  const galleryMatch = getEhentaiGalleryMatch(url)
+  if (galleryMatch) {
+    return `${EHENTAI_HOMEPAGE}g/${galleryMatch[1]}/${galleryMatch[2]}/`
+  }
+
+  const readerMatch = getEhentaiReaderMatch(url)
+  if (readerMatch?.gid && galleryToken) {
+    return `${EHENTAI_HOMEPAGE}g/${readerMatch.gid}/${galleryToken}/`
+  }
+
+  return ''
+}
+
+const normalizeEhentaiGalleryUrl = (url = '') => {
+  return getEhentaiGalleryBaseUrl(url) || url
+}
+
+const getEhentaiGalleryPageIndex = (url = '') => {
+  try {
+    return Math.max(parseInt(new URL(url || EHENTAI_HOMEPAGE).searchParams.get('p') || '0') || 0, 0)
+  } catch (error) {
+    return 0
+  }
+}
+
+const getEhentaiGalleryPageUrl = (galleryBaseUrl = '', pageIndex = 0) => {
+  if (!galleryBaseUrl) {
+    return ''
+  }
+  return pageIndex > 0 ? `${galleryBaseUrl}?p=${pageIndex}` : galleryBaseUrl
+}
+
+const getEhentaiNumberText = (value = '') => {
+  const match = String(value || '').match(/\d+/)
+  return match ? parseInt(match[0]) : 0
+}
+
+const getEhentaiTitleFromPageTitle = (rawTitle = '') => {
+  const title = String(rawTitle || '')
+    .replace(/\s*-\s*E-Hentai Galleries.*$/i, '')
+    .replace(/^E-Hentai Galleries:\s*/i, '')
+    .replace(/\s*-\s*Page\s+\d+\s*$/i, '')
+    .trim()
+
+  if (/^E-Hentai Galleries$/i.test(title) || /The Free Hentai Doujinshi/i.test(title)) {
+    return ''
+  }
+
+  return (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .trimSpecial */ .Sc)(title)
+}
+
+const getEhentaiRootTitle = (root) => {
+  const selectorList = ['#gn', '#gj', 'title']
+  for (let i = 0; i < selectorList.length; i++) {
+    try {
+      const dom = root?.querySelector(selectorList[i])
+      const text = (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .trimSpecial */ .Sc)(dom?.innerText || dom?.textContent || '')
+      if (text) {
+        return getEhentaiTitleFromPageTitle(text)
+      }
+    } catch (error) {
+      //
+    }
+  }
+
+  try {
+    const docTitle = toCleanText(root?.title || '')
+    if (docTitle) {
+      return getEhentaiTitleFromPageTitle(docTitle)
+    }
+  } catch (error) {
+    //
+  }
+
+  return getEhentaiTitleFromPageTitle(document?.title || '')
+}
+
+const getEhentaiDetailMapFromRoot = (root) => {
+  const detailMap = {}
+  try {
+    root?.querySelectorAll('#gdd tr').forEach((item) => {
+      const label = toCleanText(item.querySelector('.gdt1')?.textContent || '')
+        .replace(/:$/, '')
+        .trim()
+        .toLowerCase()
+      const value = (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .trimSpecial */ .Sc)(item.querySelector('.gdt2')?.textContent || '')
+      if (label) {
+        detailMap[label] = value
+      }
+    })
+  } catch (error) {
+    //
+  }
+  return detailMap
+}
+
+const getEhentaiLengthFromRoot = (root) => {
+  const detailMap = getEhentaiDetailMapFromRoot(root)
+  const lengthFromDetail = getEhentaiNumberText(detailMap.length || '')
+  if (lengthFromDetail > 0) {
+    return lengthFromDetail
+  }
+
+  const pageCountText = toCleanText(root?.querySelector('.gpc')?.textContent || '')
+  const match = pageCountText.match(/of\s+(\d+)\s+images/i)
+  return match?.[1] ? parseInt(match[1]) : 0
+}
+
+const getEhentaiGalleryPageCount = (imageCount = 0) => {
+  if (!imageCount) {
+    return 0
+  }
+  return Math.max(1, Math.ceil(imageCount / EHENTAI_GALLERY_PAGE_SIZE))
+}
+
+const getEhentaiGalleryUrlFromRoot = (root, pageUrl = '') => {
+  const currentGalleryUrl = getEhentaiGalleryBaseUrl(pageUrl)
+  if (currentGalleryUrl) {
+    return currentGalleryUrl
+  }
+
+  const html = String(root?.innerHTML || '')
+  const gidMatch = html.match(/var\s+gid\s*=\s*(\d+)\s*;/i)
+  const tokenMatch = html.match(/var\s+token\s*=\s*"([^"]+)"/i)
+  if (gidMatch?.[1] && tokenMatch?.[1]) {
+    return `${EHENTAI_HOMEPAGE}g/${gidMatch[1]}/${tokenMatch[1]}/`
+  }
+
+  const selectorList = [
+    '#i5 a[href*="/g/"]',
+    '.sn a[href*="/g/"]',
+    '#bread a[href*="/g/"]'
+  ]
+
+  for (let i = 0; i < selectorList.length; i++) {
+    try {
+      const href = root?.querySelector(selectorList[i])?.getAttribute('href') || ''
+      if (href) {
+        return getEhentaiGalleryBaseUrl(resolveUrl(href, pageUrl))
+      }
+    } catch (error) {
+      //
+    }
+  }
+
+  if (getEhentaiReaderMatch(pageUrl)) {
+    const galleryUrlList = uniqUrlList([...(root?.querySelectorAll?.('a[href*="/g/"]') || [])]
+      .map(item => getEhentaiGalleryBaseUrl(resolveUrl(item?.getAttribute('href') || '', pageUrl)))
+      .filter(Boolean))
+    if (galleryUrlList.length === 1) {
+      return galleryUrlList[0]
+    }
+  }
+
+  return ''
+}
+
+const getEhentaiReaderPageUrlsFromRoot = (root, pageUrl = '') => {
+  const pageUrlList = []
+  try {
+    root?.querySelectorAll('#gdt a[href*="/s/"]').forEach((item) => {
+      const href = item?.getAttribute('href') || ''
+      if (href) {
+        pageUrlList.push(resolveUrl(href, pageUrl))
+      }
+    })
+  } catch (error) {
+    //
+  }
+  return uniqUrlList(pageUrlList)
+}
+
+const isEhentaiUsableImageUrl = (url = '') => {
+  const value = String(url || '').trim()
+  if (!value || value.startsWith('data:')) {
+    return false
+  }
+  if (EHENTAI_IMAGE_PLACEHOLDER_REG.test(value)) {
+    return false
+  }
+  return true
+}
+
+const getEhentaiReaderImageUrlFromRoot = (root, pageUrl = '') => {
+  if (!root) {
+    return ''
+  }
+
+  try {
+    const anchorList = [...root.querySelectorAll('a[href]')]
+    for (let i = 0; i < anchorList.length; i++) {
+      const anchor = anchorList[i]
+      const text = toCleanText(anchor?.innerText || anchor?.textContent || anchor?.getAttribute('title') || '')
+      if (!EHENTAI_IMAGE_LINK_TEXT_REG.test(text)) {
+        continue
+      }
+      const href = anchor?.getAttribute('href') || ''
+      const resolvedUrl = resolveUrl(href, pageUrl)
+      if (isEhentaiUsableImageUrl(resolvedUrl)) {
+        return resolvedUrl
+      }
+    }
+  } catch (error) {
+    //
+  }
+
+  const selectorList = ['#img', 'img#img', '#i3 img', '#i3 a img']
+  for (let i = 0; i < selectorList.length; i++) {
+    try {
+      const dom = root?.querySelector(selectorList[i])
+      const rawUrl = dom?.getAttribute('data-src') ||
+        dom?.getAttribute('data-lazy-src') ||
+        dom?.getAttribute('src') ||
+        ''
+      const resolvedUrl = resolveUrl(rawUrl, pageUrl)
+      if (isEhentaiUsableImageUrl(resolvedUrl)) {
+        return resolvedUrl
+      }
+    } catch (error) {
+      //
+    }
+  }
+
+  const html = String(root?.innerHTML || '')
+  const match = html.match(/(?:Download original|full-size image)[\s\S]{0,300}?href="([^"]+)"/i)
+  if (match?.[1]) {
+    const resolvedUrl = resolveUrl(match[1], pageUrl)
+    if (isEhentaiUsableImageUrl(resolvedUrl)) {
+      return resolvedUrl
+    }
+  }
+
+  return ''
+}
+
+const getEhentaiGalleryTokenByReaderPageUrl = async(pageUrl = '') => {
+  const readerInfo = getEhentaiReaderMatch(pageUrl)
+  if (!readerInfo?.gid || !readerInfo?.pageToken || !readerInfo?.pageNumber) {
+    return ''
+  }
+
+  try {
+    const result = await getEhentaiApiJson({
+      method: 'gtoken',
+      pagelist: [[parseInt(readerInfo.gid), readerInfo.pageToken, readerInfo.pageNumber]]
+    }, `E-Hentai gallery token ${readerInfo.gid}`)
+
+    return toCleanText(result?.tokenlist?.[0]?.token || '')
+  } catch (error) {
+    console.log('getEhentaiGalleryTokenByReaderPageUrl-e: ', error)
+    return ''
+  }
+}
+
+const getEhentaiGalleryMetadataByApi = async(galleryUrl = '') => {
+  const galleryId = getEhentaiGalleryId(galleryUrl)
+  const galleryToken = getEhentaiGalleryToken(galleryUrl)
+  if (!galleryId || !galleryToken) {
+    return null
+  }
+
+  const result = await getEhentaiApiJson({
+    method: 'gdata',
+    gidlist: [[parseInt(galleryId), galleryToken]],
+    namespace: 1
+  }, `E-Hentai gallery ${galleryId} metadata`)
+
+  const metadata = Array.isArray(result?.gmetadata) ? result.gmetadata[0] : null
+  if (!metadata || metadata.error) {
+    return null
+  }
+
+  return metadata
+}
+
+const getEhentaiResolvedGalleryUrl = async(pageUrl, responseText = '') => {
+  const currentPageUrl = pageUrl || window.location.href
+  const currentRoot = responseText ? (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .parseToDOM */ .U3)(responseText) : null
+
+  const galleryUrlFromRoot = getEhentaiGalleryUrlFromRoot(currentRoot, currentPageUrl)
+  if (galleryUrlFromRoot) {
+    return galleryUrlFromRoot
+  }
+
+  if (!getEhentaiReaderMatch(currentPageUrl)) {
+    return ''
+  }
+
+  const galleryToken = await getEhentaiGalleryTokenByReaderPageUrl(currentPageUrl)
+  if (!galleryToken) {
+    return ''
+  }
+
+  return getEhentaiGalleryBaseUrl(currentPageUrl, galleryToken)
+}
+
+const getEhentaiGalleryReaderPageUrls = async(pageUrl, responseText = '', resolvedGalleryUrl = '') => {
+  const currentPageUrl = pageUrl || window.location.href
+  const currentRoot = responseText ? (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .parseToDOM */ .U3)(responseText) : null
+  const currentGalleryBaseUrl = getEhentaiGalleryBaseUrl(currentPageUrl)
+  const galleryBaseUrl = resolvedGalleryUrl || currentGalleryBaseUrl || await getEhentaiResolvedGalleryUrl(currentPageUrl, responseText)
+
+  if (!galleryBaseUrl) {
+    return currentRoot ? getEhentaiReaderPageUrlsFromRoot(currentRoot, currentPageUrl) : []
+  }
+
+  let galleryRoot = null
+  let currentGalleryPageIndex = 0
+
+  if (currentGalleryBaseUrl && currentRoot) {
+    galleryRoot = currentRoot
+    currentGalleryPageIndex = getEhentaiGalleryPageIndex(currentPageUrl)
+  } else {
+    const galleryText = await requestTextWithGuard({
+      method: 'get',
+      url: galleryBaseUrl,
+      purpose: 'E-Hentai gallery page',
+      verifyUrl: galleryBaseUrl
+    })
+    galleryRoot = (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .parseToDOM */ .U3)(galleryText)
+  }
+
+  const totalImageCount = getEhentaiLengthFromRoot(galleryRoot)
+  const uniquePageUrlList = uniqUrlList(getEhentaiReaderPageUrlsFromRoot(
+    galleryRoot,
+    getEhentaiGalleryPageUrl(galleryBaseUrl, currentGalleryPageIndex)
+  ))
+  if (totalImageCount > 0 && uniquePageUrlList.length >= totalImageCount) {
+    return uniquePageUrlList.slice(0, totalImageCount)
+  }
+
+  const totalGalleryPages = getEhentaiGalleryPageCount(totalImageCount || uniquePageUrlList.length)
+  if (totalGalleryPages <= 1) {
+    return uniquePageUrlList
+  }
+
+  const pageIndexList = []
+  for (let i = 0; i < totalGalleryPages; i++) {
+    if (i !== currentGalleryPageIndex) {
+      pageIndexList.push(i)
+    }
+  }
+
+  const batchSize = 3
+  for (let i = 0; i < pageIndexList.length; i += batchSize) {
+    const batchList = pageIndexList.slice(i, i + batchSize)
+    const batchResult = await Promise.all(batchList.map(async(pageIndex) => {
+      const nextGalleryPageUrl = getEhentaiGalleryPageUrl(galleryBaseUrl, pageIndex)
+      const galleryText = await requestTextWithGuard({
+        method: 'get',
+        url: nextGalleryPageUrl,
+        purpose: `E-Hentai gallery page ${pageIndex + 1}`,
+        verifyUrl: galleryBaseUrl
+      })
+      const root = (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .parseToDOM */ .U3)(galleryText)
+      return getEhentaiReaderPageUrlsFromRoot(root, nextGalleryPageUrl)
+    }))
+    uniquePageUrlList.push(...batchResult.flat())
+  }
+
+  const normalizedList = uniqUrlList(uniquePageUrlList)
+  return totalImageCount > 0 ? normalizedList.slice(0, totalImageCount) : normalizedList
+}
+
+const getEhentaiImageList = async(pageUrl, responseText = '') => {
+  const currentPageUrl = pageUrl || window.location.href
+  const currentRoot = responseText ? (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .parseToDOM */ .U3)(responseText) : null
+  const directImageUrl = getEhentaiReaderImageUrlFromRoot(currentRoot, currentPageUrl)
+  const galleryBaseUrl = await getEhentaiResolvedGalleryUrl(currentPageUrl, responseText)
+  const pageUrlList = await getEhentaiGalleryReaderPageUrls(currentPageUrl, responseText, galleryBaseUrl)
+
+  if (pageUrlList.length === 0) {
+    return directImageUrl ? [directImageUrl] : []
+  }
+
+  const imageUrlList = []
+  const batchSize = 4
+  for (let i = 0; i < pageUrlList.length; i += batchSize) {
+    const batchList = pageUrlList.slice(i, i + batchSize)
+    const batchResult = await Promise.all(batchList.map(async(currentReaderPageUrl) => {
+      let readerText = ''
+      if (currentReaderPageUrl === currentPageUrl && responseText) {
+        readerText = responseText
+      } else {
+        readerText = await requestTextWithGuard({
+          method: 'get',
+          url: currentReaderPageUrl,
+          purpose: `E-Hentai reader page ${i + 1}`,
+          verifyUrl: galleryBaseUrl || EHENTAI_HOMEPAGE
+        })
+      }
+      const readerRoot = (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .parseToDOM */ .U3)(readerText)
+      return getEhentaiReaderImageUrlFromRoot(readerRoot, currentReaderPageUrl)
+    }))
+    imageUrlList.push(...batchResult.filter(Boolean))
+  }
+
+  return uniqUrlList(imageUrlList)
+}
+
+const buildEhentaiChapterName = (pageCount = 0) => {
+  return pageCount > 0 ? `Full Gallery (${pageCount}P)` : 'Full Gallery'
+}
+
+const buildEhentaiChapterList = ({ comicName = '', authorName = '', comicPageUrl = '', downloadUrl = '', numPages = 0 }) => {
+  const resolvedComicPageUrl = comicPageUrl || downloadUrl
+  const resolvedDownloadUrl = downloadUrl || comicPageUrl
+  if (!resolvedDownloadUrl) {
+    return []
+  }
+
+  return [{
+    comicName: (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .trimSpecial */ .Sc)(comicName),
+    authorName: (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .trimSpecial */ .Sc)(authorName),
+    comicPageUrl: resolvedComicPageUrl,
+    webName: 'E-Hentai',
+    chapterNumStr: '',
+    chapterName: buildEhentaiChapterName(numPages),
+    downChapterName: '',
+    url: resolvedDownloadUrl,
+    characterType: 'one',
+    readtype: 1,
+    isPay: false,
+    isSelect: false
+  }]
+}
+
+const getEhentaiChapterListFromRoot = (root, pageUrl, comicName = '', authorName = '') => {
+  const currentPageUrl = pageUrl || window.location.href
+  const galleryPageUrl = getEhentaiGalleryUrlFromRoot(root, currentPageUrl)
+  const readerInfo = getEhentaiReaderMatch(currentPageUrl)
+  if (!galleryPageUrl && !readerInfo) {
+    return []
+  }
+
+  const galleryId = getEhentaiGalleryId(galleryPageUrl || currentPageUrl) || readerInfo?.gid || ''
+  const resolvedComicName = (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .trimSpecial */ .Sc)(comicName || getEhentaiRootTitle(root) || `E-Hentai ${galleryId}`)
+  const numPages = getEhentaiLengthFromRoot(root) || getEhentaiReaderPageUrlsFromRoot(root, currentPageUrl).length
+  const resolvedDownloadUrl = galleryPageUrl || currentPageUrl
+
+  return buildEhentaiChapterList({
+    comicName: resolvedComicName,
+    authorName,
+    comicPageUrl: galleryPageUrl || resolvedDownloadUrl,
+    downloadUrl: resolvedDownloadUrl,
+    numPages
+  })
+}
+
+const getEhentaiSearchList = async(keyword) => {
+  const currentKeyword = String(keyword || '').trim()
+  if (!currentKeyword) {
+    return []
+  }
+
+  const searchUrl = `${EHENTAI_HOMEPAGE}?f_search=${encodeURIComponent(currentKeyword)}`
+  const responseText = await requestTextWithGuard({
+    method: 'get',
+    url: searchUrl,
+    purpose: 'E-Hentai search result',
+    verifyUrl: EHENTAI_HOMEPAGE
+  })
+
+  const root = (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .parseToDOM */ .U3)(responseText)
+  const searchList = []
+  root.querySelectorAll('table.itg.gltc tr, table.itg tr').forEach((item) => {
+    const anchor = item.querySelector('td.gl3c.glname a[href*="/g/"], td.gl1e a[href*="/g/"], a[href*="/g/"]')
+    const titleDom = item.querySelector('.glink')
+    const name = (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .trimSpecial */ .Sc)(
+      titleDom?.innerText ||
+      titleDom?.textContent ||
+      anchor?.getAttribute('title') ||
+      anchor?.innerText ||
+      anchor?.textContent ||
+      ''
+    )
+    const url = resolveUrl(anchor?.getAttribute('href') || '', searchUrl)
+    const imgDom = item.querySelector('.glthumb img, img')
+    const rawImageUrl = imgDom?.getAttribute('data-src') ||
+      imgDom?.getAttribute('data-lazy-src') ||
+      imgDom?.getAttribute('src') ||
+      ''
+    const imageUrl = isEhentaiUsableImageUrl(rawImageUrl) ? resolveUrl(rawImageUrl, searchUrl) : ''
+
+    if (!name || !url || searchList.some(result => result.url === url)) {
+      return
+    }
+
+    searchList.push({
+      name,
+      url,
+      imageUrl
+    })
+  })
+
+  return searchList
+}
+
+const getEhentaiTagMapFromRoot = (root) => {
+  const tagMap = {}
+  try {
+    root?.querySelectorAll('#taglist tr').forEach((item) => {
+      const namespace = toCleanText(item.querySelector('.tc')?.textContent || '')
+        .replace(/:$/, '')
+        .trim()
+        .toLowerCase()
+      if (!namespace) {
+        return
+      }
+
+      const valueList = [...item.querySelectorAll('a')]
+        .map(link => toCleanText(link?.textContent || ''))
+        .filter(Boolean)
+
+      if (valueList.length > 0) {
+        tagMap[namespace] = valueList
+      }
+    })
+  } catch (error) {
+    //
+  }
+  return tagMap
+}
+
+const getEhentaiNamespaceValuesFromApi = (tagList = [], namespace = '') => {
+  const prefix = `${namespace}:`
+  return uniqUrlList((tagList || [])
+    .filter(tag => String(tag || '').startsWith(prefix))
+    .map(tag => String(tag || '').slice(prefix.length).trim())
+    .filter(Boolean))
+}
+
+const getEhentaiLanguageIsoByText = (value = '') => {
+  const text = String(value || '').trim().toLowerCase()
+  const languageMap = {
+    english: 'en',
+    chinese: 'zh',
+    japanese: 'ja',
+    korean: 'ko',
+    spanish: 'es',
+    french: 'fr',
+    german: 'de',
+    russian: 'ru',
+    portuguese: 'pt',
+    italian: 'it',
+    thai: 'th',
+    vietnamese: 'vi'
+  }
+
+  if (languageMap[text]) {
+    return languageMap[text]
+  }
+
+  const match = text.match(/[a-z]{2,3}/)
+  return match ? match[0] : ''
+}
+
+const getEhentaiCategoryFromRoot = (root) => {
+  return (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .trimSpecial */ .Sc)(
+    root?.querySelector('#gdc .cs')?.textContent ||
+    root?.querySelector('.gl1c .cn')?.textContent ||
+    ''
+  )
+}
+
+const getEhentaiCoverUrlFromRoot = (root, pageUrl = '') => {
+  try {
+    const imgDom = root?.querySelector('#gd1 img')
+    const rawImageUrl = imgDom?.getAttribute('data-src') || imgDom?.getAttribute('src') || ''
+    if (rawImageUrl) {
+      return resolveUrl(rawImageUrl, pageUrl)
+    }
+  } catch (error) {
+    //
+  }
+
+  try {
+    const styleValue = root?.querySelector('#gd1 > div')?.getAttribute('style') || ''
+    const match = styleValue.match(/url\((['"]?)(.*?)\1\)/i)
+    if (match?.[2]) {
+      return resolveUrl(match[2], pageUrl)
+    }
+  } catch (error) {
+    //
+  }
+
+  return ''
+}
+
+const getEhentaiReleaseDateText = (value = '') => {
+  const match = String(value || '').match(/(\d{4})[-/.年](\d{1,2})(?:[-/.月](\d{1,2}))?/)
+  if (!match) {
+    return ''
+  }
+
+  const year = match[1]
+  const month = String(parseInt(match[2])).padStart(2, '0')
+  const day = match[3] ? String(parseInt(match[3])).padStart(2, '0') : ''
+  return [year, month, day].filter(Boolean).join('-')
+}
+
+const getEhentaiMetadata = async(downloadItem = {}) => {
+  const pageUrl = downloadItem?.comicPageUrl || downloadItem?.url || window.location.href
+  const galleryUrl = await getEhentaiResolvedGalleryUrl(pageUrl)
+  if (!galleryUrl) {
+    return null
+  }
+
+  let apiMetadata = null
+  try {
+    apiMetadata = await getEhentaiGalleryMetadataByApi(galleryUrl)
+  } catch (error) {
+    apiMetadata = null
+  }
+
+  let root = null
+  if (window.location.href === galleryUrl && document?.querySelector('#gdd')) {
+    root = document
+  } else {
+    const responseText = await requestTextWithGuard({
+      method: 'get',
+      url: galleryUrl,
+      purpose: 'E-Hentai gallery metadata',
+      verifyUrl: galleryUrl
+    })
+    root = (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .parseToDOM */ .U3)(responseText)
+  }
+
+  const detailMap = getEhentaiDetailMapFromRoot(root)
+  const tagMap = getEhentaiTagMapFromRoot(root)
+  const domArtistList = tagMap.artist || []
+  const domGroupList = tagMap.group || []
+  const apiTagList = Array.isArray(apiMetadata?.tags) ? apiMetadata.tags.filter(Boolean) : []
+  const artistList = apiTagList.length > 0 ? getEhentaiNamespaceValuesFromApi(apiTagList, 'artist') : domArtistList
+  const groupList = apiTagList.length > 0 ? getEhentaiNamespaceValuesFromApi(apiTagList, 'group') : domGroupList
+  const languageText = apiTagList.length > 0
+    ? (getEhentaiNamespaceValuesFromApi(apiTagList, 'language')[0] || detailMap.language || '')
+    : ((tagMap.language || [])[0] || detailMap.language || '')
+  const domTagList = Object.entries(tagMap).flatMap(([namespace, valueList]) => {
+    if (['artist', 'group', 'language'].includes(namespace)) {
+      return []
+    }
+    return valueList.map(value => `${namespace}:${value}`)
+  })
+  const tagList = apiTagList.length > 0
+    ? apiTagList.filter(tag => !/^(artist|group|language):/i.test(String(tag || '')))
+    : domTagList
+  const uploaderName = (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .trimSpecial */ .Sc)(
+    apiMetadata?.uploader ||
+    root?.querySelector('#gdn a[href*="/uploader/"]')?.textContent ||
+    ''
+  )
+  const category = (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .trimSpecial */ .Sc)(apiMetadata?.category || getEhentaiCategoryFromRoot(root))
+  const title = (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .trimSpecial */ .Sc)(apiMetadata?.title || getEhentaiRootTitle(root) || downloadItem?.comicName || '')
+  const originalTitle = (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .trimSpecial */ .Sc)(apiMetadata?.title_jpn || title)
+  const coverUrl = getEhentaiCoverUrlFromRoot(root, galleryUrl) || resolveUrl(apiMetadata?.thumb || '', EHENTAI_HOMEPAGE)
+
+  return {
+    source: apiMetadata ? 'E-Hentai API + WebPage' : 'WebPage',
+    seriesTitle: title,
+    originalTitle,
+    summary: '',
+    writers: artistList.length > 0 ? artistList : uniqUrlList([uploaderName, ...groupList].filter(Boolean)),
+    illustrators: artistList,
+    tags: uniqUrlList(tagList),
+    publisher: groupList[0] || '',
+    issueCount: downloadItem?.seriesChapterCount || undefined,
+    releaseDate: apiMetadata?.posted
+      ? new Date(parseInt(apiMetadata.posted) * 1000).toISOString().slice(0, 10)
+      : getEhentaiReleaseDateText(detailMap.posted || ''),
+    status: 'ended',
+    ageRating: /non-h/i.test(category) ? '' : 'R18+',
+    languageISO: getEhentaiLanguageIsoByText(languageText),
+    subjectUrl: galleryUrl,
+    coverUrl
+  }
+}
+
 const comicsWebInfo = [
   {
     domain: ['nhentai.net', 'www.nhentai.net'],
@@ -6790,6 +7530,28 @@ const comicsWebInfo = [
     },
     getMetadata: async function(downloadItem) {
       return getNhentaiMetadata(downloadItem)
+    }
+  },
+  {
+    domain: ['e-hentai.org', 'www.e-hentai.org'],
+    homepage: EHENTAI_HOMEPAGE,
+    webName: 'E-Hentai',
+    comicNameCss: '#gn, #gj, title',
+    authorCss: '#taglist a[id^="ta_artist:"], #taglist a[id^="ta_group:"], #gdn a[href*="/uploader/"], .gl4c a[href*="/uploader/"]',
+    chapterCss: '.__ehentai_single_gallery__',
+    normalizeDownloadUrl: normalizeEhentaiGalleryUrl,
+    readtype: 1,
+    searchFun: async function(keyword) {
+      return getEhentaiSearchList(keyword)
+    },
+    getChaptersFromRoot: function(root, pageUrl, comicName, authorName) {
+      return getEhentaiChapterListFromRoot(root, pageUrl, comicName, authorName)
+    },
+    getImgs: async function(context, processData) {
+      return getEhentaiImageList(processData?.url || window.location.href, context)
+    },
+    getMetadata: async function(downloadItem) {
+      return getEhentaiMetadata(downloadItem)
     }
   },
   {
