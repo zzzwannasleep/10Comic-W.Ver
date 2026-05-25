@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         10图漫
 // @namespace    http://tampermonkey2.net/
-// @version      2.0.12.20260518051903
-// @build        20260518051903
+// @version      2.0.12.20260525143028
+// @build        20260525143028
 // @description  Multi-site comic search and chapter download userscript.
 // @author       journey3510
 // @homepageURL  https://github.com/zzzwannasleep/10Comic-W.Ver
@@ -2320,7 +2320,7 @@ function BufferBigIntNotDefined () {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".van-cell__title {\n  text-align: left;\n}\n.van-cell-group__title--inset {\n  text-align: left;\n}\n.van-button--default {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled {\n  opacity: 1 !important;\n}\n.van-tag--default {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow {\n  color: #d9d9d9 !important;\n}\n.van-popover__content {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".van-cell__title {\n  text-align: left;\n}\n.van-cell-group__title--inset {\n  text-align: left;\n}\n.van-button--default {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled {\n  opacity: 1 !important;\n}\n.van-tag--default {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow {\n  color: #d9d9d9 !important;\n}\n.van-popover__content {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n.van-cell__title {\n  text-align: left;\n}\n.van-cell-group__title--inset {\n  text-align: left;\n}\n.van-button--default {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled {\n  opacity: 1 !important;\n}\n.van-tag--default {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow {\n  color: #d9d9d9 !important;\n}\n.van-popover__content {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -2520,7 +2520,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, ".homeindex[data-v-7eb2bc79] {\n  margi
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".metadata-page[data-v-78dd89c9] {\n  margin: 15px;\n  max-height: 680px;\n  overflow: auto;\n}\n.metadata-loading[data-v-78dd89c9] {\n  display: flex;\n  justify-content: center;\n  margin-top: 100px;\n}\n.metadata-hint[data-v-78dd89c9],\n.metadata-top__desc[data-v-78dd89c9],\n.metadata-preview-note[data-v-78dd89c9] {\n  color: #777;\n  font-size: 12px;\n  line-height: 1.6;\n}\n.metadata-top[data-v-78dd89c9] {\n  margin-bottom: 12px;\n}\n.metadata-top__title[data-v-78dd89c9] {\n  font-size: 14px;\n  font-weight: 600;\n  color: #333;\n}\n.metadata-group-title[data-v-78dd89c9] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  width: 100%;\n  gap: 10px;\n}\n.metadata-group-title__main[data-v-78dd89c9] {\n  max-width: 240px;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n}\n.metadata-card[data-v-78dd89c9] {\n  margin-top: 12px;\n  padding: 12px;\n  background: #fff;\n  border-radius: 12px;\n}\n.metadata-preview-stack[data-v-78dd89c9] {\n  padding-bottom: 8px;\n}\n.metadata-preview-title[data-v-78dd89c9] {\n  margin-bottom: 8px;\n  font-size: 14px;\n  font-weight: 600;\n  color: #333;\n}\n.metadata-preview[data-v-78dd89c9] {\n  margin-top: 10px;\n  padding: 10px;\n  border-radius: 10px;\n  background: #f5f7fa;\n  white-space: pre-wrap;\n  word-break: break-word;\n  font-size: 12px;\n  line-height: 1.5;\n  color: #333;\n}\n.metadata-bottom[data-v-78dd89c9] {\n  display: flex;\n  justify-content: space-between;\n  gap: 12px;\n  margin-top: 16px;\n}\n.van-cell__title[data-v-78dd89c9] {\n  text-align: left;\n}\n.van-cell-group__title--inset[data-v-78dd89c9] {\n  text-align: left;\n}\n.van-button--default[data-v-78dd89c9] {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled[data-v-78dd89c9] {\n  opacity: 1 !important;\n}\n.van-tag--default[data-v-78dd89c9] {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon[data-v-78dd89c9] {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light[data-v-78dd89c9] {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow[data-v-78dd89c9] {\n  color: #d9d9d9 !important;\n}\n.van-popover__content[data-v-78dd89c9] {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".metadata-page[data-v-78dd89c9] {\n  margin: 15px;\n  max-height: 680px;\n  overflow: auto;\n}\n.metadata-loading[data-v-78dd89c9] {\n  display: flex;\n  justify-content: center;\n  margin-top: 100px;\n}\n.metadata-hint[data-v-78dd89c9],\n.metadata-top__desc[data-v-78dd89c9],\n.metadata-preview-note[data-v-78dd89c9] {\n  color: #777;\n  font-size: 12px;\n  line-height: 1.6;\n}\n.metadata-empty-btn[data-v-78dd89c9] {\n  margin-top: 12px;\n}\n.metadata-top[data-v-78dd89c9] {\n  margin-bottom: 12px;\n}\n.metadata-top__title[data-v-78dd89c9] {\n  font-size: 14px;\n  font-weight: 600;\n  color: #333;\n}\n.metadata-group-title[data-v-78dd89c9] {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  width: 100%;\n  gap: 10px;\n}\n.metadata-group-title__main[data-v-78dd89c9] {\n  max-width: 240px;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  white-space: nowrap;\n}\n.metadata-card[data-v-78dd89c9] {\n  margin-top: 12px;\n  padding: 12px;\n  background: #fff;\n  border-radius: 12px;\n}\n.metadata-preview-stack[data-v-78dd89c9] {\n  padding-bottom: 8px;\n}\n.metadata-preview-title[data-v-78dd89c9] {\n  margin-bottom: 8px;\n  font-size: 14px;\n  font-weight: 600;\n  color: #333;\n}\n.metadata-preview[data-v-78dd89c9] {\n  margin-top: 10px;\n  padding: 10px;\n  border-radius: 10px;\n  background: #f5f7fa;\n  white-space: pre-wrap;\n  word-break: break-word;\n  font-size: 12px;\n  line-height: 1.5;\n  color: #333;\n}\n.metadata-bottom[data-v-78dd89c9] {\n  display: flex;\n  justify-content: space-between;\n  gap: 12px;\n  margin-top: 16px;\n}\n.van-cell__title[data-v-78dd89c9] {\n  text-align: left;\n}\n.van-cell-group__title--inset[data-v-78dd89c9] {\n  text-align: left;\n}\n.van-button--default[data-v-78dd89c9] {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled[data-v-78dd89c9] {\n  opacity: 1 !important;\n}\n.van-tag--default[data-v-78dd89c9] {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon[data-v-78dd89c9] {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light[data-v-78dd89c9] {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow[data-v-78dd89c9] {\n  color: #d9d9d9 !important;\n}\n.van-popover__content[data-v-78dd89c9] {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -5989,8 +5989,8 @@ module.exports = styleTagTransform;
 /* eslint-disable no-undef */
 const AppName = "10图漫"
 const AppVersion = "2.0.12"
-const AppReleaseVersion = "2.0.12.20260518051903"
-const AppBuildId = "20260518051903"
+const AppReleaseVersion = "2.0.12.20260525143028"
+const AppBuildId = "20260525143028"
 const AppEnv = "production"
 const AppHomepageUrl = "https://github.com/zzzwannasleep/10Comic-W.Ver"
 const AppSupportUrl = "https://github.com/zzzwannasleep/10Comic-W.Ver/issues"
@@ -12630,6 +12630,17 @@ const normalizeMetadataDraft = (metadata = {}) => {
   }
 }
 
+const normalizeStandaloneMetadataDraft = (metadata = {}) => {
+  const baseDraft = normalizeMetadataDraft(metadata)
+  return {
+    ...baseDraft,
+    entryTitle: toMetadataText(metadata.entryTitle || metadata.title || metadata.bookTitle || metadata.name || ''),
+    entryNumber: toMetadataText(metadata.entryNumber || metadata.number || metadata.volume || ''),
+    pageCount: parseOptionalNumber(metadata.pageCount || metadata.pages),
+    isbn: toMetadataText(metadata.isbn || metadata.ISBN || '')
+  }
+}
+
 const mergeMetadataSources = (...sources) => {
   const merged = normalizeMetadataDraft()
   sources.forEach((source) => {
@@ -12793,6 +12804,64 @@ const getGenre = (metadata) => {
   return uniqList(metadata?.tags || []).join(', ')
 }
 
+const buildComicInfoXmlContent = ({
+  seriesName = '',
+  title = '',
+  number = '',
+  count = undefined,
+  summary = '',
+  writer = '',
+  penciller = '',
+  genre = '',
+  tags = '',
+  pageCount = undefined,
+  webUrl = '',
+  publisher = '',
+  languageISO = '',
+  releaseDate = '',
+  notes = ''
+} = {}) => {
+  const lines = ['<?xml version="1.0" encoding="utf-8"?>', '<ComicInfo>']
+  const dateParts = splitDateParts(releaseDate)
+
+  pushXmlTag(lines, 'Series', seriesName)
+  pushXmlTag(lines, 'Title', title)
+  pushXmlTag(lines, 'Number', number)
+  pushXmlTag(lines, 'Count', count)
+  pushXmlTag(lines, 'Summary', summary)
+  pushXmlTag(lines, 'Writer', writer)
+  pushXmlTag(lines, 'Penciller', penciller)
+  pushXmlTag(lines, 'Genre', genre)
+  pushXmlTag(lines, 'Tags', tags)
+  pushXmlTag(lines, 'PageCount', pageCount)
+  pushXmlTag(lines, 'Web', webUrl)
+  pushXmlTag(lines, 'Publisher', publisher)
+  pushXmlTag(lines, 'LanguageISO', languageISO)
+  pushXmlTag(lines, 'Year', dateParts.year)
+  pushXmlTag(lines, 'Month', dateParts.month)
+  pushXmlTag(lines, 'Day', dateParts.day)
+  pushXmlTag(lines, 'Notes', notes)
+  lines.push('</ComicInfo>')
+  return lines.join('\n')
+}
+
+const buildStandaloneNotes = (metadata) => {
+  const notes = []
+  if (metadata?.source) {
+    notes.push(`来源: ${metadata.source}`)
+  }
+  if (metadata?.originalTitle && metadata.originalTitle !== metadata.seriesTitle) {
+    notes.push(`原标题: ${metadata.originalTitle}`)
+  }
+  if (metadata?.subjectUrl) {
+    notes.push(`Metadata: ${metadata.subjectUrl}`)
+  }
+  if (metadata?.isbn) {
+    notes.push(`ISBN: ${metadata.isbn}`)
+  }
+  return notes.join('\n')
+}
+
 const getZipNameTemplate = () => {
   const currentTemplate = (0,setup/* getStorage */.cF)('zipNameTemplate')
   if (!currentTemplate || currentTemplate === legacyDefaultZipNameTemplate) {
@@ -12814,29 +12883,23 @@ const buildArchiveName = (downloadItem, pageCount) => {
 const buildComicInfoXml = (downloadItem, pageCount, externalMetadata = null) => {
   const settings = getMetadataSettings()
   const metadata = getResolvedMetadata(downloadItem, externalMetadata)
-  const lines = ['<?xml version="1.0" encoding="utf-8"?>', '<ComicInfo>']
-  const seriesName = getSeriesName(downloadItem, metadata)
-  const dateParts = splitDateParts(metadata?.releaseDate)
-
-  pushXmlTag(lines, 'Series', seriesName)
-  pushXmlTag(lines, 'Title', downloadItem.downChapterName || downloadItem.chapterName)
-  pushXmlTag(lines, 'Number', getChapterNumber(downloadItem))
-  pushXmlTag(lines, 'Count', getIssueCount(downloadItem, metadata))
-  pushXmlTag(lines, 'Summary', metadata?.summary || '')
-  pushXmlTag(lines, 'Writer', getWriter(downloadItem, metadata))
-  pushXmlTag(lines, 'Penciller', getPenciller(metadata))
-  pushXmlTag(lines, 'Genre', getGenre(metadata))
-  pushXmlTag(lines, 'Tags', getGenre(metadata))
-  pushXmlTag(lines, 'PageCount', pageCount)
-  pushXmlTag(lines, 'Web', downloadItem.url || downloadItem.comicPageUrl)
-  pushXmlTag(lines, 'Publisher', getPublisher(settings, metadata))
-  pushXmlTag(lines, 'LanguageISO', metadata?.languageISO || settings.languageISO || 'zh')
-  pushXmlTag(lines, 'Year', dateParts.year)
-  pushXmlTag(lines, 'Month', dateParts.month)
-  pushXmlTag(lines, 'Day', dateParts.day)
-  pushXmlTag(lines, 'Notes', buildNotes(downloadItem, metadata))
-  lines.push('</ComicInfo>')
-  return lines.join('\n')
+  return buildComicInfoXmlContent({
+    seriesName: getSeriesName(downloadItem, metadata),
+    title: downloadItem.downChapterName || downloadItem.chapterName,
+    number: getChapterNumber(downloadItem),
+    count: getIssueCount(downloadItem, metadata),
+    summary: metadata?.summary || '',
+    writer: getWriter(downloadItem, metadata),
+    penciller: getPenciller(metadata),
+    genre: getGenre(metadata),
+    tags: getGenre(metadata),
+    pageCount,
+    webUrl: downloadItem.url || downloadItem.comicPageUrl,
+    publisher: getPublisher(settings, metadata),
+    languageISO: metadata?.languageISO || settings.languageISO || 'zh',
+    releaseDate: metadata?.releaseDate || '',
+    notes: buildNotes(downloadItem, metadata)
+  })
 }
 
 const buildSeriesJson = (downloadItem, externalMetadata = null) => {
@@ -12859,6 +12922,100 @@ const buildMetadataPreviewFiles = (downloadItem, pageCount = 0, externalMetadata
   return {
     comicInfoXml: buildComicInfoXml(downloadItem, pageCount, externalMetadata),
     seriesJson: buildSeriesJson(downloadItem, externalMetadata)
+  }
+}
+
+const buildStandaloneComicInfoXml = (metadata = {}) => {
+  const settings = getMetadataSettings()
+  const draft = normalizeStandaloneMetadataDraft(metadata)
+  const seriesName = draft.seriesTitle || draft.entryTitle || ''
+  const title = draft.entryTitle || draft.seriesTitle || ''
+  const issueCount = draft.issueCount || draft.volumeCount || undefined
+
+  return buildComicInfoXmlContent({
+    seriesName,
+    title,
+    number: draft.entryNumber || '',
+    count: issueCount,
+    summary: draft.summary || '',
+    writer: uniqList(draft.writers || []).join(', '),
+    penciller: uniqList(draft.illustrators || []).join(', '),
+    genre: uniqList(draft.tags || []).join(', '),
+    tags: uniqList(draft.tags || []).join(', '),
+    pageCount: draft.pageCount,
+    webUrl: draft.subjectUrl || '',
+    publisher: draft.publisher || settings.publisher || '',
+    languageISO: draft.languageISO || settings.languageISO || 'zh',
+    releaseDate: draft.releaseDate || '',
+    notes: buildStandaloneNotes(draft)
+  })
+}
+
+const buildStandaloneSeriesJson = (metadata = {}) => {
+  const settings = getMetadataSettings()
+  const draft = normalizeStandaloneMetadataDraft(metadata)
+  const dateParts = splitDateParts(draft.releaseDate)
+  const seriesInfo = {
+    name: draft.seriesTitle || draft.entryTitle || '',
+    publisher: draft.publisher || settings.publisher || '',
+    description_text: draft.summary || '',
+    total_issues: draft.issueCount || draft.volumeCount || undefined,
+    status: draft.status || undefined,
+    age_rating: draft.ageRating || undefined,
+    year: dateParts.year || undefined
+  }
+  return JSON.stringify(seriesInfo, null, 2)
+}
+
+const buildStandaloneSeriesComicXml = (metadata = {}) => {
+  const settings = getMetadataSettings()
+  const draft = normalizeStandaloneMetadataDraft(metadata)
+  const seriesName = draft.seriesTitle || draft.entryTitle || ''
+
+  return buildComicInfoXmlContent({
+    seriesName,
+    title: seriesName,
+    count: draft.issueCount || draft.volumeCount || undefined,
+    summary: draft.summary || '',
+    writer: uniqList(draft.writers || []).join(', '),
+    penciller: uniqList(draft.illustrators || []).join(', '),
+    genre: uniqList(draft.tags || []).join(', '),
+    tags: uniqList(draft.tags || []).join(', '),
+    webUrl: draft.subjectUrl || '',
+    publisher: draft.publisher || settings.publisher || '',
+    languageISO: draft.languageISO || settings.languageISO || 'zh',
+    releaseDate: draft.releaseDate || '',
+    notes: buildStandaloneNotes(draft)
+  })
+}
+
+const buildStandaloneMetadataFiles = (mode, metadata = {}) => {
+  switch (mode) {
+    case 'bangumi-single':
+    case 'bookwalker-book':
+      return [{
+        key: 'comicInfoXml',
+        name: 'ComicInfo.xml',
+        type: 'application/xml',
+        content: buildStandaloneComicInfoXml(metadata)
+      }]
+    case 'bookwalker-series':
+      return [
+        {
+          key: 'seriesJson',
+          name: 'series.json',
+          type: 'application/json',
+          content: buildStandaloneSeriesJson(metadata)
+        },
+        {
+          key: 'seriesComicXml',
+          name: 'comic.xml',
+          type: 'application/xml',
+          content: buildStandaloneSeriesComicXml(metadata)
+        }
+      ]
+    default:
+      return []
   }
 }
 
@@ -20066,434 +20223,977 @@ var metadatavue_type_template_id_78dd89c9_scoped_true_render = function () {
     "div",
     { staticClass: "metadata-page" },
     [
-      _vm.loading
-        ? _c(
-            "van-loading",
-            { staticClass: "metadata-loading", attrs: { size: "24px" } },
-            [_vm._v("\n    正在解析网页并整理元数据...\n  ")]
-          )
-        : _vm.pendingGroups.length === 0
-        ? _c("van-empty", { attrs: { description: "暂无待确认的元数据" } }, [
-            _c("p", { staticClass: "metadata-hint" }, [
-              _vm._v(
-                "开启“下载前预览并编辑元数据”后，开始下载时会先进入这里。"
-              ),
-            ]),
-          ])
-        : [
-            _c("div", { staticClass: "metadata-top" }, [
-              _c("div", { staticClass: "metadata-top__title" }, [
-                _vm._v(
-                  "待确认系列 " + _vm._s(_vm.pendingGroups.length) + " 个"
-                ),
-              ]),
-              _vm._v(" "),
-              _vm.showComicInfoPreview
-                ? _c("div", { staticClass: "metadata-top__desc" }, [
-                    _vm._v(
-                      "\n        `ComicInfo.xml` 中的 `PageCount` 会在实际下载图片后自动填充，这里先展示其它字段。\n      "
-                    ),
-                  ])
-                : _vm._e(),
-            ]),
-            _vm._v(" "),
-            _c(
-              "van-collapse",
-              {
-                model: {
-                  value: _vm.activeNames,
-                  callback: function ($$v) {
-                    _vm.activeNames = $$v
-                  },
-                  expression: "activeNames",
-                },
-              },
-              _vm._l(_vm.pendingGroups, function (group) {
-                return _c(
-                  "van-collapse-item",
-                  {
-                    key: group.key,
-                    attrs: { name: group.key },
-                    scopedSlots: _vm._u(
-                      [
+      _vm.viewMode === "preview"
+        ? [
+            _vm.loading
+              ? _c(
+                  "van-loading",
+                  { staticClass: "metadata-loading", attrs: { size: "24px" } },
+                  [_vm._v("\n      正在解析网页并整理元数据...\n    ")]
+                )
+              : _vm.pendingGroups.length === 0
+              ? _c(
+                  "van-empty",
+                  { attrs: { description: "暂无待确认的元数据" } },
+                  [
+                    _c("p", { staticClass: "metadata-hint" }, [
+                      _vm._v(
+                        "开启“下载前预览并编辑元数据”后，开始下载时会先进入这里。"
+                      ),
+                    ]),
+                  ]
+                )
+              : [
+                  _c("div", { staticClass: "metadata-top" }, [
+                    _c("div", { staticClass: "metadata-top__title" }, [
+                      _vm._v(
+                        "待确认系列 " + _vm._s(_vm.pendingGroups.length) + " 个"
+                      ),
+                    ]),
+                    _vm._v(" "),
+                    _vm.showComicInfoPreview
+                      ? _c("div", { staticClass: "metadata-top__desc" }, [
+                          _vm._v(
+                            "\n          `ComicInfo.xml` 中的 `PageCount` 会在实际下载图片后自动填充，这里先展示其它字段。\n        "
+                          ),
+                        ])
+                      : _vm._e(),
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "van-collapse",
+                    {
+                      model: {
+                        value: _vm.activeNames,
+                        callback: function ($$v) {
+                          _vm.activeNames = $$v
+                        },
+                        expression: "activeNames",
+                      },
+                    },
+                    _vm._l(_vm.pendingGroups, function (group) {
+                      return _c(
+                        "van-collapse-item",
                         {
-                          key: "title",
-                          fn: function () {
-                            return [
-                              _c(
-                                "div",
-                                { staticClass: "metadata-group-title" },
-                                [
+                          key: group.key,
+                          attrs: { name: group.key },
+                          scopedSlots: _vm._u(
+                            [
+                              {
+                                key: "title",
+                                fn: function () {
+                                  return [
+                                    _c(
+                                      "div",
+                                      { staticClass: "metadata-group-title" },
+                                      [
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "metadata-group-title__main",
+                                          },
+                                          [
+                                            _vm._v(
+                                              _vm._s(group.baseItem.comicName)
+                                            ),
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "metadata-group-title__side",
+                                          },
+                                          [
+                                            _c(
+                                              "van-tag",
+                                              { attrs: { type: "primary" } },
+                                              [
+                                                _vm._v(
+                                                  _vm._s(group.items.length) +
+                                                    " 章"
+                                                ),
+                                              ]
+                                            ),
+                                          ],
+                                          1
+                                        ),
+                                      ]
+                                    ),
+                                  ]
+                                },
+                                proxy: true,
+                              },
+                            ],
+                            null,
+                            true
+                          ),
+                        },
+                        [
+                          _vm._v(" "),
+                          _c(
+                            "van-cell-group",
+                            { attrs: { inset: "" } },
+                            [
+                              _c("van-cell", {
+                                attrs: {
+                                  title: "站点",
+                                  value: group.baseItem.webName,
+                                },
+                              }),
+                              _vm._v(" "),
+                              _c("van-cell", {
+                                attrs: {
+                                  title: "样例章节",
+                                  value:
+                                    group.baseItem.downChapterName ||
+                                    group.baseItem.chapterName,
+                                },
+                              }),
+                              _vm._v(" "),
+                              _c("van-cell", {
+                                attrs: {
+                                  title: "来源",
+                                  value: group.sourceText || "基础信息",
+                                },
+                              }),
+                              _vm._v(" "),
+                              group.error
+                                ? _c("van-cell", {
+                                    attrs: {
+                                      title: "解析提示",
+                                      value: group.error,
+                                    },
+                                  })
+                                : _vm._e(),
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "metadata-card" },
+                            [
+                              _c("van-field", {
+                                attrs: {
+                                  label: "系列名",
+                                  placeholder: "系列名",
+                                },
+                                on: {
+                                  input: function ($event) {
+                                    return _vm.syncGroupPreview(group)
+                                  },
+                                },
+                                model: {
+                                  value: group.form.seriesTitle,
+                                  callback: function ($$v) {
+                                    _vm.$set(group.form, "seriesTitle", $$v)
+                                  },
+                                  expression: "group.form.seriesTitle",
+                                },
+                              }),
+                              _vm._v(" "),
+                              _c("van-field", {
+                                attrs: { label: "原标题", placeholder: "可选" },
+                                on: {
+                                  input: function ($event) {
+                                    return _vm.syncGroupPreview(group)
+                                  },
+                                },
+                                model: {
+                                  value: group.form.originalTitle,
+                                  callback: function ($$v) {
+                                    _vm.$set(group.form, "originalTitle", $$v)
+                                  },
+                                  expression: "group.form.originalTitle",
+                                },
+                              }),
+                              _vm._v(" "),
+                              _c("van-field", {
+                                attrs: {
+                                  label: "作者",
+                                  placeholder: "多个作者用逗号分隔",
+                                },
+                                on: {
+                                  input: function ($event) {
+                                    return _vm.syncGroupPreview(group)
+                                  },
+                                },
+                                model: {
+                                  value: group.form.writersText,
+                                  callback: function ($$v) {
+                                    _vm.$set(group.form, "writersText", $$v)
+                                  },
+                                  expression: "group.form.writersText",
+                                },
+                              }),
+                              _vm._v(" "),
+                              _c("van-field", {
+                                attrs: {
+                                  label: "画师",
+                                  placeholder: "多个画师用逗号分隔",
+                                },
+                                on: {
+                                  input: function ($event) {
+                                    return _vm.syncGroupPreview(group)
+                                  },
+                                },
+                                model: {
+                                  value: group.form.illustratorsText,
+                                  callback: function ($$v) {
+                                    _vm.$set(
+                                      group.form,
+                                      "illustratorsText",
+                                      $$v
+                                    )
+                                  },
+                                  expression: "group.form.illustratorsText",
+                                },
+                              }),
+                              _vm._v(" "),
+                              _c("van-field", {
+                                attrs: {
+                                  label: "标签",
+                                  placeholder: "多个标签用逗号分隔",
+                                },
+                                on: {
+                                  input: function ($event) {
+                                    return _vm.syncGroupPreview(group)
+                                  },
+                                },
+                                model: {
+                                  value: group.form.tagsText,
+                                  callback: function ($$v) {
+                                    _vm.$set(group.form, "tagsText", $$v)
+                                  },
+                                  expression: "group.form.tagsText",
+                                },
+                              }),
+                              _vm._v(" "),
+                              _c("van-field", {
+                                attrs: { label: "出版社", placeholder: "可选" },
+                                on: {
+                                  input: function ($event) {
+                                    return _vm.syncGroupPreview(group)
+                                  },
+                                },
+                                model: {
+                                  value: group.form.publisher,
+                                  callback: function ($$v) {
+                                    _vm.$set(group.form, "publisher", $$v)
+                                  },
+                                  expression: "group.form.publisher",
+                                },
+                              }),
+                              _vm._v(" "),
+                              _c("van-field", {
+                                attrs: {
+                                  type: "number",
+                                  label: "总话数",
+                                  placeholder: "可选",
+                                },
+                                on: {
+                                  input: function ($event) {
+                                    return _vm.syncGroupPreview(group)
+                                  },
+                                },
+                                model: {
+                                  value: group.form.issueCount,
+                                  callback: function ($$v) {
+                                    _vm.$set(group.form, "issueCount", $$v)
+                                  },
+                                  expression: "group.form.issueCount",
+                                },
+                              }),
+                              _vm._v(" "),
+                              _c("van-field", {
+                                attrs: {
+                                  label: "发布日期",
+                                  placeholder: "例如 2024-05-01",
+                                },
+                                on: {
+                                  input: function ($event) {
+                                    return _vm.syncGroupPreview(group)
+                                  },
+                                },
+                                model: {
+                                  value: group.form.releaseDate,
+                                  callback: function ($$v) {
+                                    _vm.$set(group.form, "releaseDate", $$v)
+                                  },
+                                  expression: "group.form.releaseDate",
+                                },
+                              }),
+                              _vm._v(" "),
+                              _c("van-field", {
+                                attrs: {
+                                  label: "状态",
+                                  placeholder: "例如 continuing / ended",
+                                },
+                                on: {
+                                  input: function ($event) {
+                                    return _vm.syncGroupPreview(group)
+                                  },
+                                },
+                                model: {
+                                  value: group.form.status,
+                                  callback: function ($$v) {
+                                    _vm.$set(group.form, "status", $$v)
+                                  },
+                                  expression: "group.form.status",
+                                },
+                              }),
+                              _vm._v(" "),
+                              _c("van-field", {
+                                attrs: { label: "分级", placeholder: "可选" },
+                                on: {
+                                  input: function ($event) {
+                                    return _vm.syncGroupPreview(group)
+                                  },
+                                },
+                                model: {
+                                  value: group.form.ageRating,
+                                  callback: function ($$v) {
+                                    _vm.$set(group.form, "ageRating", $$v)
+                                  },
+                                  expression: "group.form.ageRating",
+                                },
+                              }),
+                              _vm._v(" "),
+                              _c("van-field", {
+                                attrs: {
+                                  label: "语言",
+                                  placeholder: "例如 zh",
+                                },
+                                on: {
+                                  input: function ($event) {
+                                    return _vm.syncGroupPreview(group)
+                                  },
+                                },
+                                model: {
+                                  value: group.form.languageISO,
+                                  callback: function ($$v) {
+                                    _vm.$set(group.form, "languageISO", $$v)
+                                  },
+                                  expression: "group.form.languageISO",
+                                },
+                              }),
+                              _vm._v(" "),
+                              _c("van-field", {
+                                attrs: {
+                                  type: "textarea",
+                                  rows: "4",
+                                  autosize: "",
+                                  label: "简介",
+                                  placeholder: "可手动编辑简介",
+                                },
+                                on: {
+                                  input: function ($event) {
+                                    return _vm.syncGroupPreview(group)
+                                  },
+                                },
+                                model: {
+                                  value: group.form.summary,
+                                  callback: function ($$v) {
+                                    _vm.$set(group.form, "summary", $$v)
+                                  },
+                                  expression: "group.form.summary",
+                                },
+                              }),
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "metadata-preview-stack" }, [
+                            _vm.showComicInfoPreview
+                              ? _c("div", { staticClass: "metadata-card" }, [
                                   _c(
                                     "div",
-                                    {
-                                      staticClass: "metadata-group-title__main",
-                                    },
-                                    [_vm._v(_vm._s(group.baseItem.comicName))]
+                                    { staticClass: "metadata-preview-title" },
+                                    [_vm._v("ComicInfo.xml 预览")]
                                   ),
                                   _vm._v(" "),
                                   _c(
                                     "div",
-                                    {
-                                      staticClass: "metadata-group-title__side",
-                                    },
+                                    { staticClass: "metadata-preview-note" },
                                     [
-                                      _c(
-                                        "van-tag",
-                                        { attrs: { type: "primary" } },
-                                        [
-                                          _vm._v(
-                                            _vm._s(group.items.length) + " 章"
-                                          ),
-                                        ]
+                                      _vm._v(
+                                        "这里展示样例章节，章节名和章节序号仍会按各自下载项写入。"
                                       ),
-                                    ],
-                                    1
+                                    ]
                                   ),
-                                ]
-                              ),
-                            ]
-                          },
-                          proxy: true,
+                                  _vm._v(" "),
+                                  _c(
+                                    "pre",
+                                    { staticClass: "metadata-preview" },
+                                    [_vm._v(_vm._s(group.preview.comicInfoXml))]
+                                  ),
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.showSeriesJsonPreview
+                              ? _c("div", { staticClass: "metadata-card" }, [
+                                  _c(
+                                    "div",
+                                    { staticClass: "metadata-preview-title" },
+                                    [_vm._v("series.json 预览")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "pre",
+                                    { staticClass: "metadata-preview" },
+                                    [_vm._v(_vm._s(group.preview.seriesJson))]
+                                  ),
+                                ])
+                              : _vm._e(),
+                          ]),
+                        ],
+                        1
+                      )
+                    }),
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "metadata-bottom" },
+                    [
+                      _c(
+                        "van-button",
+                        {
+                          attrs: { round: "" },
+                          on: { click: _vm.cancelPreview },
                         },
-                      ],
-                      null,
-                      true
-                    ),
+                        [_vm._v("返回")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "van-button",
+                        {
+                          attrs: {
+                            round: "",
+                            type: "primary",
+                            loading: _vm.submitting,
+                          },
+                          on: { click: _vm.confirmPreview },
+                        },
+                        [_vm._v("继续下载")]
+                      ),
+                    ],
+                    1
+                  ),
+                ],
+          ]
+        : [
+            _vm.standaloneLoading
+              ? _c(
+                  "van-loading",
+                  { staticClass: "metadata-loading", attrs: { size: "24px" } },
+                  [_vm._v("\n      正在识别当前页面并生成元数据草稿...\n    ")]
+                )
+              : !_vm.standaloneContext
+              ? _c(
+                  "van-empty",
+                  {
+                    attrs: {
+                      description:
+                        _vm.standaloneError || "当前页面暂不支持独立生成元数据",
+                    },
                   },
                   [
-                    _vm._v(" "),
-                    _c(
-                      "van-cell-group",
-                      { attrs: { inset: "" } },
-                      [
-                        _c("van-cell", {
-                          attrs: {
-                            title: "站点",
-                            value: group.baseItem.webName,
-                          },
-                        }),
-                        _vm._v(" "),
-                        _c("van-cell", {
-                          attrs: {
-                            title: "样例章节",
-                            value:
-                              group.baseItem.downChapterName ||
-                              group.baseItem.chapterName,
-                          },
-                        }),
-                        _vm._v(" "),
-                        _c("van-cell", {
-                          attrs: {
-                            title: "来源",
-                            value: group.sourceText || "基础信息",
-                          },
-                        }),
-                        _vm._v(" "),
-                        group.error
-                          ? _c("van-cell", {
-                              attrs: { title: "解析提示", value: group.error },
-                            })
-                          : _vm._e(),
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "metadata-card" },
-                      [
-                        _c("van-field", {
-                          attrs: { label: "系列名", placeholder: "系列名" },
-                          on: {
-                            input: function ($event) {
-                              return _vm.syncGroupPreview(group)
-                            },
-                          },
-                          model: {
-                            value: group.form.seriesTitle,
-                            callback: function ($$v) {
-                              _vm.$set(group.form, "seriesTitle", $$v)
-                            },
-                            expression: "group.form.seriesTitle",
-                          },
-                        }),
-                        _vm._v(" "),
-                        _c("van-field", {
-                          attrs: { label: "原始标题", placeholder: "可选" },
-                          on: {
-                            input: function ($event) {
-                              return _vm.syncGroupPreview(group)
-                            },
-                          },
-                          model: {
-                            value: group.form.originalTitle,
-                            callback: function ($$v) {
-                              _vm.$set(group.form, "originalTitle", $$v)
-                            },
-                            expression: "group.form.originalTitle",
-                          },
-                        }),
-                        _vm._v(" "),
-                        _c("van-field", {
-                          attrs: {
-                            label: "作者",
-                            placeholder: "多个作者用逗号分隔",
-                          },
-                          on: {
-                            input: function ($event) {
-                              return _vm.syncGroupPreview(group)
-                            },
-                          },
-                          model: {
-                            value: group.form.writersText,
-                            callback: function ($$v) {
-                              _vm.$set(group.form, "writersText", $$v)
-                            },
-                            expression: "group.form.writersText",
-                          },
-                        }),
-                        _vm._v(" "),
-                        _c("van-field", {
-                          attrs: {
-                            label: "画师",
-                            placeholder: "多个画师用逗号分隔",
-                          },
-                          on: {
-                            input: function ($event) {
-                              return _vm.syncGroupPreview(group)
-                            },
-                          },
-                          model: {
-                            value: group.form.illustratorsText,
-                            callback: function ($$v) {
-                              _vm.$set(group.form, "illustratorsText", $$v)
-                            },
-                            expression: "group.form.illustratorsText",
-                          },
-                        }),
-                        _vm._v(" "),
-                        _c("van-field", {
-                          attrs: {
-                            label: "标签",
-                            placeholder: "多个标签用逗号分隔",
-                          },
-                          on: {
-                            input: function ($event) {
-                              return _vm.syncGroupPreview(group)
-                            },
-                          },
-                          model: {
-                            value: group.form.tagsText,
-                            callback: function ($$v) {
-                              _vm.$set(group.form, "tagsText", $$v)
-                            },
-                            expression: "group.form.tagsText",
-                          },
-                        }),
-                        _vm._v(" "),
-                        _c("van-field", {
-                          attrs: { label: "出版社", placeholder: "可选" },
-                          on: {
-                            input: function ($event) {
-                              return _vm.syncGroupPreview(group)
-                            },
-                          },
-                          model: {
-                            value: group.form.publisher,
-                            callback: function ($$v) {
-                              _vm.$set(group.form, "publisher", $$v)
-                            },
-                            expression: "group.form.publisher",
-                          },
-                        }),
-                        _vm._v(" "),
-                        _c("van-field", {
-                          attrs: {
-                            type: "number",
-                            label: "总话数",
-                            placeholder: "可选",
-                          },
-                          on: {
-                            input: function ($event) {
-                              return _vm.syncGroupPreview(group)
-                            },
-                          },
-                          model: {
-                            value: group.form.issueCount,
-                            callback: function ($$v) {
-                              _vm.$set(group.form, "issueCount", $$v)
-                            },
-                            expression: "group.form.issueCount",
-                          },
-                        }),
-                        _vm._v(" "),
-                        _c("van-field", {
-                          attrs: {
-                            label: "发布日期",
-                            placeholder: "例如 2024-05-01",
-                          },
-                          on: {
-                            input: function ($event) {
-                              return _vm.syncGroupPreview(group)
-                            },
-                          },
-                          model: {
-                            value: group.form.releaseDate,
-                            callback: function ($$v) {
-                              _vm.$set(group.form, "releaseDate", $$v)
-                            },
-                            expression: "group.form.releaseDate",
-                          },
-                        }),
-                        _vm._v(" "),
-                        _c("van-field", {
-                          attrs: {
-                            label: "状态",
-                            placeholder: "例如 continuing / ended",
-                          },
-                          on: {
-                            input: function ($event) {
-                              return _vm.syncGroupPreview(group)
-                            },
-                          },
-                          model: {
-                            value: group.form.status,
-                            callback: function ($$v) {
-                              _vm.$set(group.form, "status", $$v)
-                            },
-                            expression: "group.form.status",
-                          },
-                        }),
-                        _vm._v(" "),
-                        _c("van-field", {
-                          attrs: { label: "分级", placeholder: "可选" },
-                          on: {
-                            input: function ($event) {
-                              return _vm.syncGroupPreview(group)
-                            },
-                          },
-                          model: {
-                            value: group.form.ageRating,
-                            callback: function ($$v) {
-                              _vm.$set(group.form, "ageRating", $$v)
-                            },
-                            expression: "group.form.ageRating",
-                          },
-                        }),
-                        _vm._v(" "),
-                        _c("van-field", {
-                          attrs: { label: "语言", placeholder: "例如 zh" },
-                          on: {
-                            input: function ($event) {
-                              return _vm.syncGroupPreview(group)
-                            },
-                          },
-                          model: {
-                            value: group.form.languageISO,
-                            callback: function ($$v) {
-                              _vm.$set(group.form, "languageISO", $$v)
-                            },
-                            expression: "group.form.languageISO",
-                          },
-                        }),
-                        _vm._v(" "),
-                        _c("van-field", {
-                          attrs: {
-                            type: "textarea",
-                            rows: "4",
-                            autosize: "",
-                            label: "简介",
-                            placeholder: "可手动编辑简介",
-                          },
-                          on: {
-                            input: function ($event) {
-                              return _vm.syncGroupPreview(group)
-                            },
-                          },
-                          model: {
-                            value: group.form.summary,
-                            callback: function ($$v) {
-                              _vm.$set(group.form, "summary", $$v)
-                            },
-                            expression: "group.form.summary",
-                          },
-                        }),
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "metadata-preview-stack" }, [
-                      _vm.showComicInfoPreview
-                        ? _c("div", { staticClass: "metadata-card" }, [
-                            _c(
-                              "div",
-                              { staticClass: "metadata-preview-title" },
-                              [_vm._v("ComicInfo.xml 预览")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "metadata-preview-note" },
-                              [
-                                _vm._v(
-                                  "这里展示样例章节，章节名和章节序号仍会按各自下载项写入。"
-                                ),
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c("pre", { staticClass: "metadata-preview" }, [
-                              _vm._v(_vm._s(group.preview.comicInfoXml)),
-                            ]),
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.showSeriesJsonPreview
-                        ? _c("div", { staticClass: "metadata-card" }, [
-                            _c(
-                              "div",
-                              { staticClass: "metadata-preview-title" },
-                              [_vm._v("series.json 预览")]
-                            ),
-                            _vm._v(" "),
-                            _c("pre", { staticClass: "metadata-preview" }, [
-                              _vm._v(_vm._s(group.preview.seriesJson)),
-                            ]),
-                          ])
-                        : _vm._e(),
+                    _c("p", { staticClass: "metadata-hint" }, [
+                      _vm._v(
+                        "目前支持 Bangumi 漫画页、BookWalker 单本页，以及 BookWalker 系列页。"
+                      ),
                     ]),
+                    _vm._v(" "),
+                    _c(
+                      "van-button",
+                      {
+                        staticClass: "metadata-empty-btn",
+                        attrs: { size: "small", round: "", type: "primary" },
+                        on: { click: _vm.refreshStandaloneContext },
+                      },
+                      [_vm._v("\n        重新识别\n      ")]
+                    ),
                   ],
                   1
                 )
-              }),
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "metadata-bottom" },
-              [
-                _c(
-                  "van-button",
-                  { attrs: { round: "" }, on: { click: _vm.cancelPreview } },
-                  [_vm._v("返回")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "van-button",
-                  {
-                    attrs: {
-                      round: "",
-                      type: "primary",
-                      loading: _vm.submitting,
-                    },
-                    on: { click: _vm.confirmPreview },
-                  },
-                  [_vm._v("继续下载")]
-                ),
-              ],
-              1
-            ),
+              : [
+                  _c("div", { staticClass: "metadata-top" }, [
+                    _c("div", { staticClass: "metadata-top__title" }, [
+                      _vm._v("独立生成元数据"),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "metadata-top__desc" }, [
+                      _vm._v(
+                        _vm._s(_vm.standaloneContext.siteName) +
+                          " / " +
+                          _vm._s(_vm.getStandalonePageTypeText())
+                      ),
+                    ]),
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "van-cell-group",
+                    { attrs: { inset: "" } },
+                    [
+                      _c("van-cell", {
+                        attrs: {
+                          title: "站点",
+                          value: _vm.standaloneContext.siteName,
+                        },
+                      }),
+                      _vm._v(" "),
+                      _c("van-cell", {
+                        attrs: {
+                          title: "页面",
+                          value: _vm.standaloneContext.pageTitle,
+                        },
+                      }),
+                      _vm._v(" "),
+                      _c("van-cell", {
+                        attrs: {
+                          title: "链接",
+                          value: _vm.standaloneContext.pageUrl,
+                        },
+                      }),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  !_vm.standalonePrepared
+                    ? [
+                        _c(
+                          "div",
+                          { staticClass: "metadata-card" },
+                          [
+                            _c(
+                              "div",
+                              { staticClass: "metadata-preview-title" },
+                              [_vm._v("生成模式")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "van-radio-group",
+                              {
+                                model: {
+                                  value: _vm.standaloneSelectedMode,
+                                  callback: function ($$v) {
+                                    _vm.standaloneSelectedMode = $$v
+                                  },
+                                  expression: "standaloneSelectedMode",
+                                },
+                              },
+                              _vm._l(
+                                _vm.standaloneContext.modeOptions,
+                                function (option) {
+                                  return _c("van-cell", {
+                                    key: option.value,
+                                    attrs: {
+                                      clickable: "",
+                                      title: option.label,
+                                      label: option.description,
+                                    },
+                                    on: {
+                                      click: function ($event) {
+                                        _vm.standaloneSelectedMode =
+                                          option.value
+                                      },
+                                    },
+                                    scopedSlots: _vm._u(
+                                      [
+                                        {
+                                          key: "right-icon",
+                                          fn: function () {
+                                            return [
+                                              _c("van-radio", {
+                                                attrs: { name: option.value },
+                                              }),
+                                            ]
+                                          },
+                                          proxy: true,
+                                        },
+                                      ],
+                                      null,
+                                      true
+                                    ),
+                                  })
+                                }
+                              ),
+                              1
+                            ),
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "metadata-bottom" },
+                          [
+                            _c(
+                              "van-button",
+                              {
+                                attrs: { round: "" },
+                                on: { click: _vm.refreshStandaloneContext },
+                              },
+                              [_vm._v("刷新页面")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "van-button",
+                              {
+                                attrs: { round: "", type: "primary" },
+                                on: { click: _vm.prepareStandalonePreview },
+                              },
+                              [_vm._v("预览生成")]
+                            ),
+                          ],
+                          1
+                        ),
+                      ]
+                    : [
+                        _c(
+                          "div",
+                          { staticClass: "metadata-card" },
+                          [
+                            _vm.showStandaloneEntryFields
+                              ? _c("van-field", {
+                                  attrs: {
+                                    label: "条目名",
+                                    placeholder: "单本标题",
+                                  },
+                                  on: { input: _vm.syncStandalonePreview },
+                                  model: {
+                                    value: _vm.standaloneForm.entryTitle,
+                                    callback: function ($$v) {
+                                      _vm.$set(
+                                        _vm.standaloneForm,
+                                        "entryTitle",
+                                        $$v
+                                      )
+                                    },
+                                    expression: "standaloneForm.entryTitle",
+                                  },
+                                })
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.showStandaloneEntryFields
+                              ? _c("van-field", {
+                                  attrs: {
+                                    label: "册号",
+                                    placeholder: "例如 06",
+                                  },
+                                  on: { input: _vm.syncStandalonePreview },
+                                  model: {
+                                    value: _vm.standaloneForm.entryNumber,
+                                    callback: function ($$v) {
+                                      _vm.$set(
+                                        _vm.standaloneForm,
+                                        "entryNumber",
+                                        $$v
+                                      )
+                                    },
+                                    expression: "standaloneForm.entryNumber",
+                                  },
+                                })
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _c("van-field", {
+                              attrs: { label: "系列名", placeholder: "系列名" },
+                              on: { input: _vm.syncStandalonePreview },
+                              model: {
+                                value: _vm.standaloneForm.seriesTitle,
+                                callback: function ($$v) {
+                                  _vm.$set(
+                                    _vm.standaloneForm,
+                                    "seriesTitle",
+                                    $$v
+                                  )
+                                },
+                                expression: "standaloneForm.seriesTitle",
+                              },
+                            }),
+                            _vm._v(" "),
+                            _c("van-field", {
+                              attrs: { label: "原标题", placeholder: "可选" },
+                              on: { input: _vm.syncStandalonePreview },
+                              model: {
+                                value: _vm.standaloneForm.originalTitle,
+                                callback: function ($$v) {
+                                  _vm.$set(
+                                    _vm.standaloneForm,
+                                    "originalTitle",
+                                    $$v
+                                  )
+                                },
+                                expression: "standaloneForm.originalTitle",
+                              },
+                            }),
+                            _vm._v(" "),
+                            _c("van-field", {
+                              attrs: {
+                                label: "作者",
+                                placeholder: "多个作者用逗号分隔",
+                              },
+                              on: { input: _vm.syncStandalonePreview },
+                              model: {
+                                value: _vm.standaloneForm.writersText,
+                                callback: function ($$v) {
+                                  _vm.$set(
+                                    _vm.standaloneForm,
+                                    "writersText",
+                                    $$v
+                                  )
+                                },
+                                expression: "standaloneForm.writersText",
+                              },
+                            }),
+                            _vm._v(" "),
+                            _c("van-field", {
+                              attrs: {
+                                label: "画师",
+                                placeholder: "多个画师用逗号分隔",
+                              },
+                              on: { input: _vm.syncStandalonePreview },
+                              model: {
+                                value: _vm.standaloneForm.illustratorsText,
+                                callback: function ($$v) {
+                                  _vm.$set(
+                                    _vm.standaloneForm,
+                                    "illustratorsText",
+                                    $$v
+                                  )
+                                },
+                                expression: "standaloneForm.illustratorsText",
+                              },
+                            }),
+                            _vm._v(" "),
+                            _c("van-field", {
+                              attrs: {
+                                label: "标签",
+                                placeholder: "多个标签用逗号分隔",
+                              },
+                              on: { input: _vm.syncStandalonePreview },
+                              model: {
+                                value: _vm.standaloneForm.tagsText,
+                                callback: function ($$v) {
+                                  _vm.$set(_vm.standaloneForm, "tagsText", $$v)
+                                },
+                                expression: "standaloneForm.tagsText",
+                              },
+                            }),
+                            _vm._v(" "),
+                            _c("van-field", {
+                              attrs: { label: "出版社", placeholder: "可选" },
+                              on: { input: _vm.syncStandalonePreview },
+                              model: {
+                                value: _vm.standaloneForm.publisher,
+                                callback: function ($$v) {
+                                  _vm.$set(_vm.standaloneForm, "publisher", $$v)
+                                },
+                                expression: "standaloneForm.publisher",
+                              },
+                            }),
+                            _vm._v(" "),
+                            _c("van-field", {
+                              attrs: {
+                                type: "number",
+                                label: "总册数",
+                                placeholder: "可选",
+                              },
+                              on: { input: _vm.syncStandalonePreview },
+                              model: {
+                                value: _vm.standaloneForm.issueCount,
+                                callback: function ($$v) {
+                                  _vm.$set(
+                                    _vm.standaloneForm,
+                                    "issueCount",
+                                    $$v
+                                  )
+                                },
+                                expression: "standaloneForm.issueCount",
+                              },
+                            }),
+                            _vm._v(" "),
+                            _vm.showStandalonePageCountField
+                              ? _c("van-field", {
+                                  attrs: {
+                                    type: "number",
+                                    label: "页数",
+                                    placeholder: "可选",
+                                  },
+                                  on: { input: _vm.syncStandalonePreview },
+                                  model: {
+                                    value: _vm.standaloneForm.pageCount,
+                                    callback: function ($$v) {
+                                      _vm.$set(
+                                        _vm.standaloneForm,
+                                        "pageCount",
+                                        $$v
+                                      )
+                                    },
+                                    expression: "standaloneForm.pageCount",
+                                  },
+                                })
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.showStandaloneIsbnField
+                              ? _c("van-field", {
+                                  attrs: { label: "ISBN", placeholder: "可选" },
+                                  on: { input: _vm.syncStandalonePreview },
+                                  model: {
+                                    value: _vm.standaloneForm.isbn,
+                                    callback: function ($$v) {
+                                      _vm.$set(_vm.standaloneForm, "isbn", $$v)
+                                    },
+                                    expression: "standaloneForm.isbn",
+                                  },
+                                })
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _c("van-field", {
+                              attrs: {
+                                label: "发布日期",
+                                placeholder: "例如 2026-05-07",
+                              },
+                              on: { input: _vm.syncStandalonePreview },
+                              model: {
+                                value: _vm.standaloneForm.releaseDate,
+                                callback: function ($$v) {
+                                  _vm.$set(
+                                    _vm.standaloneForm,
+                                    "releaseDate",
+                                    $$v
+                                  )
+                                },
+                                expression: "standaloneForm.releaseDate",
+                              },
+                            }),
+                            _vm._v(" "),
+                            _c("van-field", {
+                              attrs: {
+                                label: "状态",
+                                placeholder: "例如 continuing / ended",
+                              },
+                              on: { input: _vm.syncStandalonePreview },
+                              model: {
+                                value: _vm.standaloneForm.status,
+                                callback: function ($$v) {
+                                  _vm.$set(_vm.standaloneForm, "status", $$v)
+                                },
+                                expression: "standaloneForm.status",
+                              },
+                            }),
+                            _vm._v(" "),
+                            _c("van-field", {
+                              attrs: { label: "分级", placeholder: "可选" },
+                              on: { input: _vm.syncStandalonePreview },
+                              model: {
+                                value: _vm.standaloneForm.ageRating,
+                                callback: function ($$v) {
+                                  _vm.$set(_vm.standaloneForm, "ageRating", $$v)
+                                },
+                                expression: "standaloneForm.ageRating",
+                              },
+                            }),
+                            _vm._v(" "),
+                            _c("van-field", {
+                              attrs: { label: "语言", placeholder: "例如 zh" },
+                              on: { input: _vm.syncStandalonePreview },
+                              model: {
+                                value: _vm.standaloneForm.languageISO,
+                                callback: function ($$v) {
+                                  _vm.$set(
+                                    _vm.standaloneForm,
+                                    "languageISO",
+                                    $$v
+                                  )
+                                },
+                                expression: "standaloneForm.languageISO",
+                              },
+                            }),
+                            _vm._v(" "),
+                            _c("van-field", {
+                              attrs: {
+                                type: "textarea",
+                                rows: "5",
+                                autosize: "",
+                                label: "简介",
+                                placeholder: "可手动编辑简介",
+                              },
+                              on: { input: _vm.syncStandalonePreview },
+                              model: {
+                                value: _vm.standaloneForm.summary,
+                                callback: function ($$v) {
+                                  _vm.$set(_vm.standaloneForm, "summary", $$v)
+                                },
+                                expression: "standaloneForm.summary",
+                              },
+                            }),
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "metadata-preview-stack" },
+                          _vm._l(_vm.standalonePreviewFiles, function (file) {
+                            return _c(
+                              "div",
+                              { key: file.key, staticClass: "metadata-card" },
+                              [
+                                _c(
+                                  "div",
+                                  { staticClass: "metadata-preview-title" },
+                                  [_vm._v(_vm._s(file.name) + " 预览")]
+                                ),
+                                _vm._v(" "),
+                                _c("pre", { staticClass: "metadata-preview" }, [
+                                  _vm._v(_vm._s(file.content)),
+                                ]),
+                              ]
+                            )
+                          }),
+                          0
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "metadata-bottom" },
+                          [
+                            _c(
+                              "van-button",
+                              {
+                                attrs: { round: "" },
+                                on: {
+                                  click: function ($event) {
+                                    _vm.standalonePrepared = false
+                                  },
+                                },
+                              },
+                              [_vm._v("返回")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "van-button",
+                              {
+                                attrs: {
+                                  round: "",
+                                  type: "primary",
+                                  loading: _vm.standaloneSubmitting,
+                                },
+                                on: { click: _vm.generateStandaloneFiles },
+                              },
+                              [_vm._v("生成文件")]
+                            ),
+                          ],
+                          1
+                        ),
+                      ],
+                ],
           ],
     ],
     2
@@ -20883,6 +21583,436 @@ const getWebMetadata = async(downloadItem) => {
   return extractWebMetadataFromRoot(root, webRule, pageUrl, downloadItem)
 }
 
+;// CONCATENATED MODULE: ./src/utils/standaloneMetadata.js
+
+
+
+const bangumiHostReg = /(^|\.)((bgm|bangumi)\.tv|chii\.in)$/i
+const bookwalkerHostReg = /(^|\.)bookwalker\.com\.tw$/i
+const bookwalkerProductPathReg = /^\/product\/\d+/i
+const bookwalkerSearchPathReg = /^\/search/i
+
+const modeMetaMap = {
+  'bangumi-single': {
+    value: 'bangumi-single',
+    label: 'Bangumi 单本元数据',
+    description: '生成 ComicInfo.xml',
+    outputText: 'ComicInfo.xml'
+  },
+  'bookwalker-book': {
+    value: 'bookwalker-book',
+    label: 'BookWalker 单本元数据',
+    description: '生成 ComicInfo.xml',
+    outputText: 'ComicInfo.xml'
+  },
+  'bookwalker-series': {
+    value: 'bookwalker-series',
+    label: 'BookWalker 系列元数据',
+    description: '生成 Komga `series.json`，并额外生成 `comic.xml`',
+    outputText: 'series.json + comic.xml'
+  }
+}
+
+const standaloneMetadata_normalizeText = (value) => {
+  return (0,utils/* trimSpecial */.Sc)(String(value || ''))
+    .replace(/\s{2,}/g, ' ')
+    .trim()
+}
+
+const escapeReg = (value = '') => {
+  return String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
+
+const standaloneMetadata_uniqList = (list = []) => {
+  return [...new Set((list || []).filter(Boolean))]
+}
+
+const toTextList = (value) => {
+  if (Array.isArray(value)) {
+    return standaloneMetadata_uniqList(value.map(item => standaloneMetadata_normalizeText(item)).filter(Boolean))
+  }
+  return standaloneMetadata_uniqList(String(value || '')
+    .split(/[、,，/／|｜\n]+/g)
+    .map(item => standaloneMetadata_normalizeText(item))
+    .filter(Boolean))
+}
+
+const standaloneMetadata_parseOptionalNumber = (value) => {
+  if (value === undefined || value === null || value === '') {
+    return undefined
+  }
+  const match = String(value).match(/(\d+(?:\.\d+)?)/)
+  if (!match) {
+    return undefined
+  }
+  const numberValue = Number(match[1])
+  return Number.isFinite(numberValue) ? numberValue : undefined
+}
+
+const standaloneMetadata_normalizeDateText = (value) => {
+  const text = standaloneMetadata_normalizeText(value)
+  if (!text) {
+    return ''
+  }
+  const match = text.match(/(\d{4})(?:[-/.年](\d{1,2}))?(?:[-/.月](\d{1,2}))?/)
+  if (!match) {
+    return ''
+  }
+  const year = match[1]
+  const month = match[2] ? String(parseInt(match[2], 10)).padStart(2, '0') : ''
+  const day = match[3] ? String(parseInt(match[3], 10)).padStart(2, '0') : ''
+  return [year, month, day].filter(Boolean).join('-')
+}
+
+const stripCountSuffix = (value) => {
+  return standaloneMetadata_normalizeText(String(value || '').replace(/\s*\(\d+\)\s*$/, ''))
+}
+
+const parseCountSuffix = (value) => {
+  const match = String(value || '').match(/\((\d+)\)\s*$/)
+  return match ? parseInt(match[1], 10) : undefined
+}
+
+const getText = (root, selector) => {
+  try {
+    const node = root?.querySelector(selector)
+    return standaloneMetadata_normalizeText(node?.innerText || node?.textContent || '')
+  } catch (error) {
+    return ''
+  }
+}
+
+const getTextList = (root, selector) => {
+  try {
+    return standaloneMetadata_uniqList([...root.querySelectorAll(selector)]
+      .map(node => standaloneMetadata_normalizeText(node?.innerText || node?.textContent || ''))
+      .filter(Boolean))
+  } catch (error) {
+    return []
+  }
+}
+
+const getCanonicalUrl = (root, pageUrl) => {
+  const canonicalUrl = root?.querySelector?.('link[rel="canonical"]')?.getAttribute('href') || ''
+  return canonicalUrl || pageUrl || window.location.href
+}
+
+const getHostname = (pageUrl = '') => {
+  try {
+    return new URL(pageUrl || window.location.href).hostname
+  } catch (error) {
+    return window.location.hostname
+  }
+}
+
+const getPathname = (pageUrl = '') => {
+  try {
+    return new URL(pageUrl || window.location.href).pathname
+  } catch (error) {
+    return window.location.pathname
+  }
+}
+
+const getSearchParam = (pageUrl = '', key = '') => {
+  try {
+    return new URL(pageUrl || window.location.href).searchParams.get(key) || ''
+  } catch (error) {
+    return ''
+  }
+}
+
+const getBookwalkerEntryNumber = (entryTitle = '', seriesTitle = '') => {
+  const titleText = standaloneMetadata_normalizeText(entryTitle)
+  const seriesText = standaloneMetadata_normalizeText(seriesTitle)
+  const shortTitle = seriesText ? titleText.replace(seriesText, '').trim() : titleText
+  const regList = [
+    /(?:\(|（|第)\s*(\d+(?:\.\d+)?)\s*(?:\)|）|冊|卷|巻|集)/,
+    /(\d+(?:\.\d+)?)(?!.*\d)/
+  ]
+
+  for (let i = 0; i < regList.length; i++) {
+    const match = shortTitle.match(regList[i]) || titleText.match(regList[i])
+    if (match?.[1]) {
+      return match[1]
+    }
+  }
+  return ''
+}
+
+const getBookwalkerFieldMap = (root) => {
+  const map = {}
+  root.querySelectorAll('.product-detail-info-item, .product-basic-info-item').forEach((item) => {
+    const key = standaloneMetadata_normalizeText(
+      item.querySelector('.product-detail-info-item-title, .product-basic-info-item-title')?.textContent || ''
+    )
+    if (!key) {
+      return
+    }
+
+    let value = ''
+    if (/標籤/.test(key)) {
+      value = getTextList(item, '.label-text').join(', ')
+    } else {
+      value = standaloneMetadata_normalizeText(
+        item.querySelector('.product-detail-info-item-value, .product-basic-info-item-string, .product-basic-info-item-label')?.innerText ||
+        item.querySelector('.product-detail-info-item-value, .product-basic-info-item-string, .product-basic-info-item-label')?.textContent ||
+        ''
+      )
+    }
+
+    if (value && !map[key]) {
+      map[key] = value
+    }
+  })
+  return map
+}
+
+const getBookwalkerSeriesCount = (root) => {
+  const subtitleText = getText(root, '.product-series-subtitle')
+  const subtitleCount = standaloneMetadata_parseOptionalNumber(subtitleText)
+  if (subtitleCount) {
+    return subtitleCount
+  }
+
+  const cardCount = getTextList(root, '.product-card-name').length
+  if (cardCount > 0) {
+    return cardCount
+  }
+
+  return undefined
+}
+
+const getBookwalkerSeriesTitles = (root) => {
+  return getTextList(root, '.product-card-name')
+}
+
+const getBookwalkerSeriesSubjectUrl = (root, pageUrl) => {
+  const breadcrumbUrl = root.querySelector('.breadcrumb a[href*="series="]')?.getAttribute('href') || ''
+  return breadcrumbUrl || getCanonicalUrl(root, pageUrl)
+}
+
+const buildBookwalkerProductBookDraft = (root, pageUrl) => {
+  const fieldMap = getBookwalkerFieldMap(root)
+  const entryTitle = getText(root, '.product-basic-info-name') || standaloneMetadata_normalizeText(document.title)
+  const seriesTitle = fieldMap['系列'] || entryTitle
+  const summary = getText(root, '#product-content .product-content-introduction')
+
+  return normalizeStandaloneMetadataDraft({
+    source: 'BookWalker',
+    seriesTitle,
+    originalTitle: seriesTitle,
+    entryTitle,
+    entryNumber: getBookwalkerEntryNumber(entryTitle, seriesTitle),
+    summary,
+    writers: toTextList(fieldMap['作者']),
+    illustrators: toTextList(fieldMap['插畫']),
+    tags: getTextList(root, '.product-basic-info-item-label .label-text'),
+    publisher: fieldMap['出版社'] || '',
+    issueCount: getBookwalkerSeriesCount(root),
+    releaseDate: standaloneMetadata_normalizeDateText(fieldMap['發售日']),
+    languageISO: 'zh',
+    subjectUrl: getCanonicalUrl(root, pageUrl),
+    pageCount: standaloneMetadata_parseOptionalNumber(fieldMap['頁數']),
+    isbn: fieldMap.ISBN || ''
+  })
+}
+
+const buildBookwalkerProductSeriesDraft = (root, pageUrl) => {
+  const fieldMap = getBookwalkerFieldMap(root)
+  const seriesTitle = fieldMap['系列'] || getText(root, '.product-series-title') || getText(root, '.product-basic-info-name')
+  const summary = getText(root, '#product-content .product-content-introduction')
+
+  return normalizeStandaloneMetadataDraft({
+    source: 'BookWalker',
+    seriesTitle,
+    originalTitle: seriesTitle,
+    summary,
+    writers: toTextList(fieldMap['作者']),
+    illustrators: toTextList(fieldMap['插畫']),
+    tags: getTextList(root, '.product-basic-info-item-label .label-text'),
+    publisher: fieldMap['出版社'] || '',
+    issueCount: getBookwalkerSeriesCount(root) || getBookwalkerSeriesTitles(root).length,
+    releaseDate: standaloneMetadata_normalizeDateText(fieldMap['發售日']),
+    languageISO: 'zh',
+    subjectUrl: getBookwalkerSeriesSubjectUrl(root, pageUrl)
+  })
+}
+
+const getBookwalkerSearchSeriesAnchor = (root, pageUrl) => {
+  const currentSeriesId = getSearchParam(pageUrl, 'series')
+  const anchorList = [...root.querySelectorAll('#search_series_ten a[href*="series="], #series_get_more a[href*="series="]')]
+  if (currentSeriesId) {
+    const matchedAnchor = anchorList.find(anchor => String(anchor.getAttribute('href') || '').includes(`series=${currentSeriesId}`))
+    if (matchedAnchor) {
+      return matchedAnchor
+    }
+  }
+  return anchorList[0] || null
+}
+
+const buildBookwalkerSearchSeriesDraft = (root, pageUrl) => {
+  const seriesAnchor = getBookwalkerSearchSeriesAnchor(root, pageUrl)
+  const seriesText = standaloneMetadata_normalizeText(seriesAnchor?.innerText || '')
+  const seriesTitle = stripCountSuffix(seriesText) || standaloneMetadata_normalizeText(getSearchParam(pageUrl, 'w'))
+  const firstAuthorText = getText(root, '.booknamesub')
+  const categoryList = getTextList(root, '.cat-label')
+
+  return normalizeStandaloneMetadataDraft({
+    source: 'BookWalker Search',
+    seriesTitle,
+    originalTitle: seriesTitle,
+    summary: '',
+    writers: getTextList(root, '#search_author_ten a, #author_get_more a').map(stripCountSuffix).filter(Boolean).length > 0
+      ? getTextList(root, '#search_author_ten a, #author_get_more a').map(stripCountSuffix).filter(Boolean)
+      : toTextList(firstAuthorText),
+    illustrators: [],
+    tags: categoryList,
+    publisher: stripCountSuffix(getText(root, '#search_vendor_ten a, #vendor_get_more a')),
+    issueCount: parseCountSuffix(seriesText) || getTextList(root, '.bookitem .bookname').length || undefined,
+    releaseDate: '',
+    languageISO: 'zh',
+    subjectUrl: seriesAnchor?.getAttribute('href') || getCanonicalUrl(root, pageUrl)
+  })
+}
+
+const getBangumiInfoboxMap = (root) => {
+  const map = {}
+  root.querySelectorAll('#infobox li').forEach((item) => {
+    const keyText = standaloneMetadata_normalizeText(item.querySelector('.tip')?.textContent || '').replace(/[:：]\s*$/, '')
+    if (!keyText) {
+      return
+    }
+    const rawText = standaloneMetadata_normalizeText(item.innerText || item.textContent || '')
+    const valueText = standaloneMetadata_normalizeText(rawText.replace(new RegExp(`^${escapeReg(keyText)}\\s*[:：]?\\s*`), ''))
+    if (!valueText) {
+      return
+    }
+    if (!map[keyText]) {
+      map[keyText] = []
+    }
+    map[keyText].push(valueText)
+  })
+  return map
+}
+
+const getBangumiInfoboxValue = (infoboxMap, keys = []) => {
+  for (let i = 0; i < keys.length; i++) {
+    const list = infoboxMap[keys[i]]
+    if (Array.isArray(list) && list.length > 0) {
+      return list[0]
+    }
+  }
+  return ''
+}
+
+const getBangumiReleaseDate = (infoboxMap) => {
+  const keyList = ['发售日', '發售日', '其他发售日', '其他發售日']
+  for (let i = 0; i < keyList.length; i++) {
+    const valueList = infoboxMap[keyList[i]] || []
+    for (let j = 0; j < valueList.length; j++) {
+      const dateText = standaloneMetadata_normalizeDateText(valueList[j])
+      if (dateText) {
+        return dateText
+      }
+    }
+  }
+  return ''
+}
+
+const buildBangumiSingleDraft = (root, pageUrl) => {
+  const infoboxMap = getBangumiInfoboxMap(root)
+  const originalTitle = getText(root, '#headerSubject h1 a') || getText(root, '.nameSingle a') || standaloneMetadata_normalizeText(document.title)
+  const seriesTitle = getBangumiInfoboxValue(infoboxMap, ['中文名']) || originalTitle
+  const tagList = standaloneMetadata_uniqList(
+    [...root.querySelectorAll('.subject_tag_section .inner a')]
+      .map(item => standaloneMetadata_normalizeText(item.querySelector('span')?.textContent || item.textContent || ''))
+      .filter(Boolean)
+  )
+
+  return normalizeStandaloneMetadataDraft({
+    source: 'Bangumi',
+    seriesTitle,
+    originalTitle,
+    entryTitle: originalTitle || seriesTitle,
+    summary: getText(root, '#subject_summary'),
+    writers: toTextList(getBangumiInfoboxValue(infoboxMap, ['作者'])),
+    illustrators: toTextList(getBangumiInfoboxValue(infoboxMap, ['作画', '作畫', '绘师', '繪師'])),
+    tags: tagList,
+    publisher: getBangumiInfoboxValue(infoboxMap, ['出版社']),
+    issueCount: standaloneMetadata_parseOptionalNumber(getBangumiInfoboxValue(infoboxMap, ['话数', '話數'])),
+    releaseDate: getBangumiReleaseDate(infoboxMap),
+    status: tagList.includes('已完结') ? 'ended' : '',
+    languageISO: '',
+    subjectUrl: getCanonicalUrl(root, pageUrl)
+  })
+}
+
+const getStandaloneMetadataModeMeta = (mode) => {
+  return modeMetaMap[mode] || null
+}
+
+const getStandaloneMetadataContext = (root = document, pageUrl = window.location.href) => {
+  const hostname = getHostname(pageUrl)
+  const pathname = getPathname(pageUrl)
+
+  if (bangumiHostReg.test(hostname) && /\/subject\/\d+/i.test(pathname)) {
+    const draft = buildBangumiSingleDraft(root, pageUrl)
+    return {
+      site: 'bangumi',
+      siteName: 'Bangumi',
+      pageType: 'subject',
+      pageTitle: draft.seriesTitle || draft.entryTitle || 'Bangumi',
+      pageUrl: getCanonicalUrl(root, pageUrl),
+      modeOptions: [modeMetaMap['bangumi-single']],
+      defaultMode: 'bangumi-single'
+    }
+  }
+
+  if (bookwalkerHostReg.test(hostname) && bookwalkerProductPathReg.test(pathname)) {
+    const bookDraft = buildBookwalkerProductBookDraft(root, pageUrl)
+    return {
+      site: 'bookwalker',
+      siteName: 'BookWalker',
+      pageType: 'product',
+      pageTitle: bookDraft.entryTitle || bookDraft.seriesTitle || 'BookWalker',
+      pageUrl: getCanonicalUrl(root, pageUrl),
+      modeOptions: [modeMetaMap['bookwalker-book'], modeMetaMap['bookwalker-series']],
+      defaultMode: 'bookwalker-book'
+    }
+  }
+
+  if (bookwalkerHostReg.test(hostname) && bookwalkerSearchPathReg.test(pathname) && getBookwalkerSearchSeriesAnchor(root, pageUrl)) {
+    const seriesDraft = buildBookwalkerSearchSeriesDraft(root, pageUrl)
+    return {
+      site: 'bookwalker',
+      siteName: 'BookWalker',
+      pageType: 'series-search',
+      pageTitle: seriesDraft.seriesTitle || 'BookWalker',
+      pageUrl: getCanonicalUrl(root, pageUrl),
+      modeOptions: [modeMetaMap['bookwalker-series']],
+      defaultMode: 'bookwalker-series'
+    }
+  }
+
+  return null
+}
+
+const buildStandaloneMetadataDraft = (mode, root = document, pageUrl = window.location.href) => {
+  switch (mode) {
+    case 'bangumi-single':
+      return buildBangumiSingleDraft(root, pageUrl)
+    case 'bookwalker-book':
+      return buildBookwalkerProductBookDraft(root, pageUrl)
+    case 'bookwalker-series':
+      if (bookwalkerProductPathReg.test(getPathname(pageUrl))) {
+        return buildBookwalkerProductSeriesDraft(root, pageUrl)
+      }
+      return buildBookwalkerSearchSeriesDraft(root, pageUrl)
+    default:
+      return normalizeStandaloneMetadataDraft()
+  }
+}
+
 ;// CONCATENATED MODULE: ./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/views/metadata.vue?vue&type=script&lang=js&
 //
 //
@@ -21026,6 +22156,187 @@ const getWebMetadata = async(downloadItem) => {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 
 
 
@@ -21041,6 +22352,7 @@ const metadatavue_type_script_lang_js_cloneData = (value) => {
   name: 'Metadata',
   data() {
     return {
+      viewMode: 'standalone',
       loading: false,
       submitting: false,
       pendingItems: [],
@@ -21049,11 +22361,32 @@ const metadatavue_type_script_lang_js_cloneData = (value) => {
       returnTab: 3,
       showComicInfoPreview: false,
       showSeriesJsonPreview: false,
-      enableBangumiScrape: false
+      enableBangumiScrape: false,
+      standaloneLoading: false,
+      standaloneSubmitting: false,
+      standaloneContext: null,
+      standaloneSelectedMode: '',
+      standalonePrepared: false,
+      standaloneDraft: normalizeStandaloneMetadataDraft(),
+      standaloneForm: {},
+      standalonePreviewFiles: [],
+      standaloneError: ''
+    }
+  },
+  computed: {
+    showStandaloneEntryFields() {
+      return ['bangumi-single', 'bookwalker-book'].includes(this.standaloneSelectedMode)
+    },
+    showStandalonePageCountField() {
+      return this.standaloneSelectedMode === 'bookwalker-book'
+    },
+    showStandaloneIsbnField() {
+      return this.standaloneSelectedMode === 'bookwalker-book'
     }
   },
   mounted() {
     this.$bus.$on('openMetadataPreview', this.openMetadataPreview)
+    this.refreshStandaloneContext()
   },
   methods: {
     buildGroupKey(item) {
@@ -21161,6 +22494,7 @@ const metadatavue_type_script_lang_js_cloneData = (value) => {
     async openMetadataPreview(items = []) {
       const list = metadatavue_type_script_lang_js_cloneData(items || [])
       const flags = getMetadataFileFlags()
+      this.viewMode = 'preview'
       this.pendingItems = list
       this.pendingGroups = this.buildGroups(list)
       this.returnTab = list[0]?.originTab ?? 3
@@ -21176,7 +22510,19 @@ const metadatavue_type_script_lang_js_cloneData = (value) => {
 
       this.loading = false
     },
+    resetPreviewState() {
+      this.viewMode = 'standalone'
+      this.loading = false
+      this.submitting = false
+      this.pendingItems = []
+      this.pendingGroups = []
+      this.activeNames = []
+      this.showComicInfoPreview = false
+      this.showSeriesJsonPreview = false
+      this.refreshStandaloneContext(true)
+    },
     cancelPreview() {
+      this.resetPreviewState()
       this.$bus.$emit('changTab', this.returnTab || 3)
     },
     confirmPreview() {
@@ -21205,6 +22551,151 @@ const metadatavue_type_script_lang_js_cloneData = (value) => {
       this.$bus.$emit('selectDown', nextItems)
       this.$bus.$emit('changTab', 3)
       this.submitting = false
+      this.resetPreviewState()
+    },
+    createStandaloneFormFromDraft(draft) {
+      return {
+        entryTitle: draft.entryTitle || '',
+        entryNumber: draft.entryNumber || '',
+        seriesTitle: draft.seriesTitle || '',
+        originalTitle: draft.originalTitle || '',
+        summary: draft.summary || '',
+        writersText: (draft.writers || []).join(', '),
+        illustratorsText: (draft.illustrators || []).join(', '),
+        tagsText: (draft.tags || []).join(', '),
+        publisher: draft.publisher || '',
+        issueCount: draft.issueCount ?? '',
+        pageCount: draft.pageCount ?? '',
+        isbn: draft.isbn || '',
+        releaseDate: draft.releaseDate || '',
+        status: draft.status || '',
+        ageRating: draft.ageRating || '',
+        languageISO: draft.languageISO || ''
+      }
+    },
+    buildStandaloneDraftFromForm(form, currentDraft = {}) {
+      return normalizeStandaloneMetadataDraft({
+        ...currentDraft,
+        entryTitle: form.entryTitle,
+        entryNumber: form.entryNumber,
+        seriesTitle: form.seriesTitle,
+        originalTitle: form.originalTitle,
+        summary: form.summary,
+        writers: form.writersText,
+        illustrators: form.illustratorsText,
+        tags: form.tagsText,
+        publisher: form.publisher,
+        issueCount: form.issueCount,
+        pageCount: form.pageCount,
+        isbn: form.isbn,
+        releaseDate: form.releaseDate,
+        status: form.status,
+        ageRating: form.ageRating,
+        languageISO: form.languageISO,
+        subjectUrl: currentDraft.subjectUrl || '',
+        source: currentDraft.source || ''
+      })
+    },
+    async refreshStandaloneContext(preserveSelection = false) {
+      if (this.viewMode === 'preview') {
+        return
+      }
+      this.standaloneLoading = true
+      this.standaloneError = ''
+      try {
+        const context = getStandaloneMetadataContext(document, window.location.href)
+        this.standaloneContext = context
+        if (context?.modeOptions?.length) {
+          const currentSelectionValid = preserveSelection && context.modeOptions.some(item => item.value === this.standaloneSelectedMode)
+          this.standaloneSelectedMode = currentSelectionValid
+            ? this.standaloneSelectedMode
+            : (context.defaultMode || context.modeOptions[0].value)
+        } else {
+          this.standaloneSelectedMode = ''
+        }
+        this.standalonePrepared = false
+        this.standaloneDraft = normalizeStandaloneMetadataDraft()
+        this.standaloneForm = this.createStandaloneFormFromDraft(this.standaloneDraft)
+        this.standalonePreviewFiles = []
+      } catch (error) {
+        this.standaloneContext = null
+        this.standaloneSelectedMode = ''
+        this.standalonePrepared = false
+        this.standalonePreviewFiles = []
+        this.standaloneError = '当前页面识别失败，请刷新页面后重试'
+      } finally {
+        this.standaloneLoading = false
+      }
+    },
+    getStandalonePageTypeText() {
+      switch (this.standaloneContext?.pageType) {
+        case 'subject':
+          return '漫画条目页'
+        case 'product':
+          return '单本详情页'
+        case 'series-search':
+          return '系列检索页'
+        default:
+          return '当前页面'
+      }
+    },
+    prepareStandalonePreview() {
+      if (!this.standaloneSelectedMode) {
+        return
+      }
+      try {
+        const draft = buildStandaloneMetadataDraft(this.standaloneSelectedMode, document, window.location.href)
+        this.standaloneDraft = normalizeStandaloneMetadataDraft(draft)
+        this.standaloneForm = this.createStandaloneFormFromDraft(this.standaloneDraft)
+        this.standalonePrepared = true
+        this.syncStandalonePreview()
+      } catch (error) {
+        (0,external_vant_.Toast)({
+          message: '当前页面元数据解析失败',
+          getContainer: '.card',
+          position: 'bottom'
+        })
+      }
+    },
+    syncStandalonePreview() {
+      this.standaloneDraft = this.buildStandaloneDraftFromForm(this.standaloneForm, this.standaloneDraft || {})
+      this.standalonePreviewFiles = buildStandaloneMetadataFiles(this.standaloneSelectedMode, this.standaloneDraft)
+    },
+    async downloadStandaloneFile(file) {
+      const blob = new Blob([file.content], {
+        type: `${file.type || 'text/plain'};charset=utf-8`
+      })
+      const url = window.URL.createObjectURL(blob)
+      const result = await (0,utils/* downFile */.zd)(url, file.name)
+      window.URL.revokeObjectURL(url)
+      return result
+    },
+    async generateStandaloneFiles() {
+      if (!this.standalonePrepared) {
+        return
+      }
+      this.standaloneSubmitting = true
+      this.syncStandalonePreview()
+      const files = metadatavue_type_script_lang_js_cloneData(this.standalonePreviewFiles)
+      if (files.length === 0) {
+        this.standaloneSubmitting = false
+        return
+      }
+
+      let successCount = 0
+      for (let i = 0; i < files.length; i++) {
+        const result = await this.downloadStandaloneFile(files[i])
+        if (result) {
+          successCount += 1
+        }
+      }
+
+      (0,external_vant_.Toast)({
+        message: successCount === files.length ? `已生成 ${successCount} 个文件` : `成功 ${successCount} 个，失败 ${files.length - successCount} 个`,
+        getContainer: '.card',
+        position: 'bottom'
+      })
+      this.standaloneSubmitting = false
     }
   }
 });

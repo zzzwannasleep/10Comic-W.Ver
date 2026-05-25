@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         10图漫
 // @namespace    http://tampermonkey2.net/
-// @version      2.0.12.20260518051903
-// @build        20260518051903
+// @version      2.0.12.20260525143028
+// @build        20260525143028
 // @description  Multi-site comic search and chapter download userscript.
 // @author       journey3510
 // @homepageURL  https://github.com/zzzwannasleep/10Comic-W.Ver

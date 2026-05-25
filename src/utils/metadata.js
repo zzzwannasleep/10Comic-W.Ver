@@ -84,6 +84,17 @@ export const normalizeMetadataDraft = (metadata = {}) => {
   }
 }
 
+export const normalizeStandaloneMetadataDraft = (metadata = {}) => {
+  const baseDraft = normalizeMetadataDraft(metadata)
+  return {
+    ...baseDraft,
+    entryTitle: toMetadataText(metadata.entryTitle || metadata.title || metadata.bookTitle || metadata.name || ''),
+    entryNumber: toMetadataText(metadata.entryNumber || metadata.number || metadata.volume || ''),
+    pageCount: parseOptionalNumber(metadata.pageCount || metadata.pages),
+    isbn: toMetadataText(metadata.isbn || metadata.ISBN || '')
+  }
+}
+
 export const mergeMetadataSources = (...sources) => {
   const merged = normalizeMetadataDraft()
   sources.forEach((source) => {
@@ -247,6 +258,64 @@ const getGenre = (metadata) => {
   return uniqList(metadata?.tags || []).join(', ')
 }
 
+const buildComicInfoXmlContent = ({
+  seriesName = '',
+  title = '',
+  number = '',
+  count = undefined,
+  summary = '',
+  writer = '',
+  penciller = '',
+  genre = '',
+  tags = '',
+  pageCount = undefined,
+  webUrl = '',
+  publisher = '',
+  languageISO = '',
+  releaseDate = '',
+  notes = ''
+} = {}) => {
+  const lines = ['<?xml version="1.0" encoding="utf-8"?>', '<ComicInfo>']
+  const dateParts = splitDateParts(releaseDate)
+
+  pushXmlTag(lines, 'Series', seriesName)
+  pushXmlTag(lines, 'Title', title)
+  pushXmlTag(lines, 'Number', number)
+  pushXmlTag(lines, 'Count', count)
+  pushXmlTag(lines, 'Summary', summary)
+  pushXmlTag(lines, 'Writer', writer)
+  pushXmlTag(lines, 'Penciller', penciller)
+  pushXmlTag(lines, 'Genre', genre)
+  pushXmlTag(lines, 'Tags', tags)
+  pushXmlTag(lines, 'PageCount', pageCount)
+  pushXmlTag(lines, 'Web', webUrl)
+  pushXmlTag(lines, 'Publisher', publisher)
+  pushXmlTag(lines, 'LanguageISO', languageISO)
+  pushXmlTag(lines, 'Year', dateParts.year)
+  pushXmlTag(lines, 'Month', dateParts.month)
+  pushXmlTag(lines, 'Day', dateParts.day)
+  pushXmlTag(lines, 'Notes', notes)
+  lines.push('</ComicInfo>')
+  return lines.join('\n')
+}
+
+const buildStandaloneNotes = (metadata) => {
+  const notes = []
+  if (metadata?.source) {
+    notes.push(`来源: ${metadata.source}`)
+  }
+  if (metadata?.originalTitle && metadata.originalTitle !== metadata.seriesTitle) {
+    notes.push(`原标题: ${metadata.originalTitle}`)
+  }
+  if (metadata?.subjectUrl) {
+    notes.push(`Metadata: ${metadata.subjectUrl}`)
+  }
+  if (metadata?.isbn) {
+    notes.push(`ISBN: ${metadata.isbn}`)
+  }
+  return notes.join('\n')
+}
+
 export const getZipNameTemplate = () => {
   const currentTemplate = getStorage('zipNameTemplate')
   if (!currentTemplate || currentTemplate === legacyDefaultZipNameTemplate) {
@@ -268,29 +337,23 @@ export const buildArchiveName = (downloadItem, pageCount) => {
 export const buildComicInfoXml = (downloadItem, pageCount, externalMetadata = null) => {
   const settings = getMetadataSettings()
   const metadata = getResolvedMetadata(downloadItem, externalMetadata)
-  const lines = ['<?xml version="1.0" encoding="utf-8"?>', '<ComicInfo>']
-  const seriesName = getSeriesName(downloadItem, metadata)
-  const dateParts = splitDateParts(metadata?.releaseDate)
-
-  pushXmlTag(lines, 'Series', seriesName)
-  pushXmlTag(lines, 'Title', downloadItem.downChapterName || downloadItem.chapterName)
-  pushXmlTag(lines, 'Number', getChapterNumber(downloadItem))
-  pushXmlTag(lines, 'Count', getIssueCount(downloadItem, metadata))
-  pushXmlTag(lines, 'Summary', metadata?.summary || '')
-  pushXmlTag(lines, 'Writer', getWriter(downloadItem, metadata))
-  pushXmlTag(lines, 'Penciller', getPenciller(metadata))
-  pushXmlTag(lines, 'Genre', getGenre(metadata))
-  pushXmlTag(lines, 'Tags', getGenre(metadata))
-  pushXmlTag(lines, 'PageCount', pageCount)
-  pushXmlTag(lines, 'Web', downloadItem.url || downloadItem.comicPageUrl)
-  pushXmlTag(lines, 'Publisher', getPublisher(settings, metadata))
-  pushXmlTag(lines, 'LanguageISO', metadata?.languageISO || settings.languageISO || 'zh')
-  pushXmlTag(lines, 'Year', dateParts.year)
-  pushXmlTag(lines, 'Month', dateParts.month)
-  pushXmlTag(lines, 'Day', dateParts.day)
-  pushXmlTag(lines, 'Notes', buildNotes(downloadItem, metadata))
-  lines.push('</ComicInfo>')
-  return lines.join('\n')
+  return buildComicInfoXmlContent({
+    seriesName: getSeriesName(downloadItem, metadata),
+    title: downloadItem.downChapterName || downloadItem.chapterName,
+    number: getChapterNumber(downloadItem),
+    count: getIssueCount(downloadItem, metadata),
+    summary: metadata?.summary || '',
+    writer: getWriter(downloadItem, metadata),
+    penciller: getPenciller(metadata),
+    genre: getGenre(metadata),
+    tags: getGenre(metadata),
+    pageCount,
+    webUrl: downloadItem.url || downloadItem.comicPageUrl,
+    publisher: getPublisher(settings, metadata),
+    languageISO: metadata?.languageISO || settings.languageISO || 'zh',
+    releaseDate: metadata?.releaseDate || '',
+    notes: buildNotes(downloadItem, metadata)
+  })
 }
 
 export const buildSeriesJson = (downloadItem, externalMetadata = null) => {
@@ -313,6 +376,100 @@ export const buildMetadataPreviewFiles = (downloadItem, pageCount = 0, externalM
   return {
     comicInfoXml: buildComicInfoXml(downloadItem, pageCount, externalMetadata),
     seriesJson: buildSeriesJson(downloadItem, externalMetadata)
+  }
+}
+
+export const buildStandaloneComicInfoXml = (metadata = {}) => {
+  const settings = getMetadataSettings()
+  const draft = normalizeStandaloneMetadataDraft(metadata)
+  const seriesName = draft.seriesTitle || draft.entryTitle || ''
+  const title = draft.entryTitle || draft.seriesTitle || ''
+  const issueCount = draft.issueCount || draft.volumeCount || undefined
+
+  return buildComicInfoXmlContent({
+    seriesName,
+    title,
+    number: draft.entryNumber || '',
+    count: issueCount,
+    summary: draft.summary || '',
+    writer: uniqList(draft.writers || []).join(', '),
+    penciller: uniqList(draft.illustrators || []).join(', '),
+    genre: uniqList(draft.tags || []).join(', '),
+    tags: uniqList(draft.tags || []).join(', '),
+    pageCount: draft.pageCount,
+    webUrl: draft.subjectUrl || '',
+    publisher: draft.publisher || settings.publisher || '',
+    languageISO: draft.languageISO || settings.languageISO || 'zh',
+    releaseDate: draft.releaseDate || '',
+    notes: buildStandaloneNotes(draft)
+  })
+}
+
+export const buildStandaloneSeriesJson = (metadata = {}) => {
+  const settings = getMetadataSettings()
+  const draft = normalizeStandaloneMetadataDraft(metadata)
+  const dateParts = splitDateParts(draft.releaseDate)
+  const seriesInfo = {
+    name: draft.seriesTitle || draft.entryTitle || '',
+    publisher: draft.publisher || settings.publisher || '',
+    description_text: draft.summary || '',
+    total_issues: draft.issueCount || draft.volumeCount || undefined,
+    status: draft.status || undefined,
+    age_rating: draft.ageRating || undefined,
+    year: dateParts.year || undefined
+  }
+  return JSON.stringify(seriesInfo, null, 2)
+}
+
+export const buildStandaloneSeriesComicXml = (metadata = {}) => {
+  const settings = getMetadataSettings()
+  const draft = normalizeStandaloneMetadataDraft(metadata)
+  const seriesName = draft.seriesTitle || draft.entryTitle || ''
+
+  return buildComicInfoXmlContent({
+    seriesName,
+    title: seriesName,
+    count: draft.issueCount || draft.volumeCount || undefined,
+    summary: draft.summary || '',
+    writer: uniqList(draft.writers || []).join(', '),
+    penciller: uniqList(draft.illustrators || []).join(', '),
+    genre: uniqList(draft.tags || []).join(', '),
+    tags: uniqList(draft.tags || []).join(', '),
+    webUrl: draft.subjectUrl || '',
+    publisher: draft.publisher || settings.publisher || '',
+    languageISO: draft.languageISO || settings.languageISO || 'zh',
+    releaseDate: draft.releaseDate || '',
+    notes: buildStandaloneNotes(draft)
+  })
+}
+
+export const buildStandaloneMetadataFiles = (mode, metadata = {}) => {
+  switch (mode) {
+    case 'bangumi-single':
+    case 'bookwalker-book':
+      return [{
+        key: 'comicInfoXml',
+        name: 'ComicInfo.xml',
+        type: 'application/xml',
+        content: buildStandaloneComicInfoXml(metadata)
+      }]
+    case 'bookwalker-series':
+      return [
+        {
+          key: 'seriesJson',
+          name: 'series.json',
+          type: 'application/json',
+          content: buildStandaloneSeriesJson(metadata)
+        },
+        {
+          key: 'seriesComicXml',
+          name: 'comic.xml',
+          type: 'application/xml',
+          content: buildStandaloneSeriesComicXml(metadata)
+        }
+      ]
+    default:
+      return []
   }
 }
 
