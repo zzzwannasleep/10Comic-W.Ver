@@ -26,8 +26,12 @@ export default class Queue {
   // 压缩下载方式
   async downloadFile(fileName, content) {
     const url = window.URL.createObjectURL(content)
-    await downFile(url, fileName)
+    let result = await downFile(url, fileName)
+    if (!result) {
+      result = await this.downloadFileByAnchor(url, fileName)
+    }
     window.URL.revokeObjectURL(url)
+    return result
   }
 
   async downloadRemoteFile(fileName, url) {
@@ -35,6 +39,26 @@ export default class Queue {
       return false
     }
     return downFile({ url, name: fileName })
+  }
+
+  async downloadFileByAnchor(url, fileName) {
+    if (!url || !fileName) {
+      return false
+    }
+    try {
+      const anchor = document.createElement('a')
+      anchor.href = url
+      anchor.download = fileName.split('\\').pop() || fileName
+      anchor.rel = 'noopener'
+      anchor.style.display = 'none'
+      document.body.appendChild(anchor)
+      anchor.click()
+      document.body.removeChild(anchor)
+      return true
+    } catch (error) {
+      console.log('downloadFileByAnchorError: ', error)
+      return false
+    }
   }
 
   getCoverFileName(url) {
@@ -148,6 +172,12 @@ export default class Queue {
     return new Error('检测到 Cloudflare 验证，已打开验证页面，请手动通过后重试下载')
   }
 
+  async waitForManualVerification() {
+    return new Promise((resolve) => {
+      setTimeout(resolve, 12 * 1000)
+    })
+  }
+
   async isChallengeResponse(workerId, requestUrl, response) {
     if (!response || response === 'onerror' || response === 'timeout' || !response.response) {
       return false
@@ -178,6 +208,15 @@ export default class Queue {
 
     this.openVerifyPageOnce(workerId, requestUrl)
     return true
+  }
+
+  async handleChallengeAndRetry(task, workerId, retryCount = 0) {
+    if (retryCount >= 1) {
+      this.worker[workerId].hasError = true
+      throw this.createChallengeError()
+    }
+    await this.waitForManualVerification()
+    return task(retryCount + 1)
   }
 
   async fetchImageBlob(workerId, url) {
@@ -409,6 +448,18 @@ export default class Queue {
     return text || fallback
   }
 
+  trimFileNameLength(fileName, maxLength = 180) {
+    const text = String(fileName || '')
+    if (text.length <= maxLength) {
+      return text
+    }
+    const extMatch = text.match(/(\.[^./\\]+)$/)
+    const ext = extMatch?.[1] || ''
+    const baseName = ext ? text.slice(0, -ext.length) : text
+    const keepLength = Math.max(24, maxLength - ext.length)
+    return baseName.slice(0, keepLength).replace(/[. ]+$/g, '') + ext
+  }
+
   getBatchFolderPrefix() {
     const value = getStorage('batchFolderPrefix')
     if (value === undefined || value === null) {
@@ -446,7 +497,7 @@ export default class Queue {
   }
 
   // 直接下载图片 Promise
-  addImgDownPromise(index, imgurl, imgIndex, newHeaders, retryTimes) {
+  addImgDownPromise(index, imgurl, imgIndex, newHeaders, retryTimes, challengeRetryCount = 0) {
     const headers = this.buildImageHeaders(index, newHeaders)
     return new Promise((resolve, reject) => {
       const _this = this
@@ -470,7 +521,7 @@ export default class Queue {
         if (res === 'onerror' || res === 'timeout') {
           if (retryTimes !== 2) {
             if (retryTimes === undefined) retryTimes = 0
-            return resolve(_this.addImgDownPromise(index, imgurl, imgIndex, newHeaders, ++retryTimes))
+            return resolve(_this.addImgDownPromise(index, imgurl, imgIndex, newHeaders, ++retryTimes, challengeRetryCount))
           }
 
           _this.worker[index].hasError = true
@@ -479,8 +530,9 @@ export default class Queue {
           newurl = window.URL.createObjectURL(newBlob)
         } else {
           if (await _this.isChallengeResponse(index, imgurl, res)) {
-            _this.worker[index].hasError = true
-            reject(_this.createChallengeError())
+            resolve(_this.handleChallengeAndRetry((nextChallengeRetryCount) => {
+              return _this.addImgDownPromise(index, imgurl, imgIndex, newHeaders, retryTimes, nextChallengeRetryCount)
+            }, index, challengeRetryCount))
             return
           }
           _this.updateProgress(index, true)
@@ -502,7 +554,7 @@ export default class Queue {
   }
 
   // 请求图片Blob Promise (后用于压缩)
-  addImgPromise(index, imgurl, newHeaders, retryTimes) {
+  addImgPromise(index, imgurl, newHeaders, retryTimes, challengeRetryCount = 0) {
     const headers = this.buildImageHeaders(index, newHeaders)
     return new Promise((resolve, reject) => {
       const _this = this
@@ -524,8 +576,9 @@ export default class Queue {
         timeout: 60 * 1000,
         onload: async function(gmRes) {
           if (await _this.isChallengeResponse(index, imgurl, gmRes)) {
-            _this.worker[index].hasError = true
-            reject(_this.createChallengeError())
+            resolve(_this.handleChallengeAndRetry((nextChallengeRetryCount) => {
+              return _this.addImgPromise(index, imgurl, newHeaders, retryTimes, nextChallengeRetryCount)
+            }, index, challengeRetryCount))
             return
           }
           _this.updateProgress(index, true)
@@ -537,7 +590,7 @@ export default class Queue {
         onerror: function(e) {
           if (retryTimes !== 2) {
             if (retryTimes === undefined) retryTimes = 0
-            return resolve(_this.addImgPromise(index, imgurl, newHeaders, ++retryTimes))
+            return resolve(_this.addImgPromise(index, imgurl, newHeaders, ++retryTimes, challengeRetryCount))
           }
           _this.worker[index].hasError = true
           _this.updateProgress(index)
@@ -549,7 +602,7 @@ export default class Queue {
         ontimeout: function() {
           if (retryTimes !== 2) {
             if (retryTimes === undefined) retryTimes = 0
-            return resolve(_this.addImgPromise(index, imgurl, newHeaders, ++retryTimes))
+            return resolve(_this.addImgPromise(index, imgurl, newHeaders, ++retryTimes, challengeRetryCount))
           }
           _this.worker[index].hasError = true
           _this.updateProgress(index)
@@ -775,15 +828,20 @@ export default class Queue {
 
     const zipblob = await zip.generateAsync({
       type: 'blob',
-      compression: 'DEFLATE',
+      compression: 'STORE',
       compressionOptions: {
-        level: 9
+        level: 0
       }
     })
     const archiveName = buildArchiveName(this.worker[workerId], this.worker[workerId].totalNumber)
     const archiveBasePath = this.getComicFolderPath(this.worker[workerId]) + '\\' + archiveName
-    await this.downloadFile(archiveBasePath + '.cbz', zipblob)
-    await this.writeBookCoverFile(workerId, archiveBasePath)
+    const archiveFileName = this.trimFileNameLength(archiveBasePath + '.cbz')
+    const archiveDownloaded = await this.downloadFile(archiveFileName, zipblob)
+    if (!archiveDownloaded) {
+      this.worker[workerId].hasError = true
+      throw new Error('压缩包下载失败')
+    }
+    await this.writeBookCoverFile(workerId, this.trimFileNameLength(archiveBasePath))
     return true
   }
 

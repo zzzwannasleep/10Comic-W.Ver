@@ -1,13 +1,8 @@
 // ==UserScript==
 // @name         10图漫
 // @namespace    http://tampermonkey2.net/
-<<<<<<< HEAD
-// @version      2.0.12.20260531065425
-// @build        20260531065425
-=======
-// @version      2.0.12.20260525144807
-// @build        20260525144807
->>>>>>> db60009568cd9b2a9c68f028ca1e2713c5538bb4
+// @version      2.0.12.20260531073304
+// @build        20260531073304
 // @description  Multi-site comic search and chapter download userscript.
 // @author       journey3510
 // @homepageURL  https://github.com/zzzwannasleep/10Comic-W.Ver
@@ -2325,7 +2320,7 @@ function BufferBigIntNotDefined () {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".van-cell__title {\n  text-align: left;\n}\n.van-cell-group__title--inset {\n  text-align: left;\n}\n.van-button--default {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled {\n  opacity: 1 !important;\n}\n.van-tag--default {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow {\n  color: #d9d9d9 !important;\n}\n.van-popover__content {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".van-cell__title {\n  text-align: left;\n}\n.van-cell-group__title--inset {\n  text-align: left;\n}\n.van-button--default {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled {\n  opacity: 1 !important;\n}\n.van-tag--default {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow {\n  color: #d9d9d9 !important;\n}\n.van-popover__content {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n.van-cell__title {\n  text-align: left;\n}\n.van-cell-group__title--inset {\n  text-align: left;\n}\n.van-button--default {\n  color: #000000;\n  background-color: #66ccff96 !important;\n  border: 1px solid #ffffff6e;\n}\n.van-button--disabled {\n  opacity: 1 !important;\n}\n.van-tag--default {\n  background-color: #66ccff;\n}\n.van-checkbox__icon--checked .van-icon {\n  color: #ee0000 !important;\n  background-color: #66ccff55 !important;\n  border-color: #66ccff88 !important;\n}\n.van-popover--light {\n  font-size: 14px !important;\n  color: #8d8de7 !important;\n}\n.van-popover--light .van-popover__arrow {\n  color: #d9d9d9 !important;\n}\n.van-popover__content {\n  border: 1px solid !important;\n  padding: 2px 9px !important;\n  margin-top: 3px !important;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -5994,13 +5989,8 @@ module.exports = styleTagTransform;
 /* eslint-disable no-undef */
 const AppName = "10图漫"
 const AppVersion = "2.0.12"
-<<<<<<< HEAD
-const AppReleaseVersion = "2.0.12.20260531065425"
-const AppBuildId = "20260531065425"
-=======
-const AppReleaseVersion = "2.0.12.20260525144807"
-const AppBuildId = "20260525144807"
->>>>>>> db60009568cd9b2a9c68f028ca1e2713c5538bb4
+const AppReleaseVersion = "2.0.12.20260531073304"
+const AppBuildId = "20260531073304"
 const AppEnv = "production"
 const AppHomepageUrl = "https://github.com/zzzwannasleep/10Comic-W.Ver"
 const AppSupportUrl = "https://github.com/zzzwannasleep/10Comic-W.Ver/issues"
@@ -14231,8 +14221,12 @@ class Queue {
   // 压缩下载方式
   async downloadFile(fileName, content) {
     const url = window.URL.createObjectURL(content)
-    await (0,utils/* downFile */.zd)(url, fileName)
+    let result = await (0,utils/* downFile */.zd)(url, fileName)
+    if (!result) {
+      result = await this.downloadFileByAnchor(url, fileName)
+    }
     window.URL.revokeObjectURL(url)
+    return result
   }
 
   async downloadRemoteFile(fileName, url) {
@@ -14240,6 +14234,26 @@ class Queue {
       return false
     }
     return (0,utils/* downFile */.zd)({ url, name: fileName })
+  }
+
+  async downloadFileByAnchor(url, fileName) {
+    if (!url || !fileName) {
+      return false
+    }
+    try {
+      const anchor = document.createElement('a')
+      anchor.href = url
+      anchor.download = fileName.split('\\').pop() || fileName
+      anchor.rel = 'noopener'
+      anchor.style.display = 'none'
+      document.body.appendChild(anchor)
+      anchor.click()
+      document.body.removeChild(anchor)
+      return true
+    } catch (error) {
+      console.log('downloadFileByAnchorError: ', error)
+      return false
+    }
   }
 
   getCoverFileName(url) {
@@ -14353,6 +14367,12 @@ class Queue {
     return new Error('检测到 Cloudflare 验证，已打开验证页面，请手动通过后重试下载')
   }
 
+  async waitForManualVerification() {
+    return new Promise((resolve) => {
+      setTimeout(resolve, 12 * 1000)
+    })
+  }
+
   async isChallengeResponse(workerId, requestUrl, response) {
     if (!response || response === 'onerror' || response === 'timeout' || !response.response) {
       return false
@@ -14383,6 +14403,15 @@ class Queue {
 
     this.openVerifyPageOnce(workerId, requestUrl)
     return true
+  }
+
+  async handleChallengeAndRetry(task, workerId, retryCount = 0) {
+    if (retryCount >= 1) {
+      this.worker[workerId].hasError = true
+      throw this.createChallengeError()
+    }
+    await this.waitForManualVerification()
+    return task(retryCount + 1)
   }
 
   async fetchImageBlob(workerId, url) {
@@ -14614,6 +14643,18 @@ class Queue {
     return text || fallback
   }
 
+  trimFileNameLength(fileName, maxLength = 180) {
+    const text = String(fileName || '')
+    if (text.length <= maxLength) {
+      return text
+    }
+    const extMatch = text.match(/(\.[^./\\]+)$/)
+    const ext = extMatch?.[1] || ''
+    const baseName = ext ? text.slice(0, -ext.length) : text
+    const keepLength = Math.max(24, maxLength - ext.length)
+    return baseName.slice(0, keepLength).replace(/[. ]+$/g, '') + ext
+  }
+
   getBatchFolderPrefix() {
     const value = (0,setup/* getStorage */.cF)('batchFolderPrefix')
     if (value === undefined || value === null) {
@@ -14651,7 +14692,7 @@ class Queue {
   }
 
   // 直接下载图片 Promise
-  addImgDownPromise(index, imgurl, imgIndex, newHeaders, retryTimes) {
+  addImgDownPromise(index, imgurl, imgIndex, newHeaders, retryTimes, challengeRetryCount = 0) {
     const headers = this.buildImageHeaders(index, newHeaders)
     return new Promise((resolve, reject) => {
       const _this = this
@@ -14675,7 +14716,7 @@ class Queue {
         if (res === 'onerror' || res === 'timeout') {
           if (retryTimes !== 2) {
             if (retryTimes === undefined) retryTimes = 0
-            return resolve(_this.addImgDownPromise(index, imgurl, imgIndex, newHeaders, ++retryTimes))
+            return resolve(_this.addImgDownPromise(index, imgurl, imgIndex, newHeaders, ++retryTimes, challengeRetryCount))
           }
 
           _this.worker[index].hasError = true
@@ -14684,8 +14725,9 @@ class Queue {
           newurl = window.URL.createObjectURL(newBlob)
         } else {
           if (await _this.isChallengeResponse(index, imgurl, res)) {
-            _this.worker[index].hasError = true
-            reject(_this.createChallengeError())
+            resolve(_this.handleChallengeAndRetry((nextChallengeRetryCount) => {
+              return _this.addImgDownPromise(index, imgurl, imgIndex, newHeaders, retryTimes, nextChallengeRetryCount)
+            }, index, challengeRetryCount))
             return
           }
           _this.updateProgress(index, true)
@@ -14707,7 +14749,7 @@ class Queue {
   }
 
   // 请求图片Blob Promise (后用于压缩)
-  addImgPromise(index, imgurl, newHeaders, retryTimes) {
+  addImgPromise(index, imgurl, newHeaders, retryTimes, challengeRetryCount = 0) {
     const headers = this.buildImageHeaders(index, newHeaders)
     return new Promise((resolve, reject) => {
       const _this = this
@@ -14729,8 +14771,9 @@ class Queue {
         timeout: 60 * 1000,
         onload: async function(gmRes) {
           if (await _this.isChallengeResponse(index, imgurl, gmRes)) {
-            _this.worker[index].hasError = true
-            reject(_this.createChallengeError())
+            resolve(_this.handleChallengeAndRetry((nextChallengeRetryCount) => {
+              return _this.addImgPromise(index, imgurl, newHeaders, retryTimes, nextChallengeRetryCount)
+            }, index, challengeRetryCount))
             return
           }
           _this.updateProgress(index, true)
@@ -14742,7 +14785,7 @@ class Queue {
         onerror: function(e) {
           if (retryTimes !== 2) {
             if (retryTimes === undefined) retryTimes = 0
-            return resolve(_this.addImgPromise(index, imgurl, newHeaders, ++retryTimes))
+            return resolve(_this.addImgPromise(index, imgurl, newHeaders, ++retryTimes, challengeRetryCount))
           }
           _this.worker[index].hasError = true
           _this.updateProgress(index)
@@ -14754,7 +14797,7 @@ class Queue {
         ontimeout: function() {
           if (retryTimes !== 2) {
             if (retryTimes === undefined) retryTimes = 0
-            return resolve(_this.addImgPromise(index, imgurl, newHeaders, ++retryTimes))
+            return resolve(_this.addImgPromise(index, imgurl, newHeaders, ++retryTimes, challengeRetryCount))
           }
           _this.worker[index].hasError = true
           _this.updateProgress(index)
@@ -14980,15 +15023,20 @@ class Queue {
 
     const zipblob = await zip.generateAsync({
       type: 'blob',
-      compression: 'DEFLATE',
+      compression: 'STORE',
       compressionOptions: {
-        level: 9
+        level: 0
       }
     })
     const archiveName = buildArchiveName(this.worker[workerId], this.worker[workerId].totalNumber)
     const archiveBasePath = this.getComicFolderPath(this.worker[workerId]) + '\\' + archiveName
-    await this.downloadFile(archiveBasePath + '.cbz', zipblob)
-    await this.writeBookCoverFile(workerId, archiveBasePath)
+    const archiveFileName = this.trimFileNameLength(archiveBasePath + '.cbz')
+    const archiveDownloaded = await this.downloadFile(archiveFileName, zipblob)
+    if (!archiveDownloaded) {
+      this.worker[workerId].hasError = true
+      throw new Error('压缩包下载失败')
+    }
+    await this.writeBookCoverFile(workerId, this.trimFileNameLength(archiveBasePath))
     return true
   }
 
