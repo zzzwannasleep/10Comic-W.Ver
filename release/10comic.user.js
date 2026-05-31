@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         10图漫
 // @namespace    http://tampermonkey2.net/
-// @version      2.0.12.20260525143028
-// @build        20260525143028
+// @version      2.0.12.20260531065425
+// @build        20260531065425
 // @description  Multi-site comic search and chapter download userscript.
 // @author       journey3510
 // @homepageURL  https://github.com/zzzwannasleep/10Comic-W.Ver
@@ -5989,8 +5989,8 @@ module.exports = styleTagTransform;
 /* eslint-disable no-undef */
 const AppName = "10图漫"
 const AppVersion = "2.0.12"
-const AppReleaseVersion = "2.0.12.20260525143028"
-const AppBuildId = "20260525143028"
+const AppReleaseVersion = "2.0.12.20260531065425"
+const AppBuildId = "20260531065425"
 const AppEnv = "production"
 const AppHomepageUrl = "https://github.com/zzzwannasleep/10Comic-W.Ver"
 const AppSupportUrl = "https://github.com/zzzwannasleep/10Comic-W.Ver/issues"
@@ -8335,7 +8335,7 @@ const comicsWebInfo = [
       referer: 'https://bakamh.com/'
     },
     downHeaders: {
-      referer: 'https://bakamh.com/'
+      referer: ''
     },
     searchFun: async function(keyword) {
       const headers = {
@@ -8397,9 +8397,31 @@ const comicsWebInfo = [
     getImgs: async function(context, processData) {
       const iframeDom = document.getElementById(processData.frameId).contentDocument
       await (0,_utils_index__WEBPACK_IMPORTED_MODULE_0__/* .delay */ .gw)(0.5)
-      const imgArray = [...iframeDom.querySelectorAll('img.wp-manga-chapter-img')]
-        .map(img => (img.getAttribute('data-manga-src') || img.dataset.mangaSrc || img.getAttribute('src') || '').trim())
-        .filter(Boolean)
+      const selectorList = [
+        'img.wp-manga-chapter-img',
+        '.reading-content img[data-manga-src]',
+        '.reading-content img[data-src]',
+        '.reading-content img'
+      ]
+      const imgNodeList = selectorList.reduce((result, selector) => {
+        const nodeList = [...iframeDom.querySelectorAll(selector)]
+        nodeList.forEach((item) => {
+          if (!result.includes(item)) {
+            result.push(item)
+          }
+        })
+        return result
+      }, [])
+      const imgArray = imgNodeList
+        .map(img => (
+          img.getAttribute('data-manga-src') ||
+          img.dataset.mangaSrc ||
+          img.getAttribute('data-src') ||
+          img.getAttribute('data-lazy-src') ||
+          img.getAttribute('src') ||
+          ''
+        ).trim())
+        .filter(url => /^https?:\/\//i.test(url))
 
       if (imgArray.length === 0) {
         const pageHtml = String(iframeDom.documentElement?.outerHTML || '').toLowerCase()
@@ -14178,6 +14200,8 @@ var external_JSZip_default = /*#__PURE__*/__webpack_require__.n(external_JSZip_n
 
 
 
+const challengeResponseReg = /challenge-platform|cf-browser-verification|cf-chl-|cf-turnstile|cf-challenge|cf-wrapper|verify you are human|attention required|checking if the site connection is secure|security check to access|just a moment\.\.\.|why do i have to complete a captcha/i
+
 // 多个任务并行执行的队列
 // https://juejin.cn/post/6844903961728647181
 
@@ -14250,13 +14274,112 @@ class Queue {
     }
   }
 
+  buildImageHeaders(workerId, headers) {
+    const defaultHeaders = {
+      referer: this.worker[workerId].url
+    }
+    if (!headers || typeof headers !== 'object' || Array.isArray(headers)) {
+      return defaultHeaders
+    }
+    const nextHeaders = {
+      ...defaultHeaders,
+      ...headers
+    }
+    if (!nextHeaders.referer) {
+      nextHeaders.referer = defaultHeaders.referer
+    }
+    return nextHeaders
+  }
+
+  updateProgress(workerId, isSuccess = false) {
+    if (isSuccess) {
+      this.worker[workerId].successNum = this.worker[workerId].successNum + 1
+    }
+    this.worker[workerId].progress = parseInt(this.worker[workerId].imgIndex / this.worker[workerId].totalNumber * 100)
+    this.refresh()
+  }
+
+  getResponseHeaderValue(responseHeaders = '', headerName = '') {
+    const reg = new RegExp(`^${String(headerName || '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*:\\s*(.+)$`, 'im')
+    return String(responseHeaders || '').match(reg)?.[1]?.trim() || ''
+  }
+
+  async blobToText(blob) {
+    if (!blob) {
+      return ''
+    }
+    if (typeof blob.text === 'function') {
+      try {
+        return await blob.text()
+      } catch (error) {
+        return ''
+      }
+    }
+    return new Promise((resolve) => {
+      try {
+        const reader = new FileReader()
+        reader.onload = function() {
+          resolve(String(reader.result || ''))
+        }
+        reader.onerror = function() {
+          resolve('')
+        }
+        reader.readAsText(blob)
+      } catch (error) {
+        resolve('')
+      }
+    })
+  }
+
+  openVerifyPageOnce(workerId, url) {
+    if (!this.worker[workerId] || this.worker[workerId].verifyPromptShown) {
+      return
+    }
+    this.worker[workerId].verifyPromptShown = true
+    ;(0,utils/* openVerifyPage */.XB)(url || this.worker[workerId].url)
+  }
+
+  createChallengeError() {
+    return new Error('检测到 Cloudflare 验证，已打开验证页面，请手动通过后重试下载')
+  }
+
+  async isChallengeResponse(workerId, requestUrl, response) {
+    if (!response || response === 'onerror' || response === 'timeout' || !response.response) {
+      return false
+    }
+
+    const finalUrl = String(response.finalUrl || requestUrl || '')
+    const responseHeaders = String(response.responseHeaders || '')
+    const contentType = (this.getResponseHeaderValue(responseHeaders, 'content-type') || response.response?.type || '').toLowerCase()
+    const maybeChallengeUrl = challengeResponseReg.test(finalUrl) || /\/cdn-cgi\//i.test(finalUrl)
+    const shouldReadText = maybeChallengeUrl || !contentType.includes('image/')
+
+    if (!shouldReadText) {
+      return false
+    }
+
+    let responseText = ''
+    if (typeof response.responseText === 'string' && response.responseText) {
+      responseText = response.responseText
+    } else if (typeof response.response === 'string') {
+      responseText = response.response
+    } else if (response.response instanceof Blob) {
+      responseText = await this.blobToText(response.response)
+    }
+
+    if (!maybeChallengeUrl && !challengeResponseReg.test(String(responseText || ''))) {
+      return false
+    }
+
+    this.openVerifyPageOnce(workerId, requestUrl)
+    return true
+  }
+
   async fetchImageBlob(workerId, url) {
     if (!url) {
       return null
     }
-    const headers = this.worker[workerId].downHeaders || {
-      referer: this.worker[workerId].url
-    }
+    const headers = this.buildImageHeaders(workerId, this.worker[workerId].downHeaders)
     const response = await (0,utils/* request */.WY)({
       method: 'get',
       url,
@@ -14265,6 +14388,9 @@ class Queue {
       timeout: 60 * 1000
     })
     if (!response || response === 'onerror' || response === 'timeout' || !response.response) {
+      return null
+    }
+    if (await this.isChallengeResponse(workerId, url, response)) {
       return null
     }
     return {
@@ -14399,7 +14525,7 @@ class Queue {
       let imgs = []
       try {
         imgs = await (0,utils/* getImage */.gJ)(processData)
-        const imgDownRange = (0,setup/* getStorage */.cF)('imgDownRange')
+        const imgDownRange = (0,setup/* getStorage */.cF)('imgDownRange') || [1, -1]
         const start = parseInt(imgDownRange[0])
         const end = parseInt(imgDownRange[1])
         if (end === -1) {
@@ -14407,22 +14533,38 @@ class Queue {
         } else {
           imgs = imgs.slice(start - 1, end + 1)
         }
-        // eslint-disable-next-line eqeqeq
-        imgs == [] ? this.worker[index].hasError = true : ''
+        if (!Array.isArray(imgs) || imgs.length === 0) {
+          this.worker[index].hasError = true
+          await afterDown(index)
+          return
+        }
         this.worker[index].imgs = imgs
         this.worker[index].totalNumber = imgs.length
       } catch (error) {
         this.worker[index].hasError = true
+        console.log('getImageError: ', error)
+        await afterDown(index)
+        return
       }
       yield this.down(index)
         .then(function() {
           afterDown(index)
+        })
+        .catch(function(error) {
+          _this.worker[index].hasError = true
+          console.log('down-e: ', error)
+          return afterDown(index)
         })
         //
     } else {
       yield this.down2(index)
         .then(function() {
           afterDown(index)
+        })
+        .catch(function(error) {
+          _this.worker[index].hasError = true
+          console.log('down2-e: ', error)
+          return afterDown(index)
         })
     }
   }
@@ -14500,31 +14642,24 @@ class Queue {
 
   // 直接下载图片 Promise
   addImgDownPromise(index, imgurl, imgIndex, newHeaders, retryTimes) {
-    const headers = {
-      referer: this.worker[index].url
-    }
+    const headers = this.buildImageHeaders(index, newHeaders)
     return new Promise((resolve, reject) => {
       const _this = this
       if (!imgurl) {
-        _this.worker[index].progress = parseInt(_this.worker[index].imgIndex / _this.worker[index].totalNumber * 100)
-        _this.refresh()
+        _this.updateProgress(index)
         resolve(false)
+        return
       }
 
       (0,utils/* request */.WY)({
         method: 'get',
         url: imgurl,
         responseType: 'blob',
-        headers: newHeaders || headers,
+        headers,
         timeout: 60 * 1000
-      }).then((res) => {
+      }).then(async(res) => {
         const name = this.getChapterFolderPath(this.worker[index]) + '\\' + (0,utils/* addZeroForNum */.xo)(imgIndex, this.imgIndexBitNum) + '.'
-
-        let suffix = this.getSuffix(res.finalUrl)
-
-        _this.worker[index].successNum = _this.worker[index].successNum + 1
-        _this.worker[index].progress = parseInt(_this.worker[index].imgIndex / _this.worker[index].totalNumber * 100)
-        _this.refresh()
+        let suffix = this.getSuffix(res?.finalUrl || imgurl)
 
         let newurl = ''
         if (res === 'onerror' || res === 'timeout') {
@@ -14538,7 +14673,16 @@ class Queue {
           const newBlob = new Blob([imgurl], { type: 'text/plain' })
           newurl = window.URL.createObjectURL(newBlob)
         } else {
+          if (await _this.isChallengeResponse(index, imgurl, res)) {
+            _this.worker[index].hasError = true
+            reject(_this.createChallengeError())
+            return
+          }
+          _this.updateProgress(index, true)
           newurl = window.URL.createObjectURL(res.response)
+        }
+        if (res === 'onerror' || res === 'timeout') {
+          _this.updateProgress(index)
         }
         (0,utils/* downFile */.zd)(newurl, name + suffix).then((downRes) => {
           if (downRes) {
@@ -14554,13 +14698,12 @@ class Queue {
 
   // 请求图片Blob Promise (后用于压缩)
   addImgPromise(index, imgurl, newHeaders, retryTimes) {
-    const headers = {
-      referer: this.worker[index].url
-    }
+    const headers = this.buildImageHeaders(index, newHeaders)
     return new Promise((resolve, reject) => {
       const _this = this
       if (imgurl === '' || imgurl === undefined) {
         _this.worker[index].hasError = true
+        _this.updateProgress(index)
         return resolve({
           blob: 1,
           imgurl,
@@ -14572,12 +14715,15 @@ class Queue {
         method: 'get',
         url: imgurl,
         responseType: 'blob',
-        headers: newHeaders || headers,
+        headers,
         timeout: 60 * 1000,
-        onload: function(gmRes) {
-          _this.worker[index].successNum = _this.worker[index].successNum + 1
-          _this.worker[index].progress = parseInt(_this.worker[index].imgIndex / _this.worker[index].totalNumber * 100)
-          _this.refresh()
+        onload: async function(gmRes) {
+          if (await _this.isChallengeResponse(index, imgurl, gmRes)) {
+            _this.worker[index].hasError = true
+            reject(_this.createChallengeError())
+            return
+          }
+          _this.updateProgress(index, true)
           resolve({
             blob: gmRes.response,
             imgurl,
@@ -14589,6 +14735,7 @@ class Queue {
             return resolve(_this.addImgPromise(index, imgurl, newHeaders, ++retryTimes))
           }
           _this.worker[index].hasError = true
+          _this.updateProgress(index)
           resolve({
             blob: 1,
             imgurl,
@@ -14599,6 +14746,8 @@ class Queue {
             if (retryTimes === undefined) retryTimes = 0
             return resolve(_this.addImgPromise(index, imgurl, newHeaders, ++retryTimes))
           }
+          _this.worker[index].hasError = true
+          _this.updateProgress(index)
           resolve({
             blob: 0,
             imgurl,
@@ -14760,6 +14909,7 @@ class Queue {
           func: this.exeDown(i),
           downType: item.downType, // 下载方式 0：直接  1：压缩  2：拼接  3：批量
           hasError: false,
+          verifyPromptShown: false,
           imageSource: item.imageSource,
           downHeaders: item.downHeaders,
           otherData: undefined, // 自定义存储其他下载数据

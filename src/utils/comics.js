@@ -2146,7 +2146,7 @@ export const comicsWebInfo = [
       referer: 'https://bakamh.com/'
     },
     downHeaders: {
-      referer: 'https://bakamh.com/'
+      referer: ''
     },
     searchFun: async function(keyword) {
       const headers = {
@@ -2208,9 +2208,31 @@ export const comicsWebInfo = [
     getImgs: async function(context, processData) {
       const iframeDom = document.getElementById(processData.frameId).contentDocument
       await delay(0.5)
-      const imgArray = [...iframeDom.querySelectorAll('img.wp-manga-chapter-img')]
-        .map(img => (img.getAttribute('data-manga-src') || img.dataset.mangaSrc || img.getAttribute('src') || '').trim())
-        .filter(Boolean)
+      const selectorList = [
+        'img.wp-manga-chapter-img',
+        '.reading-content img[data-manga-src]',
+        '.reading-content img[data-src]',
+        '.reading-content img'
+      ]
+      const imgNodeList = selectorList.reduce((result, selector) => {
+        const nodeList = [...iframeDom.querySelectorAll(selector)]
+        nodeList.forEach((item) => {
+          if (!result.includes(item)) {
+            result.push(item)
+          }
+        })
+        return result
+      }, [])
+      const imgArray = imgNodeList
+        .map(img => (
+          img.getAttribute('data-manga-src') ||
+          img.dataset.mangaSrc ||
+          img.getAttribute('data-src') ||
+          img.getAttribute('data-lazy-src') ||
+          img.getAttribute('src') ||
+          ''
+        ).trim())
+        .filter(url => /^https?:\/\//i.test(url))
 
       if (imgArray.length === 0) {
         const pageHtml = String(iframeDom.documentElement?.outerHTML || '').toLowerCase()
